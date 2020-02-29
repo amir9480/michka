@@ -1,0 +1,17 @@
+cmake_minimum_required(VERSION 3.0.0)
+project(Mishka VERSION 0.0.1)
+set(CMAKE_CXX_STANDARD 17)
+
+include_directories("src")
+add_executable(Mishka "src/main.cpp" "src/Core/String.cpp")
+add_subdirectory("src/Core")
+add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
+
+option(PACKAGE_TESTS "Build the tests" ON)
+if(PACKAGE_TESTS)
+    set(gtest_force_shared_crt ON)
+    add_subdirectory("thirdparty/googletest")
+    include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+    enable_testing()
+    add_subdirectory("tests")
+endif()
