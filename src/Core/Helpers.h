@@ -4,6 +4,7 @@
 #include <utility>
 #include <stdio.h>
 #include <memory.h>
+#include <type_traits>
 
 #define MISHKA_ASSERT(condition, message)
 

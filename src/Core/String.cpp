@@ -144,4 +144,48 @@ namespace Mishka
 		}
 		return *this;
 	}
+
+
+	template<>
+	template<>
+	float StringTemplate<wchar_t>::toNumber<float>(const u32& _base) const
+	{
+		return StringTemplate<char>(mData).toNumber<float>();
+	}
+
+	template<>
+	template<>
+	double StringTemplate<wchar_t>::toNumber<double>(const u32& _base) const
+	{
+		return StringTemplate<char>(mData).toNumber<double>();
+	}
+
+	template<>
+	template<>
+	long double StringTemplate<wchar_t>::toNumber<long double>(const u32& _base) const
+	{
+		return StringTemplate<char>(mData).toNumber<long double>();
+	}
+
+	template<>
+	template<>
+	float StringTemplate<char32_t>::toNumber<float>(const u32& _base) const
+	{
+		return StringTemplate<char>(mData).toNumber<float>();
+	}
+
+	template<>
+	template<>
+	double StringTemplate<char32_t>::toNumber<double>(const u32& _base) const
+	{
+		return StringTemplate<char>(mData).toNumber<double>();
+	}
+
+	template<>
+	template<>
+	long double StringTemplate<char32_t>::toNumber<long double>(const u32& _base) const
+	{
+		return StringTemplate<char>(mData).toNumber<long double>();
+	}
 }
+

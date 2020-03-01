@@ -130,10 +130,8 @@ TEST(StringTest, StringToNumberTest) {
 
 	test = "3.1415";
 	ASSERT_EQ(test.toNumber<float>(), float(3.1415f));
-	ASSERT_EQ(test.toNumber<double>(), double(3.1415f));
-	ASSERT_EQ(test.toNumber<float>(), long double(3.1415f));
-
-
+	ASSERT_EQ(test.toNumber<double>(), double(3.1415));
+	ASSERT_EQ(test.toNumber<long double>(), long double(3.1415));
 }
 
 TEST(StringTest, StringReverseTest) {

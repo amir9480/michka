@@ -212,8 +212,10 @@ namespace Mishka
 				}
 				iterator++;
 			}
-			if (mData[0] == '-') {
-				out = -out;
+			if constexpr(std::is_signed<TYPE>::value) {
+				if (mData[0] == '-') {
+					out = -out;
+				}
 			}
 		}
 		return out;
@@ -389,43 +391,25 @@ namespace Mishka
 
 	template<>
 	template<>
-	inline float StringTemplate<wchar_t>::toNumber<float>(const u32& _base) const
-	{
-		return StringTemplate<char>(mData).toNumber<float>();
-	}
+	float StringTemplate<wchar_t>::toNumber<float>(const u32& _base) const;
 
 	template<>
 	template<>
-	inline double StringTemplate<wchar_t>::toNumber<double>(const u32& _base) const
-	{
-		return StringTemplate<char>(mData).toNumber<double>();
-	}
+	double StringTemplate<wchar_t>::toNumber<double>(const u32& _base) const;
 
 	template<>
 	template<>
-	inline long double StringTemplate<wchar_t>::toNumber<long double>(const u32& _base) const
-	{
-		return StringTemplate<char>(mData).toNumber<long double>();
-	}
+	long double StringTemplate<wchar_t>::toNumber<long double>(const u32& _base) const;
 
 	template<>
 	template<>
-	inline float StringTemplate<char32_t>::toNumber<float>(const u32& _base) const
-	{
-		return StringTemplate<char>(mData).toNumber<float>();
-	}
+	float StringTemplate<char32_t>::toNumber<float>(const u32& _base) const;
 
 	template<>
 	template<>
-	inline double StringTemplate<char32_t>::toNumber<double>(const u32& _base) const
-	{
-		return StringTemplate<char>(mData).toNumber<double>();
-	}
+	double StringTemplate<char32_t>::toNumber<double>(const u32& _base) const;
 
 	template<>
 	template<>
-	inline long double StringTemplate<char32_t>::toNumber<long double>(const u32& _base) const
-	{
-		return StringTemplate<char>(mData).toNumber<long double>();
-	}
+	long double StringTemplate<char32_t>::toNumber<long double>(const u32& _base) const;
 }

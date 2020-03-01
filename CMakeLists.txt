@@ -2,9 +2,10 @@ cmake_minimum_required(VERSION 3.0.0)
 project(Mishka VERSION 0.0.1)
 set(CMAKE_CXX_STANDARD 17)
 
-include_directories("src")
-add_executable(Mishka "src/main.cpp" "src/Core/String.cpp")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
+set(SOURCES "")
 add_subdirectory("src/Core")
+add_executable(Mishka ${SOURCES} "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
 add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
 
 option(PACKAGE_TESTS "Build the tests" ON)
