@@ -79,6 +79,7 @@ TEST(StringTest, ClearStringTest) {
 	test.clear();
 	ASSERT_TRUE(test == Mishka::String::empty);
 	ASSERT_TRUE(test.isEmpty());
+	ASSERT_FALSE(test.isNotEmpty());
 }
 
 TEST(StringTest, NumberToStringTest) {
@@ -158,11 +159,46 @@ TEST(StringTest, StringGetCharacterTest) {
 
 TEST(StringTest, StringFindCharacterTest) {
 	Mishka::String test = L"Hello World";
+	Mishka::String test2 = "Hello World Hello";
 	ASSERT_EQ(test.find(L'H'), 0);
 	ASSERT_EQ(test.find(L'e'), 1);
 	ASSERT_EQ(test.find(L'l'), 2);
 	ASSERT_EQ(test.find(L'o'), 4);
+	ASSERT_EQ(test.find(L'l', 4), 9);
 	ASSERT_EQ(test.find(L'd'), 10);
 	ASSERT_EQ(test.find(L'T'), Mishka::String::notFound);
+
+	ASSERT_EQ(test.findFromRight(L'H'), 0);
+	ASSERT_EQ(test.findFromRight(L'e'), 1);
+	ASSERT_EQ(test.findFromRight(L'l'), 9);
+	ASSERT_EQ(test.findFromRight(L'o'), 7);
+	ASSERT_EQ(test.findFromRight(L'l', 4), 3);
+	ASSERT_EQ(test.findFromRight(L'l', 3), 3);
+	ASSERT_EQ(test.findFromRight(L'l', 2), 2);
+	ASSERT_EQ(test.findFromRight(L'd'), 10);
+	ASSERT_EQ(test.findFromRight(L'T'), Mishka::String::notFound);
+
+	ASSERT_EQ(test.find(L"Hello"), 0);
+	ASSERT_EQ(test.find(L"ello"), 1);
+	ASSERT_EQ(test.find(L"Hello", 1), Mishka::String::notFound);
+	ASSERT_EQ(test2.find(L"Hello", 1), 12);
+	ASSERT_EQ(test.find(L"World"), 6);
+	ASSERT_EQ(test.find(L"World", 6), 6);
+	ASSERT_EQ(test.find(L"RandomStuff"), Mishka::String::notFound);
+	ASSERT_EQ(Mishka::String().find(L"RandomStuff"), Mishka::String::notFound);
+	ASSERT_EQ(Mishka::String().find(Mishka::String()), Mishka::String::notFound);
+	ASSERT_EQ(test.find(Mishka::String()), Mishka::String::notFound);
+
+	ASSERT_EQ(test2.findFromRight(L"Hello"), 12);
+	ASSERT_EQ(test2.findFromRight(L"ello"), 13);
+	ASSERT_EQ(test2.findFromRight(L"World", 10), Mishka::String::notFound);
+	ASSERT_EQ(test2.findFromRight(L"Hello", 16), 0);
+	ASSERT_EQ(test2.findFromRight(L"World"), 6);
+	ASSERT_EQ(test2.findFromRight(L"World", 12), 6);
+	ASSERT_EQ(test2.findFromRight(L"World", 11), 6);
+	ASSERT_EQ(test2.findFromRight(L"RandomStuff"), Mishka::String::notFound);
+	ASSERT_EQ(Mishka::String().findFromRight(L"RandomStuff"), Mishka::String::notFound);
+	ASSERT_EQ(Mishka::String().findFromRight(Mishka::String()), Mishka::String::notFound);
+	ASSERT_EQ(test2.findFromRight(Mishka::String()), Mishka::String::notFound);
 }
 

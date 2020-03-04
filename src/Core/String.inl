@@ -54,7 +54,8 @@ namespace Mishka
 	template<typename T>
 	FORCE_INLINE StringTemplate<T>& StringTemplate<T>::clear()
 	{
-		if (mData) {
+		if (mData)
+		{
 			delete[] mData;
 			mData = nullptr;
 		}
@@ -73,13 +74,81 @@ namespace Mishka
 	}
 
 	template<typename T>
-	template<typename T2>
-	FORCE_INLINE u32 StringTemplate<T>::find(const T2& _character)const
+	FORCE_INLINE u32 StringTemplate<T>::find(const T& _character, const u32& _offset) const
 	{
-		if (mData) {
-			T* pointer = (T*)memchr((void*)mData, _character, getSize() * sizeof(T));
-			if (pointer) {
+		if (mData)
+		{
+			T* pointer = static_cast<T*>(memchr((void*)(mData + _offset), T(_character), getSize() * sizeof(T)));
+			if (pointer)
+			{
 				return u32(pointer - mData);
+			}
+		}
+		return notFound;
+	}
+
+	template<typename T>
+	u32 StringTemplate<T>::findFromRight(const T& _character, const u32& _offset) const
+	{
+		u32 offset =  _offset == 0xffffffff ? getSize() : _offset;
+		u32 result = notFound;
+		if (mData)
+		{
+			while (T* pointer = (T*)memchr((void*)(mData + (result != notFound ? result + 1 : 0)), T(_character), getSize() * sizeof(T)))
+			{
+				if (u32(pointer - mData) > offset)
+				{
+					break;
+				}
+				result = u32(pointer - mData);
+			}
+		}
+		return result;
+	}
+
+	template<typename T>
+	u32 StringTemplate<T>::find(const StringTemplate<T>& _string, const u32& _offset) const
+	{
+		if (_string.isNotEmpty() && this->isNotEmpty())
+		{
+			u32 offset = _offset;
+			while ((offset = find(_string[0], offset)) != notFound && getSize() - offset >= _string.getSize())
+			{
+				for (u32 i = 0; i <= _string.getSize(); i++)
+				{
+					if (_string.mData[i] == 0)
+					{
+						return offset;
+					}
+					if (mData[i + offset] != _string.mData[i])
+					{
+						break;
+					}
+				}
+			}
+		}
+		return notFound;
+	}
+
+	template<typename T>
+	u32 StringTemplate<T>::findFromRight(const StringTemplate<T>& _string, const u32& _offset) const
+	{
+		if (_string.isNotEmpty() && this->isNotEmpty())
+		{
+			u32 offset =  (_offset == 0xffffffff ? getSize() : _offset) - _string.getSize();
+			while ((offset = findFromRight(_string[0], offset)) != notFound)
+			{
+				for (u32 i = 0; i <= _string.getSize(); i++)
+				{
+					if (_string.mData[i] == 0)
+					{
+						return offset;
+					}
+					if (mData[i + offset] != _string.mData[i])
+					{
+						break;
+					}
+				}
 			}
 		}
 		return notFound;
@@ -102,6 +171,12 @@ namespace Mishka
 	FORCE_INLINE bool StringTemplate<T>::isEmpty() const
 	{
 		return getSize() == 0;
+	}
+
+	template<typename T>
+	FORCE_INLINE bool StringTemplate<T>::isNotEmpty() const
+	{
+		return getSize() != 0;
 	}
 
 	template<typename T>
@@ -200,20 +275,26 @@ namespace Mishka
 		static const StringTemplate<T> numberCharacters = "0123456789abcdef";
 		TYPE out = 0;
 		u32 index = 0, iterator = 0, size = getSize();
-		if (size > 0) {
-			if (mData[0] == '-' || mData[0] == '+') {
+		if (size > 0)
+		{
+			if (mData[0] == '-' || mData[0] == '+')
+			{
 				iterator++;
 			}
-			while (iterator < size) {
-				if ((index = numberCharacters.find(mData[iterator])) == notFound) {
+			while (iterator < size)
+			{
+				if ((index = numberCharacters.find(mData[iterator])) == notFound)
+				{
 					return 0;
 				} else {
 					out = out * _base + index;
 				}
 				iterator++;
 			}
-			if constexpr(std::is_signed<TYPE>::value) {
-				if (mData[0] == '-') {
+			if constexpr(std::is_signed<TYPE>::value)
+			{
+				if (mData[0] == '-')
+				{
 					out = -out;
 				}
 			}

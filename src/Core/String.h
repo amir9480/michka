@@ -51,10 +51,37 @@ namespace Mishka
 		 * if not found then StringBase<T>::notFound will return.
 		 *
 		 * \param _character
-		 * \return index of character
+		 * \param _offset
+		 * \return index of character. If not found StringTemplate<T>::notFound will return.
 		 */
-		template<typename T2>
-		u32 find(const T2& _character) const;
+		u32 find(const T& _character, const u32& _offset = 0) const;
+
+		/**
+		 * \brief Find a character from end to begining.
+		 *
+		 * \param _character
+		 * \param _offset
+		 * \return u32 index of character. If not found StringTemplate<T>::notFound will return.
+		 */
+		u32 findFromRight(const T& _character, const u32& _offset = 0xffffffff) const;
+
+		/**
+		 * \brief Find a string inside string.
+		 *
+		 * \param _string
+		 * \param _offset
+		 * \return u32 index of string. If not found StringTemplate<T>::notFound will return.
+		 */
+		u32 find(const StringTemplate<T>& _string, const u32& _offset = 0) const;
+
+		/**
+		 * \brief Find a string inside string from end to begining.
+		 *
+		 * \param _string
+		 * \param _offset
+		 * \return u32 index of character. If not found StringTemplate<T>::notFound will return.
+		 */
+		u32 findFromRight(const StringTemplate<T>& _string, const u32& _offset = 0xffffffff) const;
 
 		/**
 		 * \brief Get string length.
@@ -74,6 +101,11 @@ namespace Mishka
 		 * \brief Check string is empty.
 		 */
 		FORCE_INLINE bool isEmpty() const;
+
+		/**
+		 * \brief Check string is empty.
+		 */
+		FORCE_INLINE bool isNotEmpty() const;
 
 		/**
 		 * \brief Reverse string.
