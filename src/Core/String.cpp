@@ -1,5 +1,7 @@
 #include "String.h"
 #include "Helpers.h"
+#include <utility>
+#include <memory>
 
 namespace Mishka
 {
