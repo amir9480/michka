@@ -4,5 +4,6 @@
 #include "Defines.h"
 #include "Types.h"
 #include "String.h"
+#include "Vector.h"
 
 #endif // __CORE_H__

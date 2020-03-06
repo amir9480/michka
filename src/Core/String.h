@@ -2,6 +2,7 @@
 #define __STRING_H__
 
 #include "Defines.h"
+#include "Types.h"
 
 namespace Mishka
 {
@@ -12,6 +13,8 @@ namespace Mishka
 		typedef StringTemplate<char> String8;
 		typedef StringTemplate<wchar_t> String;
 		typedef StringTemplate<char32_t> String32;
+		typedef T* Iterator;
+		typedef const T* ConstIterator;
 
 
 	public:
@@ -32,9 +35,21 @@ namespace Mishka
 		FORCE_INLINE StringTemplate<T>& clear();
 
 		/**
+		 * \brief Iterator begin.
+		 */
+		Iterator begin();
+		ConstIterator begin() const;
+
+		/**
 		 * \brief Get string as C characters.
 		 */
 		const T* cstr() const;
+
+		/**
+		 * \brief Iterator end.
+		 */
+		Iterator end();
+		ConstIterator end() const;
 
 		/**
 		 * \brief Find a character in string.
@@ -52,7 +67,7 @@ namespace Mishka
 		 * \param _offset
 		 * \return u32 index of character. If not found StringTemplate<T>::notFound will return.
 		 */
-		u32 findLast(const T& _character, const u32& _offset = 0xffffffff) const;
+		u32 findLast(const T& _character, const u32& _offset = u32Info::max) const;
 
 		/**
 		 * \brief Find a sub string inside string.
@@ -70,7 +85,7 @@ namespace Mishka
 		 * \param _offset
 		 * \return u32 index of character. If not found StringTemplate<T>::notFound will return.
 		 */
-		u32 findLast(const StringTemplate<T>& _string, const u32& _offset = 0xffffffff) const;
+		u32 findLast(const StringTemplate<T>& _string, const u32& _offset = u32Info::max) const;
 
 		/**
 		 * \brief Create string from utf8 encoded string.
@@ -164,7 +179,7 @@ namespace Mishka
 		 * \param _size
 		 * \return
 		 */
-		StringTemplate<T>& remove(const u32& _start, const u32& _size = 0xffffffff);
+		StringTemplate<T>& remove(const u32& _start, const u32& _size = u32Info::max);
 
 		/**
 		 * \brief Reverse string.
@@ -181,7 +196,7 @@ namespace Mishka
 		 * \param _offset
 		 * \return Self
 		 */
-		StringTemplate<T>& replace(const StringTemplate<T>& _find, const StringTemplate<T>& _replace = StringTemplate<T>::empty, const u32& _start = 0, const u32& _end = 0xffffffff);
+		StringTemplate<T>& replace(const StringTemplate<T>& _find, const StringTemplate<T>& _replace = StringTemplate<T>::empty, const u32& _start = 0, const u32& _end = u32Info::max);
 
 		/**
 		 * \brief Resize string buffer.
@@ -219,7 +234,7 @@ namespace Mishka
 		 * \param _size
 		 * \return
 		 */
-		StringTemplate<T> subString(const u32& _start, const u32& _size = 0xffffffff) const;
+		StringTemplate<T> subString(const u32& _start, const u32& _size = u32Info::max) const;
 
 		/**
 		 * \brief Convert to lowercase.

@@ -7,7 +7,7 @@ namespace Mishka
 	const StringTemplate<T> StringTemplate<T>::empty;
 
 	template<typename T>
-	const u32 StringTemplate<T>::notFound = 0xffffffff;
+	const u32 StringTemplate<T>::notFound = u32Info::max;
 
 	template<typename T>
 	FORCE_INLINE StringTemplate<T>::StringTemplate()
@@ -63,6 +63,18 @@ namespace Mishka
 	}
 
 	template<typename T>
+	typename StringTemplate<T>::Iterator StringTemplate<T>::begin()
+	{
+		return mData;
+	}
+
+	template<typename T>
+	typename StringTemplate<T>::ConstIterator StringTemplate<T>::begin() const
+	{
+		return mData;
+	}
+
+	template<typename T>
 	const T* StringTemplate<T>::cstr() const
 	{
 		static const T emptyString[2] = { 0, 0 };
@@ -71,6 +83,18 @@ namespace Mishka
 			return mData;
 		}
 		return emptyString;
+	}
+
+	template<typename T>
+	typename StringTemplate<T>::Iterator StringTemplate<T>::end()
+	{
+		return mData + getSize();
+	}
+
+	template<typename T>
+	typename StringTemplate<T>::ConstIterator StringTemplate<T>::end() const
+	{
+		return mData + getSize();
 	}
 
 	template<typename T>
@@ -90,7 +114,7 @@ namespace Mishka
 	template<typename T>
 	u32 StringTemplate<T>::findLast(const T& _character, const u32& _offset) const
 	{
-		u32 offset =  _offset == 0xffffffff ? getSize() : _offset;
+		u32 offset =  _offset == u32Info::max ? getSize() : _offset;
 		u32 result = notFound;
 		if (mData)
 		{
@@ -135,7 +159,7 @@ namespace Mishka
 	{
 		if (_string.isNotEmpty() && this->isNotEmpty())
 		{
-			u32 offset =  (_offset == 0xffffffff ? getSize() : _offset) - _string.getSize();
+			u32 offset =  (_offset == u32Info::max ? getSize() : _offset) - _string.getSize();
 			while ((offset = findLast(_string[0], offset)) != notFound)
 			{
 				for (register u32 i = 0; i <= _string.getSize(); i++)

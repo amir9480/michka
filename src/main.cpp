@@ -4,56 +4,72 @@
 #include "Mishka.h"
 using namespace Mishka;
 
-template<typename T>
-void printType()
-{
-    std::wcout << "------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
-    std::wcout << Type<T>::size << " | " << Type<T>::name << " | " << Type<T>::typeName << " | " << Type<T>::min << " | " << Type<T>::max<< " | " << (Type<T>::isUnsigned ? "Unsigned" : "Signed") << " | " << (Type<T>::isClass ? "Class" : Type<T>::isEnum ? "Enum" : "Native") << " | " << Type<T>::rawName << " | " << Type<T>::typeName << " | " << Type<T>::hash << " | " << std::endl;
-}
 
-
-enum testEnum
+class Person
 {
-    a, b, c
+public:
+    Person(const std::string& _name)
+    {
+        name = _name;
+    }
+
+    Person(const Person& _other)
+    {
+        std::cout << "COPY!\n";
+        name = _other.name;
+    }
+
+    Person(Person&& _other)
+    {
+        std::cout << "Move!\n";
+        name = std::move(_other.name);
+    }
+
+    virtual std::string getName() const
+    {
+        return name;
+    }
+protected:
+    std::string name;
 };
+
 
 int main()
 {
     std::cout << "Welcome to engine!\n-------------------------------------\n\n";
+    Mishka::String m;
+    for (auto i : m)
+    {
+        std::cout << int (i) << std::endl;
+    }
 
+    // Vector<Person> a;
+    // a.resize(10);
+    // a.pushBack(Person("amir"));
+    // a.pushBack(Person("ali"));
+    // a.pushBack(Person("reza"));
+    // a.pushBack(Person("mohammad"));
+    // a.insert(0, Person("First"));
+    // a.insert(1, Person("Second"));
+    // a.insert(2, {Person("Hello"), Person("World")});
 
-    printType<short>();
-    printType<short int>();
-    printType<signed short>();
-    printType<signed short int>();
-    printType<unsigned short>();
-    printType<unsigned short int>();
-    printType<int>();
-    printType<signed>();
-    printType<signed int>();
-    printType<unsigned>();
-    printType<unsigned int>();
-    printType<long>();
-    printType<long int>();
-    printType<signed long>();
-    printType<signed long int>();
-    printType<unsigned long>();
-    printType<unsigned long int>();
-    printType<long long>();
-    printType<long long int>();
-    printType<signed long long>();
-    printType<signed long long int>();
-    printType<unsigned long long>();
-    printType<unsigned long long int>();
+    // a = {Person("A"), Person("B"), Person("C")};
 
-    printType<float>();
-    printType<double>();
-    printType<long double>();
-    printType<String>();
-    printType<testEnum>();
-    printType<char16_t>();
-    printType<char32_t>();
-    printType<wchar_t>();
+    // for (int i = 0; i < a.getSize(); i++)
+    // {
+    //     std::cout << a[i].getName() << std::endl;
+    // }
+    // std::cout << "\n\n\n";
+
+    // Vector<int> b;
+    // b.pushBack(1);
+    // b.pushBack(5);
+    // b.pushBack(9);
+    // for (int i = 0; i < b.getSize(); i++)
+    // {
+    //     std::cout << b[i] << std::endl;
+    // }
+
     system("PAUSE");
     return 0;
 }
