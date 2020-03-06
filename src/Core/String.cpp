@@ -187,5 +187,294 @@ namespace Mishka
 	{
 		return StringTemplate<char>(mData).toNumber<long double>();
 	}
+
+	template<>
+	StringTemplate<char> StringTemplate<char>::fromUtf8(const char* _string)
+	{
+		return StringTemplate<char>(_string);
+	}
+
+	template<>
+	StringTemplate<wchar_t> StringTemplate<wchar_t>::fromUtf8(const char* _string)
+	{
+		StringTemplate<wchar_t> out;
+		u32 strLength = StringTemplate<char>::stringLength(_string);
+		out.resize(strLength * 2);
+		u32 iterator = 0;
+		for (u32 i = 0; i < strLength; i++)
+		{
+			u32 character = utf8Decode(_string + iterator);
+			Utf16Character encodedCharacter = utf16Encode(character);
+			u32 encodedCharacterSize = (stringSize(encodedCharacter.character) + 1) * sizeof(wchar_t);
+			memcpy((void*)&out[i], (void*)encodedCharacter.character, encodedCharacterSize * sizeof(wchar_t));
+
+			if (character <= 0x7f)
+			{
+				iterator += 1;
+			}
+			else if (character <= 0x7ff)
+			{
+				iterator += 2;
+			}
+			else if (character <= 0xffff)
+			{
+				iterator += 3;
+			}
+			else if (character <= 0x1fffff)
+			{
+				iterator += 4;
+			}
+			else if (character <= 0x3ffffff)
+			{
+				iterator += 5;
+			}
+			else if (character <= 0x7fffffff)
+			{
+				iterator += 6;
+			}
+			if (character >= 0x10000)
+			{
+				i++;
+			}
+		}
+		return out;
+	}
+
+	template<>
+	StringTemplate<char32_t> StringTemplate<char32_t>::fromUtf8(const char* _string)
+	{
+		StringTemplate<char32_t> out;
+		u32 strLength = StringTemplate<char>::stringLength(_string);
+		out.resize(strLength);
+		u32 iterator = 0;
+		for (u32 i = 0; i < strLength; i++)
+		{
+			u32 character = utf8Decode(_string + iterator);
+			out[i] = character;
+
+			if (character <= 0x7f)
+			{
+				iterator += 1;
+			}
+			else if (character <= 0x7ff)
+			{
+				iterator += 2;
+			}
+			else if (character <= 0xffff)
+			{
+				iterator += 3;
+			}
+			else if (character <= 0x1fffff)
+			{
+				iterator += 4;
+			}
+			else if (character <= 0x3ffffff)
+			{
+				iterator += 5;
+			}
+			else if (character <= 0x7fffffff)
+			{
+				iterator += 6;
+			}
+		}
+		return out;
+	}
+
+	template<>
+	StringTemplate<char> StringTemplate<char>::fromUtf16(const wchar_t* _string)
+	{
+		return StringTemplate<wchar_t>(_string).toUtf8();
+	}
+
+	template<>
+	StringTemplate<wchar_t> StringTemplate<wchar_t>::fromUtf16(const wchar_t* _string)
+	{
+		return StringTemplate<wchar_t>(_string);
+	}
+
+	template<>
+	StringTemplate<char32_t> StringTemplate<char32_t>::fromUtf16(const wchar_t* _string)
+	{
+		StringTemplate<char32_t> out;
+		u32 strLength = StringTemplate<wchar_t>::stringLength(_string);
+		out.resize(strLength);
+		u32 iterator = 0;
+		for (u32 i = 0; i < strLength; i++)
+		{
+			u32 character = utf16Decode(_string + iterator);
+			out[i] = character;
+			out[i + 1] = 0;
+
+			if (character >= 0x10000)
+			{
+				iterator += 2;
+			}
+			else
+			{
+				iterator++;
+			}
+		}
+		return out;
+	}
+
+	template<>
+	StringTemplate<char> StringTemplate<char>::toUtf8()
+	{
+		return StringTemplate<char>(*this);
+	}
+
+	template<>
+	StringTemplate<char> StringTemplate<wchar_t>::toUtf8()
+	{
+		StringTemplate<char> out;
+		u32 thisLength = getLength();
+		out.resize(thisLength * 6);
+		u32 iterator = 0;
+		for (u32 i = 0; i < thisLength; i++)
+		{
+			u32 character = utf16Decode(mData + i);
+			Utf8Character encoedCharacter = utf8Encode(character);
+			u32 encoedCharacterSize = (StringTemplate<char>::stringSize(encoedCharacter.character) + 1) * sizeof(char);
+			memcpy(&out[iterator], encoedCharacter.character, encoedCharacterSize * sizeof(char));
+			iterator += encoedCharacterSize - 1;
+			if (character >= 0x10000)
+			{
+				i++;
+			}
+		}
+		return out;
+	}
+
+	template<>
+	StringTemplate<char> StringTemplate<char32_t>::toUtf8()
+	{
+		StringTemplate<char> out;
+		u32 thisLength = getLength();
+		out.resize(thisLength * 6);
+		u32 iterator = 0;
+		for (u32 i = 0; i < thisLength; i++)
+		{
+			u32 character = mData[i];
+			Utf8Character encoedCharacter = utf8Encode(character);
+			u32 encoedCharacterSize = (StringTemplate<char>::stringSize(encoedCharacter.character) + 1) * sizeof(char);
+			memcpy(&out[iterator], encoedCharacter.character, encoedCharacterSize * sizeof(char));
+			iterator += encoedCharacterSize - 1;
+		}
+		return out;
+	}
+
+	template<>
+	StringTemplate<wchar_t> StringTemplate<char>::toUtf16()
+	{
+		return StringTemplate<wchar_t>::fromUtf8(mData);
+	}
+
+	template<>
+	StringTemplate<wchar_t> StringTemplate<wchar_t>::toUtf16()
+	{
+		return StringTemplate<wchar_t>(*this);
+	}
+
+	template<>
+	StringTemplate<wchar_t> StringTemplate<char32_t>::toUtf16()
+	{
+		StringTemplate<wchar_t> out;
+		u32 stringLength = getLength();
+		out.resize(stringLength * 2);
+		u32 iterator = 0;
+		for (u32 i = 0; i < stringLength; i++)
+		{
+			u32 character = mData[i];
+			Utf16Character encodedCharacter = utf16Encode(character);
+			u32 encodedCharacterSize = StringTemplate<wchar_t>::stringSize(encodedCharacter.character);
+			memcpy((void*)&out[iterator], (void*)encodedCharacter.character, encodedCharacterSize * sizeof(wchar_t));
+			iterator += encodedCharacterSize;
+		}
+		return out;
+	}
+
+	template<>
+	StringTemplate<char32_t> StringTemplate<char>::toUtf32()
+	{
+		return StringTemplate<char32_t>::fromUtf8(mData);
+	}
+
+	template<>
+	StringTemplate<char32_t> StringTemplate<wchar_t>::toUtf32()
+	{
+		return StringTemplate<char32_t>::fromUtf16(mData);
+	}
+
+	template<>
+	StringTemplate<char32_t> StringTemplate<char32_t>::toUtf32()
+	{
+		return *this;
+	}
+
+	template<>
+	u32 StringTemplate<char>::stringLength(const char* _str)
+	{
+		u32 out = 0, iterator = 0;
+		u32 strSize = stringSize(_str);
+		while (iterator < strSize)
+		{
+			u32 character = utf8Decode(_str + iterator);
+
+			if (character <= 0x7f)
+			{
+				iterator += 1;
+			}
+			else if (character <= 0x7ff)
+			{
+				iterator += 2;
+			}
+			else if (character <= 0xffff)
+			{
+				iterator += 3;
+			}
+			else if (character <= 0x1fffff)
+			{
+				iterator += 4;
+			}
+			else if (character <= 0x3ffffff)
+			{
+				iterator += 5;
+			}
+			else if (character <= 0x7fffffff)
+			{
+				iterator += 6;
+			}
+			out++;
+		}
+		return out;
+	}
+
+	template<>
+	u32 StringTemplate<wchar_t>::stringLength(const wchar_t* _str)
+	{
+		u32 out = 0, iterator = 0;
+		u32 strSize = stringSize(_str);
+		while (iterator < strSize)
+		{
+			u32 character = utf16Decode(_str + iterator);
+
+			if (character < 0x10000)
+			{
+				iterator += 1;
+			}
+			else
+			{
+				iterator += 2;
+			}
+			out++;
+		}
+		return out;
+	}
+
+	template<>
+	u32 StringTemplate<char32_t>::stringLength(const char32_t* _str)
+	{
+		return stringSize(_str);
+	}
 }
 

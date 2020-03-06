@@ -5,18 +5,8 @@
 
 namespace Mishka
 {
-	/**
-	 * \brief Get size of string.
-	 *
-	 * \tparam T
-	 * \param _str string
-	 * \return string size
-	 */
 	template<typename T>
-	FORCE_INLINE u32 stringSize(const T* _str);
-
-	template<typename T>
-	class StringTemplate
+	class MISHKA_API StringTemplate
 	{
 	public:
 		typedef StringTemplate<char> String8;
@@ -48,7 +38,6 @@ namespace Mishka
 
 		/**
 		 * \brief Find a character in string.
-		 * if not found then StringBase<T>::notFound will return.
 		 *
 		 * \param _character
 		 * \param _offset
@@ -63,10 +52,10 @@ namespace Mishka
 		 * \param _offset
 		 * \return u32 index of character. If not found StringTemplate<T>::notFound will return.
 		 */
-		u32 findFromRight(const T& _character, const u32& _offset = 0xffffffff) const;
+		u32 findLast(const T& _character, const u32& _offset = 0xffffffff) const;
 
 		/**
-		 * \brief Find a string inside string.
+		 * \brief Find a sub string inside string.
 		 *
 		 * \param _string
 		 * \param _offset
@@ -75,20 +64,35 @@ namespace Mishka
 		u32 find(const StringTemplate<T>& _string, const u32& _offset = 0) const;
 
 		/**
-		 * \brief Find a string inside string from end to begining.
+		 * \brief Find a sub string inside string from end to begin.
 		 *
 		 * \param _string
 		 * \param _offset
 		 * \return u32 index of character. If not found StringTemplate<T>::notFound will return.
 		 */
-		u32 findFromRight(const StringTemplate<T>& _string, const u32& _offset = 0xffffffff) const;
+		u32 findLast(const StringTemplate<T>& _string, const u32& _offset = 0xffffffff) const;
 
 		/**
-		 * \brief Get string length.
+		 * \brief Create string from utf8 encoded string.
 		 *
-		 * \return size
+		 * \param _string
 		 */
-		FORCE_INLINE u32 getSize() const;
+		static StringTemplate<T> fromUtf8(const char* _string);
+
+		/**
+		 * \brief Create string from utf8 encoded string.
+		 *
+		 * \param _string
+		 */
+		static StringTemplate<T> fromUtf16(const wchar_t* _string);
+
+		/**
+		 * \brief Count of characters.
+		 *
+		 * \sa getSize
+		 * \return length
+		 */
+		FORCE_INLINE u32 getLength() const;
 
 		/**
 		 * \brief Get reversed copy of this string.
@@ -96,6 +100,23 @@ namespace Mishka
 		 * \return Reversed string
 		 */
 		FORCE_INLINE StringTemplate<T> getReversed() const;
+
+		/**
+		 * \brief Get size of string.
+		 *
+		 * \sa getLength
+		 * \return size
+		 */
+		FORCE_INLINE u32 getSize() const;
+
+		/**
+		 * \brief Insert a substring in middle of string.
+		 *
+		 * \param _string
+		 * \param _offset
+		 * \return Self
+		 */
+		String& insert(const StringTemplate<T>& _string, const u32& _offset = 0);
 
 		/**
 		 * \brief Check string is empty.
@@ -106,20 +127,6 @@ namespace Mishka
 		 * \brief Check string is empty.
 		 */
 		FORCE_INLINE bool isNotEmpty() const;
-
-		/**
-		 * \brief Reverse string.
-		 *
-		 * \return Self
-		 */
-		StringTemplate<T>& reverse();
-
-		/**
-		 * \brief Resize string buffer.
-		 *
-		 * \return Self
-		 */
-		StringTemplate<T>& resize(u32 _newSize);
 
 		/**
 		 * \brief Convert float number to string.
@@ -143,6 +150,85 @@ namespace Mishka
 		static StringTemplate<T> number(TYPE _number, const u8& _base = 10);
 
 		/**
+		 * \brief Prepend a string to this string.
+		 *
+		 * \param _other
+		 * \return Self
+		 */
+		FORCE_INLINE StringTemplate<T>& prepend(const StringTemplate<T>& _other);
+
+		/**
+		 * \brief Remove part of string for _size characters.
+		 *
+		 * \param _start
+		 * \param _size
+		 * \return
+		 */
+		StringTemplate<T>& remove(const u32& _start, const u32& _size = 0xffffffff);
+
+		/**
+		 * \brief Reverse string.
+		 *
+		 * \return Self
+		 */
+		StringTemplate<T>& reverse();
+
+		/**
+		 * \brief Find a sub string and replace it with another substring.
+		 *
+		 * \param _find
+		 * \param _replace
+		 * \param _offset
+		 * \return Self
+		 */
+		StringTemplate<T>& replace(const StringTemplate<T>& _find, const StringTemplate<T>& _replace = StringTemplate<T>::empty, const u32& _start = 0, const u32& _end = 0xffffffff);
+
+		/**
+		 * \brief Resize string buffer.
+		 *
+		 * \return Self
+		 */
+		StringTemplate<T>& resize(u32 _newSize);
+
+		/**
+		 * \brief Get size of string.
+		 *
+		 * \tparam T
+		 * \param _str string
+		 * \return string size
+		 *
+		 * \sa stringLength
+		 */
+		static u32 stringSize(const T* _str);
+
+		/**
+		 * \brief Get string characters count.
+		 *
+		 * \tparam T
+		 * \param _str string
+		 * \return string length
+		 *
+		 * \sa stringSize
+		 */
+		static u32 stringLength(const T* _str);
+
+		/**
+		 * \brief Get part of string.
+		 *
+		 * \param _start
+		 * \param _size
+		 * \return
+		 */
+		StringTemplate<T> subString(const u32& _start, const u32& _size = 0xffffffff) const;
+
+		/**
+		 * \brief Convert to lowercase.
+		 *
+		 * \return
+		 */
+		StringTemplate<T> toLower() const;
+
+		/**
 		 * \brief Convert string to number.
 		 *
 		 * \tparam TYPE
@@ -151,12 +237,45 @@ namespace Mishka
 		template<typename TYPE>
 		TYPE toNumber(const u32& _base = 10) const;
 
+		/**
+		 * \brief Convert to upper case.
+		 *
+		 * \return
+		 */
+		StringTemplate<T> toUpper() const;
+
+		/**
+		 * \brief Convert to utf8 encoded string.
+		 *
+		 * \return
+		 */
+		StringTemplate<char> toUtf8();
+
+		/**
+		 * \brief Convert to utf16 encoded string.
+		 *
+		 * \return
+		 */
+		StringTemplate<wchar_t> toUtf16();
+
+		/**
+		 * \brief Convert to utf32 encoded string.
+		 *
+		 * \return
+		 */
+		StringTemplate<char32_t> toUtf32();
+
 		template<typename T2>
 		StringTemplate<T>& operator = (const T2* _str);
 		FORCE_INLINE StringTemplate<T>& operator = (const StringTemplate<char>& _other);
 		FORCE_INLINE StringTemplate<T>& operator = (const StringTemplate<wchar_t>& _other);
 		FORCE_INLINE StringTemplate<T>& operator = (const StringTemplate<char32_t>& _other);
 		FORCE_INLINE StringTemplate<T>& operator = (StringTemplate<T>&& _other);
+
+		FORCE_INLINE StringTemplate<T> operator + (const StringTemplate<T>& _other) const;
+		FORCE_INLINE StringTemplate<T>& operator += (const StringTemplate<T>& _other);
+
+
 		template<typename T2>
 		bool operator == (const T2* _str) const;
 		template<typename T2>
@@ -179,13 +298,55 @@ namespace Mishka
 		 */
 		static const StringTemplate<T> empty;
 	private:
+		struct Utf8Character
+		{
+			char character[7];
+		};
+
+		struct Utf16Character
+		{
+			wchar_t character[3];
+		};
+
+		/**
+		 * \brief Encode a character to UTF8.
+		 *
+		 * \param _character
+		 */
+		FORCE_INLINE static Utf8Character utf8Encode(u32 _character);
+
+		/**
+		 * \brief Decode a UTF8 encoded character.
+		 *
+		 * \param _character
+		 */
+		FORCE_INLINE static u32 utf8Decode(const char* _character);
+
+		/**
+		 * \brief Encode a character to UTF16.
+		 *
+		 * \param _character
+		 */
+		FORCE_INLINE static Utf16Character utf16Encode(u32 _character);
+
+		/**
+		 * \brief Decode a UTF8 encoded character.
+		 *
+		 * \param _character
+		 */
+		FORCE_INLINE static u32 utf16Decode(const wchar_t* _character);
+	private:
 		T* mData = nullptr;
 	};
+
+	template<typename T, typename T2>
+	FORCE_INLINE StringTemplate<T2> operator + (const T* _first, const StringTemplate<T2>& _second);
 
 	typedef StringTemplate<char> String8;
 	typedef StringTemplate<wchar_t> String;
 	typedef StringTemplate<char32_t> String32;
 }
+
 
 #include "String.inl"
 
