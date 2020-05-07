@@ -1,19 +1,19 @@
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 #include "Core/Types.h"
 #include "Core/Helpers.h"
 #include <limits>
 #include <cstring>
 #include <type_traits>
 
-#define TYPE_NAME_TEST(TYPE, TYPENAME) ASSERT_TRUE(strcmp(Mishka::Type<TYPE>::name, TYPENAME) == 0)
-#define TYPE_MIN_TEST(TYPE) ASSERT_EQ(Mishka::Type<TYPE>::min, std::numeric_limits<TYPE>::min())
-#define TYPE_MAX_TEST(TYPE) ASSERT_EQ(Mishka::Type<TYPE>::max, std::numeric_limits<TYPE>::max())
-#define TYPE_IS_INTEGRAL(TYPE) ASSERT_EQ(Mishka::Type<TYPE>::isIntegral, std::is_integral<TYPE>::value)
-#define TYPE_IS_FLOAT(TYPE) ASSERT_EQ(Mishka::Type<TYPE>::isFloat, std::is_floating_point<TYPE>::value)
-#define TYPE_IS_SIGNED(TYPE) ASSERT_EQ(Mishka::Type<TYPE>::isSigned, std::is_signed<TYPE>::value)
-#define TYPE_IS_UNSIGNED(TYPE) ASSERT_EQ(Mishka::Type<TYPE>::isUnsigned, std::is_unsigned<TYPE>::value)
+#define TYPE_NAME_TEST(TYPE, TYPENAME) ASSERT_TRUE(strcmp(Michka::Type<TYPE>::name, TYPENAME) == 0)
+#define TYPE_MIN_TEST(TYPE) ASSERT_EQ(Michka::Type<TYPE>::min, std::numeric_limits<TYPE>::min())
+#define TYPE_MAX_TEST(TYPE) ASSERT_EQ(Michka::Type<TYPE>::max, std::numeric_limits<TYPE>::max())
+#define TYPE_IS_INTEGRAL(TYPE) ASSERT_EQ(Michka::Type<TYPE>::isIntegral, std::is_integral<TYPE>::value)
+#define TYPE_IS_FLOAT(TYPE) ASSERT_EQ(Michka::Type<TYPE>::isFloat, std::is_floating_point<TYPE>::value)
+#define TYPE_IS_SIGNED(TYPE) ASSERT_EQ(Michka::Type<TYPE>::isSigned, std::is_signed<TYPE>::value)
+#define TYPE_IS_UNSIGNED(TYPE) ASSERT_EQ(Michka::Type<TYPE>::isUnsigned, std::is_unsigned<TYPE>::value)
 
-#define TYPE_TEST(...) MISHKA_OVERLOADED_MACRO(_TYPE_TEST_, __VA_ARGS__)
+#define TYPE_TEST(...) MICHKA_OVERLOADED_MACRO(_TYPE_TEST_, __VA_ARGS__)
 
 #define __TYPE_TEST(TYPE) \
     TYPE_MIN_TEST(TYPE); \
@@ -31,9 +31,9 @@
     TYPE_NAME_TEST(TYPE, TYPENAME); \
     __TYPE_TEST(TYPE);
 
-class MishkaTestClass {};
-union MishkaTestUnion {};
-enum MishkaTestEnum {};
+class MichkaTestClass {};
+union MichkaTestUnion {};
+enum MichkaTestEnum {};
 
 TEST(TypesTest, TypesRangeTest)
 {
@@ -68,7 +68,7 @@ TEST(TypesTest, TypesRangeTest)
     TYPE_TEST(char32_t);
     TYPE_TEST(wchar_t);
 
-    ASSERT_TRUE(Mishka::Type<MishkaTestClass>::isClass);
-    ASSERT_TRUE(Mishka::Type<MishkaTestUnion>::isUnion);
-    ASSERT_TRUE(Mishka::Type<MishkaTestEnum>::isEnum);
+    ASSERT_TRUE(Michka::Type<MichkaTestClass>::isClass);
+    ASSERT_TRUE(Michka::Type<MichkaTestUnion>::isUnion);
+    ASSERT_TRUE(Michka::Type<MichkaTestEnum>::isEnum);
 }

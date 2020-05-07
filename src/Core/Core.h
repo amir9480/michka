@@ -3,6 +3,8 @@
 
 #include "Defines.h"
 #include "Types.h"
+#include "Memory.h"
+#include "Thread.h"
 #include "String.h"
 #include "Vector.h"
 

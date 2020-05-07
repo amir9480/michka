@@ -4,10 +4,10 @@
 #include "Defines.h"
 #include "Types.h"
 
-namespace Mishka
+namespace Michka
 {
 	template<typename T>
-	class MISHKA_API StringTemplate
+	class MICHKA_API StringTemplate
 	{
 	public:
 		typedef StringTemplate<char> String8;
@@ -361,7 +361,6 @@ namespace Mishka
 	typedef StringTemplate<wchar_t> String;
 	typedef StringTemplate<char32_t> String32;
 }
-
 
 #include "String.inl"
 

@@ -1,7 +1,7 @@
 #include "String.h"
 #include "Helpers.h"
 
-namespace Mishka
+namespace Michka
 {
 	template<typename T>
 	const StringTemplate<T> StringTemplate<T>::empty;
@@ -238,7 +238,7 @@ namespace Mishka
 	template<typename TYPE>
 	StringTemplate<T> StringTemplate<T>::number(TYPE _number, const u8& _base)
 	{
-		MISHKA_ASSERT(_base >= 2 && _base <= 16, "String::number(...): Base must be between 2 & 16.");
+		MICHKA_ASSERT(_base >= 2 && _base <= 16, "String::number(...): Base must be between 2 & 16.");
 		static const StringTemplate<T> numberCharacters = "0123456789abcdef";
 		StringTemplate<T> out;
 		out.resize((sizeof(TYPE) * 8) + 1);
@@ -410,7 +410,7 @@ namespace Mishka
 	template<typename TYPE>
 	TYPE StringTemplate<T>::toNumber(const u32& _base)const
 	{
-		MISHKA_ASSERT(_base >= 2 && _base <= 16, "String::number(...): Base must be between 2 & 16.");
+		MICHKA_ASSERT(_base >= 2 && _base <= 16, "String::number(...): Base must be between 2 & 16.");
 		static const StringTemplate<T> numberCharacters = "0123456789abcdef";
 		TYPE out = 0;
 		u32 index = 0, iterator = 0, size = getSize();

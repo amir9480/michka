@@ -1,6 +1,7 @@
 #include "Vector.h"
+#include "Memory.h"
 
-namespace Mishka
+namespace Michka
 {
     template<typename T>
     FORCE_INLINE Vector<T>::Vector()
@@ -42,12 +43,8 @@ namespace Mishka
                 {
                     mData[i].~T();
                 }
-                operator delete[](mData);
             }
-            else
-            {
-                delete[] mData;
-            }
+            Memory.free(mData);
             mData = nullptr;
         }
         mSize = 0;
@@ -97,7 +94,9 @@ namespace Mishka
         memcpy((void*)(mData + _index + 1), (void*)(mData + _index), (mSize - _index) * sizeof(T));
         if constexpr (Type<T>::isClass)
         {
+#           undef new
             new(mData + _index) T(std::move(_item));
+#           define new MICHKA_NEW
         }
         else
         {
@@ -131,7 +130,9 @@ namespace Mishka
         {
             for (u32 i = 0; i < _size; i++)
             {
+#               undef new
                 new(mData + _index + i) T(_items[i]);
+#               define new MICHKA_NEW
             }
         }
         else
@@ -174,28 +175,14 @@ namespace Mishka
             T* old = mData;
             u32 oldSize = mSize;
             u32 newCapacity = ((_newCapacity / capacityStep) + (_newCapacity % capacityStep > 0 ? 1 : 0)) * capacityStep;
-            if constexpr (Type<T>::isClass)
-            {
-                mData = static_cast<T*>(operator new[](newCapacity * sizeof(T)));
-            }
-            else
-            {
-                mData = new T[newCapacity];
-            }
+            mData = static_cast<T*>(Memory.malloc(newCapacity * sizeof(T)));
             mCapacity = _newCapacity;
             mSize = min(mSize, mCapacity);
             if (old)
             {
                 u32 oldSizeLimited = min(oldSize, mSize);
                 memcpy((void*)mData, (void*)(old), oldSizeLimited * sizeof(T));
-                if constexpr (Type<T>::isClass)
-                {
-                    operator delete[](old);
-                }
-                else
-                {
-                    delete[] old;
-                }
+                Memory.free(old);
             }
         }
         return *this;

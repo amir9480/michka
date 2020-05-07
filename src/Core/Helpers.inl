@@ -1,6 +1,6 @@
 #include "Helpers.h"
 
-namespace Mishka
+namespace Michka
 {
     template<typename T>
     FORCE_INLINE void swap(T& _a, T& _b)

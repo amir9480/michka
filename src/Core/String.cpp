@@ -3,7 +3,7 @@
 #include <utility>
 #include <memory>
 
-namespace Mishka
+namespace Michka
 {
 	template<>
 	template<>

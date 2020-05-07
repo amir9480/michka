@@ -5,7 +5,7 @@
 #include <float.h>
 #include <typeinfo>
 
-namespace Mishka
+namespace Michka
 {
     /**
      * \brief Set of type properties.

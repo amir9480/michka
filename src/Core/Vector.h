@@ -4,10 +4,10 @@
 #include "Defines.h"
 #include <initializer_list>
 
-namespace Mishka
+namespace Michka
 {
     template<typename T>
-    class MISHKA_API Vector
+    class MICHKA_API Vector
     {
     public:
         FORCE_INLINE Vector();

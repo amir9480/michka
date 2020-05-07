@@ -1,4 +1,4 @@
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 #include <utility>
 #include "Core/String.h"
 #include "Core/Helpers.h"
@@ -7,7 +7,7 @@
 class Person
 {
 public:
-	Person(const Mishka::String& _name)
+	Person(const Michka::String& _name)
 	{
 		mName = _name;
 	}
@@ -22,12 +22,12 @@ public:
 		mName = std::move(_other.mName);
 	}
 
-	Mishka::String getName() const
+	Michka::String getName() const
 	{
 		return mName;
 	}
 
-	bool operator == (const Mishka::String& _name)
+	bool operator == (const Michka::String& _name)
 	{
 		return mName == _name;
 	}
@@ -37,13 +37,13 @@ public:
 		return mName == _other.mName;
 	}
 protected:
-	Mishka::String mName;
+	Michka::String mName;
 };
 
 TEST(VectorTest, VectorSetTest)
 {
-	Mishka::Vector<int> a = {1};
-	Mishka::Vector<Person> b = {Person("A")};
+	Michka::Vector<int> a = {1};
+	Michka::Vector<Person> b = {Person("A")};
 	ASSERT_EQ(a.getSize(), 1);
 	ASSERT_EQ(b.getSize(), 1);
 	ASSERT_TRUE(a[0] == 1);
@@ -60,8 +60,8 @@ TEST(VectorTest, VectorSetTest)
 	ASSERT_TRUE(a[2] == 30);
 	ASSERT_TRUE(b[2] == Person("CC"));
 
-	a = Mishka::Vector<int>({1, 2, 3});
-	b = Mishka::Vector<Person>({Person("A"), Person("B"), Person("C")});
+	a = Michka::Vector<int>({1, 2, 3});
+	b = Michka::Vector<Person>({Person("A"), Person("B"), Person("C")});
 	ASSERT_EQ(a.getSize(), 3);
 	ASSERT_EQ(b.getSize(), 3);
 	ASSERT_TRUE(a[0] == 1);
@@ -74,8 +74,8 @@ TEST(VectorTest, VectorSetTest)
 
 TEST(VectorTest, VectorPushTest)
 {
-	Mishka::Vector<int> a = {1};
-	Mishka::Vector<Person> b = {Person("A")};
+	Michka::Vector<int> a = {1};
+	Michka::Vector<Person> b = {Person("A")};
 
 	a.pushBack(2);
 	b.pushBack(Person("B"));
@@ -101,8 +101,8 @@ TEST(VectorTest, VectorPushTest)
 
 TEST(VectorTest, VectorInsertTest)
 {
-	Mishka::Vector<int> a = {1, 2};
-	Mishka::Vector<Person> b = {Person("A"), Person("B")};
+	Michka::Vector<int> a = {1, 2};
+	Michka::Vector<Person> b = {Person("A"), Person("B")};
 
 	a.insert(0, 10);
 	a.insert(2, {20, 200});
