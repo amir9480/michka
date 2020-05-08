@@ -1,8 +1,6 @@
 #ifndef __HELPERS_H__
 #define __HELPERS_H__
 
-#include "Defines.h"
-
 #define MICHKA_ASSERT(_CONDITION, _MESSAGE)
 
 #define MICHKA_GLUE(_X, _Y) _X _Y
@@ -18,17 +16,17 @@
 
 
 #define MICHKA_SINGLETON_CLASS(CLASSNAME)\
-CLASSNAME(const CLASSNAME&) = delete;\
-CLASSNAME(CLASSNAME&&) = delete;\
-CLASSNAME& operator=(const CLASSNAME&) = delete;\
-CLASSNAME& operator=(CLASSNAME&&) = delete;\
-public:\
-static CLASSNAME& instance()\
-{\
-    static CLASSNAME o;\
-    return o;\
-}\
-private:
+	CLASSNAME(const CLASSNAME&) = delete;\
+	CLASSNAME(CLASSNAME&&) = delete;\
+	CLASSNAME& operator=(const CLASSNAME&) = delete;\
+	CLASSNAME& operator=(CLASSNAME&&) = delete;\
+	public:\
+	static CLASSNAME& instance()\
+	{\
+		static CLASSNAME o;\
+		return o;\
+	}\
+	private:
 
 namespace Michka
 {

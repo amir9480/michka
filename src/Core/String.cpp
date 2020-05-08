@@ -202,13 +202,14 @@ namespace Michka
 		StringTemplate<wchar_t> out;
 		u32 strLength = StringTemplate<char>::stringLength(_string);
 		out.resize(strLength * 2);
-		u32 iterator = 0;
+		u32 iterator = 0, encodedUtf16Iterator = 0;
 		for (u32 i = 0; i < strLength; i++)
 		{
 			u32 character = utf8Decode(_string + iterator);
 			Utf16Character encodedCharacter = utf16Encode(character);
-			u32 encodedCharacterSize = (stringSize(encodedCharacter.character) + 1) * sizeof(wchar_t);
-			memcpy((void*)&out[i], (void*)encodedCharacter.character, encodedCharacterSize * sizeof(wchar_t));
+			u32 encodedCharacterSize = stringSize(encodedCharacter.character);
+			memcpy((void*)&out[encodedUtf16Iterator], (void*)encodedCharacter.character, encodedCharacterSize * sizeof(wchar_t));
+			encodedUtf16Iterator += encodedCharacterSize;
 
 			if (character <= 0x7f)
 			{
@@ -233,10 +234,6 @@ namespace Michka
 			else if (character <= 0x7fffffff)
 			{
 				iterator += 6;
-			}
-			if (character >= 0x10000)
-			{
-				i++;
 			}
 		}
 		return out;
@@ -331,17 +328,21 @@ namespace Michka
 		StringTemplate<char> out;
 		u32 thisLength = getLength();
 		out.resize(thisLength * 6);
-		u32 iterator = 0;
+		u32 iterator = 0, encodedUtf8Iterator = 0;
 		for (u32 i = 0; i < thisLength; i++)
 		{
-			u32 character = utf16Decode(mData + i);
+			u32 character = utf16Decode(mData + iterator);
 			Utf8Character encoedCharacter = utf8Encode(character);
-			u32 encoedCharacterSize = (StringTemplate<char>::stringSize(encoedCharacter.character) + 1) * sizeof(char);
-			memcpy(&out[iterator], encoedCharacter.character, encoedCharacterSize * sizeof(char));
-			iterator += encoedCharacterSize - 1;
+			u32 encoedCharacterSize = StringTemplate<char>::stringSize(encoedCharacter.character);
+			memcpy(&out[encodedUtf8Iterator], encoedCharacter.character, encoedCharacterSize);
+			encodedUtf8Iterator += encoedCharacterSize;
 			if (character >= 0x10000)
 			{
-				i++;
+				iterator+=2;
+			}
+			else
+			{
+				iterator++;
 			}
 		}
 		return out;
@@ -358,9 +359,9 @@ namespace Michka
 		{
 			u32 character = mData[i];
 			Utf8Character encoedCharacter = utf8Encode(character);
-			u32 encoedCharacterSize = (StringTemplate<char>::stringSize(encoedCharacter.character) + 1) * sizeof(char);
-			memcpy(&out[iterator], encoedCharacter.character, encoedCharacterSize * sizeof(char));
-			iterator += encoedCharacterSize - 1;
+			u32 encoedCharacterSize = StringTemplate<char>::stringSize(encoedCharacter.character);
+			memcpy(&out[iterator], encoedCharacter.character, encoedCharacterSize);
+			iterator += encoedCharacterSize;
 		}
 		return out;
 	}

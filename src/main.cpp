@@ -116,6 +116,7 @@ int main()
     // {
     //     std::cout << b[i] << std::endl;
     // }
+    std::cout << MICHKA_VERSION << std::endl;
     system("PAUSE");
     return 0;
 }

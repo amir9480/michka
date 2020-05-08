@@ -4,12 +4,6 @@
 #include "Defines.h"
 #include "Helpers.h"
 
-#if MICHKA_DEBUG
-#   define MICHKA_NEW new(__FILE__, __LINE__)
-#else
-#   define MICHKA_NEW new
-#endif // MICHKA_DEBUG
-
 namespace Michka
 {
     class MICHKA_API MemoryManager
@@ -36,8 +30,6 @@ void operator delete[] (void* _ptr);
 void operator delete[] (void* _ptr, const char* _filename, u32 _line);
 
 #endif // MICHKA_DEBUG
-
-#define new MICHKA_NEW
 
 #include "Memory.inl"
 

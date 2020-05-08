@@ -19,34 +19,114 @@ TEST(StringTest, StringSizeTest)
 
 TEST(StringTest, CreateStringTest)
 {
-	Michka::String test8 = "TEST CHAR";
-	ASSERT_TRUE(test8 == "TEST CHAR");
-	test8 = L"TEST WCHAR";
-	ASSERT_TRUE(test8 == "TEST WCHAR");
-	test8 = U"TEST CHAR32_T";
-	ASSERT_TRUE(test8 == "TEST CHAR32_T");
+	{
+		Michka::String test8 = "TEST CHAR";
+		ASSERT_TRUE(test8 == "TEST CHAR");
+		test8 = L"TEST WCHAR";
+		ASSERT_TRUE(test8 == "TEST WCHAR");
+		test8 = U"TEST CHAR32_T";
+		ASSERT_TRUE(test8 == "TEST CHAR32_T");
 
-	Michka::String test16 = "TEST CHAR";
-	ASSERT_TRUE(test16 == L"TEST CHAR");
-	test16 = L"TEST WCHAR";
-	ASSERT_TRUE(test16 == L"TEST WCHAR");
-	test16 = U"TEST CHAR32_T";
-	ASSERT_TRUE(test16 == L"TEST CHAR32_T");
+		Michka::String test16 = "TEST CHAR";
+		ASSERT_TRUE(test16 == L"TEST CHAR");
+		test16 = L"TEST WCHAR";
+		ASSERT_TRUE(test16 == L"TEST WCHAR");
+		test16 = U"TEST CHAR32_T";
+		ASSERT_TRUE(test16 == L"TEST CHAR32_T");
 
-	Michka::String test32 = "TEST CHAR";
-	ASSERT_TRUE(test32 == U"TEST CHAR");
-	test32 = L"TEST WCHAR";
-	ASSERT_TRUE(test32 == U"TEST WCHAR");
-	test32 = U"TEST CHAR32_T";
-	ASSERT_TRUE(test32 == U"TEST CHAR32_T");
+		Michka::String test32 = "TEST CHAR";
+		ASSERT_TRUE(test32 == U"TEST CHAR");
+		test32 = L"TEST WCHAR";
+		ASSERT_TRUE(test32 == U"TEST WCHAR");
+		test32 = U"TEST CHAR32_T";
+		ASSERT_TRUE(test32 == U"TEST CHAR32_T");
+	}
+
+	{
+		Michka::String8 test8 = "TEST CHAR";
+		ASSERT_TRUE(test8 == "TEST CHAR");
+		test8 = L"TEST WCHAR";
+		ASSERT_TRUE(test8 == "TEST WCHAR");
+		test8 = U"TEST CHAR32_T";
+		ASSERT_TRUE(test8 == "TEST CHAR32_T");
+
+		Michka::String8 test16 = "TEST CHAR";
+		ASSERT_TRUE(test16 == L"TEST CHAR");
+		test16 = L"TEST WCHAR";
+		ASSERT_TRUE(test16 == L"TEST WCHAR");
+		test16 = U"TEST CHAR32_T";
+		ASSERT_TRUE(test16 == L"TEST CHAR32_T");
+
+		Michka::String8 test32 = "TEST CHAR";
+		ASSERT_TRUE(test32 == U"TEST CHAR");
+		test32 = L"TEST WCHAR";
+		ASSERT_TRUE(test32 == U"TEST WCHAR");
+		test32 = U"TEST CHAR32_T";
+		ASSERT_TRUE(test32 == U"TEST CHAR32_T");
+	}
+
+	{
+		Michka::String32 test8 = "TEST CHAR";
+		ASSERT_TRUE(test8 == "TEST CHAR");
+		test8 = L"TEST WCHAR";
+		ASSERT_TRUE(test8 == "TEST WCHAR");
+		test8 = U"TEST CHAR32_T";
+		ASSERT_TRUE(test8 == "TEST CHAR32_T");
+
+		Michka::String32 test16 = "TEST CHAR";
+		ASSERT_TRUE(test16 == L"TEST CHAR");
+		test16 = L"TEST WCHAR";
+		ASSERT_TRUE(test16 == L"TEST WCHAR");
+		test16 = U"TEST CHAR32_T";
+		ASSERT_TRUE(test16 == L"TEST CHAR32_T");
+
+		Michka::String32 test32 = "TEST CHAR";
+		ASSERT_TRUE(test32 == U"TEST CHAR");
+		test32 = L"TEST WCHAR";
+		ASSERT_TRUE(test32 == U"TEST WCHAR");
+		test32 = U"TEST CHAR32_T";
+		ASSERT_TRUE(test32 == U"TEST CHAR32_T");
+	}
 }
 
 TEST(StringTest, StringEqualTest)
 {
-	Michka::String test = L"MICHKA TEST";
-	ASSERT_TRUE(test == L"MICHKA TEST");
-	ASSERT_FALSE(test == L"MICHKA_TEST");
-	ASSERT_FALSE(test == L"MICHKA TEST DIFFRENT SIZE");
+	{
+		Michka::String test = L"MICHKA TEST";
+		ASSERT_TRUE(test == L"MICHKA TEST");
+		ASSERT_FALSE(test == "MICHKA_TEST");
+		ASSERT_FALSE(test == L"MICHKA_TEST");
+		ASSERT_FALSE(test == U"MICHKA_TEST");
+		ASSERT_FALSE(test == "MICHKA TEST DIFFRENT SIZE");
+		ASSERT_FALSE(test == L"MICHKA TEST DIFFRENT SIZE");
+		ASSERT_FALSE(test == U"MICHKA TEST DIFFRENT SIZE");
+		test = "";
+		ASSERT_TRUE(test == L"");
+	}
+	{
+		Michka::String8 test = "MICHKA TEST";
+		ASSERT_TRUE(test == "MICHKA TEST");
+		ASSERT_FALSE(test == "MICHKA_TEST");
+		ASSERT_FALSE(test == L"MICHKA_TEST");
+		ASSERT_FALSE(test == U"MICHKA_TEST");
+		ASSERT_FALSE(test == "MICHKA TEST DIFFRENT SIZE");
+		ASSERT_FALSE(test == L"MICHKA TEST DIFFRENT SIZE");
+		ASSERT_FALSE(test == U"MICHKA TEST DIFFRENT SIZE");
+		test = "";
+		ASSERT_TRUE(test == "");
+	}
+	{
+		Michka::String32 test = U"MICHKA TEST";
+		ASSERT_TRUE(test == U"MICHKA TEST");
+		ASSERT_FALSE(test == "MICHKA_TEST");
+		ASSERT_FALSE(test == L"MICHKA_TEST");
+		ASSERT_FALSE(test == U"MICHKA_TEST");
+		ASSERT_FALSE(test == "MICHKA TEST DIFFRENT SIZE");
+		ASSERT_FALSE(test == L"MICHKA TEST DIFFRENT SIZE");
+		ASSERT_FALSE(test == U"MICHKA TEST DIFFRENT SIZE");
+		test = "";
+		ASSERT_TRUE(test == U"");
+	}
 }
 
 TEST(StringTest, StringNotEqualTest)
@@ -59,15 +139,31 @@ TEST(StringTest, StringNotEqualTest)
 
 TEST(StringTest, StringAssignToAnotherStringTest)
 {
-	Michka::String test = L"MICHKA TEST";
-	Michka::String test2 = test;
-	ASSERT_TRUE(test == L"MICHKA TEST");
-	test2 = L"Hello World";
-	ASSERT_TRUE(test == L"MICHKA TEST");
-	ASSERT_TRUE(test2 == L"Hello World");
-	test = test2;
-	ASSERT_TRUE(test == L"Hello World");
-	ASSERT_TRUE(test2 == L"Hello World");
+	{
+		Michka::String test = L"MICHKA TEST";
+		Michka::String test2 = test;
+		ASSERT_TRUE(test == L"MICHKA TEST");
+		test2 = L"Hello World";
+		ASSERT_TRUE(test == L"MICHKA TEST");
+		ASSERT_TRUE(test2 == L"Hello World");
+		test = test2;
+		ASSERT_TRUE(test == L"Hello World");
+		ASSERT_TRUE(test2 == L"Hello World");
+		test = (wchar_t*)nullptr;
+		ASSERT_TRUE(test == L"");
+	}
+	{
+		Michka::String8 test = (char*)nullptr;
+		ASSERT_TRUE(test == L"");
+		test = (wchar_t*)nullptr;
+		ASSERT_TRUE(test == L"");
+	}
+	{
+		Michka::String32 test = (char32_t*)nullptr;
+		ASSERT_TRUE(test == U"");
+		test = (wchar_t*)nullptr;
+		ASSERT_TRUE(test == L"");
+	}
 }
 
 TEST(StringTest, StringMoveConstructorTest)
@@ -109,40 +205,77 @@ TEST(StringTest, NumberToStringTest)
 	ASSERT_TRUE(Michka::String::number(float(-3.14f)) == L"-3.14");
 	ASSERT_TRUE(Michka::String::number(double(-3.14159265)) == L"-3.14159");
 	ASSERT_TRUE(Michka::String::number(long double(-3.14159265359)) == L"-3.14159");
+
+	ASSERT_TRUE(Michka::String8::number(123) == "123");
+	ASSERT_TRUE(Michka::String32::number(123) == U"123");
 }
 
 TEST(StringTest, StringToNumberTest)
 {
-	Michka::String test = L"12345";
-	ASSERT_EQ(test.toNumber<i16>(), 12345);
-	ASSERT_EQ(test.toNumber<u16>(), 12345);
-	ASSERT_EQ(test.toNumber<i32>(), 12345);
-	ASSERT_EQ(test.toNumber<u32>(), 12345);
-	ASSERT_EQ(test.toNumber<i64>(), 12345);
-	ASSERT_EQ(test.toNumber<u64>(), 12345);
-	test = L"+12345";
-	ASSERT_EQ(test.toNumber<i16>(), 12345);
-	ASSERT_EQ(test.toNumber<u16>(), 12345);
-	ASSERT_EQ(test.toNumber<i32>(), 12345);
-	ASSERT_EQ(test.toNumber<u32>(), 12345);
-	ASSERT_EQ(test.toNumber<i64>(), 12345);
-	ASSERT_EQ(test.toNumber<u64>(), 12345);
+	{
+		Michka::String test = L"12345";
+		ASSERT_EQ(test.toNumber<i16>(), 12345);
+		ASSERT_EQ(test.toNumber<u16>(), 12345);
+		ASSERT_EQ(test.toNumber<i32>(), 12345);
+		ASSERT_EQ(test.toNumber<u32>(), 12345);
+		ASSERT_EQ(test.toNumber<i64>(), 12345);
+		ASSERT_EQ(test.toNumber<u64>(), 12345);
+		test = L"+12345";
+		ASSERT_EQ(test.toNumber<i16>(), 12345);
+		ASSERT_EQ(test.toNumber<u16>(), 12345);
+		ASSERT_EQ(test.toNumber<i32>(), 12345);
+		ASSERT_EQ(test.toNumber<u32>(), 12345);
+		ASSERT_EQ(test.toNumber<i64>(), 12345);
+		ASSERT_EQ(test.toNumber<u64>(), 12345);
 
-	test = L"-12345";
-	ASSERT_EQ(test.toNumber<i16>(), -12345);
-	ASSERT_EQ(test.toNumber<i32>(), -12345);
-	ASSERT_EQ(test.toNumber<i64>(), -12345);
+		test = L"-12345";
+		ASSERT_EQ(test.toNumber<i16>(), -12345);
+		ASSERT_EQ(test.toNumber<i32>(), -12345);
+		ASSERT_EQ(test.toNumber<i64>(), -12345);
 
-	test = Michka::String::empty;
-	ASSERT_EQ(test.toNumber<i64>(), 0);
+		test = Michka::String::empty;
+		ASSERT_EQ(test.toNumber<i64>(), 0);
 
-	test = "NON NUMBER";
-	ASSERT_EQ(test.toNumber<i64>(), 0);
+		test = "NON NUMBER";
+		ASSERT_EQ(test.toNumber<i64>(), 0);
 
-	test = "3.1415";
-	ASSERT_EQ(test.toNumber<float>(), float(3.1415f));
-	ASSERT_EQ(test.toNumber<double>(), double(3.1415));
-	ASSERT_EQ(test.toNumber<long double>(), long double(3.1415));
+		test = "3.1415";
+		ASSERT_EQ(test.toNumber<float>(), float(3.1415f));
+		ASSERT_EQ(test.toNumber<double>(), double(3.1415));
+		ASSERT_EQ(test.toNumber<long double>(), long double(3.1415));
+	}
+	{
+		Michka::String8 test = "12345";
+		ASSERT_EQ(test.toNumber<i16>(), 12345);
+		test = "+12345";
+		ASSERT_EQ(test.toNumber<i16>(), 12345);
+		test = "-12345";
+		ASSERT_EQ(test.toNumber<i16>(), -12345);
+		test = Michka::String8::empty;
+		ASSERT_EQ(test.toNumber<i64>(), 0);
+		test = "NON NUMBER";
+		ASSERT_EQ(test.toNumber<i64>(), 0);
+		test = "3.1415";
+		ASSERT_EQ(test.toNumber<float>(), float(3.1415f));
+		ASSERT_EQ(test.toNumber<double>(), double(3.1415));
+		ASSERT_EQ(test.toNumber<long double>(), long double(3.1415));
+	}
+	{
+		Michka::String32 test = U"12345";
+		ASSERT_EQ(test.toNumber<i16>(), 12345);
+		test = U"+12345";
+		ASSERT_EQ(test.toNumber<i16>(), 12345);
+		test = U"-12345";
+		ASSERT_EQ(test.toNumber<i16>(), -12345);
+		test = Michka::String32::empty;
+		ASSERT_EQ(test.toNumber<i64>(), 0);
+		test = U"NON NUMBER";
+		ASSERT_EQ(test.toNumber<i64>(), 0);
+		test = U"3.1415";
+		ASSERT_EQ(test.toNumber<float>(), float(3.1415f));
+		ASSERT_EQ(test.toNumber<double>(), double(3.1415));
+		ASSERT_EQ(test.toNumber<long double>(), long double(3.1415));
+	}
 }
 
 TEST(StringTest, StringReverseTest)
@@ -169,7 +302,7 @@ TEST(StringTest, StringGetCharacterTest)
 	ASSERT_EQ(test[10], L'd');
 }
 
-TEST(StringTest, StringFindCharacterTest)
+TEST(StringTest, StringFindTest)
 {
 	Michka::String test = L"Hello World";
 	Michka::String test2 = "Hello World Hello";
@@ -198,6 +331,7 @@ TEST(StringTest, StringFindCharacterTest)
 	ASSERT_EQ(test.find(L"World"), 6);
 	ASSERT_EQ(test.find(L"World", 6), 6);
 	ASSERT_EQ(test.find(L"RandomStuff"), Michka::String::notFound);
+	ASSERT_EQ(test.find(L"Hello Random"), Michka::String::notFound);
 	ASSERT_EQ(Michka::String().find(L"RandomStuff"), Michka::String::notFound);
 	ASSERT_EQ(Michka::String().find(Michka::String()), Michka::String::notFound);
 	ASSERT_EQ(test.find(Michka::String()), Michka::String::notFound);
@@ -210,6 +344,7 @@ TEST(StringTest, StringFindCharacterTest)
 	ASSERT_EQ(test2.findLast(L"World", 12), 6);
 	ASSERT_EQ(test2.findLast(L"World", 11), 6);
 	ASSERT_EQ(test2.findLast(L"RandomStuff"), Michka::String::notFound);
+	ASSERT_EQ(test2.findLast(L"Hello Random"), Michka::String::notFound);
 	ASSERT_EQ(Michka::String().findLast(L"RandomStuff"), Michka::String::notFound);
 	ASSERT_EQ(Michka::String().findLast(Michka::String()), Michka::String::notFound);
 	ASSERT_EQ(test2.findLast(Michka::String()), Michka::String::notFound);
@@ -254,16 +389,32 @@ TEST(StringTest, StringSubStringTest)
 	ASSERT_EQ(test.subString(2), "llo World");
 	ASSERT_EQ(test.subString(0, 5), "Hello");
 	ASSERT_EQ(test.subString(6, 5), "World");
+	ASSERT_EQ(test.subString(0, 0), "");
+	test = "";
+	ASSERT_EQ(test.subString(0, 1), "");
 }
 
 TEST(StringTest, StringUnicodeTest)
 {
-	Michka::String8 test8;
-	Michka::String test16;
-	Michka::String32 test32;
-	Michka::String test = Michka::String::fromUtf8("سلام دنیا - 🌍");
-	test8 = test.toUtf8();
-	ASSERT_TRUE(strcmp(test8.cstr(), "سلام دنیا - 🌍") == 0);
+	const char* teststr = "سلام دنیا - 🌍 Hello World 你好，世界 - æ - © - ſ - ◌󠇓";
+	{
+		Michka::String test = Michka::String::fromUtf8(teststr);
+		Michka::String8 t = test.toUtf8();
+		ASSERT_TRUE(strcmp(test.toUtf8().cstr(), teststr) == 0);
+		ASSERT_EQ(Michka::String::fromUtf8("").getLength(), 0);
+	}
+	{
+		Michka::String8 test8 = Michka::String8::fromUtf8(teststr);
+		ASSERT_TRUE(strcmp(test8.cstr(), teststr) == 0);
+		ASSERT_EQ(Michka::String8::fromUtf8("").getLength(), 0);
+	}
+	{
+		Michka::String32 test32 = Michka::String32::fromUtf8(teststr);
+		ASSERT_TRUE(strcmp(test32.toUtf8().cstr(), teststr) == 0);
+		ASSERT_EQ(Michka::String32::fromUtf8("").getLength(), 0);
+	}
+	{
+	}
 }
 
 TEST(StringTest, StringInsertTest)

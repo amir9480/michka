@@ -24,7 +24,7 @@ namespace Michka
 	template<typename T>
 	FORCE_INLINE StringTemplate<T>::StringTemplate(const StringTemplate<char>& _other)
 	{
-		*this = _other.mData;
+		*this = _other.cstr();
 	}
 
 	template<typename T>
@@ -100,9 +100,10 @@ namespace Michka
 	template<typename T>
 	FORCE_INLINE u32 StringTemplate<T>::find(const T& _character, const u32& _offset) const
 	{
+		u32 thisSize = getSize();
 		if (mData)
 		{
-			T* pointer = static_cast<T*>(memchr((void*)(mData + _offset), T(_character), (getSize() - _offset) * sizeof(T)));
+			T* pointer = static_cast<T*>(memchr((void*)(mData + _offset), T(_character), (thisSize - _offset) * sizeof(T)));
 			if (pointer)
 			{
 				return u32(pointer - mData);
@@ -114,11 +115,15 @@ namespace Michka
 	template<typename T>
 	u32 StringTemplate<T>::findLast(const T& _character, const u32& _offset) const
 	{
-		u32 offset =  _offset == u32Info::max ? getSize() : _offset;
+		u32 thisSize = getSize();
+		u32 offset =  _offset == u32Info::max ? thisSize : _offset;
+		if (offset == 0) {
+			return notFound;
+		}
 		u32 result = notFound;
 		if (mData)
 		{
-			while (T* pointer = (T*)memchr((void*)(mData + (result != notFound ? result + 1 : 0)), T(_character), getSize() * sizeof(T)))
+			while (T* pointer = (T*)memchr((void*)(mData + (result != notFound ? result + 1 : 0)), T(_character), thisSize * sizeof(T)))
 			{
 				if (u32(pointer - mData) > offset)
 				{
@@ -136,7 +141,8 @@ namespace Michka
 		if (_string.isNotEmpty() && this->isNotEmpty())
 		{
 			u32 offset = _offset;
-			while ((offset = find(_string[0], offset)) != notFound && getSize() - offset >= _string.getSize())
+			u32 thisSize = getSize();
+			while ((offset = find(_string[0], offset)) != notFound && thisSize - offset >= _string.getSize())
 			{
 				for (register u32 i = 0; i <= _string.getSize(); i++)
 				{
@@ -160,7 +166,8 @@ namespace Michka
 		if (_string.isNotEmpty() && this->isNotEmpty())
 		{
 			u32 offset =  (_offset == u32Info::max ? getSize() : _offset) - _string.getSize();
-			while ((offset = findLast(_string[0], offset)) != notFound)
+			u32 thisSize = getSize();
+			while ((offset = findLast(_string[0], offset)) != notFound && thisSize - offset >= _string.getSize())
 			{
 				for (register u32 i = 0; i <= _string.getSize(); i++)
 				{
@@ -614,11 +621,7 @@ namespace Michka
 	{
 		Utf8Character out;
 		out.character[0] = '\0';
-		if (_character == 0)
-		{
-			out.character[0] = '\0';
-		}
-		else if (_character <= 0x7f)
+		if (_character <= 0x7f)
 		{
 			out.character[0] = _character;
 			out.character[1] = '\0';
@@ -706,7 +709,7 @@ namespace Michka
 			out = (_input[0] & (~0xE0)) << 6;
 			out += (_input[1] & (~0xC0));
 		}
-		else if ((_input[0] & 0xC0) == 0xB0)
+		else if ((_input[0] & 0xC0) == 0x80)
 		{
 			out = (_input[0] & (~0xC0));
 		}
@@ -723,9 +726,7 @@ namespace Michka
 	{
 	    Utf16Character out;
 		out.character[0] = L'\0';
-		if (_character == 0)
-			out.character[0] = L'\0';
-		else if ((_character <= 0xD7FF) || (_character >= 0xE000 && _character <= 0xFFFF))
+		if (_character < 0x10000)
 		{
 			out.character[0] = _character;
 			out.character[1] = L'\0';
@@ -734,7 +735,7 @@ namespace Michka
 		{
 			_character = _character - 0x10000;
 			out.character[0] = 0xD800 | (_character >> 10);
-			out.character[1] = 0xDC00 | (_character & 0x3FF);
+			out.character[1] = 0xDC00 | (_character & 0x03FF);
 			out.character[2] = L'\0';
 		}
 		return out;

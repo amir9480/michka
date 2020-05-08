@@ -1,4 +1,5 @@
 #include "Helpers.h"
+#include "Defines.h"
 
 namespace Michka
 {
