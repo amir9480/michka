@@ -44,6 +44,7 @@ TEST(VectorTest, VectorSetTest)
 {
 	Michka::Vector<int> a = {1};
 	Michka::Vector<Person> b = {Person("A")};
+	Michka::Vector<int> c;
 	ASSERT_EQ(a.getSize(), 1);
 	ASSERT_EQ(b.getSize(), 1);
 	ASSERT_TRUE(a[0] == 1);
@@ -70,6 +71,13 @@ TEST(VectorTest, VectorSetTest)
 	ASSERT_TRUE(b[1] == Person("B"));
 	ASSERT_TRUE(a[2] == 3);
 	ASSERT_TRUE(b[2] == Person("C"));
+
+	c = a;
+	ASSERT_EQ(c.getSize(), 3);
+	ASSERT_TRUE(c[0] == 1);
+	ASSERT_TRUE(c[1] == 2);
+	ASSERT_TRUE(c[2] == 3);
+
 }
 
 TEST(VectorTest, VectorPushTest)
@@ -125,4 +133,42 @@ TEST(VectorTest, VectorInsertTest)
 	ASSERT_TRUE(b[4] == Person("B"));
 	ASSERT_TRUE(a[5] == 30);
 	ASSERT_TRUE(b[5] == Person("CC"));
+
+	for (u32 i=0; i < 100; i++)
+	{
+		a.pushBack(i);
+	}
+	for (u32 i=0; i < 100; i++)
+	{
+		a.pushBack(2 * i);
+	}
+	ASSERT_EQ(a.getSize(), 206);
+
+	Michka::Vector<int> c;
+	c.insert(0, a);
+	ASSERT_EQ(c.getSize(), 206);
+	ASSERT_TRUE(c[0] == 10);
+	ASSERT_TRUE(c[1] == 1);
+	ASSERT_TRUE(c[2] == 20);
+}
+
+TEST(VectorTest, VectorResizeTest)
+{
+	Michka::Vector<int> a = {1, 2};
+	ASSERT_EQ(a.getSize(), 2);
+	ASSERT_EQ(a.getCapacity(), 8);
+	a.resize(16);
+	ASSERT_EQ(a.getSize(), 2);
+	ASSERT_EQ(a.getCapacity(), 16);
+	ASSERT_EQ(a[0], 1);
+	ASSERT_EQ(a[1], 2);
+}
+
+TEST(VectorTest, ConstantVectorTest)
+{
+	const Michka::Vector<int> a = {1, 2};
+	ASSERT_EQ(a.getSize(), 2);
+	ASSERT_EQ(a.getCapacity(), 8);
+	ASSERT_EQ(a[0], 1);
+	ASSERT_EQ(a[1], 2);
 }

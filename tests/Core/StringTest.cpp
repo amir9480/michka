@@ -306,6 +306,7 @@ TEST(StringTest, StringFindTest)
 {
 	Michka::String test = L"Hello World";
 	Michka::String test2 = "Hello World Hello";
+
 	ASSERT_EQ(test.find(L'H'), 0);
 	ASSERT_EQ(test.find(L'e'), 1);
 	ASSERT_EQ(test.find(L'l'), 2);
@@ -332,6 +333,7 @@ TEST(StringTest, StringFindTest)
 	ASSERT_EQ(test.find(L"World", 6), 6);
 	ASSERT_EQ(test.find(L"RandomStuff"), Michka::String::notFound);
 	ASSERT_EQ(test.find(L"Hello Random"), Michka::String::notFound);
+	ASSERT_EQ(test.find(L"Helloo"), Michka::String::notFound);
 	ASSERT_EQ(Michka::String().find(L"RandomStuff"), Michka::String::notFound);
 	ASSERT_EQ(Michka::String().find(Michka::String()), Michka::String::notFound);
 	ASSERT_EQ(test.find(Michka::String()), Michka::String::notFound);
@@ -344,6 +346,7 @@ TEST(StringTest, StringFindTest)
 	ASSERT_EQ(test2.findLast(L"World", 12), 6);
 	ASSERT_EQ(test2.findLast(L"World", 11), 6);
 	ASSERT_EQ(test2.findLast(L"RandomStuff"), Michka::String::notFound);
+	ASSERT_EQ(test2.findLast(L"Helloo"), Michka::String::notFound);
 	ASSERT_EQ(test2.findLast(L"Hello Random"), Michka::String::notFound);
 	ASSERT_EQ(Michka::String().findLast(L"RandomStuff"), Michka::String::notFound);
 	ASSERT_EQ(Michka::String().findLast(Michka::String()), Michka::String::notFound);
@@ -397,23 +400,56 @@ TEST(StringTest, StringSubStringTest)
 TEST(StringTest, StringUnicodeTest)
 {
 	const char* teststr = "سلام دنیا - 🌍 Hello World 你好，世界 - æ - © - ſ - ◌󠇓";
+	const wchar_t* teststr16 = L"\u0633\u0644\u0627\u0645 \u062F\u0646\u06CC\u0627 - \U0001f30d Hello World \u4F60\u597D\uFF0C\u4E16\u754C - \u00E6 - \u00A9 - \u017F - \u25CC\U000e01d3";
+
+	// UTF 8
 	{
 		Michka::String test = Michka::String::fromUtf8(teststr);
-		Michka::String8 t = test.toUtf8();
 		ASSERT_TRUE(strcmp(test.toUtf8().cstr(), teststr) == 0);
+		ASSERT_TRUE(wcscmp(test.toUtf16().cstr(), teststr16) == 0);
 		ASSERT_EQ(Michka::String::fromUtf8("").getLength(), 0);
 	}
 	{
 		Michka::String8 test8 = Michka::String8::fromUtf8(teststr);
 		ASSERT_TRUE(strcmp(test8.cstr(), teststr) == 0);
+		ASSERT_TRUE(wcscmp(test8.toUtf16().cstr(), teststr16) == 0);
 		ASSERT_EQ(Michka::String8::fromUtf8("").getLength(), 0);
 	}
 	{
 		Michka::String32 test32 = Michka::String32::fromUtf8(teststr);
 		ASSERT_TRUE(strcmp(test32.toUtf8().cstr(), teststr) == 0);
+		ASSERT_TRUE(wcscmp(test32.toUtf16().cstr(), teststr16) == 0);
 		ASSERT_EQ(Michka::String32::fromUtf8("").getLength(), 0);
 	}
+
+	// UTF 16
 	{
+		Michka::String test = Michka::String::fromUtf16(teststr16);
+		ASSERT_TRUE(strcmp(test.toUtf8().cstr(), teststr) == 0);
+		ASSERT_TRUE(wcscmp(test.toUtf16().cstr(), teststr16) == 0);
+		ASSERT_EQ(Michka::String::fromUtf16(L"").getLength(), 0);
+	}
+	{
+		Michka::String8 test8 = Michka::String8::fromUtf16(teststr16);
+		ASSERT_TRUE(strcmp(test8.cstr(), teststr) == 0);
+		ASSERT_TRUE(wcscmp(test8.toUtf16().cstr(), teststr16) == 0);
+		ASSERT_EQ(Michka::String8::fromUtf16(L"").getLength(), 0);
+	}
+	{
+		Michka::String32 test32 = Michka::String32::fromUtf16(teststr16);
+		ASSERT_TRUE(strcmp(test32.toUtf8().cstr(), teststr) == 0);
+		ASSERT_TRUE(wcscmp(test32.toUtf16().cstr(), teststr16) == 0);
+		ASSERT_EQ(Michka::String32::fromUtf16(L"").getLength(), 0);
+	}
+
+	// No Convert Test
+	{
+		Michka::String test = teststr16;
+		ASSERT_TRUE(wcscmp(test.toUtf16().cstr(), teststr16) == 0);
+	}
+	{
+		Michka::String8 test8 = teststr;
+		ASSERT_TRUE(strcmp(test8.toUtf8().cstr(), teststr) == 0);
 	}
 }
 

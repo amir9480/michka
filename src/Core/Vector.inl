@@ -67,7 +67,7 @@ namespace Michka
     template<typename T>
     Vector<T>& Vector<T>::insert(const u32& _index, const T& _item)
     {
-        if (mSize + 1 > mCapacity)
+        if (mSize + 1 >= mCapacity)
         {
             resize(mCapacity + capacityStep);
         }
@@ -87,7 +87,7 @@ namespace Michka
     template<typename T>
     Vector<T>& Vector<T>::insert(const u32& _index, T&& _item)
     {
-        if (mSize + 1 > mCapacity)
+        if (mSize + 1 >= mCapacity)
         {
             resize(mCapacity + capacityStep);
         }
@@ -121,9 +121,9 @@ namespace Michka
     template<typename T>
     Vector<T>& Vector<T>::insert(const u32& _index, const T* _items, const u32& _size)
     {
-        if (mSize + _size > mCapacity)
+        if (mSize + _size >= mCapacity)
         {
-            resize(mCapacity + capacityStep);
+            resize(mCapacity + max(capacityStep, _size));
         }
         memcpy((void*)(mData + _index + _size), (void*)(mData + _index), (mSize - _index) * sizeof(T));
         if constexpr (Type<T>::isClass)
@@ -181,7 +181,7 @@ namespace Michka
             if (old)
             {
                 u32 oldSizeLimited = min(oldSize, mSize);
-                memcpy((void*)mData, (void*)(old), oldSizeLimited * sizeof(T));
+                memcpy((void*)mData, (void*)old, oldSizeLimited * sizeof(T));
                 Memory.free(old);
             }
         }

@@ -152,6 +152,7 @@ namespace Michka
 					}
 					if (mData[i + offset] != _string.mData[i])
 					{
+						offset++;
 						break;
 					}
 				}
