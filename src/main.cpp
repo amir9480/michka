@@ -46,39 +46,37 @@ protected:
 	Michka::String mName;
 };
 
-void sayHello()
+void sayHello(int i)
 {
-    // std::cout << "Very long started (" << ThreadBase::id() << ")" << std::endl;
-    // for (int i = 0; i < 300; i++) {
-    //     Sleep(10);
-    // }
-    // std::cout << "Very long ended (" << ThreadBase::id() << ")" << std::endl;
+    printf("Very long started %d (%llu)\n", i, ThreadBase::id());
+    for (int i = 0; i < 300; i++) {
+        Sleep(10);
+    }
+    printf("Very long ended %d (%llu)\n", i, ThreadBase::id());
 }
 
 int main()
 {
-    // typedef void * (*THREADFUNCPTR)(void *);
-    // std::cout << "Welcome to engine!\n-------------------------------------\n\n";
+    std::cout << "Welcome to engine!\n-------------------------------------\n\n";
     // std::cout << Thread<>::id() << std::endl;
-    // Person a("amir");
-    // pthread_t t;
-    // pthread_create(&t, NULL, (THREADFUNCPTR)&Person::runSomethingStatic, &a);
-    // Sleep(500);
-    // pthread_cancel(t);
-    // pthread_kill(t, 0);
 
-    // Vector<Thread<void()>> a;
+    Vector<Thread<void(int)>> a;
 
-    // for (int i = 0; i < 5; i++)
-    // {
-    //     a.pushBack(Thread<void()>(sayHello));
-    //     a[i].start();
-    // }
+    for (int i = 0; i < 5; i++)
+    {
+        a.pushBack(Thread<void(int)>(sayHello));
+        a[i].start(i);
+    }
 
-    // for (int i = 0; i < 10; i++)
-    // {
-    //     a[i].join();
-    // }
+    for (int i = 0; i < 10; i++)
+    {
+        a[i].join();
+    }
+
+    for (int i = 0; i < 10; i++)
+    {
+        a[i].join();
+    }
 
     // std::chrono::steady_clock::time_point begin, end;
     // begin = std::chrono::steady_clock::now();
@@ -116,8 +114,6 @@ int main()
     // {
     //     std::cout << b[i] << std::endl;
     // }
-    Michka::String8 test = "سلام";
-    std::cout << test.getSize() << " - " << test.getLength() << std::endl;
     system("PAUSE");
     return 0;
 }
