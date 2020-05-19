@@ -172,18 +172,13 @@ namespace Michka
     {
         if (_newCapacity != mCapacity)
         {
-            T* old = mData;
-            u32 oldSize = mSize;
-            u32 newCapacity = ((_newCapacity / capacityStep) + (_newCapacity % capacityStep > 0 ? 1 : 0)) * capacityStep;
-            mData = static_cast<T*>(Memory.malloc(newCapacity * sizeof(T)));
-            mCapacity = _newCapacity;
-            mSize = min(mSize, mCapacity);
-            if (old)
-            {
-                u32 oldSizeLimited = min(oldSize, mSize);
-                memcpy((void*)mData, (void*)old, oldSizeLimited * sizeof(T));
-                Memory.free(old);
+            mCapacity = ((_newCapacity / capacityStep) + (_newCapacity % capacityStep > 0 ? 1 : 0)) * capacityStep;
+            if (mData) {
+                mData = static_cast<T*>(Memory.realloc(mData, mCapacity * sizeof(T)));
+            } else {
+                mData = static_cast<T*>(Memory.malloc(mCapacity * sizeof(T)));
             }
+            mSize = min(mSize, mCapacity);
         }
         return *this;
     }

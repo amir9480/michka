@@ -31,7 +31,7 @@
 namespace Michka
 {
 	/**
-	 * \brief Swap two variable value.
+	 * @brief Swap two variable value.
 	 */
 	template<typename T>
 	FORCE_INLINE void swap(T& _a, T& _b);

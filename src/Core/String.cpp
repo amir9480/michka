@@ -317,6 +317,24 @@ namespace Michka
 	}
 
 	template<>
+	StringTemplate<char> StringTemplate<char>::fromUtf32(const char32_t* _string)
+	{
+		return StringTemplate<char32_t>(_string).toUtf8();
+	}
+
+	template<>
+	StringTemplate<wchar_t> StringTemplate<wchar_t>::fromUtf32(const char32_t* _string)
+	{
+		return StringTemplate<char32_t>(_string).toUtf16();
+	}
+
+	template<>
+	StringTemplate<char32_t> StringTemplate<char32_t>::fromUtf32(const char32_t* _string)
+	{
+		return StringTemplate<char32_t>(_string);
+	}
+
+	template<>
 	StringTemplate<char> StringTemplate<char>::toUtf8()
 	{
 		return StringTemplate<char>(*this);

@@ -13,6 +13,7 @@ namespace Michka
         FORCE_INLINE ~MemoryManager();
     public:
         FORCE_INLINE void* malloc(size_t _size);
+        FORCE_INLINE void* realloc(void* _ptr, size_t _size);
         FORCE_INLINE void free(void* _ptr);
     };
 

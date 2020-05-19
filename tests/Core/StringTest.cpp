@@ -399,8 +399,9 @@ TEST(StringTest, StringSubStringTest)
 
 TEST(StringTest, StringUnicodeTest)
 {
-	const char* teststr = "سلام دنیا - 🌍 Hello World 你好，世界 - æ - © - ſ - ◌󠇓";
-	const wchar_t* teststr16 = L"\u0633\u0644\u0627\u0645 \u062F\u0646\u06CC\u0627 - \U0001f30d Hello World \u4F60\u597D\uFF0C\u4E16\u754C - \u00E6 - \u00A9 - \u017F - \u25CC\U000e01d3";
+	const char* teststr = "سلام دنیا - 🌍 Hello World 你好，世界 - æ - © - ſ - ◌󠇓 - × - ~";
+	const wchar_t* teststr16 = L"\u0633\u0644\u0627\u0645 \u062F\u0646\u06CC\u0627 - \U0001f30d Hello World \u4F60\u597D\uFF0C\u4E16\u754C - \u00E6 - \u00A9 - \u017F - \u25CC\U000e01d3 - \u00D7 - ~";
+	const char32_t* teststr32 = U"\u0633\u0644\u0627\u0645 \u062F\u0646\u06CC\u0627 - \U0001f30d Hello World \u4F60\u597D\uFF0C\u4E16\u754C - \u00E6 - \u00A9 - \u017F - \u25CC\U000e01d3 - \u00D7 - ~";
 
 	// UTF 8
 	{
@@ -442,6 +443,26 @@ TEST(StringTest, StringUnicodeTest)
 		ASSERT_EQ(Michka::String32::fromUtf16(L"").getLength(), 0);
 	}
 
+	// UTF 32
+	{
+		Michka::String test = Michka::String::fromUtf32(teststr32);
+		ASSERT_TRUE(strcmp(test.toUtf8().cstr(), teststr) == 0);
+		ASSERT_TRUE(memcmp(test.toUtf32().cstr(), teststr32, test.toUtf32().getSize() * sizeof(char32_t)) == 0);
+		ASSERT_EQ(Michka::String::fromUtf32(U"").getLength(), 0);
+	}
+	{
+		Michka::String8 test8 = Michka::String8::fromUtf32(teststr32);
+		ASSERT_TRUE(strcmp(test8.cstr(), teststr) == 0);
+		ASSERT_TRUE(memcmp(test8.toUtf32().cstr(), teststr32, test8.toUtf32().getSize() * sizeof(char32_t)) == 0);
+		ASSERT_EQ(Michka::String8::fromUtf32(U"").getLength(), 0);
+	}
+	{
+		Michka::String32 test32 = Michka::String32::fromUtf32(teststr32);
+		ASSERT_TRUE(strcmp(test32.toUtf8().cstr(), teststr) == 0);
+		ASSERT_TRUE(memcmp(test32.toUtf32().cstr(), teststr32, test32.toUtf32().getSize() * sizeof(char32_t)) == 0);
+		ASSERT_EQ(Michka::String32::fromUtf32(U"").getLength(), 0);
+	}
+
 	// No Convert Test
 	{
 		Michka::String test = teststr16;
@@ -450,6 +471,10 @@ TEST(StringTest, StringUnicodeTest)
 	{
 		Michka::String8 test8 = teststr;
 		ASSERT_TRUE(strcmp(test8.toUtf8().cstr(), teststr) == 0);
+	}
+	{
+		Michka::String32 test = teststr32;
+		ASSERT_TRUE(memcmp((void*)test.toUtf32().cstr(), (void*)teststr32, test.getSize() * sizeof(char32_t)) == 0);
 	}
 }
 

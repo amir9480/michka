@@ -710,10 +710,6 @@ namespace Michka
 			out = (_input[0] & (~0xE0)) << 6;
 			out += (_input[1] & (~0xC0));
 		}
-		else if ((_input[0] & 0xC0) == 0x80)
-		{
-			out = (_input[0] & (~0xC0));
-		}
 		else
 		{
 			out = _input[0];

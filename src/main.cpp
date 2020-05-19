@@ -116,7 +116,8 @@ int main()
     // {
     //     std::cout << b[i] << std::endl;
     // }
-    std::cout << MICHKA_VERSION << std::endl;
+    Michka::String8 test = "سلام";
+    std::cout << test.getSize() << " - " << test.getLength() << std::endl;
     system("PAUSE");
     return 0;
 }

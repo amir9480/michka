@@ -8,80 +8,80 @@
 namespace Michka
 {
     /**
-     * \brief Set of type properties.
+     * @brief Set of type properties.
      *
-     * \tparam T
+     * @tparam T
      */
     template<typename T>
     struct TypeBase
     {
         /**
-         * \brief Sizeof type
+         * @brief Sizeof type
          */
         static inline const u32 size = sizeof(T);
 
         /**
-         * \brief Name of type if was native. "Unknown" for custom types like classes and enums.
+         * @brief Name of type if was native. "Unknown" for custom types like classes and enums.
          */
         static inline const char* name = "Unknown";
 
         /**
-         * \brief Type id name.
+         * @brief Type id name.
          */
         static inline const char* typeName = typeid(T).name();
 
         /**
-         * \brief Type raw name.
+         * @brief Type raw name.
          */
         static inline const char* rawName = typeid(T).raw_name();
 
         /**
-         * \brief Type id hash.
+         * @brief Type id hash.
          */
         static inline const u64 hash = typeid(T).hash_code();
 
         /**
-         * \brief Minimum possilbe value for numeric types.
+         * @brief Minimum possilbe value for numeric types.
          */
         static inline const u32 min = 0;
 
         /**
-         * \brief Maximum possilbe value for numeric types.
+         * @brief Maximum possilbe value for numeric types.
          */
         static inline const u32 max = 0;
 
         /**
-         * \brief Is type signed for numeric types.
+         * @brief Is type signed for numeric types.
          */
         static inline const bool isSigned = false;
 
         /**
-         * \brief Is type unsigned for numeric types.
+         * @brief Is type unsigned for numeric types.
          */
         static inline const bool isUnsigned = false;
 
         /**
-         * \brief Is type integral for numeric types.
+         * @brief Is type integral for numeric types.
          */
         static inline const bool isIntegral = false;
 
         /**
-         * \brief Is type real for numeric types.
+         * @brief Is type real for numeric types.
          */
         static inline const bool isFloat = false;
 
         /**
-         * \brief Is type a custom class.
+         * @brief Is type a custom class.
          */
         static inline const bool isClass = __is_class(T);
 
         /**
-         * \brief Is type a custom union.
+         * @brief Is type a custom union.
          */
         static inline const bool isUnion = __is_union(T);
 
         /**
-         * \brief Is type a custom enum.
+         * @brief Is type a custom enum.
          */
         static inline const bool isEnum = __is_enum(T);
     };

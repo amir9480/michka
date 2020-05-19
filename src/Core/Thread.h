@@ -14,21 +14,21 @@
 //         virtual ~ThreadBase();
 
 //         /**
-//          * \brief
+//          * @brief
 //          *
-//          * \return id
+//          * @return id
 //          */
 //         FORCE_INLINE static u64 id();
 
 //         /**
-//          * \brief Wait for milliseconds.
+//          * @brief Wait for milliseconds.
 //          *
-//          * \param _milliseconds
+//          * @param _milliseconds
 //          */
 //         FORCE_INLINE static void sleep(u32 _milliseconds);
 
 //         /**
-//          * \brief Join to thread and wait until it finishes.
+//          * @brief Join to thread and wait until it finishes.
 //          */
 //         FORCE_INLINE void join();
 
@@ -50,10 +50,10 @@
 //         Thread(Thread<ReturnType(ArgumentTypes...)>&& _other);
 
 //         /**
-//          * \brief Call function in thread.
+//          * @brief Call function in thread.
 //          *
-//          * \param _arguments
-//          * \return false if did not started successfully.
+//          * @param _arguments
+//          * @return false if did not started successfully.
 //          */
 //         bool start(ArgumentTypes... _arguments);
 
