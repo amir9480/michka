@@ -41,12 +41,16 @@ typedef unsigned short int     u16;
 typedef unsigned int           u32;
 typedef unsigned long long int u64;
 
-/* --------------------- Custom new and delete Operators -------------------- */
+/* --------------------- Custom new and delete operator s -------------------- */
 
 #if MICHKA_DEBUG
 #   define MICHKA_NEW new(__FILE__, __LINE__)
 #else
 #   define MICHKA_NEW new
 #endif // MICHKA_DEBUG
+
+#define new MICHKA_NEW
+
+#include "Memory.h"
 
 #endif // __DEFINES_H__

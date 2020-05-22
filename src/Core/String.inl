@@ -463,7 +463,7 @@ namespace Michka
 
 	template<typename T>
 	template<typename T2>
-	StringTemplate<T>& StringTemplate<T>::operator=(const T2* _str)
+	StringTemplate<T>& StringTemplate<T>::operator = (const T2* _str)
 	{
 		if (_str)
 		{
@@ -471,7 +471,7 @@ namespace Michka
 			if (size >= getSize())
 			{
 				clear();
-				mData = new T[size];
+				mData = new T[size + 1];
 			}
 			for (register u32 i = 0; i < size; i++)
 			{
@@ -486,28 +486,28 @@ namespace Michka
 	}
 
 	template<typename T>
-	FORCE_INLINE StringTemplate<T>& StringTemplate<T>::operator=(const StringTemplate<char>& _other)
+	FORCE_INLINE StringTemplate<T>& StringTemplate<T>::operator = (const StringTemplate<char>& _other)
 	{
 		*this = _other.mData;
 		return *this;
 	}
 
 	template<typename T>
-	FORCE_INLINE StringTemplate<T>& StringTemplate<T>::operator=(const StringTemplate<wchar_t>& _other)
+	FORCE_INLINE StringTemplate<T>& StringTemplate<T>::operator = (const StringTemplate<wchar_t>& _other)
 	{
 		*this = _other.mData;
 		return *this;
 	}
 
 	template<typename T>
-	FORCE_INLINE StringTemplate<T>& StringTemplate<T>::operator=(const StringTemplate<char32_t>& _other)
+	FORCE_INLINE StringTemplate<T>& StringTemplate<T>::operator = (const StringTemplate<char32_t>& _other)
 	{
 		*this = _other.mData;
 		return *this;
 	}
 
 	template<typename T>
-	FORCE_INLINE StringTemplate<T>& StringTemplate<T>::operator=(StringTemplate<T>&& _other)
+	FORCE_INLINE StringTemplate<T>& StringTemplate<T>::operator = (StringTemplate<T>&& _other)
 	{
 		clear();
 		mData = _other.mData;
@@ -539,7 +539,7 @@ namespace Michka
 
 	template<typename T>
 	template<typename T2>
-	bool StringTemplate<T>::operator==(const T2* _str) const
+	bool StringTemplate<T>::operator == (const T2* _str) const
 	{
 		u32 thisSize = StringTemplate<T>::stringSize(mData);
 		u32 otherSize = StringTemplate<T2>::stringSize(_str);
@@ -563,33 +563,33 @@ namespace Michka
 
 	template<typename T>
 	template<typename T2>
-	FORCE_INLINE bool StringTemplate<T>::operator!=(const T2* _str) const
+	FORCE_INLINE bool StringTemplate<T>::operator != (const T2* _str) const
 	{
 		return !((*this) == _str);
 	}
 
 	template<typename T>
 	template<typename T2>
-	FORCE_INLINE bool StringTemplate<T>::operator==(const StringTemplate<T2>& _str) const
+	FORCE_INLINE bool StringTemplate<T>::operator == (const StringTemplate<T2>& _str) const
 	{
 		return *this == _str.mData;
 	}
 
 	template<typename T>
 	template<typename T2>
-	FORCE_INLINE bool StringTemplate<T>::operator!=(const StringTemplate<T2>& _str) const
+	FORCE_INLINE bool StringTemplate<T>::operator != (const StringTemplate<T2>& _str) const
 	{
 		return !(*this == _str.mData);
 	}
 
 	template<typename T>
-	FORCE_INLINE T& StringTemplate<T>::operator[](const u32& _index)
+	FORCE_INLINE T& StringTemplate<T>::operator [](const u32& _index)
 	{
 		return mData[_index];
 	}
 
 	template<typename T>
-	FORCE_INLINE T StringTemplate<T>::operator[](const u32& _index) const
+	FORCE_INLINE T StringTemplate<T>::operator [](const u32& _index) const
 	{
 		return mData[_index];
 	}
@@ -770,27 +770,27 @@ namespace Michka
 
 	template<>
 	template<>
-	bool StringTemplate<char>::operator==(const char* _str) const;
+	bool StringTemplate<char>::operator == (const char* _str) const;
 
 	template<>
 	template<>
-	bool StringTemplate<wchar_t>::operator==(const wchar_t* _str) const;
+	bool StringTemplate<wchar_t>::operator == (const wchar_t* _str) const;
 
 	template<>
 	template<>
-	bool StringTemplate<char32_t>::operator==(const char32_t* _str) const;
+	bool StringTemplate<char32_t>::operator == (const char32_t* _str) const;
 
 	template<>
 	template<>
-	StringTemplate<char>& StringTemplate<char>::operator=<char>(const char* _str);
+	StringTemplate<char>& StringTemplate<char>::operator = <char>(const char* _str);
 
 	template<>
 	template<>
-	StringTemplate<wchar_t>& StringTemplate<wchar_t>::operator=<wchar_t>(const wchar_t* _str);
+	StringTemplate<wchar_t>& StringTemplate<wchar_t>::operator = <wchar_t>(const wchar_t* _str);
 
 	template<>
 	template<>
-	StringTemplate<char32_t>& StringTemplate<char32_t>::operator=<char32_t>(const char32_t* _str);
+	StringTemplate<char32_t>& StringTemplate<char32_t>::operator = <char32_t>(const char32_t* _str);
 
 	template<>
 	template<>

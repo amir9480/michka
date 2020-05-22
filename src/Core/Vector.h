@@ -10,6 +10,9 @@ namespace Michka
     class MICHKA_API Vector
     {
     public:
+        typedef T* Iterator;
+        typedef const T* ConstIterator;
+    public:
         FORCE_INLINE Vector();
         FORCE_INLINE Vector(const std::initializer_list<T>& _array);
         FORCE_INLINE Vector(const Vector<T>& _other);
@@ -17,11 +20,31 @@ namespace Michka
         FORCE_INLINE ~Vector();
 
         /**
+         * @brief Iterator to begin of array.
+         */
+        FORCE_INLINE Iterator begin();
+
+        /**
+         * @brief Iterator to begin of array for constants.
+         */
+        FORCE_INLINE ConstIterator begin() const;
+
+        /**
          * @brief Clear vector.
          *
          * @return Self
          */
         FORCE_INLINE Vector<T>& clear();
+
+        /**
+         * @brief Iterator to end of array.
+         */
+        FORCE_INLINE Iterator end();
+
+        /**
+         * @brief Iterator to end of array for constants.
+         */
+        FORCE_INLINE ConstIterator end() const;
 
         /**
          * @brief Get count of items in vector.
@@ -47,7 +70,7 @@ namespace Michka
          * @brief Insert multiple items in specifed index.
          *
          * @param _index
-         * @param _item
+         * @param _items
          * @return Self
          */
         FORCE_INLINE Vector<T>& insert(const u32& _index, const Vector<T>& _items);
@@ -83,8 +106,8 @@ namespace Michka
         FORCE_INLINE Vector<T>& operator = (const Vector<T>& _other);
         Vector<T>& operator = (Vector<T>&& _other);
 
-		FORCE_INLINE T& operator[] (const u32& _index);
-		FORCE_INLINE T operator[] (const u32& _index) const;
+		FORCE_INLINE T& operator [] (const u32& _index);
+		FORCE_INLINE T operator [] (const u32& _index) const;
     protected:
         T* mData = nullptr;
         u32 mSize = 0;

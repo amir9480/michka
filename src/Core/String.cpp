@@ -1,5 +1,6 @@
 #include "String.h"
 #include "Helpers.h"
+#include "Memory.h"
 #include <utility>
 #include <memory>
 
@@ -35,7 +36,7 @@ namespace Michka
 
 	template<>
 	template<>
-	bool StringTemplate<char>::operator==(const char* _str) const
+	bool StringTemplate<char>::operator == (const char* _str) const
 	{
 		u32 thisSize = stringSize(mData);
 		u32 otherSize = stringSize(_str);
@@ -52,7 +53,7 @@ namespace Michka
 
 	template<>
 	template<>
-	bool StringTemplate<wchar_t>::operator==(const wchar_t* _str) const
+	bool StringTemplate<wchar_t>::operator == (const wchar_t* _str) const
 	{
 		u32 thisSize = stringSize(mData);
 		u32 otherSize = stringSize(_str);
@@ -69,7 +70,7 @@ namespace Michka
 
 	template<>
 	template<>
-	bool StringTemplate<char32_t>::operator==(const char32_t* _str) const
+	bool StringTemplate<char32_t>::operator == (const char32_t* _str) const
 	{
 		u32 thisSize = stringSize(mData);
 		u32 otherSize = stringSize(_str);
@@ -86,7 +87,7 @@ namespace Michka
 
 	template<>
 	template<>
-	StringTemplate<char>& StringTemplate<char>::operator=<char>(const char* _str)
+	StringTemplate<char>& StringTemplate<char>::operator = <char>(const char* _str)
 	{
 		if (_str)
 		{
@@ -107,7 +108,7 @@ namespace Michka
 
 	template<>
 	template<>
-	StringTemplate<wchar_t>& StringTemplate<wchar_t>::operator=<wchar_t>(const wchar_t* _str)
+	StringTemplate<wchar_t>& StringTemplate<wchar_t>::operator = <wchar_t>(const wchar_t* _str)
 	{
 		if (_str)
 		{
@@ -128,7 +129,7 @@ namespace Michka
 
 	template<>
 	template<>
-	StringTemplate<char32_t>& StringTemplate<char32_t>::operator=<char32_t>(const char32_t* _str)
+	StringTemplate<char32_t>& StringTemplate<char32_t>::operator = <char32_t>(const char32_t* _str)
 	{
 		if (_str)
 		{

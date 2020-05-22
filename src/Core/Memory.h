@@ -3,6 +3,7 @@
 
 #include "Defines.h"
 #include "Helpers.h"
+#include <cstddef>
 
 namespace Michka
 {
@@ -12,26 +13,31 @@ namespace Michka
         FORCE_INLINE MemoryManager();
         FORCE_INLINE ~MemoryManager();
     public:
-        FORCE_INLINE void* malloc(size_t _size);
-        FORCE_INLINE void* realloc(void* _ptr, size_t _size);
+        FORCE_INLINE void* malloc(const std::size_t& _size);
+        FORCE_INLINE void* realloc(void* _ptr, const std::size_t& _size);
         FORCE_INLINE void free(void* _ptr);
     };
 
     static MemoryManager& Memory = MemoryManager::instance();
 }
 
+#undef new
+
 #if MICHKA_DEBUG
 
-void* operator new (size_t _size, const char* _filename, u32 _line);
-void operator delete (void* _ptr);
-void operator delete (void* _ptr, const char* _filename, u32 _line);
+void* operator new (const std::size_t _size, const char* _filename, u32 _line);
+void operator delete (void* _ptr) noexcept;
+void operator delete (void* _ptr, const char* _filename, u32 _line) noexcept;
 
-void* operator new[] (size_t _size, const char* _filename, u32 _line);
-void operator delete[] (void* _ptr);
-void operator delete[] (void* _ptr, const char* _filename, u32 _line);
+void* operator new[] (const std::size_t _size, const char* _filename, u32 _line);
+void operator delete[] (void* _ptr) noexcept;
+void operator delete[] (void* _ptr, const char* _filename, u32 _line) noexcept;
 
 #endif // MICHKA_DEBUG
 
 #include "Memory.inl"
+
+#undef new
+#define new MICHKA_NEW
 
 #endif // __MEMORY_H__

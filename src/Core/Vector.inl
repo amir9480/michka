@@ -33,11 +33,23 @@ namespace Michka
     }
 
     template<typename T>
+    FORCE_INLINE typename Vector<T>::Iterator Vector<T>::begin()
+    {
+        return mData;
+    }
+
+    template<typename T>
+    FORCE_INLINE typename Vector<T>::ConstIterator Vector<T>::begin() const
+    {
+        return mData;
+    }
+
+    template<typename T>
     FORCE_INLINE Vector<T>& Vector<T>::clear()
     {
         if (mData)
         {
-            if constexpr (Type<T>::isClass)
+            if constexpr (Type<T>::isClass && Type<T>::hasDestructor)
             {
                 for (register u32 i = 0; i < mSize; i++)
                 {
@@ -50,6 +62,18 @@ namespace Michka
         mSize = 0;
         mCapacity = 0;
         return *this;
+    }
+
+    template<typename T>
+    FORCE_INLINE typename Vector<T>::Iterator Vector<T>::end()
+    {
+        return (mData + mSize);
+    }
+
+    template<typename T>
+    FORCE_INLINE typename Vector<T>::ConstIterator Vector<T>::end() const
+    {
+        return (mData + mSize);
     }
 
     template<typename T>
@@ -72,9 +96,12 @@ namespace Michka
             resize(mCapacity + capacityStep);
         }
         memcpy((void*)(mData + _index + 1), (void*)(mData + _index), (mSize - _index) * sizeof(T));
+
         if constexpr (Type<T>::isClass)
         {
+#           undef new
             new(mData + _index) T(_item);
+#           define new MICHKA_NEW
         }
         else
         {
@@ -213,13 +240,13 @@ namespace Michka
     }
 
     template<typename T>
-    FORCE_INLINE T Vector<T>::operator[] (const u32& _index) const
+    FORCE_INLINE T Vector<T>::operator [] (const u32& _index) const
     {
         return mData[_index];
     }
 
     template<typename T>
-    FORCE_INLINE T& Vector<T>::operator[] (const u32& _index)
+    FORCE_INLINE T& Vector<T>::operator [] (const u32& _index)
     {
         return mData[_index];
     }

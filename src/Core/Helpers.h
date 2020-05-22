@@ -18,8 +18,8 @@
 #define MICHKA_SINGLETON_CLASS(CLASSNAME)\
 	CLASSNAME(const CLASSNAME&) = delete;\
 	CLASSNAME(CLASSNAME&&) = delete;\
-	CLASSNAME& operator=(const CLASSNAME&) = delete;\
-	CLASSNAME& operator=(CLASSNAME&&) = delete;\
+	CLASSNAME& operator = (const CLASSNAME&) = delete;\
+	CLASSNAME& operator = (CLASSNAME&&) = delete;\
 	public:\
 	static CLASSNAME& instance()\
 	{\

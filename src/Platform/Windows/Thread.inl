@@ -85,7 +85,7 @@ namespace Michka
     }
 
     template<typename ReturnType, typename... ArgumentTypes>
-    Thread<ReturnType(ArgumentTypes...)>& Thread<ReturnType(ArgumentTypes...)>::operator=(Thread<ReturnType(ArgumentTypes...)>&& _other)
+    Thread<ReturnType(ArgumentTypes...)>& Thread<ReturnType(ArgumentTypes...)>::operator = (Thread<ReturnType(ArgumentTypes...)>&& _other)
     {
         swap(mFunction, _other.mFunction);
         swap(mThread, _other.mThread);

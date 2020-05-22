@@ -11,12 +11,12 @@ namespace Michka
     {
     }
 
-    FORCE_INLINE void* MemoryManager::malloc(size_t _size)
+    FORCE_INLINE void* MemoryManager::malloc(const std::size_t& _size)
     {
         return ::malloc(_size);
     }
 
-    FORCE_INLINE void* MemoryManager::realloc(void* _ptr, size_t _size)
+    FORCE_INLINE void* MemoryManager::realloc(void* _ptr, const std::size_t& _size)
     {
         return ::realloc(_ptr, _size);
     }

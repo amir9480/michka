@@ -40,10 +40,10 @@ namespace Michka
 
 
     template<typename T>
-    class MICHKA_API Thread: public ThreadBase {};
+    class Thread: public ThreadBase {};
 
     template<typename ReturnType, typename... ArgumentTypes>
-    class MICHKA_API Thread<ReturnType(ArgumentTypes...)>: public ThreadBase
+    class Thread<ReturnType(ArgumentTypes...)>: public ThreadBase
     {
     public:
         Thread(const std::function<ReturnType(ArgumentTypes...)>& _function);
@@ -62,7 +62,7 @@ namespace Michka
          */
         void call();
 
-        Thread<ReturnType(ArgumentTypes...)>& operator=(Thread<ReturnType(ArgumentTypes...)>&& _other);
+        Thread<ReturnType(ArgumentTypes...)>& operator = (Thread<ReturnType(ArgumentTypes...)>&& _other);
 
     private:
         std::function<ReturnType(ArgumentTypes...)> mFunction;

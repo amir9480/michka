@@ -3,42 +3,7 @@
 #include "Core/String.h"
 #include "Core/Helpers.h"
 #include "Core/Vector.h"
-
-class Person
-{
-public:
-	Person(const Michka::String& _name)
-	{
-		mName = _name;
-	}
-
-	Person(const Person& _other)
-	{
-		mName = _other.mName;
-	}
-
-	Person(Person&& _other)
-	{
-		mName = std::move(_other.mName);
-	}
-
-	Michka::String getName() const
-	{
-		return mName;
-	}
-
-	bool operator == (const Michka::String& _name)
-	{
-		return mName == _name;
-	}
-
-	bool operator == (const Person& _other)
-	{
-		return mName == _other.mName;
-	}
-protected:
-	Michka::String mName;
-};
+#include "../Classes/Person.h"
 
 TEST(VectorTest, VectorSetTest)
 {
@@ -171,4 +136,37 @@ TEST(VectorTest, ConstantVectorTest)
 	ASSERT_EQ(a.getCapacity(), 8);
 	ASSERT_EQ(a[0], 1);
 	ASSERT_EQ(a[1], 2);
+}
+
+TEST(VectorTest, ClearVectorTest)
+{
+	Michka::Vector<int> a = {1, 2};
+	ASSERT_EQ(a.getSize(), 2);
+	a.clear();
+	ASSERT_EQ(a.getSize(), 0);
+}
+
+TEST(VectorTest, IteratorTest)
+{
+	Michka::Vector<int> a = {1, 2, 3};
+	const Michka::Vector<int> b = {4, 6, 8, 10};
+	u32 count = 0;
+	u32 sum = 0;
+	for (auto i: a)
+	{
+		count++;
+		sum += i;
+	}
+	ASSERT_EQ(count, 3);
+	ASSERT_EQ(sum, 6);
+
+	count = 0;
+	sum = 0;
+	for (auto i: b)
+	{
+		count++;
+		sum += i;
+	}
+	ASSERT_EQ(count, 4);
+	ASSERT_EQ(sum, 28);
 }

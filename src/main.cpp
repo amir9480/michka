@@ -6,6 +6,11 @@
 #include <Windows.h>
 using namespace Michka;
 
+std::ostream& operator << (std::ostream& _ostream, String _str)
+{
+    _ostream << _str.toUtf8().cstr();
+    return _ostream;
+}
 
 class Person
 {
@@ -60,23 +65,41 @@ int main()
     std::cout << "Welcome to engine!\n-------------------------------------\n\n";
     // std::cout << Thread<>::id() << std::endl;
 
-    Vector<Thread<void(int)>> a;
+    // Vector<Thread<void(int)>> a;
 
-    for (int i = 0; i < 5; i++)
+    // for (int i = 0; i < 5; i++)
+    // {
+    //     a.pushBack(Thread<void(int)>(sayHello));
+    //     a[i].start(i);
+    // }
+
+    // for (int i = 0; i < 10; i++)
+    // {
+    //     a[i].join();
+    // }
+
+    // for (int i = 0; i < 10; i++)
+    // {
+    //     a[i].join();
+    // }
+
+    Map<String, int>::Element g("Test", 4);
+    std::cout << sizeof (g) << std::endl;
+
+    Map<String, String> a = {
+        {"a", "478"},
+        {"777", "421"}
+    };6
+
+    // std::cout << g.first << std::endl;
+
+    // std::cout << g.key.toUtf8().cstr() << " - " << g.value << std::endl;
+
+    for (auto i : a)
     {
-        a.pushBack(Thread<void(int)>(sayHello));
-        a[i].start(i);
+        std::cout << i.key() << " - " << i.value() << std::endl;
     }
 
-    for (int i = 0; i < 10; i++)
-    {
-        a[i].join();
-    }
-
-    for (int i = 0; i < 10; i++)
-    {
-        a[i].join();
-    }
 
     // std::chrono::steady_clock::time_point begin, end;
     // begin = std::chrono::steady_clock::now();

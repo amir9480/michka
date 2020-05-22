@@ -125,6 +125,7 @@ namespace Michka
 
 		/**
 		 * @brief Get size of string.
+		 * @warning This is not count of characters. for counting characters use getLength instead..
 		 *
 		 * @sa getLength
 		 * @return size
@@ -307,8 +308,8 @@ namespace Michka
 		template<typename T2>
 		FORCE_INLINE bool operator != (const StringTemplate<T2>& _str) const;
 
-		FORCE_INLINE T& operator[] (const u32& _index);
-		FORCE_INLINE T operator[] (const u32& _index) const;
+		FORCE_INLINE T& operator [] (const u32& _index);
+		FORCE_INLINE T operator [] (const u32& _index) const;
 	public:
 		/**
 		 * @brief Not found index for find functions.

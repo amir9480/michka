@@ -4,6 +4,7 @@
 #include "Defines.h"
 #include <float.h>
 #include <typeinfo>
+#include <type_traits>
 
 namespace Michka
 {
@@ -84,6 +85,11 @@ namespace Michka
          * @brief Is type a custom enum.
          */
         static inline const bool isEnum = __is_enum(T);
+
+        /**
+         * @brief Is type has a destrucor function.
+         */
+        static inline const bool hasDestructor = std::is_trivially_destructible<T>::value;
     };
 
     template<typename T>

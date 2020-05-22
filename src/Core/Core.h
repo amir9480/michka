@@ -7,5 +7,6 @@
 #include "Thread.h"
 #include "String.h"
 #include "Vector.h"
+#include "Map.h"
 
 #endif // __CORE_H__
