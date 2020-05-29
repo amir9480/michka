@@ -110,7 +110,8 @@ namespace Michka
         }
         Vector<T> out;
         out.resize(indexes.getSize());
-        for (auto i : indexes) {
+        for (auto i : indexes)
+        {
             out.pushBack(mData[i]);
         }
 

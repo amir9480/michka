@@ -10,6 +10,7 @@ namespace Michka
     {
         Pair();
         Pair(const T1& _first, const T2& _second);
+        Pair(T1&& _first, T2&& _second);
         Pair(const Pair<T1, T2>& _other);
         Pair(Pair<T1, T2>&& _other);
         ~Pair();

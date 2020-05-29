@@ -27,12 +27,12 @@ public:
 		return mName;
 	}
 
-	bool operator == (const Michka::String& _name)
+	bool operator == (const Michka::String& _name) const
 	{
 		return mName == _name;
 	}
 
-	bool operator == (const Person& _other)
+	bool operator == (const Person& _other) const
 	{
 		return mName == _other.mName;
 	}

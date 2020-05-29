@@ -125,6 +125,21 @@ namespace Michka
         static inline const bool isEnum = __is_enum(T);
 
         /**
+         * @brief Is type assaignable.
+         */
+        static inline const bool hasCopyAssign = std::is_assignable<std::remove_reference<T>::type&, T>::value;
+
+        /**
+         * @brief Is type move assaignable.
+         */
+        static inline const bool hasMoveAssign = std::is_move_assignable<T>::value;
+
+        /**
+         * @brief Is type has a default constructor.
+         */
+        static inline const bool hasDefaultConstructor = std::is_default_constructible<T>::value;
+
+        /**
          * @brief Is type has a destrucor function.
          */
         static inline const bool hasDestructor = std::is_trivially_destructible<T>::value;

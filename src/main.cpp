@@ -102,8 +102,10 @@ int main()
     //     std::cout << i.key() << " - " << i.value() << std::endl;
     // }
 
-    Vector<Person> a = {Person("a")};
+    Map<String, String> a;
+    a["hello"] = "World";
     std::cout << a.getSize() << std::endl;
+    std::cout << a["hello"] << std::endl;
 
 
     // std::chrono::steady_clock::time_point begin, end;

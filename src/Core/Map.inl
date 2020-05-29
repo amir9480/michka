@@ -55,6 +55,18 @@ namespace Michka
     }
 
     template<typename TKey, typename TValue>
+    FORCE_INLINE typename Map<TKey, TValue>::Element& Map<TKey, TValue>::at(const u32& _index)
+    {
+        return mData[_index];
+    }
+
+    template<typename TKey, typename TValue>
+    FORCE_INLINE typename Map<TKey, TValue>::Element Map<TKey, TValue>::at(const u32& _index) const
+    {
+        return mData[_index];
+    }
+
+    template<typename TKey, typename TValue>
     FORCE_INLINE typename Map<TKey, TValue>::Iterator Map<TKey, TValue>::begin()
     {
         return mData.begin();
@@ -97,9 +109,54 @@ namespace Michka
     }
 
     template<typename TKey, typename TValue>
+    FORCE_INLINE u32 Map<TKey, TValue>::indexOfKey(const TKey& _what) const
+    {
+        return mData.indexOf([=] (const Element& _element)
+        {
+            return _element.first == _what;
+        });
+    }
+
+    template<typename TKey, typename TValue>
+    FORCE_INLINE u32 Map<TKey, TValue>::indexOfValue(const TValue& _what, const u32 _from) const
+    {
+        return mData.indexOf([=] (const Element& _element)
+        {
+            return _element.second == _what;
+        }, _from);
+    }
+
+    template<typename TKey, typename TValue>
+    FORCE_INLINE Map<TKey, TValue>& Map<TKey, TValue>::insert(const TKey& _key, const TValue& _value)
+    {
+        u32 index = indexOfKey(_key);
+        if (index == mData.notFound)
+        {
+            mData.pushBack(Element(_key, _value));
+        }
+
+        return *this;
+    }
+
+    template<typename TKey, typename TValue>
+    FORCE_INLINE Map<TKey, TValue>& Map<TKey, TValue>::insert(TKey&& _key, TValue&& _value)
+    {
+        u32 index = indexOfKey(_key);
+        if (index == mData.notFound)
+        {
+            mData.pushBack(Element(std::forward<TKey>(_key), std::forward<TValue>(_value)));
+        }
+
+        return *this;
+    }
+
+    template<typename TKey, typename TValue>
     Map<TKey, TValue>& Map<TKey, TValue>::operator = (const std::initializer_list<Map<TKey, TValue>::Element>& _array)
     {
-        mData = _array;
+        for (auto i : _array)
+        {
+            insert(i.first, i.second);
+        }
 
         return *this;
     }
@@ -118,5 +175,36 @@ namespace Michka
         mData = std::move(_other.mData);
 
         return *this;
+    }
+
+    template<typename TKey, typename TValue>
+    FORCE_INLINE TValue Map<TKey, TValue>::operator [] (const TKey& _key) const
+    {
+        u32 index = indexOfKey(_key);
+        MICHKA_ASSERT(index == mData.notFound, "Key not found.");
+
+        return mData[index].second;
+    }
+
+    template<typename TKey, typename TValue>
+    FORCE_INLINE TValue& Map<TKey, TValue>::operator [] (const TKey& _key)
+    {
+        u32 index = indexOfKey(_key);
+
+        if (index == mData.notFound)
+        {
+            if constexpr (Type<TValue>::hasDefaultConstructor)
+            {
+                mData.pushBack(Element(_key, TValue()));
+                index = mData.getSize() - 1;
+            }
+            else
+            {
+                MICHKA_ASSERT(false, "Your type is not assaignable");
+            }
+
+        }
+
+        return mData[index].second;
     }
 }

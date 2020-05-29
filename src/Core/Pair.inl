@@ -8,22 +8,32 @@ namespace Michka
     }
 
     template<typename T1, typename T2>
-    Pair<T1, T2>::Pair(const T1& _first, const T2& _second)
+    Pair<T1, T2>::Pair(const T1& _first, const T2& _second):
+        first(_first),
+        second(_second)
     {
-        first = _first;
-        second = _second;
     }
 
     template<typename T1, typename T2>
-    Pair<T1, T2>::Pair(const Pair<T1, T2>& _other)
+    Pair<T1, T2>::Pair(T1&& _first, T2&& _second) :
+        first(std::forward<T1>(_first)),
+        second(std::forward<T2>(_second))
     {
-        *this = _other;
+
     }
 
     template<typename T1, typename T2>
-    Pair<T1, T2>::Pair(Pair<T1, T2>&& _other)
+    Pair<T1, T2>::Pair(const Pair<T1, T2>& _other):
+        first(_other.first),
+        second(_other.second)
     {
-        *this = std::move(_other);
+    }
+
+    template<typename T1, typename T2>
+    Pair<T1, T2>::Pair(Pair<T1, T2>&& _other):
+        first(std::move(_other.first)),
+        second(std::move(_other.second))
+    {
     }
 
     template<typename T1, typename T2>
