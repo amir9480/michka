@@ -77,6 +77,14 @@ namespace Michka
     }
 
     template<typename T>
+    Vector<T>& Vector<T>::filter(const std::function<bool(const T&)>& _callback)
+    {
+        *this = getFiltered(_callback);
+
+        return *this;
+    }
+
+    template<typename T>
     FORCE_INLINE u32 Vector<T>::getSize() const
     {
         return mSize;
@@ -86,6 +94,72 @@ namespace Michka
     FORCE_INLINE u32 Vector<T>::getCapacity() const
     {
         return mCapacity;
+    }
+
+    template<typename T>
+    Vector<T> Vector<T>::getFiltered(const std::function<bool(const T&)>& _callback) const
+    {
+        Vector<u32> indexes;
+        indexes.resize(mSize);
+        for (u32 i = 0; i < mSize; i++)
+        {
+            if (_callback(mData[i]))
+            {
+                indexes.pushBack(i);
+            }
+        }
+        Vector<T> out;
+        out.resize(indexes.getSize());
+        for (auto i : indexes) {
+            out.pushBack(mData[i]);
+        }
+
+        return out;
+    }
+
+    template<typename T>
+    u32 Vector<T>::indexOf(const T& _what, const u32 _from) const
+    {
+        static_assert(Type<T>::hasOperator<>::equal, "Your type does not have operator \'==\' to comparison");
+
+        for (u32 i = _from; i < mSize; i++)
+        {
+            if (mData[i] == _what)
+            {
+                return i;
+            }
+        }
+
+        return notFound;
+    }
+
+    template<typename T>
+    u32 Vector<T>::indexOf(const std::function<bool(const T&)>& _callback, const u32 _from) const
+    {
+        for (u32 i = _from; i < mSize; i++)
+        {
+            if (_callback(mData[i]))
+            {
+                return i;
+            }
+        }
+
+        return notFound;
+    }
+
+    template<typename T>
+    template<typename T2>
+    u32 Vector<T>::indexOf(const std::function<bool(const T&, const T2&)>& _callback , const T2& _what, const u32 _from) const
+    {
+        for (u32 i = _from; i < mSize; i++)
+        {
+            if (_callback(mData[i], _what))
+            {
+                return i;
+            }
+        }
+
+        return notFound;
     }
 
     template<typename T>
@@ -171,6 +245,51 @@ namespace Michka
     }
 
     template<typename T>
+    u32 Vector<T>::lastIndexOf(const T& _what, const u32 _from) const
+    {
+        static_assert(Type<T>::hasOperator<>::equal, "Your type does not have operator \'==\' to comparison");
+
+        for (u32 i = min(_from, mSize - 1); i < mSize; i--)
+        {
+            if (mData[i] == _what)
+            {
+                return i;
+            }
+        }
+
+        return notFound;
+    }
+
+    template<typename T>
+    u32 Vector<T>::lastIndexOf(const std::function<bool(const T&)>& _callback, const u32 _from) const
+    {
+        for (u32 i = min(_from, mSize - 1); i < mSize; i--)
+        {
+            if (_callback(mData[i]))
+            {
+                return i;
+            }
+        }
+
+        return notFound;
+    }
+
+    template<typename T>
+    template<typename T2>
+    u32 Vector<T>::lastIndexOf(const std::function<bool(const T&, const T2&)>& _callback , const T2& _what, const u32 _from) const
+    {
+        for (u32 i = min(_from, mSize - 1); i < mSize; i--)
+        {
+            if (_callback(mData[i], _what))
+            {
+                return i;
+            }
+        }
+
+        return notFound;
+    }
+
+    template<typename T>
     FORCE_INLINE Vector<T>& Vector<T>::pushBack(const T& _item)
     {
         return insert(getSize(), _item);
@@ -189,6 +308,22 @@ namespace Michka
     }
 
     template<typename T>
+    Vector<T>& Vector<T>::remove(const u32& _index, const u32& _count)
+    {
+        if (_count > 0)
+        {
+            u32 count = min(mSize - _index, _count);
+            for (u32 i = _index; i < mSize - count; i++)
+            {
+                mData[i] = std::move(mData[i + count]);
+            }
+            mSize -= count;
+        }
+
+        return *this;
+    }
+
+    template<typename T>
     FORCE_INLINE Vector<T>& Vector<T>::pushFront(T&& _item)
     {
         return insert(0, std::move(_item));
@@ -200,13 +335,17 @@ namespace Michka
         if (_newCapacity != mCapacity)
         {
             mCapacity = ((_newCapacity / capacityStep) + (_newCapacity % capacityStep > 0 ? 1 : 0)) * capacityStep;
-            if (mData) {
+            if (mData)
+            {
                 mData = static_cast<T*>(Memory.realloc(mData, mCapacity * sizeof(T)));
-            } else {
+            }
+            else
+            {
                 mData = static_cast<T*>(Memory.malloc(mCapacity * sizeof(T)));
             }
             mSize = min(mSize, mCapacity);
         }
+
         return *this;
     }
 

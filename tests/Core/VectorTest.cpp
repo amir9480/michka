@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <utility>
 #include "Core/String.h"
+#include "Core/Type.h"
 #include "Core/Helpers.h"
 #include "Core/Vector.h"
 #include "../Classes/Person.h"
@@ -169,4 +170,96 @@ TEST(VectorTest, IteratorTest)
 	}
 	ASSERT_EQ(count, 4);
 	ASSERT_EQ(sum, 28);
+}
+
+TEST(VectorTest, SearchTest)
+{
+	Michka::Vector<int> a = {2, 4, 6, 8, 10, 2};
+	ASSERT_EQ(a.indexOf(3), a.notFound);
+	ASSERT_EQ(a.indexOf(2), 0);
+	ASSERT_EQ(a.indexOf(2, 1), 5);
+	ASSERT_EQ(a.indexOf(4, 1), 1);
+	ASSERT_EQ(a.indexOf(4, 2), a.notFound);
+	ASSERT_EQ(a.lastIndexOf(2), 5);
+	ASSERT_EQ(a.lastIndexOf(2, 4), 0);
+	ASSERT_EQ(a.lastIndexOf(4), 1);
+	ASSERT_EQ(a.lastIndexOf(4, 0), a.notFound);
+
+
+	Michka::Vector<Person> b = {Person("michka")};
+	ASSERT_EQ(b.indexOf(Person("michka")), 0);
+	ASSERT_EQ(b.indexOf(Person("sparrow")), b.notFound);
+
+	auto compareCallback = [] (const Person& _a, const Michka::String& _b)
+	{
+		return _a.getName() == _b;
+	};
+
+	auto compareCallback2a = [] (const Person& _a)
+	{
+		return _a.getName() == "michka";
+	};
+
+	auto compareCallback2b = [] (const Person& _a)
+	{
+		return _a.getName() == "test";
+	};
+
+	ASSERT_EQ(b.indexOf<Michka::String>(compareCallback, Michka::String("michka")), 0);
+	ASSERT_EQ(b.indexOf<Michka::String>(compareCallback, Michka::String("test")), b.notFound);
+
+	ASSERT_EQ(b.indexOf(compareCallback2a), 0);
+	ASSERT_EQ(b.indexOf(compareCallback2b), b.notFound);
+
+	ASSERT_EQ(b.lastIndexOf<Michka::String>(compareCallback, Michka::String("michka")), 0);
+	ASSERT_EQ(b.lastIndexOf<Michka::String>(compareCallback, Michka::String("test")), b.notFound);
+
+	ASSERT_EQ(b.lastIndexOf(compareCallback2a), 0);
+	ASSERT_EQ(b.lastIndexOf(compareCallback2b), b.notFound);
+}
+
+TEST(VectorTest, RemoveTest)
+{
+	Michka::Vector<int> a = {2, 4, 6, 8, 10, 2};
+	a.remove(1);
+	ASSERT_EQ(a.getSize(), 5);
+	ASSERT_EQ(a[1], 6);
+	ASSERT_EQ(a[4], 2);
+
+	a.remove(1, 2);
+	ASSERT_EQ(a.getSize(), 3);
+	ASSERT_EQ(a[1], 10);
+	ASSERT_EQ(a[2], 2);
+
+	a.remove(1, Michka::u32Info::max);
+	ASSERT_EQ(a.getSize(), 1);
+	ASSERT_EQ(a[0], 2);
+
+	a.remove(0);
+	ASSERT_EQ(a.getSize(), 0);
+}
+
+TEST(VectorTest, FilterTest)
+{
+	auto filterFunction = [] (const int& _item)
+	{
+		return _item % 2 == 0;
+	};
+	Michka::Vector<int> a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+	Michka::Vector<int> b = a.getFiltered(filterFunction);
+
+	ASSERT_EQ(a.getSize(), 10);
+	ASSERT_EQ(b.getSize(), 5);
+	ASSERT_EQ(b[0], 2);
+	ASSERT_EQ(b[1], 4);
+	ASSERT_EQ(b[2], 6);
+	ASSERT_EQ(b[3], 8);
+	ASSERT_EQ(b[4], 10);
+
+	a.filter(filterFunction);
+	ASSERT_EQ(a[0], 2);
+	ASSERT_EQ(a[1], 4);
+	ASSERT_EQ(a[2], 6);
+	ASSERT_EQ(a[3], 8);
+	ASSERT_EQ(a[4], 10);
 }

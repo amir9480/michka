@@ -71,7 +71,8 @@ namespace Michka
             nullptr
         );
 
-        if (mThread == nullptr) {
+        if (mThread == nullptr)
+        {
             return false;
         }
 

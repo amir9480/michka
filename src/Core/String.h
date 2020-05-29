@@ -2,7 +2,7 @@
 #define __STRING_H__
 
 #include "Defines.h"
-#include "Types.h"
+#include "Type.h"
 
 namespace Michka
 {
@@ -169,8 +169,8 @@ namespace Michka
 		/**
 		 * @brief Convert any integer type to string.
 		 */
-		template<typename TYPE>
-		static StringTemplate<T> number(TYPE _number, const u8& _base = 10);
+		template<typename NumberType>
+		static StringTemplate<T> number(NumberType _number, const u8& _base = 10);
 
 		/**
 		 * @brief Prepend a string to this string.
@@ -254,11 +254,11 @@ namespace Michka
 		/**
 		 * @brief Convert string to number.
 		 *
-		 * @tparam TYPE
+		 * @tparam NumberType
 		 * @param _base integer base
 		 */
-		template<typename TYPE>
-		TYPE toNumber(const u32& _base = 10) const;
+		template<typename NumberType>
+		NumberType toNumber(const u32& _base = 10) const;
 
 		/**
 		 * @brief Convert to upper case.

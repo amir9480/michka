@@ -47,6 +47,14 @@ namespace Michka
         FORCE_INLINE ConstIterator end() const;
 
         /**
+         * @brief Filter vector items by a callback.
+         *
+         * @param _callback
+         * @return Self
+         */
+        Vector<T>& filter(const std::function<bool(const T&)>& _callback);
+
+        /**
          * @brief Get count of items in vector.
          */
         FORCE_INLINE u32 getSize() const;
@@ -55,6 +63,44 @@ namespace Michka
          * @brief Get capacity of vector.
          */
         FORCE_INLINE u32 getCapacity() const;
+
+        /**
+         * @brief Get filter vector by a compare callback.
+         *
+         * @param _callback
+         * @return Filtered Vector
+         */
+        Vector<T> getFiltered(const std::function<bool(const T&)>& _callback) const;
+
+        /**
+         * @brief Find index of a value with offset of from.
+         *
+         * @param _what
+         * @param _from
+         * @return index of value. notFound if nothing found.
+         */
+        u32 indexOf(const T& _what, const u32 _from = 0) const;
+
+        /**
+         * @brief Find index of a value with offset of from with custom a callback.
+         *
+         * @param _callback
+         * @param _from
+         * @return index of value. notFound if nothing found.
+         */
+        u32 indexOf(const std::function<bool(const T&)>& _callback, const u32 _from = 0) const;
+
+        /**
+         * @brief Find index of a value with offset of from with custom comparison function.
+         *
+         * @tparam T2
+         * @param _callback
+         * @param _what
+         * @param _from
+         * @return index of value. notFound if nothing found.
+         */
+        template<typename T2>
+        u32 indexOf(const std::function<bool(const T&, const T2&)>& _callback , const T2& _what, const u32 _from = 0) const;
 
         /**
          * @brief Insert new item in specifed index.
@@ -78,6 +124,36 @@ namespace Michka
         Vector<T>& insert(const u32& _index, const T* _items, const u32& _size);
 
         /**
+         * @brief Find index of a value with offset of from but in reversed order.
+         *
+         * @param _what
+         * @param _from
+         * @return index of value. notFound if nothing found.
+         */
+        u32 lastIndexOf(const T& _what, const u32 _from = u32Info::max) const;
+
+        /**
+         * @brief Find index of a value with offset of from with custom a callback but in reversed order.
+         *
+         * @param _callback
+         * @param _from
+         * @return index of value. notFound if nothing found.
+         */
+        u32 lastIndexOf(const std::function<bool(const T&)>& _callback, const u32 _from = u32Info::max) const;
+
+        /**
+         * @brief Find index of a value with offset of from with custom comparison function but in reversed order.
+         *
+         * @tparam T2
+         * @param _callback
+         * @param _what
+         * @param _from
+         * @return index of value. notFound if nothing found.
+         */
+        template<typename T2>
+        u32 lastIndexOf(const std::function<bool(const T&, const T2&)>& _callback , const T2& _what, const u32 _from = u32Info::max) const;
+
+        /**
          * @brief Add new item to end of vector.
          *
          * @param _item
@@ -96,6 +172,15 @@ namespace Michka
         FORCE_INLINE Vector<T>& pushFront(T&& _item);
 
         /**
+         * @brief Remove items from vector.
+         *
+         * @param _index
+         * @param _count
+         * @return Self
+         */
+        Vector<T>& remove(const u32& _index, const u32& _count = 1);
+
+        /**
          * @brief Resize capacity of vector.
          *
          * @return Self
@@ -108,6 +193,12 @@ namespace Michka
 
 		FORCE_INLINE T& operator [] (const u32& _index);
 		FORCE_INLINE T operator [] (const u32& _index) const;
+    public:
+		/**
+		 * @brief Not found index for search functions.
+		 */
+		static const u32 notFound = u32Info::max;
+
     protected:
         T* mData = nullptr;
         u32 mSize = 0;

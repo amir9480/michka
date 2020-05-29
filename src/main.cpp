@@ -37,7 +37,8 @@ public:
 
     void runSomething()
     {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++)
+        {
             Sleep(100);
             std::wcout << mName.cstr() << "\n";
         }
@@ -54,7 +55,8 @@ protected:
 void sayHello(int i)
 {
     printf("Very long started %d (%llu)\n", i, ThreadBase::id());
-    for (int i = 0; i < 300; i++) {
+    for (int i = 0; i < 300; i++)
+    {
         Sleep(10);
     }
     printf("Very long ended %d (%llu)\n", i, ThreadBase::id());
@@ -83,22 +85,25 @@ int main()
     //     a[i].join();
     // }
 
-    Map<String, int>::Element g("Test", 4);
-    std::cout << sizeof (g) << std::endl;
+    // Map<String, int>::Element g("Test", 4);
+    // std::cout << sizeof (g) << std::endl;
 
-    Map<String, String> a = {
-        {"a", "478"},
-        {"777", "421"}
-    };6
+    // Map<String, String> a = {
+    //     {"a", "478"},
+    //     {"777", "421"}
+    // };
 
     // std::cout << g.first << std::endl;
 
     // std::cout << g.key.toUtf8().cstr() << " - " << g.value << std::endl;
 
-    for (auto i : a)
-    {
-        std::cout << i.key() << " - " << i.value() << std::endl;
-    }
+    // for (auto i : a)
+    // {
+    //     std::cout << i.key() << " - " << i.value() << std::endl;
+    // }
+
+    Vector<Person> a = {Person("a")};
+    std::cout << a.getSize() << std::endl;
 
 
     // std::chrono::steady_clock::time_point begin, end;

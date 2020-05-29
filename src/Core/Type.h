@@ -9,6 +9,44 @@
 namespace Michka
 {
     /**
+     * @see TypeBase::hasOperator
+     */
+    namespace OperatorCheck
+    {
+        struct NoType{bool _m[2];};
+        template<typename _T1, typename _T2>
+        inline NoType operator == (const _T1&, const _T2&);
+        template<typename _T1, typename _T2>
+        inline NoType operator != (const _T1&, const _T2&);
+        template<typename _T1, typename _T2>
+        inline NoType operator > (const _T1&, const _T2&);
+        template<typename _T1, typename _T2>
+        inline NoType operator < (const _T1&, const _T2&);
+        template<typename _T1, typename _T2>
+        inline NoType operator >= (const _T1&, const _T2&);
+        template<typename _T1, typename _T2>
+        inline NoType operator <= (const _T1&, const _T2&);
+
+        template<typename T1, typename T2 = T1>
+        struct hasEqual{const static bool value = !std::is_same<decltype(*(T1*)(0) == *(T2*)(0)), NoType>::value;};
+
+        template<typename T1, typename T2 = T1>
+        struct hasNotEqual{const static bool value = !std::is_same<decltype(*(T1*)(0) != *(T2*)(0)), NoType>::value;};
+
+        template<typename T1, typename T2 = T1>
+        struct hasGreater{const static bool value = !std::is_same<decltype(*(T1*)(0) > *(T2*)(0)), NoType>::value;};
+
+        template<typename T1, typename T2 = T1>
+        struct hasLess{const static bool value = !std::is_same<decltype(*(T1*)(0) < *(T2*)(0)), NoType>::value;};
+
+        template<typename T1, typename T2 = T1>
+        struct hasGreaterOrEqual{const static bool value = !std::is_same<decltype(*(T1*)(0) >= *(T2*)(0)), NoType>::value;};
+
+        template<typename T1, typename T2 = T1>
+        struct hasLessOrEqual{const static bool value = !std::is_same<decltype(*(T1*)(0) <= *(T2*)(0)), NoType>::value;};
+    }
+
+    /**
      * @brief Set of type properties.
      *
      * @tparam T
@@ -90,6 +128,26 @@ namespace Michka
          * @brief Is type has a destrucor function.
          */
         static inline const bool hasDestructor = std::is_trivially_destructible<T>::value;
+
+        /**
+         * @brief Check type is same.
+         */
+        template<typename T2>
+        static constexpr inline const bool is();
+
+        /**
+         * @brief Check specific operator exists or not.
+         */
+        template<typename T2 = T>
+        struct hasOperator
+        {
+            static inline const bool equal = OperatorCheck::hasEqual<T, T2>::value;
+            static inline const bool notEqual = OperatorCheck::hasNotEqual<T, T2>::value;
+            static inline const bool less = OperatorCheck::hasLess<T, T2>::value;
+            static inline const bool greater = OperatorCheck::hasGreater<T, T2>::value;
+            static inline const bool lessOrEqual = OperatorCheck::hasLessOrEqual<T, T2>::value;
+            static inline const bool greaterOrEqual = OperatorCheck::hasGreaterOrEqual<T, T2>::value;
+        };
     };
 
     template<typename T>
@@ -283,5 +341,7 @@ namespace Michka
     typedef Type<u32> u32Info;
     typedef Type<u64> u64Info;
 }
+
+#include "Type.inl"
 
 #endif // __TYPES_H__

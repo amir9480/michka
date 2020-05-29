@@ -2,7 +2,7 @@
 #define __CORE_H__
 
 #include "Defines.h"
-#include "Types.h"
+#include "Type.h"
 #include "Memory.h"
 #include "Thread.h"
 #include "String.h"

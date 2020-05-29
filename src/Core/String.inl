@@ -1,5 +1,6 @@
 #include "String.h"
 #include "Helpers.h"
+#include "Type.h"
 
 namespace Michka
 {
@@ -117,7 +118,8 @@ namespace Michka
 	{
 		u32 thisSize = getSize();
 		u32 offset =  _offset == u32Info::max ? thisSize : _offset;
-		if (offset == 0) {
+		if (offset == 0)
+		{
 			return notFound;
 		}
 		u32 result = notFound;
@@ -243,13 +245,13 @@ namespace Michka
 	}
 
 	template<typename T>
-	template<typename TYPE>
-	StringTemplate<T> StringTemplate<T>::number(TYPE _number, const u8& _base)
+	template<typename NumberType>
+	StringTemplate<T> StringTemplate<T>::number(NumberType _number, const u8& _base)
 	{
 		MICHKA_ASSERT(_base >= 2 && _base <= 16, "String::number(...): Base must be between 2 & 16.");
 		static const StringTemplate<T> numberCharacters = "0123456789abcdef";
 		StringTemplate<T> out;
-		out.resize((sizeof(TYPE) * 8) + 1);
+		out.resize((sizeof(NumberType) * 8) + 1);
 		bool negetive = false;
 		int index = 0;
 		if (_number < 0)
@@ -415,12 +417,12 @@ namespace Michka
 	}
 
 	template<typename T>
-	template<typename TYPE>
-	TYPE StringTemplate<T>::toNumber(const u32& _base)const
+	template<typename NumberType>
+	NumberType StringTemplate<T>::toNumber(const u32& _base)const
 	{
 		MICHKA_ASSERT(_base >= 2 && _base <= 16, "String::number(...): Base must be between 2 & 16.");
 		static const StringTemplate<T> numberCharacters = "0123456789abcdef";
-		TYPE out = 0;
+		NumberType out = 0;
 		u32 index = 0, iterator = 0, size = getSize();
 		if (size > 0)
 		{
@@ -433,12 +435,14 @@ namespace Michka
 				if ((index = numberCharacters.find(mData[iterator])) == notFound)
 				{
 					return 0;
-				} else {
+				}
+				else
+				{
 					out = out * _base + index;
 				}
 				iterator++;
 			}
-			if constexpr(std::is_signed<TYPE>::value)
+			if constexpr(Type<NumberType>::isSigned)
 			{
 				if (mData[0] == '-')
 				{
@@ -612,7 +616,7 @@ namespace Michka
 	template<typename T, typename T2>
 	FORCE_INLINE StringTemplate<T2> operator + (const T* _first, const StringTemplate<T2>& _second)
 	{
-		static_assert(std::is_same<T, char>::value || std::is_same<T, wchar_t>::value || std::is_same<T, char32_t>::value);
+		static_assert(Type<char>::is<char>() || Type<wchar_t>::is<char>() || Type<char32_t>::is<char>());
 		StringTemplate<T2> first = _first;
 		return first + _second;
 	}
