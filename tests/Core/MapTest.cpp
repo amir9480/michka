@@ -42,6 +42,30 @@ TEST(MapTest, KeyValueTest)
 	ASSERT_EQ(b["y"], Person("person y"));
 	ASSERT_EQ(b["z"], Person("person z"));
 	ASSERT_EQ(b["v"], Person("Inserted"));
+
+	EXPECT_THROW({
+		try
+		{
+			int testNumber = a["undefined"];
+		}
+		catch (Michka::Exception exception)
+		{
+			EXPECT_STREQ("Key not found.", exception.getMessage());
+            throw;
+		}
+	}, Michka::Exception);
+
+	EXPECT_THROW({
+		try
+		{
+			Person testPerson = b["undefined"];
+		}
+		catch (Michka::Exception exception)
+		{
+			EXPECT_STREQ("Your type is not assaignable.", exception.getMessage());
+            throw;
+		}
+	}, Michka::Exception);
 }
 
 TEST(MapTest, atTest)

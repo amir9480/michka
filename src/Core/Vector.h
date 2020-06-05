@@ -242,6 +242,9 @@ namespace Michka
 
         template<typename T2>
         bool operator == (const Vector<T2>& _other) const;
+
+        template<typename T2>
+        FORCE_INLINE bool operator != (const Vector<T2>& _other) const;
     public:
 		/**
 		 * @brief Not found index for search functions.

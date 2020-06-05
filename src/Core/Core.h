@@ -4,6 +4,7 @@
 #include "Defines.h"
 #include "Type.h"
 #include "Memory.h"
+#include "Exception.h"
 #include "Thread.h"
 #include "String.h"
 #include "Vector.h"

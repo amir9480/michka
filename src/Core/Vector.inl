@@ -434,6 +434,13 @@ namespace Michka
     }
 
     template<typename T>
+    template<typename T2>
+    FORCE_INLINE bool Vector<T>::operator != (const Vector<T2>& _other) const
+    {
+        return !(*this == _other);
+    }
+
+    template<typename T>
     FORCE_INLINE Vector<T>& Vector<T>::operator = (const Vector<T>& _other)
     {
         clear();

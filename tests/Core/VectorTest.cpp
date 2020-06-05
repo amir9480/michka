@@ -239,6 +239,18 @@ TEST(VectorTest, RemoveTest)
 	ASSERT_EQ(a.getSize(), 0);
 }
 
+TEST(VectorTest, CompareTest)
+{
+	Michka::Vector<int> a = {1, 2, 3};
+	Michka::Vector<int> b = {1, 2, 3};
+	Michka::Vector<int> c = {3, 2, 1};
+	Michka::Vector<int> d = {1, 2, 3, 4};
+
+	ASSERT_EQ(a, b);
+	ASSERT_NE(a, c);
+	ASSERT_NE(a, d);
+}
+
 TEST(VectorTest, ReverseTest)
 {
 	Michka::Vector<int> a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};

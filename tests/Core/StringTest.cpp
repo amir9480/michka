@@ -208,6 +208,13 @@ TEST(StringTest, NumberToStringTest)
 
 	ASSERT_TRUE(Michka::String8::number(123) == "123");
 	ASSERT_TRUE(Michka::String32::number(123) == U"123");
+
+	EXPECT_THROW({
+		Michka::String::number(0xf, 17);
+	}, Michka::Exception);
+	EXPECT_THROW({
+		Michka::String::number(0xf, 1);
+	}, Michka::Exception);
 }
 
 TEST(StringTest, StringToNumberTest)
@@ -243,6 +250,13 @@ TEST(StringTest, StringToNumberTest)
 		ASSERT_EQ(test.toNumber<float>(), float(3.1415f));
 		ASSERT_EQ(test.toNumber<double>(), double(3.1415));
 		ASSERT_EQ(test.toNumber<long double>(), long double(3.1415));
+
+		EXPECT_THROW({
+			test.toNumber<int>(17);
+		}, Michka::Exception);
+		EXPECT_THROW({
+			test.toNumber<int>(1);
+		}, Michka::Exception);
 	}
 	{
 		Michka::String8 test = "12345";

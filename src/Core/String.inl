@@ -1,6 +1,7 @@
 #include "String.h"
 #include "Helpers.h"
 #include "Type.h"
+#include "Exception.h"
 
 namespace Michka
 {
@@ -248,7 +249,10 @@ namespace Michka
 	template<typename NumberType>
 	StringTemplate<T> StringTemplate<T>::number(NumberType _number, const u8& _base)
 	{
-		MICHKA_ASSERT(_base >= 2 && _base <= 16, "String::number(...): Base must be between 2 & 16.");
+		if (_base < 2 || _base > 16)
+		{
+			throw Exception("String::number(...): Base must be between 2 & 16.");
+		}
 		static const StringTemplate<T> numberCharacters = "0123456789abcdef";
 		StringTemplate<T> out;
 		out.resize((sizeof(NumberType) * 8) + 1);
@@ -420,7 +424,10 @@ namespace Michka
 	template<typename NumberType>
 	NumberType StringTemplate<T>::toNumber(const u32& _base)const
 	{
-		MICHKA_ASSERT(_base >= 2 && _base <= 16, "String::number(...): Base must be between 2 & 16.");
+		if (_base < 2 || _base > 16)
+		{
+			throw Exception("String::number(...): Base must be between 2 & 16.");
+		}
 		static const StringTemplate<T> numberCharacters = "0123456789abcdef";
 		NumberType out = 0;
 		u32 index = 0, iterator = 0, size = getSize();

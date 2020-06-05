@@ -1,4 +1,5 @@
 #include "Map.h"
+#include "Exception.h"
 
 namespace Michka
 {
@@ -181,7 +182,10 @@ namespace Michka
     FORCE_INLINE TValue Map<TKey, TValue>::operator [] (const TKey& _key) const
     {
         u32 index = indexOfKey(_key);
-        MICHKA_ASSERT(index == mData.notFound, "Key not found.");
+        if (index == mData.notFound)
+        {
+            throw Exception("Key not found.");
+        }
 
         return mData[index].second;
     }
@@ -200,7 +204,7 @@ namespace Michka
             }
             else
             {
-                MICHKA_ASSERT(false, "Your type is not assaignable");
+                throw Exception("Your type is not assaignable.");
             }
         }
 
