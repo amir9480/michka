@@ -73,6 +73,29 @@ namespace Michka
         Vector<T> getFiltered(const std::function<bool(const T&)>& _callback) const;
 
         /**
+         * @brief Get reversed copy of the vector.
+         *
+         * @return Reversed Vector
+         */
+        Vector<T> getReversed() const;
+
+        /**
+         * @brief Get sorted copy of this vector.
+         *
+         * @param _direction
+         * @return Sorted Vector
+         */
+        Vector<T> getSorted(const SortDirection& _direction = SortDirection::Ascending) const;
+
+        /**
+         * @brief Get sorted copy of this vector with custom callback.
+         *
+         * @param _callback
+         * @return Sorted Vector
+         */
+        Vector<T> getSorted(const std::function<bool(const T&, const T&)>& _callback) const;
+
+        /**
          * @brief Find index of a value with offset of from.
          *
          * @param _what
@@ -187,12 +210,38 @@ namespace Michka
          */
         Vector<T>& resize(const u32& _newCapacity);
 
+        /**
+         * @brief Reverse the vector.
+         *
+         * @return Self
+         */
+        Vector<T>& reverse();
+
+        /**
+         * @brief Sort vector.
+         *
+         * @param _direction
+         * @return Self
+         */
+        Vector<T>& sort(const SortDirection& _direction = SortDirection::Ascending);
+
+        /**
+         * @brief Sort vector with a custom callback.
+         *
+         * @param _callback
+         * @return Self
+         */
+        Vector<T>& sort(const std::function<bool(const T&, const T&)>& _callback);
+
         FORCE_INLINE Vector<T>& operator = (const std::initializer_list<T>& _array);
         FORCE_INLINE Vector<T>& operator = (const Vector<T>& _other);
         Vector<T>& operator = (Vector<T>&& _other);
 
 		FORCE_INLINE T& operator [] (const u32& _index);
 		FORCE_INLINE T operator [] (const u32& _index) const;
+
+        template<typename T2>
+        bool operator == (const Vector<T2>& _other) const;
     public:
 		/**
 		 * @brief Not found index for search functions.

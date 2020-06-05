@@ -1,6 +1,8 @@
 #ifndef __HELPERS_H__
 #define __HELPERS_H__
 
+#include <functional>
+
 #define MICHKA_ASSERT(_CONDITION, _MESSAGE)
 
 #define MICHKA_GLUE(_X, _Y) _X _Y
@@ -30,17 +32,55 @@
 
 namespace Michka
 {
+	enum SortDirection
+	{
+		Ascending,
+		Descending
+	};
+
 	/**
 	 * @brief Swap two variable value.
 	 */
 	template<typename T>
 	FORCE_INLINE void swap(T& _a, T& _b);
 
+	/**
+	 * @brief Get minimum between two numbers.
+	 *
+	 * @param _a
+	 * @param _b
+	 */
 	template<typename T>
 	FORCE_INLINE const T& min(const T& _a, const T& _b);
 
+	/**
+	 * @brief Get maximum between two numbers.
+	 *
+	 * @param _a
+	 * @param _b
+	 */
 	template<typename T>
 	FORCE_INLINE const T& max(const T& _a, const T& _b);
+
+	/**
+	 * @brief Sort any iteratable.
+	 *
+	 * @tparam T
+	 * @param _array
+	 * @param _direction
+	 */
+	template<typename T>
+	FORCE_INLINE void sort(T*& _array, const u32& _size, const SortDirection& _direction);
+
+	/**
+	 * @brief Sort any iteratable with custom callback.
+	 *
+	 * @tparam T
+	 * @param _array
+	 * @param _callback
+	 */
+	template<typename T>
+	FORCE_INLINE void sort(T*& _array, const u32& _size, const std::function<bool(const T&, const T&)>& _callback);
 }
 
 #include "Helpers.inl"

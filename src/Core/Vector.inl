@@ -1,5 +1,6 @@
 #include "Vector.h"
 #include "Memory.h"
+#include "Helpers.h"
 
 namespace Michka
 {
@@ -114,6 +115,33 @@ namespace Michka
         {
             out.pushBack(mData[i]);
         }
+
+        return out;
+    }
+
+    template<typename T>
+    Vector<T> Vector<T>::getReversed() const
+    {
+        Vector<T> out = *this;
+        out.reverse();
+
+        return out;
+    }
+
+    template<typename T>
+    Vector<T> Vector<T>::getSorted(const SortDirection& _direction) const
+    {
+        Vector<T> out = *this;
+        out.sort(_direction);
+
+        return out;
+    }
+
+    template<typename T>
+    Vector<T> Vector<T>::getSorted(const std::function<bool(const T&, const T&)>& _callback) const
+    {
+        Vector<T> out = *this;
+        out.sort(_callback);
 
         return out;
     }
@@ -351,11 +379,58 @@ namespace Michka
     }
 
     template<typename T>
+    Vector<T>& Vector<T>::reverse()
+    {
+        u32 mSizeOnTwo = mSize/2;
+        for (u32 i = 0; i < mSizeOnTwo; i++)
+        {
+            Michka::swap(mData[i], mData[(mSize - 1) - i]);
+        }
+
+        return *this;
+    }
+
+    template<typename T>
+    Vector<T>& Vector<T>::sort(const SortDirection& _direction)
+    {
+        Michka::sort(mData, mSize, _direction);
+
+        return *this;
+    }
+
+    template<typename T>
+    Vector<T>& Vector<T>::sort(const std::function<bool(const T&, const T&)>& _callback)
+    {
+        Michka::sort(mData, mSize, _callback);
+
+        return *this;
+    }
+
+    template<typename T>
     FORCE_INLINE Vector<T>& Vector<T>::operator = (const std::initializer_list<T>& _array)
     {
         clear();
         insert(0, _array.begin(), u32(_array.size()));
         return *this;
+    }
+
+    template<typename T>
+    template<typename T2>
+    bool Vector<T>::operator == (const Vector<T2>& _other) const
+    {
+        if (mSize != _other.mSize)
+        {
+            return false;
+        }
+        for (u32 i = 0; i < mSize; i++)
+        {
+            if (mData[i] != _other.mData[i])
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     template<typename T>

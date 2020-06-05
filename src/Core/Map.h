@@ -40,8 +40,8 @@ namespace Michka
          * @param _index
          * @return Element
          */
-		FORCE_INLINE Element& at (const u32& _index);
-		FORCE_INLINE Element at (const u32& _index) const;
+		FORCE_INLINE Element& at(const u32& _index);
+		FORCE_INLINE Element at(const u32& _index) const;
 
         /**
          * @brief Iterator to begin of array.

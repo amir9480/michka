@@ -239,6 +239,17 @@ TEST(VectorTest, RemoveTest)
 	ASSERT_EQ(a.getSize(), 0);
 }
 
+TEST(VectorTest, ReverseTest)
+{
+	Michka::Vector<int> a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+	Michka::Vector<int> aReversed = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+	Michka::Vector<int> b = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+	Michka::Vector<int> bReversed = {9, 8, 7, 6, 5, 4, 3, 2, 1};
+
+	ASSERT_EQ(a.getReversed(), aReversed);
+	ASSERT_EQ(b.getReversed(), bReversed);
+}
+
 TEST(VectorTest, FilterTest)
 {
 	auto filterFunction = [] (const int& _item)
@@ -262,4 +273,32 @@ TEST(VectorTest, FilterTest)
 	ASSERT_EQ(a[2], 6);
 	ASSERT_EQ(a[3], 8);
 	ASSERT_EQ(a[4], 10);
+}
+
+TEST(VectorTest, SortTest)
+{
+	{
+		Michka::Vector<int> a = {4, 7, 1779, 832, 4349, 2476, 3176, 3894, 1219, 1537, 910, 2699, 1207, 2858, 3850, 2871, 4937, 4954, 2759, 2254, 3414, 1860, 3686, 8, 5};
+		Michka::Vector<int> aSorted = {4, 5, 7, 8, 832, 910, 1207, 1219, 1537, 1779, 1860, 2254, 2476, 2699, 2759, 2858, 2871, 3176, 3414, 3686, 3850, 3894, 4349, 4937, 4954};
+
+		ASSERT_EQ(a.getSorted(), aSorted);
+		ASSERT_EQ(a.getSorted(Michka::SortDirection::Descending), aSorted.getReversed());
+	}
+	{
+		Michka::Vector<Michka::String> a = {"Hello", "Hi", "World", "This is awesome", "Michka"};
+		Michka::Vector<Michka::String> aSorted = {"Hi", "World", "Hello", "Michka", "This is awesome"};
+		Michka::Vector<Michka::String> b;
+
+		b = a.getSorted([] (const Michka::String& a, const Michka::String& b)
+		{
+			return a.getLength() < b.getLength();
+		});
+		ASSERT_TRUE(b == aSorted);
+
+		b = a.getSorted([] (const Michka::String& a, const Michka::String& b)
+		{
+			return a.getLength() > b.getLength();
+		});
+		ASSERT_TRUE(b == aSorted.getReversed());
+	}
 }

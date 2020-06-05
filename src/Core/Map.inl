@@ -202,7 +202,6 @@ namespace Michka
             {
                 MICHKA_ASSERT(false, "Your type is not assaignable");
             }
-
         }
 
         return mData[index].second;
