@@ -55,17 +55,17 @@ namespace Michka
         Vector<T>& filter(const std::function<bool(const T&)>& _callback);
 
         /**
-         * @brief Get count of items in vector.
-         */
-        FORCE_INLINE u32 getSize() const;
-
-        /**
          * @brief Get capacity of vector.
          */
         FORCE_INLINE u32 getCapacity() const;
 
         /**
-         * @brief Get filter vector by a compare callback.
+         * @brief Get count of items in vector.
+         */
+        FORCE_INLINE u32 getSize() const;
+
+        /**
+         * @brief Get filtered vector by a compare callback.
          *
          * @param _callback
          * @return Filtered Vector
@@ -258,10 +258,26 @@ namespace Michka
         Vector<T>& sort(const std::function<bool(const T&, const T&)>& _callback);
 
         /**
+         * @brief Swap two values at specific indexes.
+         *
+         * @param _index1
+         * @param _index2
+         * @return Self
+         */
+        FORCE_INLINE Vector<T>& swap(const u32& _index1, const u32& _index2);
+
+        /**
+         * @brief Swap values of this vector with another vector.
+         *
+         * @param _other
+         * @return Self
+         */
+        FORCE_INLINE Vector<T>& swap(Vector<T>& _other);
+
+        /**
          * @brief Get value of specific index and then remove it.
          *
          * @param _index
-         * @return T
          */
         T take(const u32& _index);
 
@@ -297,9 +313,9 @@ namespace Michka
 		static const u32 notFound = u32Info::max;
 
     protected:
-        T* mData = nullptr;
-        u32 mSize = 0;
-        u32 mCapacity = 0;
+        T*               mData = nullptr;
+        u32              mSize = 0;
+        u32              mCapacity = 0;
         static const u32 capacityStep = 8;
     };
 }

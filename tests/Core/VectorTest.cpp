@@ -379,3 +379,21 @@ TEST(VectorTest, OperatorAddTest)
 	a += b;
 	ASSERT_EQ(a, ab);
 }
+
+TEST(VectorTest, SwapTest)
+{
+	Michka::Vector<int> a = {1, 2, 3, 4, 5};
+	Michka::Vector<int> b = {5, 6, 7, 8, 9, 10};
+	Michka::Vector<int> c = a;
+	Michka::Vector<int> d = b;
+
+	a.swap(b);
+
+	ASSERT_EQ(b, c);
+	ASSERT_EQ(a, d);
+
+	a.swap(0, 4);
+
+	ASSERT_EQ(a[0], 9);
+	ASSERT_EQ(a[4], 5);
+}

@@ -25,6 +25,7 @@ TEST(MapTest, KeyValueTest)
 		{"y", Person("person Duplicate")},
 		{"z", Person("person z")},
 	};
+	Michka::Map<Michka::String, int> c;
 
 	ASSERT_EQ(a.getSize(), 3);
 	ASSERT_EQ(b.getSize(), 4);
@@ -64,6 +65,10 @@ TEST(MapTest, KeyValueTest)
             throw;
 		}
 	}, Michka::Exception);
+
+	EXPECT_NO_THROW({
+		int testInt = c["undefined"];
+	});
 }
 
 TEST(MapTest, IsEmptyTest)
@@ -202,4 +207,82 @@ TEST(MapTest, RemoveTest)
 	ASSERT_TRUE(a.hasKey("a"));
 	ASSERT_FALSE(a.hasKey("b"));
 	ASSERT_TRUE(a.hasKey("c"));
+}
+
+TEST(MapTest, GetValueTest)
+{
+	Michka::Map<Michka::String, int> a = {
+		{"a", 1},
+		{"b", 2},
+	};
+
+	ASSERT_EQ(a.getValue("a", 10), 1);
+	ASSERT_EQ(a.getValue("b", 20), 2);
+	ASSERT_EQ(a.getValue("c", 30), 30);
+}
+
+TEST(MapTest, FilterTest)
+{
+	Michka::Map<Michka::String, int> a = {
+		{"a", 1},
+		{"b", 2},
+		{"c", 3},
+		{"d", 4},
+		{"e", 5},
+		{"f", 6},
+		{"g", 7},
+		{"h", 8},
+		{"i", 9},
+	};
+
+	Michka::Map<Michka::String, int> aFiltered = a.getFiltered([] (auto element) {
+		return element.value() % 2 == 0;
+	});
+
+	ASSERT_EQ(aFiltered.getSize(), 4);
+	ASSERT_EQ(aFiltered["b"], 2);
+
+	aFiltered.filter([] (auto element) {
+		return element.key() == "b";
+	});
+
+	ASSERT_EQ(aFiltered.getSize(), 1);
+	ASSERT_EQ(aFiltered["b"], 2);
+}
+
+TEST(MapTest, TakeTest)
+{
+	Michka::Map<Michka::String, int> a = {
+		{"a", 1},
+		{"b", 2},
+	};
+
+	ASSERT_EQ(a.take("a"), 1);
+	ASSERT_EQ(a.getSize(), 1);
+	ASSERT_EQ(a.take("b"), 2);
+}
+
+TEST(MapTest, SwapTest)
+{
+	Michka::Map<Michka::String, int> a = {
+		{"a", 1},
+		{"b", 2},
+	};
+	Michka::Map<Michka::String, int> b = {
+		{"c", 3},
+		{"d", 4},
+		{"e", 5},
+	};
+	Michka::Map<Michka::String, int> c = a;
+	Michka::Map<Michka::String, int> d = b;
+
+	a.swap(b);
+
+	ASSERT_EQ(b, c);
+	ASSERT_EQ(a, d);
+
+	a.swap("c", "d");
+
+	ASSERT_EQ(a["c"], 4);
+	ASSERT_EQ(a["d"], 3);
 }

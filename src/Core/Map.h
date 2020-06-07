@@ -79,14 +79,39 @@ namespace Michka
         FORCE_INLINE ConstIterator end() const;
 
         /**
-         * @brief Get count of items in map.
+         * @brief Filter map items by a callback.
+         *
+         * @param _callback
+         * @return Self
          */
-        FORCE_INLINE u32 getSize() const;
+        FORCE_INLINE Map<TKey, TValue>& filter(const std::function<bool(const Element&)>& _callback);
 
         /**
          * @brief Get capacity of map.
          */
         FORCE_INLINE u32 getCapacity() const;
+
+        /**
+         * @brief Get filtered map by a compare callback.
+         *
+         * @param _callback
+         * @return Filtered Vector
+         */
+        FORCE_INLINE Map<TKey, TValue> getFiltered(const std::function<bool(const Element&)>& _callback) const;
+
+        /**
+         * @brief Get count of items in map.
+         */
+        FORCE_INLINE u32 getSize() const;
+
+        /**
+         * @brief Get value of a key. if not exists returns default.
+         *
+         * @param _key
+         * @param _default
+         * @return Value of key
+         */
+        FORCE_INLINE TValue getValue(const TKey& _key, const TValue& _default = TValue()) const;
 
         /**
          * @brief Check specific key exists.
@@ -148,6 +173,37 @@ namespace Michka
          * @return Self
          */
         FORCE_INLINE Map<TKey, TValue>& remove(const TKey& _key);
+
+        /**
+         * @brief Resize capacity of map.
+         *
+         * @return Self
+         */
+        FORCE_INLINE Map<TKey, TValue>& resize(const u32& _newCapacity);
+
+        /**
+         * @brief Swap two values at specific keys.
+         *
+         * @param _key1
+         * @param _key2
+         * @return Self
+         */
+        FORCE_INLINE Map<TKey, TValue>& swap(const TKey& _key1, const TKey& _key2);
+
+        /**
+         * @brief Swap values of this map with another vector.
+         *
+         * @param _other
+         * @return Self
+         */
+        FORCE_INLINE Map<TKey, TValue>& swap(Map<TKey, TValue>& _other);
+
+        /**
+         * @brief Get value of specific key and then remove it.
+         *
+         * @param _key
+         */
+        FORCE_INLINE TValue take(const TKey& _key);
 
         Map<TKey, TValue>& operator = (const std::initializer_list<Element>& _array);
         Map<TKey, TValue>& operator = (const Map<TKey, TValue>& _other);

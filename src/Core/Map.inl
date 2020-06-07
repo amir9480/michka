@@ -128,6 +128,14 @@ namespace Michka
     }
 
     template<typename TKey, typename TValue>
+    FORCE_INLINE Map<TKey, TValue>& Map<TKey, TValue>::filter(const std::function<bool(const Element&)>& _callback)
+    {
+        *this = getFiltered(_callback);
+
+        return *this;
+    }
+
+    template<typename TKey, typename TValue>
     FORCE_INLINE u32 Map<TKey, TValue>::getSize() const
     {
         return mData.getSize();
@@ -137,6 +145,26 @@ namespace Michka
     FORCE_INLINE u32 Map<TKey, TValue>::getCapacity() const
     {
         return mData.getCapacity();
+    }
+
+    template<typename TKey, typename TValue>
+    FORCE_INLINE Map<TKey, TValue> Map<TKey, TValue>::getFiltered(const std::function<bool(const Element&)>& _callback) const
+    {
+        Michka::Map<TKey, TValue> out;
+        out.mData = mData.getFiltered(_callback);
+
+        return out;
+    }
+
+    template<typename TKey, typename TValue>
+    FORCE_INLINE TValue Map<TKey, TValue>::getValue(const TKey& _key, const TValue& _default) const
+    {
+        u32 index = indexOfKey(_key);
+        if (index != notFound) {
+            return mData[index].second;
+        }
+
+        return _default;
     }
 
     template<typename TKey, typename TValue>
@@ -205,6 +233,36 @@ namespace Michka
     }
 
     template<typename TKey, typename TValue>
+    FORCE_INLINE Map<TKey, TValue>& Map<TKey, TValue>::resize(const u32& _newCapacity)
+    {
+        mData.resize(_newCapacity);
+
+        return *this;
+    }
+
+    template<typename TKey, typename TValue>
+    FORCE_INLINE Map<TKey, TValue>& Map<TKey, TValue>::swap(const TKey& _key1, const TKey& _key2)
+    {
+        Michka::swap(mData[indexOfKey(_key1)].second, mData[indexOfKey(_key2)].second);
+
+        return *this;
+    }
+
+    template<typename TKey, typename TValue>
+    FORCE_INLINE Map<TKey, TValue>& Map<TKey, TValue>::swap(Map<TKey, TValue>& _other)
+    {
+        mData.swap(_other.mData);
+
+        return *this;
+    }
+
+    template<typename TKey, typename TValue>
+    FORCE_INLINE TValue Map<TKey, TValue>::take(const TKey& _key)
+    {
+        return mData.take(indexOfKey(_key)).second;
+    }
+
+    template<typename TKey, typename TValue>
     FORCE_INLINE Map<TKey, TValue>& Map<TKey, TValue>::insert(TKey&& _key, TValue&& _value)
     {
         u32 index = indexOfKey(_key);
@@ -230,7 +288,7 @@ namespace Michka
     template<typename TKey, typename TValue>
     Map<TKey, TValue>& Map<TKey, TValue>::operator = (const Map<TKey, TValue>& _other)
     {
-        mData = _other;
+        mData = _other.mData;
 
         return *this;
     }

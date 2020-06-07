@@ -431,6 +431,24 @@ namespace Michka
     }
 
     template<typename T>
+    FORCE_INLINE Vector<T>& Vector<T>::swap(const u32& _index1, const u32& _index2)
+    {
+        Michka::swap(mData[_index1], mData[_index2]);
+
+        return *this;
+    }
+
+    template<typename T>
+    FORCE_INLINE Vector<T>& Vector<T>::swap(Vector<T>& _other)
+    {
+        Michka::swap(mData, _other.mData);
+        Michka::swap(mSize, _other.mSize);
+        Michka::swap(mCapacity, _other.mCapacity);
+
+        return *this;
+    }
+
+    template<typename T>
     T Vector<T>::take(const u32& _index)
     {
         T value = std::move(mData[_index]);
