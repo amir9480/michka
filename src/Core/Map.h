@@ -15,13 +15,21 @@ namespace Michka
             Element(TKey&& _first, TValue&& _second): Pair(std::forward<TKey>(_first), std::forward<TValue>(_second)) {}
             Element(const TKey& _first, const TValue& _second) : Pair(_first, _second) {}
             Element(const Element& _other) : Pair(_other) {}
-            Element(Element&& _other) : Pair(std::forward<Pair<TKey, TValue>>(_other)) {}
+            Element(Element&& _other) : Pair(std::forward<Element>(_other)) {}
             ~Element() {}
 
             TKey& key();
             TKey key() const;
             TValue& value();
             TValue value() const;
+
+            using Pair<TKey, TValue>::operator =;
+
+            Element& operator = (const Element& _other);
+            Element& operator = (Element&& _other);
+
+            bool operator == (const Element& _other) const;
+            bool operator != (const Element& _other) const;
         };
 
         typedef Element* Iterator;
@@ -81,6 +89,22 @@ namespace Michka
         FORCE_INLINE u32 getCapacity() const;
 
         /**
+         * @brief Check specific key exists.
+         *
+         * @param _key
+         * @return true if exists
+         */
+        FORCE_INLINE bool hasKey(const TKey& _key) const;
+
+        /**
+         * @brief Check specific value exists.
+         *
+         * @param _value
+         * @return true if exists
+         */
+        FORCE_INLINE bool hasValue(const TValue& _value) const;
+
+        /**
          * @brief Find index of a key.
          *
          * @param _what
@@ -107,12 +131,40 @@ namespace Michka
         FORCE_INLINE Map<TKey, TValue>& insert(const TKey& _key, const TValue& _value);
         FORCE_INLINE Map<TKey, TValue>& insert(TKey&& _key, TValue&& _value);
 
+		/**
+		 * @brief Check map is empty.
+		 */
+		FORCE_INLINE bool isEmpty() const;
+
+		/**
+		 * @brief Check map is not empty.
+		 */
+		FORCE_INLINE bool isNotEmpty() const;
+
+        /**
+         * @brief Remove specific key.
+         *
+         * @param _key
+         * @return Self
+         */
+        FORCE_INLINE Map<TKey, TValue>& remove(const TKey& _key);
+
         Map<TKey, TValue>& operator = (const std::initializer_list<Element>& _array);
         Map<TKey, TValue>& operator = (const Map<TKey, TValue>& _other);
         Map<TKey, TValue>& operator = (Map<TKey, TValue>&& _other);
 
 		FORCE_INLINE TValue& operator [] (const TKey& _key);
 		FORCE_INLINE TValue operator [] (const TKey& _key) const;
+
+        FORCE_INLINE bool operator == (const Map<TKey, TValue>& _other) const;
+        FORCE_INLINE bool operator != (const Map<TKey, TValue>& _other) const;
+
+    public:
+    /**
+     * @brief Not found index for search functions.
+     */
+    static const u32 notFound = Vector<Element>::notFound;
+
     protected:
         Vector<Element> mData;
     };

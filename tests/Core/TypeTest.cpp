@@ -36,7 +36,7 @@ class MichkaTestClass {};
 union MichkaTestUnion {};
 enum MichkaTestEnum {};
 
-TEST(TypeTest, TypeRangeTest)
+TEST(TypeTest, RangeTest)
 {
     ASSERT_TRUE(true);
     TYPE_TEST(short, "short int");
@@ -77,7 +77,7 @@ TEST(TypeTest, TypeRangeTest)
     ASSERT_TRUE(Michka::Type<MichkaTestEnum>::isEnum);
 }
 
-TEST(TypeTest, TypeCompareTest)
+TEST(TypeTest, CompareTest)
 {
     int a = 100;
     ASSERT_FALSE(Michka::Type<int>::is<float>());
@@ -86,7 +86,7 @@ TEST(TypeTest, TypeCompareTest)
     ASSERT_TRUE(Michka::Type<decltype(a)>::is<int>());
 }
 
-TEST(TypeTest, TypeHasOperatorTest)
+TEST(TypeTest, HasOperatorTest)
 {
     int a = 100;
     ASSERT_TRUE(Michka::Type<decltype(a)>::hasOperator<const int>::equal);

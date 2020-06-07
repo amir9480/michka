@@ -6,7 +6,7 @@
 #include "Core/Vector.h"
 #include "../Classes/Person.h"
 
-TEST(VectorTest, VectorSetTest)
+TEST(VectorTest, SetTest)
 {
 	Michka::Vector<int> a = {1};
 	Michka::Vector<Person> b = {Person("A")};
@@ -46,7 +46,7 @@ TEST(VectorTest, VectorSetTest)
 
 }
 
-TEST(VectorTest, VectorPushTest)
+TEST(VectorTest, PushTest)
 {
 	Michka::Vector<int> a = {1};
 	Michka::Vector<Person> b = {Person("A")};
@@ -71,9 +71,24 @@ TEST(VectorTest, VectorPushTest)
 	ASSERT_TRUE(b[1] == Person("A"));
 	ASSERT_TRUE(a[2] == 2);
 	ASSERT_TRUE(b[2] == Person("B"));
+
+	a << 500 << 5000;
+	b << Person("Hi") << Person("Hi Again");
+	ASSERT_EQ(a.getSize(), 5);
+	ASSERT_EQ(b.getSize(), 5);
+	ASSERT_TRUE(a[0] == 50);
+	ASSERT_TRUE(b[0] == Person("Hello"));
+	ASSERT_TRUE(a[1] == 1);
+	ASSERT_TRUE(b[1] == Person("A"));
+	ASSERT_TRUE(a[2] == 2);
+	ASSERT_TRUE(b[2] == Person("B"));
+	ASSERT_TRUE(a[3] == 500);
+	ASSERT_TRUE(b[3] == Person("Hi"));
+	ASSERT_TRUE(a[4] == 5000);
+	ASSERT_TRUE(b[4] == Person("Hi Again"));
 }
 
-TEST(VectorTest, VectorInsertTest)
+TEST(VectorTest, InsertTest)
 {
 	Michka::Vector<int> a = {1, 2};
 	Michka::Vector<Person> b = {Person("A"), Person("B")};
@@ -118,7 +133,7 @@ TEST(VectorTest, VectorInsertTest)
 	ASSERT_TRUE(c[2] == 20);
 }
 
-TEST(VectorTest, VectorResizeTest)
+TEST(VectorTest, ResizeTest)
 {
 	Michka::Vector<int> a = {1, 2};
 	ASSERT_EQ(a.getSize(), 2);
@@ -128,6 +143,15 @@ TEST(VectorTest, VectorResizeTest)
 	ASSERT_EQ(a.getCapacity(), 16);
 	ASSERT_EQ(a[0], 1);
 	ASSERT_EQ(a[1], 2);
+}
+
+TEST(VectorTest, EmptyTest)
+{
+	Michka::Vector<int> a;
+	Michka::Vector<int> b = {1, 2};
+
+	ASSERT_TRUE(a.isEmpty());
+	ASSERT_TRUE(b.isNotEmpty());
 }
 
 TEST(VectorTest, ConstantVectorTest)
@@ -231,6 +255,12 @@ TEST(VectorTest, RemoveTest)
 	ASSERT_EQ(a[1], 10);
 	ASSERT_EQ(a[2], 2);
 
+	a.remove(3); // remove out of range
+	a.remove(5);
+	ASSERT_EQ(a.getSize(), 3);
+	ASSERT_EQ(a[1], 10);
+	ASSERT_EQ(a[2], 2);
+
 	a.remove(1, Michka::u32Info::max);
 	ASSERT_EQ(a.getSize(), 1);
 	ASSERT_EQ(a[0], 2);
@@ -313,4 +343,39 @@ TEST(VectorTest, SortTest)
 		});
 		ASSERT_TRUE(b == aSorted.getReversed());
 	}
+}
+
+TEST(VectorTest, TakeAndPopTest)
+{
+	Michka::Vector<int> a = {1, 2, 4, 9, 10};
+
+	ASSERT_EQ(a.popBack(), 10);
+	ASSERT_EQ(a.getSize(), 4);
+	ASSERT_EQ(a[3], 9);
+
+	ASSERT_EQ(a.popFront(), 1);
+	ASSERT_EQ(a.getSize(), 3);
+	ASSERT_EQ(a[0], 2);
+	ASSERT_EQ(a[1], 4);
+	ASSERT_EQ(a[2], 9);
+
+	ASSERT_EQ(a.take(1), 4);
+	ASSERT_EQ(a.getSize(), 2);
+	ASSERT_EQ(a[0], 2);
+	ASSERT_EQ(a[1], 9);
+
+	ASSERT_EQ(a.popFront(), 2);
+	ASSERT_EQ(a.popBack(), 9);
+}
+
+TEST(VectorTest, OperatorAddTest)
+{
+	Michka::Vector<int> a = {1, 2, 3, 4, 5};
+	Michka::Vector<int> b = {5, 6, 7, 8, 9, 10};
+	Michka::Vector<int> ab = {1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10};
+
+	ASSERT_EQ(a + b, ab);
+
+	a += b;
+	ASSERT_EQ(a, ab);
 }

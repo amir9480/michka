@@ -113,14 +113,14 @@ int main()
     //     std::cout << i.key() << " - " << i.value() << std::endl;
     // }
 
-    // Map<String, String> a;
-    // a["hello"] = "World";
-    // std::cout << a.getSize() << std::endl;
-    // std::cout << a["hello"] << std::endl;
+    const Map<String, String> a;
+    std::cout << a.getSize() << std::endl;
+    std::cout << a["heallo"] << std::endl;
 
-    Vector<int> a = {4, 7, 1779,832,4349,2476,3176,3894,1219,1537,910,2699,1207,2858,3850,2871,4937,4954,2759,2254,3414,1860,3686, 8, 5};
-    a.sort();
-    std::cout << a << std::endl;
+
+    // Vector<int> a = {4, 7, 1779,832,4349,2476,3176,3894,1219,1537,910,2699,1207,2858,3850,2871,4937,4954,2759,2254,3414,1860,3686, 8, 5};
+    // a.sort();
+    // std::cout << a << std::endl;
 
 
     // std::chrono::steady_clock::time_point begin, end;

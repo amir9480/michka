@@ -28,6 +28,36 @@ namespace Michka
     }
 
     template<typename TKey, typename TValue>
+    bool Map<TKey, TValue>::Element::operator == (const Map<TKey, TValue>::Element& _other) const
+    {
+        return first == _other.first && second == _other.second;
+    }
+
+    template<typename TKey, typename TValue>
+    bool Map<TKey, TValue>::Element::operator != (const Map<TKey, TValue>::Element& _other) const
+    {
+        return !(*this == _other);
+    }
+
+    template<typename TKey, typename TValue>
+    typename Map<TKey, TValue>::Element& Map<TKey, TValue>::Element::operator = (const Map<TKey, TValue>::Element& _other)
+    {
+        first = _other.first;
+        second = _other.second;
+
+        return *this;
+    }
+
+    template<typename TKey, typename TValue>
+    typename Map<TKey, TValue>::Element& Map<TKey, TValue>::Element::operator = (Map<TKey, TValue>::Element&& _other)
+    {
+        first = std::move(_other.first);
+        second = std::move(_other.second);
+
+        return *this;
+    }
+
+    template<typename TKey, typename TValue>
     FORCE_INLINE Map<TKey, TValue>::Map()
     {
     }
@@ -110,6 +140,18 @@ namespace Michka
     }
 
     template<typename TKey, typename TValue>
+    FORCE_INLINE bool Map<TKey, TValue>::hasKey(const TKey& _key) const
+    {
+        return indexOfKey(_key) != notFound;
+    }
+
+    template<typename TKey, typename TValue>
+    FORCE_INLINE bool Map<TKey, TValue>::hasValue(const TValue& _value) const
+    {
+        return indexOfValue(_value) != notFound;
+    }
+
+    template<typename TKey, typename TValue>
     FORCE_INLINE u32 Map<TKey, TValue>::indexOfKey(const TKey& _what) const
     {
         return mData.indexOf([=] (const Element& _element)
@@ -134,6 +176,29 @@ namespace Michka
         if (index == mData.notFound)
         {
             mData.pushBack(Element(_key, _value));
+        }
+
+        return *this;
+    }
+
+    template<typename TKey, typename TValue>
+    FORCE_INLINE bool Map<TKey, TValue>::isEmpty() const
+    {
+        return mData.isEmpty();
+    }
+
+    template<typename TKey, typename TValue>
+    FORCE_INLINE bool Map<TKey, TValue>::isNotEmpty() const
+    {
+        return mData.isNotEmpty();
+    }
+
+    template<typename TKey, typename TValue>
+    FORCE_INLINE Map<TKey, TValue>& Map<TKey, TValue>::remove(const TKey& _key)
+    {
+        if (u32 index = indexOfKey(_key) != notFound)
+        {
+            mData.remove(index);
         }
 
         return *this;
@@ -184,7 +249,7 @@ namespace Michka
         u32 index = indexOfKey(_key);
         if (index == mData.notFound)
         {
-            throw Exception("Key not found.");
+            throw Exception("Map::operator[] : Key not found.");
         }
 
         return mData[index].second;
@@ -204,10 +269,22 @@ namespace Michka
             }
             else
             {
-                throw Exception("Your type is not assaignable.");
+                throw Exception("Map::operator[] : Your type is not assaignable.");
             }
         }
 
         return mData[index].second;
+    }
+
+    template<typename TKey, typename TValue>
+    FORCE_INLINE bool Map<TKey, TValue>::operator == (const Map<TKey, TValue>& _other) const
+    {
+        return mData == _other.mData;
+    }
+
+    template<typename TKey, typename TValue>
+    FORCE_INLINE bool Map<TKey, TValue>::operator != (const Map<TKey, TValue>& _other) const
+    {
+        return !(*this == _other);
     }
 }

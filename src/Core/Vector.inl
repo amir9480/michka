@@ -98,7 +98,7 @@ namespace Michka
     }
 
     template<typename T>
-    Vector<T> Vector<T>::getFiltered(const std::function<bool(const T&)>& _callback) const
+    FORCE_INLINE Vector<T> Vector<T>::getFiltered(const std::function<bool(const T&)>& _callback) const
     {
         Vector<u32> indexes;
         indexes.resize(mSize);
@@ -120,7 +120,7 @@ namespace Michka
     }
 
     template<typename T>
-    Vector<T> Vector<T>::getReversed() const
+    FORCE_INLINE Vector<T> Vector<T>::getReversed() const
     {
         Vector<T> out = *this;
         out.reverse();
@@ -129,7 +129,7 @@ namespace Michka
     }
 
     template<typename T>
-    Vector<T> Vector<T>::getSorted(const SortDirection& _direction) const
+    FORCE_INLINE Vector<T> Vector<T>::getSorted(const SortDirection& _direction) const
     {
         Vector<T> out = *this;
         out.sort(_direction);
@@ -138,7 +138,7 @@ namespace Michka
     }
 
     template<typename T>
-    Vector<T> Vector<T>::getSorted(const std::function<bool(const T&, const T&)>& _callback) const
+    FORCE_INLINE Vector<T> Vector<T>::getSorted(const std::function<bool(const T&, const T&)>& _callback) const
     {
         Vector<T> out = *this;
         out.sort(_callback);
@@ -274,6 +274,18 @@ namespace Michka
     }
 
     template<typename T>
+    FORCE_INLINE bool Vector<T>::isEmpty() const
+    {
+        return mSize == 0;
+    }
+
+    template<typename T>
+    FORCE_INLINE bool Vector<T>::isNotEmpty() const
+    {
+        return mSize != 0;
+    }
+
+    template<typename T>
     u32 Vector<T>::lastIndexOf(const T& _what, const u32 _from) const
     {
         static_assert(Type<T>::hasOperator<>::equal, "Your type does not have operator \'==\' to comparison");
@@ -319,6 +331,18 @@ namespace Michka
     }
 
     template<typename T>
+    FORCE_INLINE T Vector<T>::popBack()
+    {
+        return take(mSize - 1);
+    }
+
+    template<typename T>
+    FORCE_INLINE T Vector<T>::popFront()
+    {
+        return take(0);
+    }
+
+    template<typename T>
     FORCE_INLINE Vector<T>& Vector<T>::pushBack(const T& _item)
     {
         return insert(getSize(), _item);
@@ -339,7 +363,7 @@ namespace Michka
     template<typename T>
     Vector<T>& Vector<T>::remove(const u32& _index, const u32& _count)
     {
-        if (_count > 0)
+        if (_count > 0 && _index < mSize)
         {
             u32 count = min(mSize - _index, _count);
             for (u32 i = _index; i < mSize - count; i++)
@@ -407,6 +431,15 @@ namespace Michka
     }
 
     template<typename T>
+    T Vector<T>::take(const u32& _index)
+    {
+        T value = std::move(mData[_index]);
+        remove(_index);
+
+        return value;
+    }
+
+    template<typename T>
     FORCE_INLINE Vector<T>& Vector<T>::operator = (const std::initializer_list<T>& _array)
     {
         clear();
@@ -441,6 +474,23 @@ namespace Michka
     }
 
     template<typename T>
+    FORCE_INLINE Vector<T>& Vector<T>::operator += (const Vector<T>& _other)
+    {
+        insert(mSize, _other);
+
+        return *this;
+    }
+
+    template<typename T>
+    FORCE_INLINE Vector<T> Vector<T>::operator + (const Vector<T>& _other) const
+    {
+        Vector<T> temp = *this;
+        temp += _other;
+
+        return temp;
+    }
+
+    template<typename T>
     FORCE_INLINE Vector<T>& Vector<T>::operator = (const Vector<T>& _other)
     {
         clear();
@@ -471,5 +521,17 @@ namespace Michka
     FORCE_INLINE T& Vector<T>::operator [] (const u32& _index)
     {
         return mData[_index];
+    }
+
+    template<typename T>
+    FORCE_INLINE Vector<T>& Vector<T>::operator << (const T& _item)
+    {
+        return pushBack(_item);
+    }
+
+    template<typename T>
+    FORCE_INLINE Vector<T>& Vector<T>::operator << (T&& _item)
+    {
+        return pushBack(std::forward<T>(_item));
     }
 }

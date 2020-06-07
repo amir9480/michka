@@ -251,7 +251,7 @@ namespace Michka
 	{
 		if (_base < 2 || _base > 16)
 		{
-			throw Exception("String::number(...): Base must be between 2 & 16.");
+			throw Exception("String::number(...) : Base must be between 2 & 16.");
 		}
 		static const StringTemplate<T> numberCharacters = "0123456789abcdef";
 		StringTemplate<T> out;
@@ -426,7 +426,7 @@ namespace Michka
 	{
 		if (_base < 2 || _base > 16)
 		{
-			throw Exception("String::number(...): Base must be between 2 & 16.");
+			throw Exception("String::number(...) : Base must be between 2 & 16.");
 		}
 		static const StringTemplate<T> numberCharacters = "0123456789abcdef";
 		NumberType out = 0;

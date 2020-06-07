@@ -70,14 +70,14 @@ namespace Michka
          * @param _callback
          * @return Filtered Vector
          */
-        Vector<T> getFiltered(const std::function<bool(const T&)>& _callback) const;
+        FORCE_INLINE Vector<T> getFiltered(const std::function<bool(const T&)>& _callback) const;
 
         /**
          * @brief Get reversed copy of the vector.
          *
          * @return Reversed Vector
          */
-        Vector<T> getReversed() const;
+        FORCE_INLINE Vector<T> getReversed() const;
 
         /**
          * @brief Get sorted copy of this vector.
@@ -85,7 +85,7 @@ namespace Michka
          * @param _direction
          * @return Sorted Vector
          */
-        Vector<T> getSorted(const SortDirection& _direction = SortDirection::Ascending) const;
+        FORCE_INLINE Vector<T> getSorted(const SortDirection& _direction = SortDirection::Ascending) const;
 
         /**
          * @brief Get sorted copy of this vector with custom callback.
@@ -93,7 +93,7 @@ namespace Michka
          * @param _callback
          * @return Sorted Vector
          */
-        Vector<T> getSorted(const std::function<bool(const T&, const T&)>& _callback) const;
+        FORCE_INLINE Vector<T> getSorted(const std::function<bool(const T&, const T&)>& _callback) const;
 
         /**
          * @brief Find index of a value with offset of from.
@@ -146,6 +146,16 @@ namespace Michka
         FORCE_INLINE Vector<T>& insert(const u32& _index, const std::initializer_list<T>& _items);
         Vector<T>& insert(const u32& _index, const T* _items, const u32& _size);
 
+		/**
+		 * @brief Check vector is empty.
+		 */
+		FORCE_INLINE bool isEmpty() const;
+
+		/**
+		 * @brief Check vector is not empty.
+		 */
+		FORCE_INLINE bool isNotEmpty() const;
+
         /**
          * @brief Find index of a value with offset of from but in reversed order.
          *
@@ -175,6 +185,20 @@ namespace Michka
          */
         template<typename T2>
         u32 lastIndexOf(const std::function<bool(const T&, const T2&)>& _callback , const T2& _what, const u32 _from = u32Info::max) const;
+
+        /**
+         * @brief Get last item value then remove it.
+         *
+         * @return Last Item Value
+         */
+        FORCE_INLINE T popBack();
+
+        /**
+         * @brief Get first item value then remove it.
+         *
+         * @return First Item Value
+         */
+        FORCE_INLINE T popFront();
 
         /**
          * @brief Add new item to end of vector.
@@ -233,6 +257,14 @@ namespace Michka
          */
         Vector<T>& sort(const std::function<bool(const T&, const T&)>& _callback);
 
+        /**
+         * @brief Get value of specific index and then remove it.
+         *
+         * @param _index
+         * @return T
+         */
+        T take(const u32& _index);
+
         FORCE_INLINE Vector<T>& operator = (const std::initializer_list<T>& _array);
         FORCE_INLINE Vector<T>& operator = (const Vector<T>& _other);
         Vector<T>& operator = (Vector<T>&& _other);
@@ -245,6 +277,19 @@ namespace Michka
 
         template<typename T2>
         FORCE_INLINE bool operator != (const Vector<T2>& _other) const;
+
+        FORCE_INLINE Vector<T>& operator += (const Vector<T>& _other);
+        FORCE_INLINE Vector<T> operator + (const Vector<T>& _other) const;
+
+        /**
+         * @brief Same push back.
+         * @sa pushBack
+         *
+         * @param _item
+         * @return Self
+         */
+        FORCE_INLINE Vector<T>& operator << (const T& _item);
+        FORCE_INLINE Vector<T>& operator << (T&& _item);
     public:
 		/**
 		 * @brief Not found index for search functions.

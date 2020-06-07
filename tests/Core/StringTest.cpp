@@ -9,7 +9,7 @@ TEST(StringTest, CreateDefaultStringTest)
 	ASSERT_EQ(test.getSize(), 0);
 }
 
-TEST(StringTest, StringSizeTest)
+TEST(StringTest, SizeTest)
 {
 	Michka::String test = L"Hello";
 	ASSERT_EQ(test.getSize(), 5);
@@ -89,7 +89,7 @@ TEST(StringTest, CreateStringTest)
 	}
 }
 
-TEST(StringTest, StringEqualTest)
+TEST(StringTest, EqualTest)
 {
 	{
 		Michka::String test = L"MICHKA TEST";
@@ -129,7 +129,7 @@ TEST(StringTest, StringEqualTest)
 	}
 }
 
-TEST(StringTest, StringNotEqualTest)
+TEST(StringTest, NotEqualTest)
 {
 	Michka::String test = L"MICHKA TEST";
 	ASSERT_FALSE(test != L"MICHKA TEST");
@@ -137,7 +137,7 @@ TEST(StringTest, StringNotEqualTest)
 	ASSERT_TRUE(test != L"MICHKA TEST DIFFRENT SIZE");
 }
 
-TEST(StringTest, StringAssignToAnotherStringTest)
+TEST(StringTest, AssignToAnotherStringTest)
 {
 	{
 		Michka::String test = L"MICHKA TEST";
@@ -166,7 +166,7 @@ TEST(StringTest, StringAssignToAnotherStringTest)
 	}
 }
 
-TEST(StringTest, StringMoveConstructorTest)
+TEST(StringTest, MoveConstructorTest)
 {
 	Michka::String test = L"MICHKA TEST";
 	ASSERT_TRUE(test == L"MICHKA TEST");
@@ -217,7 +217,7 @@ TEST(StringTest, NumberToStringTest)
 	}, Michka::Exception);
 }
 
-TEST(StringTest, StringToNumberTest)
+TEST(StringTest, ToNumberTest)
 {
 	{
 		Michka::String test = L"12345";
@@ -292,7 +292,7 @@ TEST(StringTest, StringToNumberTest)
 	}
 }
 
-TEST(StringTest, StringReverseTest)
+TEST(StringTest, ReverseTest)
 {
 	Michka::String test;
 	test.reverse();
@@ -308,7 +308,7 @@ TEST(StringTest, StringReverseTest)
 	ASSERT_TRUE(test == "1234");
 }
 
-TEST(StringTest, StringGetCharacterTest)
+TEST(StringTest, GetCharacterTest)
 {
 	Michka::String test = L"Hello World";
 	ASSERT_EQ(test[0], L'H');
@@ -316,7 +316,7 @@ TEST(StringTest, StringGetCharacterTest)
 	ASSERT_EQ(test[10], L'd');
 }
 
-TEST(StringTest, StringFindTest)
+TEST(StringTest, FindTest)
 {
 	Michka::String test = L"Hello World";
 	Michka::String test2 = "Hello World Hello";
@@ -367,7 +367,7 @@ TEST(StringTest, StringFindTest)
 	ASSERT_EQ(test2.findLast(Michka::String()), Michka::String::notFound);
 }
 
-TEST(StringTest, StringAppendTest)
+TEST(StringTest, AppendTest)
 {
 	Michka::String test = "Hello";
 	ASSERT_EQ(test + " World", "Hello World");
@@ -380,7 +380,7 @@ TEST(StringTest, StringAppendTest)
 	ASSERT_EQ(test.getSize(), 11);
 }
 
-TEST(StringTest, StringPrependTest)
+TEST(StringTest, PrependTest)
 {
 	Michka::String test = "World";
 	test.prepend("Hello ");
@@ -388,7 +388,7 @@ TEST(StringTest, StringPrependTest)
 	ASSERT_EQ(test.getSize(), 11);
 }
 
-TEST(StringTest, StringRemoveTest)
+TEST(StringTest, RemoveTest)
 {
 	ASSERT_EQ(Michka::String("Hello World").remove(0), "");
 	ASSERT_EQ(Michka::String("Hello World").remove(1), "H");
@@ -398,7 +398,7 @@ TEST(StringTest, StringRemoveTest)
 	ASSERT_EQ(Michka::String("Hello World").remove(5, 6), "Hello");
 }
 
-TEST(StringTest, StringSubStringTest)
+TEST(StringTest, SubStringTest)
 {
 	Michka::String test = "Hello World";
 	ASSERT_EQ(test.subString(0), "Hello World");
@@ -411,7 +411,7 @@ TEST(StringTest, StringSubStringTest)
 	ASSERT_EQ(test.subString(0, 1), "");
 }
 
-TEST(StringTest, StringUnicodeTest)
+TEST(StringTest, UnicodeTest)
 {
 	const char* teststr = "سلام دنیا - 🌍 Hello World 你好，世界 - æ - © - ſ - ◌󠇓 - × - ~";
 	const wchar_t* teststr16 = L"\u0633\u0644\u0627\u0645 \u062F\u0646\u06CC\u0627 - \U0001f30d Hello World \u4F60\u597D\uFF0C\u4E16\u754C - \u00E6 - \u00A9 - \u017F - \u25CC\U000e01d3 - \u00D7 - ~";
@@ -492,14 +492,14 @@ TEST(StringTest, StringUnicodeTest)
 	}
 }
 
-TEST(StringTest, StringInsertTest)
+TEST(StringTest, InsertTest)
 {
 	ASSERT_EQ(Michka::String("Hello").insert(" World!", 5), "Hello World!");
 	ASSERT_EQ(Michka::String("Hello").insert("World!", 0), "World!Hello");
 	ASSERT_EQ(Michka::String("Hello").insert("World!", 6), "Hello World!");
 }
 
-TEST(StringTest, StringRepaceTest)
+TEST(StringTest, RepaceTest)
 {
 	ASSERT_EQ(Michka::String("Hello World!").replace("test"), "Hello World!");
 	ASSERT_EQ(Michka::String("Hello World!").replace("Hello"), " World!");
@@ -518,12 +518,12 @@ TEST(StringTest, StringRepaceTest)
 	ASSERT_EQ(Michka::String("Hello World").replace("World", "MICHKA the bird!"), "Hello MICHKA the bird!");
 }
 
-TEST(StringTest, StringToLowerTest)
+TEST(StringTest, ToLowerTest)
 {
 	ASSERT_EQ(Michka::String("Hello World!").toLower(), "hello world!");
 }
 
-TEST(StringTest, StringToUpperTest)
+TEST(StringTest, ToUpperTest)
 {
 	ASSERT_EQ(Michka::String("Hello World!").toUpper(), "HELLO WORLD!");
 }

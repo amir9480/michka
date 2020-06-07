@@ -11,8 +11,6 @@ TEST(MapTest, CreateDefaultTest)
 	ASSERT_EQ(test.getSize(), 0);
 }
 
-#include <map>
-
 TEST(MapTest, KeyValueTest)
 {
 	const Michka::Map<Michka::String, int> a = {
@@ -50,7 +48,7 @@ TEST(MapTest, KeyValueTest)
 		}
 		catch (Michka::Exception exception)
 		{
-			EXPECT_STREQ("Key not found.", exception.getMessage());
+			ASSERT_STREQ("Map::operator[] : Key not found.", exception.getMessage());
             throw;
 		}
 	}, Michka::Exception);
@@ -62,10 +60,21 @@ TEST(MapTest, KeyValueTest)
 		}
 		catch (Michka::Exception exception)
 		{
-			EXPECT_STREQ("Your type is not assaignable.", exception.getMessage());
+			ASSERT_STREQ("Map::operator[] : Your type is not assaignable.", exception.getMessage());
             throw;
 		}
 	}, Michka::Exception);
+}
+
+TEST(MapTest, IsEmptyTest)
+{
+	Michka::Map<Michka::String, Person> a;
+	Michka::Map<Michka::String, Person> b = {
+		{"y", Person("person y")},
+	};
+
+	ASSERT_TRUE(a.isEmpty());
+	ASSERT_TRUE(b.isNotEmpty());
 }
 
 TEST(MapTest, atTest)
@@ -116,4 +125,81 @@ TEST(MapTest, IteratorTest)
 	}
 	ASSERT_EQ(count, 4);
 	ASSERT_EQ(sum, 28);
+}
+
+TEST(MapTest, CompareTest)
+{
+	Michka::Map<Michka::String, int> a = {
+		{"a", 1},
+		{"b", 2},
+		{"c", 3}
+	};
+	Michka::Map<Michka::String, int> b = {
+		{"a", 1},
+		{"b", 2},
+		{"c", 3}
+	};
+	Michka::Map<Michka::String, int> c = {
+		{"a", 1},
+		{"b", 2},
+		{"c", 4}
+	};
+	Michka::Map<Michka::String, int> d = {
+		{"w", 4},
+		{"x", 6},
+		{"y", 8},
+		{"z", 10},
+	};
+
+	ASSERT_TRUE(a == b);
+	ASSERT_TRUE(a != c);
+	ASSERT_TRUE(a != d);
+}
+
+TEST(MapTest, HasKeyTest)
+{
+	Michka::Map<Michka::String, int> a = {
+		{"a", 1},
+		{"b", 2},
+		{"c", 3}
+	};
+
+	ASSERT_TRUE(a.hasKey("a"));
+	ASSERT_TRUE(a.hasKey("b"));
+	ASSERT_TRUE(a.hasKey("c"));
+	ASSERT_FALSE(a.hasKey("d"));
+	ASSERT_FALSE(a.hasKey("abc"));
+}
+
+TEST(MapTest, HasValueTest)
+{
+	Michka::Map<Michka::String, int> a = {
+		{"a", 1},
+		{"b", 2},
+		{"c", 3}
+	};
+
+	ASSERT_TRUE(a.hasValue(1));
+	ASSERT_TRUE(a.hasValue(2));
+	ASSERT_TRUE(a.hasValue(3));
+	ASSERT_FALSE(a.hasValue(4));
+}
+
+TEST(MapTest, RemoveTest)
+{
+	Michka::Map<Michka::String, int> a = {
+		{"a", 1},
+		{"b", 2},
+		{"c", 3}
+	};
+	Michka::Map<Michka::String, int> b = {
+		{"a", 1},
+		{"c", 3}
+	};
+
+	a.remove("b");
+	ASSERT_EQ(a.getSize(), 2);
+	ASSERT_TRUE(a.hasKey("a"));
+	ASSERT_FALSE(a.hasKey("b"));
+	ASSERT_TRUE(a.hasKey("c"));
 }

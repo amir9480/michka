@@ -147,7 +147,7 @@ namespace Michka
 		FORCE_INLINE bool isEmpty() const;
 
 		/**
-		 * @brief Check string is empty.
+		 * @brief Check string is not empty.
 		 */
 		FORCE_INLINE bool isNotEmpty() const;
 
