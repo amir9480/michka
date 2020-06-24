@@ -55,6 +55,16 @@ namespace Michka
     struct TypeBase
     {
         /**
+         * @brief Type without pointer.
+         */
+        using RemovedPointerType = typename std::remove_pointer<T>::type;
+
+        /**
+         * @brief Type without reference.
+         */
+        using RemovedReferenceType = typename std::remove_reference<T>::type;
+
+        /**
          * @brief Sizeof type
          */
         static inline const u32 size = sizeof(T);

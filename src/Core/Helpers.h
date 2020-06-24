@@ -2,6 +2,7 @@
 #define __HELPERS_H__
 
 #include <functional>
+#include "Type.h"
 
 #define MICHKA_ASSERT(_CONDITION, _MESSAGE) if (!(_CONDITION)) {printf(_MESSAGE); std::exit(1);}
 
@@ -66,21 +67,23 @@ namespace Michka
 	 * @brief Sort any iteratable.
 	 *
 	 * @tparam T
+	 * @tparam ElementType
 	 * @param _array
 	 * @param _direction
 	 */
-	template<typename T>
-	FORCE_INLINE void sort(T*& _array, const u32& _size, const SortDirection& _direction);
+	template<typename T, typename ElementType = Type<T>::RemovedPointerType>
+	FORCE_INLINE void sort(T _array, const u32& _size, const SortDirection& _direction);
 
 	/**
 	 * @brief Sort any iteratable with custom callback.
 	 *
 	 * @tparam T
+	 * @tparam ElementType
 	 * @param _array
 	 * @param _callback
 	 */
-	template<typename T>
-	FORCE_INLINE void sort(T*& _array, const u32& _size, const std::function<bool(const T&, const T&)>& _callback);
+	template<typename T, typename ElementType = Type<T>::RemovedPointerType>
+	FORCE_INLINE void sort(T _array, const u32& _size, const std::function<bool(const ElementType&, const ElementType&)>& _callback);
 }
 
 #include "Helpers.inl"

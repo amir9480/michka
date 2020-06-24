@@ -23,6 +23,17 @@ std::ostream& operator << (std::ostream& _ostream, Vector<T> _array)
     return _ostream;
 }
 
+template<typename T>
+std::ostream& operator << (std::ostream& _ostream, List<T> _array)
+{
+    for (auto element: _array)
+    {
+        _ostream << element << ",";
+    }
+    _ostream << "\n";
+    return _ostream;
+}
+
 class Person
 {
 public:
@@ -113,14 +124,12 @@ int main()
     //     std::cout << i.key() << " - " << i.value() << std::endl;
     // }
 
-    const Map<String, String> a;
-    std::cout << a.getSize() << std::endl;
-    std::cout << a["heallo"] << std::endl;
 
-
-    // Vector<int> a = {4, 7, 1779,832,4349,2476,3176,3894,1219,1537,910,2699,1207,2858,3850,2871,4937,4954,2759,2254,3414,1860,3686, 8, 5};
-    // a.sort();
-    // std::cout << a << std::endl;
+    // List<int> a = {4, 7, 1779,832,4349,2476,3176,3894,1219,1537,910,2699,1207,2858,3850,2871,4937,4954,2759,2254,3414,1860,3686, 8, 5};
+    List<int> a;
+    a.insert(0, {10, 20, 30});
+    a += {1, 2, 3};
+    std::cout << a << std::endl;
 
 
     // std::chrono::steady_clock::time_point begin, end;
@@ -159,6 +168,5 @@ int main()
     // {
     //     std::cout << b[i] << std::endl;
     // }
-    system("PAUSE");
     return 0;
 }

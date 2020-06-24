@@ -160,7 +160,8 @@ namespace Michka
     FORCE_INLINE TValue Map<TKey, TValue>::getValue(const TKey& _key, const TValue& _default) const
     {
         u32 index = indexOfKey(_key);
-        if (index != notFound) {
+        if (index != notFound)
+        {
             return mData[index].second;
         }
 

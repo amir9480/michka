@@ -105,3 +105,13 @@ TEST(TypeTest, HasOperatorTest)
     ASSERT_FALSE(Michka::Type<Person>::hasOperator<int>::greater);
     ASSERT_FALSE(Michka::Type<Person>::hasOperator<int>::greaterOrEqual);
 }
+
+TEST(TypeTest, RemovePointerAndReference)
+{
+    ASSERT_TRUE(Michka::Type<typename Michka::Type<int>::RemovedPointerType>::is<int>());
+    ASSERT_TRUE(Michka::Type<typename Michka::Type<int*>::RemovedPointerType>::is<int>());
+
+    ASSERT_TRUE(Michka::Type<typename Michka::Type<int>::RemovedReferenceType>::is<int>());
+    ASSERT_TRUE(Michka::Type<typename Michka::Type<int&>::RemovedReferenceType>::is<int>());
+    ASSERT_TRUE(Michka::Type<typename Michka::Type<int&&>::RemovedReferenceType>::is<int>());
+}

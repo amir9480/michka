@@ -235,14 +235,16 @@ TEST(MapTest, FilterTest)
 		{"i", 9},
 	};
 
-	Michka::Map<Michka::String, int> aFiltered = a.getFiltered([] (auto element) {
+	Michka::Map<Michka::String, int> aFiltered = a.getFiltered([] (auto element)
+	{
 		return element.value() % 2 == 0;
 	});
 
 	ASSERT_EQ(aFiltered.getSize(), 4);
 	ASSERT_EQ(aFiltered["b"], 2);
 
-	aFiltered.filter([] (auto element) {
+	aFiltered.filter([] (auto element)
+	{
 		return element.key() == "b";
 	});
 

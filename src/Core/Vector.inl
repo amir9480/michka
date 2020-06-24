@@ -458,14 +458,6 @@ namespace Michka
     }
 
     template<typename T>
-    FORCE_INLINE Vector<T>& Vector<T>::operator = (const std::initializer_list<T>& _array)
-    {
-        clear();
-        insert(0, _array.begin(), u32(_array.size()));
-        return *this;
-    }
-
-    template<typename T>
     template<typename T2>
     bool Vector<T>::operator == (const Vector<T2>& _other) const
     {
@@ -506,6 +498,14 @@ namespace Michka
         temp += _other;
 
         return temp;
+    }
+
+    template<typename T>
+    FORCE_INLINE Vector<T>& Vector<T>::operator = (const std::initializer_list<T>& _array)
+    {
+        clear();
+        insert(0, _array.begin(), u32(_array.size()));
+        return *this;
     }
 
     template<typename T>

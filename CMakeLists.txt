@@ -10,7 +10,7 @@ add_subdirectory("src/Platform")
 
 add_executable(Michka ${SOURCES} "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
 add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
-
+set_property(TARGET Michka PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 # target_link_libraries(Michka ${LIBS})
 
 option(PACKAGE_TESTS "Build the tests" ON)
