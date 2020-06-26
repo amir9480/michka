@@ -1,8 +1,8 @@
 #ifndef __MEMORY_H__
 #define __MEMORY_H__
 
-#include "Defines.h"
-#include "Helpers.h"
+#include "../Defines.h"
+#include "../Helpers.h"
 #include <cstddef>
 
 namespace Michka
@@ -25,11 +25,11 @@ namespace Michka
 
 #if MICHKA_DEBUG
 
-void* operator new (const std::size_t _size, const char* _filename, u32 _line);
+void* operator new (const std::size_t _size, const char* _filename, u32 _line) noexcept;
 void operator delete (void* _ptr) noexcept;
 void operator delete (void* _ptr, const char* _filename, u32 _line) noexcept;
 
-void* operator new[] (const std::size_t _size, const char* _filename, u32 _line);
+void* operator new[] (const std::size_t _size, const char* _filename, u32 _line) noexcept;
 void operator delete[] (void* _ptr) noexcept;
 void operator delete[] (void* _ptr, const char* _filename, u32 _line) noexcept;
 

@@ -2,7 +2,7 @@
 #include <limits>
 #include <cstring>
 #include <type_traits>
-#include "Core/Type.h"
+#include "Core/Reflection/Type.h"
 #include "Core/Helpers.h"
 #include "../Classes/Person.h"
 

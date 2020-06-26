@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 #include <utility>
-#include "Core/String.h"
-#include "Core/Type.h"
+#include "Core/Container/String.h"
+#include "Core/Container/List.h"
+#include "Core/Reflection/Type.h"
 #include "Core/Helpers.h"
-#include "Core/List.h"
 #include "../Classes/Person.h"
 
 TEST(ListTest, SetTest)

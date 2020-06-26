@@ -2,13 +2,15 @@
 #define __CORE_H__
 
 #include "Defines.h"
-#include "Type.h"
-#include "Memory.h"
-#include "Exception.h"
-#include "Thread.h"
-#include "String.h"
-#include "Vector.h"
-#include "List.h"
-#include "Map.h"
+#include "Reflection/Type.h"
+#include "Exception/Exception.h"
+#include "Memory/Memory.h"
+#include "Container/Pair.h"
+#include "Container/String.h"
+#include "Container/Vector.h"
+#include "Container/List.h"
+#include "Container/Map.h"
+#include "Thread/Thread.h"
+#include "Thread/Mutex.h"
 
 #endif // __CORE_H__

@@ -1,6 +1,6 @@
 #include "String.h"
-#include "Helpers.h"
-#include "Memory.h"
+#include "../Helpers.h"
+#include "../Memory/Memory.h"
 #include <utility>
 #include <memory>
 

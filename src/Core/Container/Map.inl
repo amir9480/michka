@@ -1,5 +1,5 @@
 #include "Map.h"
-#include "Exception.h"
+#include "../Exception/Exception.h"
 
 namespace Michka
 {

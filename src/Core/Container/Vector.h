@@ -1,7 +1,8 @@
 #ifndef __VECTOR_H__
 #define __VECTOR_H__
 
-#include "Defines.h"
+#include "../Defines.h"
+#include "../Helpers.h"
 #include <initializer_list>
 
 namespace Michka

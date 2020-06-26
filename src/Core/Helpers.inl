@@ -1,6 +1,6 @@
 #include "Helpers.h"
 #include "Defines.h"
-#include "Type.h"
+#include "Reflection/Type.h"
 
 namespace Michka
 {

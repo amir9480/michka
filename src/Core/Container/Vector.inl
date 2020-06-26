@@ -1,6 +1,6 @@
 #include "Vector.h"
-#include "Memory.h"
-#include "Helpers.h"
+#include "../Memory/Memory.h"
+#include "../Helpers.h"
 
 namespace Michka
 {

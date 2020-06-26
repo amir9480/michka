@@ -1,7 +1,7 @@
 
 #include <gtest/gtest.h>
 #include <utility>
-#include "Core/Thread.h"
+#include "Core/Thread/Thread.h"
 
 // namespace
 // {

@@ -1,7 +1,7 @@
 #include "String.h"
-#include "Helpers.h"
-#include "Type.h"
-#include "Exception.h"
+#include "../Helpers.h"
+#include "../Reflection/Type.h"
+#include "../Exception/Exception.h"
 
 namespace Michka
 {

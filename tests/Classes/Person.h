@@ -1,7 +1,7 @@
 #ifndef __PERSON_H__
 #define __PERSON_H__
 
-#include "Core/String.h"
+#include "Core/Container/String.h"
 
 // A class just for testing
 class Person

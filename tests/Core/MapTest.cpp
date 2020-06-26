@@ -1,8 +1,8 @@
 
 #include <gtest/gtest.h>
 #include <utility>
-#include "Core/Map.h"
-#include "Core/String.h"
+#include "Core/Container/Map.h"
+#include "Core/Container/String.h"
 #include "../Classes/Person.h"
 
 TEST(MapTest, CreateDefaultTest)

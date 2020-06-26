@@ -2,7 +2,7 @@
 #define __HELPERS_H__
 
 #include <functional>
-#include "Type.h"
+#include "Reflection/Type.h"
 
 #define MICHKA_ASSERT(_CONDITION, _MESSAGE) if (!(_CONDITION)) {printf(_MESSAGE); std::exit(1);}
 

@@ -1,7 +1,7 @@
 
 #include <gtest/gtest.h>
 #include <utility>
-#include "Core/String.h"
+#include "Core/Container/String.h"
 
 TEST(StringTest, CreateDefaultStringTest)
 {

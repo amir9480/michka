@@ -1,7 +1,7 @@
 
 #include <gtest/gtest.h>
 #include <utility>
-#include "Core/String.h"
+#include "Core/Container/String.h"
 #include "Core/Helpers.h"
 
 TEST(HelpersTest, SwapTest)
