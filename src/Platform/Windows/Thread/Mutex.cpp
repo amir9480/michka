@@ -23,4 +23,28 @@ namespace Michka
     {
         CloseHandle(mMutex);
     }
+
+    bool Mutex::lock()
+    {
+        return WaitForSingleObject(
+            mMutex,
+            INFINITE
+        ) == WAIT_OBJECT_0;
+    }
+
+    bool Mutex::unlock()
+    {
+        return ReleaseMutex(mMutex);
+    }
+
+    MutexLock::MutexLock(Mutex& _mutex):
+        mMutex(_mutex)
+    {
+        mMutex.lock();
+    }
+
+    MutexLock::~MutexLock()
+    {
+        mMutex.unlock();
+    }
 }

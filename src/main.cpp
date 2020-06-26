@@ -63,12 +63,22 @@ public:
 
     void runSomething(int i)
     {
-        printf("Very long started %d (%llu)\n", i, Thread::id());
+        printf("Very long started %d %llu (%llu)\n", i, Thread::getCurrent()->getId(), Thread::getCurrentId());
         for (int j = 0; j < 300; j++)
         {
             Sleep(10);
         }
-        printf("Very long ended %d (%llu)\n", i, Thread::id());
+        printf("Very long ended %d %llu (%llu)\n", i, Thread::getCurrent()->getId(), Thread::getCurrentId());
+    }
+
+    void runSomething2()
+    {
+        printf("Very long started %llu (%llu)\n", Thread::getCurrent()->getId(), Thread::getCurrentId());
+        for (int j = 0; j < 300; j++)
+        {
+            Sleep(10);
+        }
+        printf("Very long ended %llu (%llu)\n", Thread::getCurrent()->getId(), Thread::getCurrentId());
     }
 
     static void runSomethingStatic(Person* p)
@@ -79,27 +89,31 @@ protected:
 	Michka::String mName;
 };
 
+
 void sayHello(int i)
 {
-    printf("Very long started %d (%llu)\n", i, Thread::id());
+    printf("Very long started %d - %llu (%llu)\n", i, Thread::getCurrent()->getId(), Thread::getCurrentId());
     for (int i = 0; i < 300; i++)
     {
         Sleep(10);
     }
-    printf("Very long ended %d (%llu)\n", i, Thread::id());
+    printf("Very long ended %d - %llu (%llu)\n", i, Thread::getCurrent()->getId(), Thread::getCurrentId());
 }
+
+Mutex mutex;
 
 class CustomThread : public Thread
 {
 protected:
     void run() override
     {
-        printf("Very long started (%llu)\n", id());
-        for (int i = 0; i < 300; i++)
+        printf("Very long started %llu (%llu)\n", Thread::getCurrent()->getId(), Thread::getCurrentId());
+        for (int i = 0; i < 50; i++)
         {
+            MutexLock ml(mutex);
             Sleep(10);
         }
-        printf("Very long ended (%llu)\n", id());
+        printf("Very long ended %llu (%llu)\n", Thread::getCurrent()->getId(), Thread::getCurrentId());
     }
 };
 
@@ -108,39 +122,37 @@ int main()
     std::cout << "Welcome to engine!\n-------------------------------------\n\n";
     // std::cout << ThreadBase::id() << std::endl;
 
-    // Vector<Thread<void(int)>> a;
-    // Vector<Person> persons = {
-    //     Person("a"),
-    //     Person("b"),
-    //     Person("c"),
-    //     Person("d"),
-    //     Person("e"),
-    // };
-
-    // for (int i = 0; i < 5; i++)
-    // {
-    //     a.pushBack(Thread<void(int)>(std::bind(&Person::runSomething, persons[i], std::placeholders::_1)));
-    //     a[i].start(i);
-    // }
-
-    // for (int i = 0; i < 10; i++)
-    // {
-    //     a[i].join();
-    // }
-
-    // for (int i = 0; i < 10; i++)
-    // {
-    //     a[i].join();
-    // }
-
-    Vector<CustomThread> a;
-    a.resize(20);
+    Vector<CallbackThread<void()>> a;
+    Vector<Person> persons = {
+        Person("a"),
+        Person("b"),
+        Person("c"),
+        Person("d"),
+        Person("e"),
+        Person("f"),
+        Person("g"),
+        Person("h"),
+        Person("i"),
+        Person("j"),
+        Person("k"),
+        Person("l"),
+    };
 
     for (int i = 0; i < 10; i++)
     {
-        a.pushBack(CustomThread());
+        a.pushBack(CallbackThread<void()>(std::bind(&Person::runSomething2, persons[i])));
+    }
+
+    for (int i = 0; i < 10; i++)
+    {
         a[i].start();
     }
+
+    for (int i = 0; i < 10; i++)
+    {
+        a[i].join();
+    }
+
     for (int i = 0; i < 10; i++)
     {
         a[i].join();

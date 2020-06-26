@@ -9,10 +9,35 @@ namespace Michka
     {
     public:
         Mutex();
-        virtual ~Mutex();
+        ~Mutex();
+
+        /**
+         * @brief Lock mutex.
+         *
+         * @return false if failed.
+         */
+        bool lock();
+
+        /**
+         * @brief Unlock mutex.
+         *
+         * @return false if failed.
+         */
+        bool unlock();
 
     protected:
         void* mMutex = nullptr;
+    };
+
+    class MICHKA_API MutexLock
+    {
+        MICHKA_NON_COPYABLE_CLASS(MutexLock)
+    public:
+        explicit MutexLock(Mutex& _mutex);
+        ~MutexLock();
+
+    protected:
+        Mutex& mMutex;
     };
 }
 

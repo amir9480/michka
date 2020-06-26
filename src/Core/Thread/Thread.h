@@ -2,6 +2,8 @@
 #define __THREAD_H__
 
 #include "../Defines.h"
+#include "Core/Container/Map.h"
+#include "Mutex.h"
 #include <tuple>
 #include <functional>
 
@@ -16,11 +18,21 @@ namespace Michka
         virtual ~Thread();
 
         /**
-         * @brief Get thread id
+         * @brief Get current thread instance.
+         */
+        FORCE_INLINE static Thread* getCurrent();
+
+        /**
+         * @brief Get current thread ID.
+         */
+        FORCE_INLINE static u64 getCurrentId();
+
+        /**
+         * @brief Get thread id.
          *
          * @return id
          */
-        FORCE_INLINE static u64 id();
+        FORCE_INLINE u64 getId();
 
         /**
          * @brief Join to thread and wait until it finishes.
@@ -31,7 +43,6 @@ namespace Michka
          * @brief Call thread run function.
          *
          * @param _thread
-         * @return
          */
         FORCE_INLINE static void runThread(Thread* _thread);
 
@@ -50,7 +61,7 @@ namespace Michka
         FORCE_INLINE bool start();
 
         Thread& operator = (const Thread& _other) = delete;
-        Thread& operator = (Thread&& _other);
+        FORCE_INLINE Thread& operator = (Thread&& _other);
 
     protected:
         /**
@@ -60,38 +71,42 @@ namespace Michka
 
     protected:
         void* mThread = nullptr;
+
+    private:
+        static Map<u64, Thread*> allThreads;
+        static Mutex             allThreadsMutex;
     };
 
 
-    // template<typename T = void>
-    // class Thread: public ThreadBase {};
+    template<typename T>
+    class CallbackThread: public Thread {};
 
-    // template<typename ReturnType, typename... ArgumentTypes>
-    // class Thread<ReturnType(ArgumentTypes...)>: public ThreadBase
-    // {
-    // public:
-    //     Thread(const std::function<ReturnType(ArgumentTypes...)>& _function);
-    //     Thread(Thread<ReturnType(ArgumentTypes...)>&& _other);
+    template<typename ReturnType, typename... ArgumentTypes>
+    class CallbackThread<ReturnType(ArgumentTypes...)>: public Thread
+    {
+    public:
+        CallbackThread(const std::function<ReturnType(ArgumentTypes...)>& _function);
+        CallbackThread(CallbackThread<ReturnType(ArgumentTypes...)>&& _other);
 
-    //     /**
-    //      * @brief Call function in thread.
-    //      *
-    //      * @param _arguments
-    //      * @return false if did not started successfully.
-    //      */
-    //     bool start(ArgumentTypes... _arguments);
+        /**
+         * Run function.
+         */
+        virtual void run();
 
-    //     /**
-    //      * @brief Call function
-    //      */
-    //     void call();
+        /**
+         * @brief Call function in thread.
+         *
+         * @param _arguments
+         * @return false if did not started successfully.
+         */
+        bool start(ArgumentTypes... _arguments);
 
-    //     Thread<ReturnType(ArgumentTypes...)>& operator = (Thread<ReturnType(ArgumentTypes...)>&& _other);
+        CallbackThread<ReturnType(ArgumentTypes...)>& operator = (CallbackThread<ReturnType(ArgumentTypes...)>&& _other);
 
-    // private:
-    //     std::function<ReturnType(ArgumentTypes...)> mFunction;
-    //     std::tuple<ArgumentTypes...> mArguments;
-    // };
+    private:
+        std::function<ReturnType(ArgumentTypes...)> mFunction;
+        std::tuple<ArgumentTypes...> mArguments;
+    };
 }
 
 #include "Platform/Thread.inl"

@@ -7,7 +7,7 @@
 namespace Michka
 {
     template<typename TKey, typename TValue>
-    class Map
+    class MICHKA_API Map
     {
     public:
         struct Element: public Pair<TKey, TValue>

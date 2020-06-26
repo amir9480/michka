@@ -17,16 +17,18 @@
 #define _MICHKA_OVERLOADED_MACRO(_NAME, _COUNT) __MICHKA_OVERLOADED_MACRO(_NAME, _COUNT)
 #define MICHKA_OVERLOADED_MACRO(_NAME, ...) MICHKA_GLUE(_MICHKA_OVERLOADED_MACRO(_NAME, MICHKA_COUNT_ARGS(__VA_ARGS__)), (__VA_ARGS__))
 
+#define MICHKA_NON_COPYABLE_CLASS(_CLASSNAME)\
+	_CLASSNAME(const _CLASSNAME&) = delete;\
+	_CLASSNAME(_CLASSNAME&&) = delete;\
+	_CLASSNAME& operator = (const _CLASSNAME&) = delete;\
+	_CLASSNAME& operator = (_CLASSNAME&&) = delete;\
 
-#define MICHKA_SINGLETON_CLASS(CLASSNAME)\
-	CLASSNAME(const CLASSNAME&) = delete;\
-	CLASSNAME(CLASSNAME&&) = delete;\
-	CLASSNAME& operator = (const CLASSNAME&) = delete;\
-	CLASSNAME& operator = (CLASSNAME&&) = delete;\
+#define MICHKA_SINGLETON_CLASS(_CLASSNAME)\
+	MICHKA_NON_COPYABLE_CLASS(_CLASSNAME)\
 	public:\
-	static CLASSNAME& instance()\
+	static _CLASSNAME& instance()\
 	{\
-		static CLASSNAME o;\
+		static _CLASSNAME o;\
 		return o;\
 	}\
 	private:
