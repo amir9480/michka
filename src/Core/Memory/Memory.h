@@ -1,8 +1,8 @@
 #ifndef __MEMORY_H__
 #define __MEMORY_H__
 
-#include "../Defines.h"
-#include "../Helpers.h"
+#include "Core/Defines.h"
+#include "Core/Helpers.h"
 #include <cstddef>
 
 namespace Michka

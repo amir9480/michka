@@ -15,7 +15,7 @@ namespace Michka
 
         if (mMutex == nullptr)
         {
-            throw Exception("Mutex::Mutex : Can not create mutex.");
+            throw Exception("Mutex::Mutex : Can not create mutex."); // @NOCOVERAGE
         }
     }
 

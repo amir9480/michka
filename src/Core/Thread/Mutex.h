@@ -1,7 +1,7 @@
 #ifndef __MUTEX_H__
 #define __MUTEX_H__
 
-#include "../Defines.h"
+#include "Core/Defines.h"
 
 namespace Michka
 {

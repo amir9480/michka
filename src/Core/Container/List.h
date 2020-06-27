@@ -1,7 +1,7 @@
 #ifndef __LIST_H__
 #define __LIST_H__
 
-#include "../Defines.h"
+#include "Core/Defines.h"
 #include <initializer_list>
 
 namespace Michka

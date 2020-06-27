@@ -1,6 +1,5 @@
 #include "Type.h"
 
-
 namespace Michka
 {
     template<typename T>

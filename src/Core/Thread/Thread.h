@@ -1,7 +1,7 @@
 #ifndef __THREAD_H__
 #define __THREAD_H__
 
-#include "../Defines.h"
+#include "Core/Defines.h"
 #include "Core/Container/Map.h"
 #include "Mutex.h"
 #include <tuple>
@@ -67,7 +67,7 @@ namespace Michka
         /**
          * @brief Run thread implementation.
          */
-        virtual void run();
+        virtual void run() = 0;
 
     protected:
         void* mThread = nullptr;

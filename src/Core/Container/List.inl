@@ -1,6 +1,6 @@
 #include "List.h"
-#include "../Memory/Memory.h"
-#include "../Helpers.h"
+#include "Core/Memory/Memory.h"
+#include "Core/Helpers.h"
 #include "Vector.h"
 
 namespace Michka

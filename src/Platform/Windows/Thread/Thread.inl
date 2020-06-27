@@ -27,7 +27,7 @@ namespace Michka
     {
         if (mThread)
         {
-            join();
+            join(); // @NOCOVERAGE
         }
     }
 
@@ -38,7 +38,7 @@ namespace Michka
         {
             return allThreads[getCurrentId()];
         }
-        return nullptr;
+        return nullptr; // @NOCOVERAGE
     }
 
     FORCE_INLINE u64 Thread::getCurrentId()
@@ -90,7 +90,7 @@ namespace Michka
 
         if (mThread == nullptr)
         {
-            return false;
+            return false; // @NOCOVERAGE
         }
 
         if (allThreadsMutex.lock())

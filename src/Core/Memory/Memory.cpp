@@ -16,9 +16,9 @@ void operator delete (void* _ptr) noexcept
 }
 
 void operator delete (void* _ptr, const char* _filename, u32 _line) noexcept
-{
-    return Michka::Memory.free(_ptr);
-}
+{                                                                               // @NOCOVERAGE
+    return Michka::Memory.free(_ptr);                                           // @NOCOVERAGE
+}                                                                               // @NOCOVERAGE
 
 void* operator new[] (const size_t _size, const char* _filename, u32 _line) noexcept
 {
@@ -31,9 +31,9 @@ void operator delete[] (void* _ptr) noexcept
 }
 
 void operator delete[] (void* _ptr, const char* _filename, u32 _line) noexcept
-{
-    return Michka::MemoryManager::instance().free(_ptr);
-}
+{                                                                               // @NOCOVERAGE
+    return Michka::MemoryManager::instance().free(_ptr);                        // @NOCOVERAGE
+}                                                                               // @NOCOVERAGE
 
 #define new MICHKA_NEW
 

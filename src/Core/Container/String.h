@@ -1,8 +1,8 @@
 #ifndef __STRING_H__
 #define __STRING_H__
 
-#include "../Defines.h"
-#include "../Reflection/Type.h"
+#include "Core/Defines.h"
+#include "Core/Reflection/Type.h"
 
 namespace Michka
 {
