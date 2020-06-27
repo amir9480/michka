@@ -1,2 +1,12 @@
-file(GLOB_RECURSE PlatformSources "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
-set(SOURCES ${SOURCES} ${PlatformSources} PARENT_SCOPE)
+set(
+    SOURCES
+    ${SOURCES}
+
+    # -------------------------------------------------------------------------- #
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Windows/Thread/Mutex.cpp
+
+    # -------------------------------------------------------------------------- #
+
+    PARENT_SCOPE
+)

@@ -3,9 +3,10 @@ project(MichkaTests)
 
 enable_testing()
 
-file(GLOB testSources "${CMAKE_CURRENT_SOURCE_DIR}/Core/*.cpp" PARENT_SCOPE)
+set(TEST_SOURCES "")
+add_subdirectory("Core")
 
-add_executable(MichkaTests ${SOURCES} ${testSources})
+add_executable(MichkaTests ${SOURCES} ${TEST_SOURCES})
 target_link_libraries(MichkaTests gtest gtest_main)
 
 add_test(MichkaTest MichkaTests)

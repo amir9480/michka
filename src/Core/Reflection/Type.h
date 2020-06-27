@@ -303,6 +303,7 @@ namespace Michka
         static inline const float min = FLT_MIN;
         static inline const bool isFloat = true;
         static inline const bool isSigned = true;
+        static inline const float epsilon = 1.19209e-07f;
     };
 
     template<>
@@ -313,6 +314,7 @@ namespace Michka
         static inline const double min = DBL_MIN;
         static inline const bool isFloat = true;
         static inline const bool isSigned = true;
+        static inline const double epsilon = 2.22045e-16;
     };
 
     template<>
@@ -323,6 +325,7 @@ namespace Michka
         static inline const long double min = LDBL_MIN;
         static inline const bool isFloat = true;
         static inline const bool isSigned = true;
+        static inline const long double epsilon = 1.0842e-19L;
     };
 
     /* ----------------------------- Character Types ---------------------------- */
