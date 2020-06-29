@@ -1,0 +1,41 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(Windows) Launch",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceRoot}/build/Debug/Michka.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": true
+        },
+        {
+            "name": "Run Tests",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceRoot}/build/tests/MichkaTests.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false
+        },
+        {
+            "name": "Run Tests Coverage",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "OpenCppCoverage.exe",
+            "args": ["--sources", "src\\*", "--excluded_sources", "thirdparty\\*", "--excluded_sources", "d:\\agent", "--modules", "build\\*", "--export_type" , "html:build/coverage/html", "--export_type", "cobertura:build/coverage/coverage.xml", "--excluded_line_regex", ".*@NOCOVERAGE.*", "--excluded_line_regex", "\\s*else.*", "--excluded_line_regex", "\\s*\\}.*", ".\\build\\tests\\Debug\\MichkaTests.exe"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false
+        }
+    ]
+}
