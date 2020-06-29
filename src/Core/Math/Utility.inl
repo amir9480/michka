@@ -48,6 +48,11 @@ namespace Michka
             return cos(_degree) / sin(_degree);
         }
 
+        FORCE_INLINE f32 degreesToRadians(const f32& _degrees)
+        {
+            return _degrees * radianPerDegree;
+        }
+
         template<typename T>
         FORCE_INLINE bool equals(const T& _a, const T& _b, const T& _epsilon)
         {
@@ -73,6 +78,11 @@ namespace Michka
             return std::isnan(_number);
         }
 
+        FORCE_INLINE f32 lerp(const f32& _start, const f32& _end, const f32& _position)
+        {
+            return _start + (_position * (_end - _start));
+        }
+
         template<typename T>
         FORCE_INLINE T mod(const T& _a, const T& _b)
         {
@@ -92,6 +102,11 @@ namespace Michka
             {
                 return _a % _b;
             }
+        }
+
+        FORCE_INLINE f32 radiansToDegrees(const f32& _radians)
+        {
+            return _radians * degreePerRadian;
         }
 
         FORCE_INLINE f32 round(const f32& _number, const f32& _precision)
@@ -117,6 +132,20 @@ namespace Michka
                 return 0;
             }
             return -1;
+        }
+
+        template<typename T>
+        FORCE_INLINE T clamp(const T& _value, const T& _min, const T& _max)
+        {
+            if (_value <= _min)
+            {
+                return _min;
+            }
+            if (_value >= _max)
+            {
+                return _max;
+            }
+            return _value;
         }
 
         FORCE_INLINE f32 sin(const f32& _degree)

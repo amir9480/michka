@@ -12,7 +12,7 @@ namespace Michka
         static const f32 halfPi           = 1.57079632679489661923f;
         static const f32 radianPerDegree  = 0.01745329251994329576f;
         static const f32 degreePerRadian  = 57.29577951308232087684f;
-        static const f32 epsilon          = 0.000005f;
+        static const f32 epsilon          = 0.00001f;
         static const f32 infinity         = INFINITY;
 
         /**
@@ -60,6 +60,17 @@ namespace Michka
         FORCE_INLINE f32 ceil(const f32& _number);
 
         /**
+         * @brief clamp number to a range.
+         *
+         * @tparam T
+         * @param _value
+         * @param _min
+         * @param _max
+         */
+        template<typename T>
+        FORCE_INLINE T clamp(const T& _value, const T& _min = 0, const T& _max = 1);
+
+        /**
          * @brief Cos
          *
          * @param _degree
@@ -72,6 +83,13 @@ namespace Michka
          * @param _degree
          */
         FORCE_INLINE f32 cotan(const f32& _degree);
+
+        /**
+         * @brief Convert degrees to radians
+         *
+         * @param _degrees
+         */
+        FORCE_INLINE f32 degreesToRadians(const f32& _degrees);
 
         /**
          * @brief Check two float point number are equal or not.
@@ -106,6 +124,15 @@ namespace Michka
         FORCE_INLINE bool isNaN(const f32& _number);
 
         /**
+         * @brief Lerp between two numbers.
+         *
+         * @param _start
+         * @param _end
+         * @param _position
+         */
+        FORCE_INLINE f32 lerp(const f32& _start, const f32& _end, const f32& _position);
+
+        /**
          * @brief Get remainder of _a/_b
          *
          * @param _a
@@ -113,6 +140,13 @@ namespace Michka
          */
         template<typename T>
         FORCE_INLINE T mod(const T& _a, const T& _b);
+
+        /**
+         * @brief Convert radians to degrees
+         *
+         * @param _radians
+         */
+        FORCE_INLINE f32 radiansToDegrees(const f32& _radians);
 
         /**
          * @brief Round.

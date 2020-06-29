@@ -70,6 +70,52 @@ TEST(MathUtilityTest, Sqrt)
 	ASSERT_FLOAT_EQ(Michka::Math::sqrt(25.0f), 5.0f);
 }
 
+TEST(MathUtilityTest, Clamp)
+{
+	ASSERT_EQ(Michka::Math::clamp(1), 1);
+	ASSERT_EQ(Michka::Math::clamp(2), 1);
+	ASSERT_EQ(Michka::Math::clamp(-1), 0);
+
+	ASSERT_EQ(Michka::Math::clamp(70, 50, 100), 70);
+	ASSERT_EQ(Michka::Math::clamp(200, 50, 100), 100);
+	ASSERT_EQ(Michka::Math::clamp(0, 50, 100), 50);
+}
+
+TEST(MathUtilityTest, Lerp)
+{
+	ASSERT_FLOAT_EQ(Michka::Math::lerp(1, 3, 0), 1);
+	ASSERT_FLOAT_EQ(Michka::Math::lerp(1, 3, 0.25f), 1.5f);
+	ASSERT_FLOAT_EQ(Michka::Math::lerp(1, 3, 0.5f), 2);
+	ASSERT_FLOAT_EQ(Michka::Math::lerp(1, 3, 0.75f), 2.5f);
+	ASSERT_FLOAT_EQ(Michka::Math::lerp(1, 3, 1), 3);
+}
+
+TEST(MathUtilityTest, Sign)
+{
+	ASSERT_EQ(Michka::Math::sign(-5), -1);
+	ASSERT_EQ(Michka::Math::sign(0), 0);
+	ASSERT_EQ(Michka::Math::sign(5), 1);
+}
+
+TEST(MathUtilityTest, DegreesAndRadiansConversion)
+{
+	ASSERT_NEAR(Michka::Math::degreesToRadians(0.0f), 0.0f, Michka::Math::epsilon);
+	ASSERT_NEAR(Michka::Math::degreesToRadians(30.0f), 0.5235987755f, Michka::Math::epsilon);
+	ASSERT_NEAR(Michka::Math::degreesToRadians(60.0f), 1.0471975511f, Michka::Math::epsilon);
+	ASSERT_NEAR(Michka::Math::degreesToRadians(90.0f), 0.5f * Michka::Math::pi, Michka::Math::epsilon);
+	ASSERT_NEAR(Michka::Math::degreesToRadians(180.0f), Michka::Math::pi, Michka::Math::epsilon);
+	ASSERT_NEAR(Michka::Math::degreesToRadians(360.0f), 2 * Michka::Math::pi, Michka::Math::epsilon);
+	ASSERT_NEAR(Michka::Math::degreesToRadians(-30.0f), -0.5235987755f, Michka::Math::epsilon);
+
+	ASSERT_NEAR(Michka::Math::radiansToDegrees(0.0f), 0.0f, Michka::Math::epsilon);
+	ASSERT_NEAR(Michka::Math::radiansToDegrees(0.5235987755f), 30.0f, Michka::Math::epsilon);
+	ASSERT_NEAR(Michka::Math::radiansToDegrees(1.0471975511f), 60.0f, Michka::Math::epsilon);
+	ASSERT_NEAR(Michka::Math::radiansToDegrees(0.5f * Michka::Math::pi), 90.0f, Michka::Math::epsilon);
+	ASSERT_NEAR(Michka::Math::radiansToDegrees(Michka::Math::pi), 180.0f, Michka::Math::epsilon);
+	ASSERT_NEAR(Michka::Math::radiansToDegrees(2 * Michka::Math::pi), 360.0f, Michka::Math::epsilon);
+	ASSERT_NEAR(Michka::Math::radiansToDegrees(-0.5235987755f), -30.0f, Michka::Math::epsilon);
+}
+
 TEST(MathUtilityTest, Other)
 {
 	ASSERT_NEAR(Michka::Math::sin(0), 0.0f, Michka::Math::epsilon);
