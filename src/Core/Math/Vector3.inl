@@ -3,7 +3,10 @@
 
 namespace Michka
 {
-    FORCE_INLINE Vector3::Vector3()
+    FORCE_INLINE Vector3::Vector3() :
+        x(0.0f),
+        y(0.0f),
+        z(0.0f)
     {
         //
     }
@@ -19,6 +22,43 @@ namespace Michka
     FORCE_INLINE Vector3::Vector3(const Vector3& _other)
     {
         *this = _other;
+    }
+
+    FORCE_INLINE Vector3 Vector3::crossProduct(const Vector3& _a, const Vector3& _b)
+    {
+        return Vector3(
+             (_a.y*_b.z - _a.z*_b.y),
+            -(_a.x*_b.z - _a.z*_b.x),
+             (_a.x*_b.y - _a.y*_b.x)
+        );
+    }
+
+    FORCE_INLINE f32 Vector3::distance(const Vector3& _a, const Vector3& _b)
+    {
+        f32 dx = _a.x - _b.x;
+        f32 dy = _a.y - _b.y;
+        f32 dz = _a.z - _b.z;
+        return Math::sqrt(dx*dx + dy*dy + dz*dz);
+    }
+
+    FORCE_INLINE f32 Vector3::dotProduct(const Vector3& _a, const Vector3& _b)
+    {
+        return _a.x*_b.x + _a.y*_b.y + _a.z*_b.z;
+    }
+
+    FORCE_INLINE Vector3 Vector3::getCrossProduct(const Vector3& _other) const
+    {
+        return crossProduct(*this, _other);
+    }
+
+    FORCE_INLINE f32 Vector3::getDistanceFrom(const Vector3& _other) const
+    {
+        return distance(*this, _other);
+    }
+
+    FORCE_INLINE f32 Vector3::getDotProduct(const Vector3& _other) const
+    {
+        return dotProduct(*this, _other);
     }
 
     FORCE_INLINE f32 Vector3::getLength() const
@@ -109,26 +149,12 @@ namespace Michka
 
     FORCE_INLINE f32& Vector3::operator [] (const u8& _d)
     {
-        switch(_d)
-        {
-        case 1:
-            return y;
-        case 2:
-            return z;
-        }
-        return x;
+        return asArray[_d];
     }
 
     FORCE_INLINE f32 Vector3::operator [] (const u8& _d) const
     {
-        switch(_d)
-        {
-        case 1:
-            return y;
-        case 2:
-            return z;
-        }
-        return x;
+        return asArray[_d];
     }
 
     FORCE_INLINE Vector3 Vector3::operator + () const
@@ -141,46 +167,90 @@ namespace Michka
         return Vector3(-x, -y, -z);
     }
 
-    FORCE_INLINE Vector3 Vector3::operator / (const Vector3& _other) const
+    FORCE_INLINE Vector3& Vector3::operator += (const f32& _scaler)
     {
-        Vector3 out = *this;
-        out /= _other;
-
-        return out;
-    }
-
-    FORCE_INLINE Vector3& Vector3::operator /= (const Vector3& _other)
-    {
-        x /= _other.x;
-        y /= _other.y;
-        z /= _other.z;
+        x += _scaler;
+        y += _scaler;
+        z += _scaler;
 
         return *this;
     }
 
-    FORCE_INLINE Vector3 Vector3::operator / (const f32& _scaler) const
+    FORCE_INLINE Vector3 Vector3::operator + (const f32& _scaler) const
     {
-        Vector3 out = *this;
-        out /= _scaler;
+        Michka::Vector3 out = *this;
+        out += _scaler;
 
         return out;
     }
 
-    FORCE_INLINE Vector3& Vector3::operator /= (const f32& _scaler)
+    FORCE_INLINE Vector3& Vector3::operator += (const Vector3& _other)
     {
-        x /= _scaler;
-        y /= _scaler;
-        z /= _scaler;
+        x += _other.x;
+        y += _other.y;
+        z += _other.z;
 
         return *this;
     }
 
-    FORCE_INLINE Vector3 operator / (const f32& _a, const Vector3& _b)
+    FORCE_INLINE Vector3 Vector3::operator + (const Vector3& _other) const
     {
-        Vector3 out = _b;
-        out.x = _a / out.x;
-        out.y = _a / out.y;
-        out.z = _a / out.z;
+        Michka::Vector3 out = *this;
+        out += _other;
+
+        return out;
+    }
+
+    FORCE_INLINE Vector3 operator + (const f32& _a, const Vector3& _b)
+    {
+        Michka::Vector3 out = _b;
+        out.x = _a + out.x;
+        out.y = _a + out.y;
+        out.z = _a + out.z;
+
+        return out;
+    }
+
+    FORCE_INLINE Vector3 Vector3::operator - (const Vector3& _other) const
+    {
+        Michka::Vector3 out = *this;
+        out -= _other;
+
+        return out;
+    }
+
+    FORCE_INLINE Vector3& Vector3::operator -= (const Vector3& _other)
+    {
+        x -= _other.x;
+        y -= _other.y;
+        z -= _other.z;
+
+        return *this;
+    }
+
+    FORCE_INLINE Vector3 Vector3::operator - (const f32& _scaler) const
+    {
+        Michka::Vector3 out = *this;
+        out -= _scaler;
+
+        return out;
+    }
+
+    FORCE_INLINE Vector3& Vector3::operator -= (const f32& _scaler)
+    {
+        x -= _scaler;
+        y -= _scaler;
+        z -= _scaler;
+
+        return *this;
+    }
+
+    FORCE_INLINE Vector3 operator - (const f32& _a, const Vector3& _b)
+    {
+        Michka::Vector3 out = _b;
+        out.x = _a - out.x;
+        out.y = _a - out.y;
+        out.z = _a - out.z;
 
         return out;
     }
@@ -223,6 +293,50 @@ namespace Michka
     {
         Vector3 out = *this;
         out *= _other;
+
+        return out;
+    }
+
+    FORCE_INLINE Vector3 Vector3::operator / (const Vector3& _other) const
+    {
+        Vector3 out = *this;
+        out /= _other;
+
+        return out;
+    }
+
+    FORCE_INLINE Vector3& Vector3::operator /= (const Vector3& _other)
+    {
+        x /= _other.x;
+        y /= _other.y;
+        z /= _other.z;
+
+        return *this;
+    }
+
+    FORCE_INLINE Vector3 Vector3::operator / (const f32& _scaler) const
+    {
+        Vector3 out = *this;
+        out /= _scaler;
+
+        return out;
+    }
+
+    FORCE_INLINE Vector3& Vector3::operator /= (const f32& _scaler)
+    {
+        x /= _scaler;
+        y /= _scaler;
+        z /= _scaler;
+
+        return *this;
+    }
+
+    FORCE_INLINE Vector3 operator / (const f32& _a, const Vector3& _b)
+    {
+        Vector3 out = _b;
+        out.x = _a / out.x;
+        out.y = _a / out.y;
+        out.z = _a / out.z;
 
         return out;
     }

@@ -13,12 +13,57 @@ namespace Michka
         FORCE_INLINE Vector3(const Vector3& _other);
 
         /**
+         * @brief Get cross product of two directions.
+         *
+         * @param _a
+         * @param _b
+         */
+        FORCE_INLINE static Vector3 crossProduct(const Vector3& _a, const Vector3& _b);
+
+        /**
+         * @brief Distance between two points.
+         *
+         * @param _a
+         * @param _b
+         */
+        FORCE_INLINE static f32 distance(const Vector3& _a, const Vector3& _b);
+
+        /**
+         * @brief Get dot product of two points.
+         *
+         * @param _a
+         * @param _b
+         */
+        FORCE_INLINE static f32 dotProduct(const Vector3& _a, const Vector3& _b);
+
+        /**
+         * @brief Get cross product of this vector and another vector.
+         *
+         * @param _other
+         */
+        FORCE_INLINE Vector3 getCrossProduct(const Vector3& _other) const;
+
+        /**
+         * @brief Get the distance from this vector to another vector.
+         *
+         * @param _other
+         */
+        FORCE_INLINE f32 getDistanceFrom(const Vector3& _other) const;
+
+        /**
+         * @brief Get dot product between this vector and another vector.
+         *
+         * @param _other
+         */
+        FORCE_INLINE f32 getDotProduct(const Vector3& _other) const;
+
+        /**
          * @brief Get the length of vector.
          */
         FORCE_INLINE f32 getLength() const;
 
         /**
-         * @brief Get normalized copy of this vector.
+         * @brief Get the normalized copy of this vector.
          */
         FORCE_INLINE Vector3 getNormalized() const;
 
@@ -82,6 +127,18 @@ namespace Michka
         FORCE_INLINE f32& operator [] (const u8& _d);
         FORCE_INLINE f32 operator [] (const u8& _d) const;
 
+        FORCE_INLINE Vector3 operator + (const Vector3& _other) const;
+        FORCE_INLINE Vector3& operator += (const Vector3& _other);
+        FORCE_INLINE Vector3 operator + (const f32& _scaler) const;
+        FORCE_INLINE Vector3& operator += (const f32& _scaler);
+        friend FORCE_INLINE Vector3 operator + (const f32& _a, const Vector3& _b);
+
+        FORCE_INLINE Vector3 operator - (const Vector3& _other) const;
+        FORCE_INLINE Vector3& operator -= (const Vector3& _other);
+        FORCE_INLINE Vector3 operator - (const f32& _scaler) const;
+        FORCE_INLINE Vector3& operator -= (const f32& _scaler);
+        friend FORCE_INLINE Vector3 operator - (const f32& _a, const Vector3& _b);
+
         // Note: These operators are NOT Cross/Dot  product.
         FORCE_INLINE Vector3 operator * (const Vector3& _other) const;
         FORCE_INLINE Vector3& operator *= (const Vector3& _other);
@@ -107,9 +164,22 @@ namespace Michka
         static const Vector3 one;
 
     public:
-        f32 x = 0.0f;
-        f32 y = 0.0f;
-        f32 z = 0.0f;
+        union
+        {
+            struct
+            {
+                f32 x;
+                f32 y;
+                f32 z;
+            };
+            struct
+            {
+                f32 r;
+                f32 g;
+                f32 b;
+            };
+            f32 asArray[3];
+        };
     };
 }
 
