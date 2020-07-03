@@ -8,6 +8,7 @@ set(
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/Utility.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Memory/Memory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Thread/Thread.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Math/Vector3.cpp
 
     # -------------------------------------------------------------------------- #
 

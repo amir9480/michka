@@ -12,5 +12,7 @@
 #include "Container/Map.h"
 #include "Thread/Thread.h"
 #include "Thread/Mutex.h"
+#include "Math/Utility.h"
+#include "Math/Vector3.h"
 
 #endif // __CORE_H__

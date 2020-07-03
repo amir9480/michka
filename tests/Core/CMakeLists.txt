@@ -12,6 +12,7 @@ set(
     ${CMAKE_CURRENT_SOURCE_DIR}/ThreadTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TypeTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/VectorTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Vector3Test.cpp
 
     # -------------------------------------------------------------------------- #
 
