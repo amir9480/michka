@@ -97,8 +97,9 @@ namespace Michka
         {
             return false;
         }
-        x /= length;
-        y /= length;
+        f32 lengthInv = 1.0f / length;
+        x *= lengthInv;
+        y *= lengthInv;
 
         return true;
     }
@@ -316,8 +317,9 @@ namespace Michka
 
     FORCE_INLINE Vector2& Vector2::operator /= (const f32& _scaler)
     {
-        x /= _scaler;
-        y /= _scaler;
+        f32 scalerInv = 1.0f / _scaler;
+        x *= scalerInv;
+        y *= scalerInv;
 
         return *this;
     }

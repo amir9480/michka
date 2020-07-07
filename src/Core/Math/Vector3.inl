@@ -114,9 +114,10 @@ namespace Michka
         {
             return false;
         }
-        x /= length;
-        y /= length;
-        z /= length;
+        f32 lengthInv = 1.0f / length;
+        x *= lengthInv;
+        y *= lengthInv;
+        z *= lengthInv;
 
         return true;
     }
@@ -351,9 +352,10 @@ namespace Michka
 
     FORCE_INLINE Vector3& Vector3::operator /= (const f32& _scaler)
     {
-        x /= _scaler;
-        y /= _scaler;
-        z /= _scaler;
+        f32 scalerInv = 1.0f / _scaler;
+        x *= scalerInv;
+        y *= scalerInv;
+        z *= scalerInv;
 
         return *this;
     }
