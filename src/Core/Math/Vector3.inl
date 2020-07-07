@@ -24,6 +24,11 @@ namespace Michka
         *this = _other;
     }
 
+    FORCE_INLINE f32 Vector3::angle(const Vector3& _a, const Vector3& _b)
+    {
+        return Math::acos(dotProduct(_a.getNormalized(), _b.getNormalized()));
+    }
+
     FORCE_INLINE Vector3 Vector3::crossProduct(const Vector3& _a, const Vector3& _b)
     {
         return Vector3(
@@ -44,6 +49,11 @@ namespace Michka
     FORCE_INLINE f32 Vector3::dotProduct(const Vector3& _a, const Vector3& _b)
     {
         return _a.x*_b.x + _a.y*_b.y + _a.z*_b.z;
+    }
+
+    FORCE_INLINE f32 Vector3::getAngleFrom(const Vector3& _other) const
+    {
+        return angle(*this, _other);
     }
 
     FORCE_INLINE Vector3 Vector3::getCrossProduct(const Vector3& _other) const
@@ -77,9 +87,19 @@ namespace Michka
         return temp;
     }
 
+    FORCE_INLINE Vector3 Vector3::getReflected(const Vector3& _normal) const
+    {
+        return (*this) - (2.0f * dotProduct(*this, _normal) * _normal);
+    }
+
     FORCE_INLINE f32 Vector3::getSqauredLength() const
     {
         return x*x + y*y + z*z;
+    }
+
+    FORCE_INLINE bool Vector3::isNormalizable() const
+    {
+        return getLength() > 0.0f;
     }
 
     FORCE_INLINE bool Vector3::isNormalized() const
@@ -99,6 +119,13 @@ namespace Michka
         z /= length;
 
         return true;
+    }
+
+    FORCE_INLINE Vector3& Vector3::reflect(const Vector3& _normal)
+    {
+        *this = getReflected(_normal);
+
+        return *this;
     }
 
     FORCE_INLINE Vector3& Vector3::set(const f32& _x, const f32& _y, const f32& _z)

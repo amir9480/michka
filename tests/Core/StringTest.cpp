@@ -413,9 +413,9 @@ TEST(StringTest, SubStringTest)
 
 TEST(StringTest, UnicodeTest)
 {
-	const char* teststr = "سلام دنیا - 🌍 Hello World 你好，世界 - æ - © - ſ - ◌󠇓 - × - ~";
-	const wchar_t* teststr16 = L"\u0633\u0644\u0627\u0645 \u062F\u0646\u06CC\u0627 - \U0001f30d Hello World \u4F60\u597D\uFF0C\u4E16\u754C - \u00E6 - \u00A9 - \u017F - \u25CC\U000e01d3 - \u00D7 - ~";
-	const char32_t* teststr32 = U"\u0633\u0644\u0627\u0645 \u062F\u0646\u06CC\u0627 - \U0001f30d Hello World \u4F60\u597D\uFF0C\u4E16\u754C - \u00E6 - \u00A9 - \u017F - \u25CC\U000e01d3 - \u00D7 - ~";
+	const char* teststr = "سلام دنیا - 🌍 Hello World 你好，世界 - æ - © - ſ - ◌󠇓 - × - ~ - 𠀁";
+	const wchar_t* teststr16 = L"\u0633\u0644\u0627\u0645 \u062F\u0646\u06CC\u0627 - \U0001f30d Hello World \u4F60\u597D\uFF0C\u4E16\u754C - \u00E6 - \u00A9 - \u017F - \u25CC\U000e01d3 - \u00D7 - ~ - \U00020001";
+	const char32_t* teststr32 = U"\u0633\u0644\u0627\u0645 \u062F\u0646\u06CC\u0627 - \U0001f30d Hello World \u4F60\u597D\uFF0C\u4E16\u754C - \u00E6 - \u00A9 - \u017F - \u25CC\U000e01d3 - \u00D7 - ~ - \U00020001";
 
 	// UTF 8
 	{

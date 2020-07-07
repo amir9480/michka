@@ -13,6 +13,7 @@
 #include "Thread/Thread.h"
 #include "Thread/Mutex.h"
 #include "Math/Utility.h"
+#include "Math/Vector2.h"
 #include "Math/Vector3.h"
 
 #endif // __CORE_H__

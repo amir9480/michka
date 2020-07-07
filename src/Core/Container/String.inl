@@ -659,24 +659,24 @@ namespace Michka
 			out.character[3] = 0x80 | ((_character) & (~(0xC0)));
 			out.character[4] = '\0';
 		}
-		else if (_character <= 0x3FFFFFF)
+		else if (_character <= 0x3ffffff)
 		{
-			out.character[0] = 0xF8 | _character >> 24;
-			out.character[1] = 0x80 | ((_character >> 18) & (~(0xC0)));
-			out.character[2] = 0x80 | ((_character >> 12) & (~(0xC0)));
-			out.character[3] = 0x80 | ((_character >> 6) & (~(0xC0)));
-			out.character[4] = 0x80 | ((_character) & (~(0xC0)));
-			out.character[5] = '\0';
+			out.character[0] = 0xF8 | _character >> 24; 				 // @NOCOVERAGE
+			out.character[1] = 0x80 | ((_character >> 18) & (~(0xC0)));	 // @NOCOVERAGE
+			out.character[2] = 0x80 | ((_character >> 12) & (~(0xC0)));	 // @NOCOVERAGE
+			out.character[3] = 0x80 | ((_character >> 6) & (~(0xC0)));	 // @NOCOVERAGE
+			out.character[4] = 0x80 | ((_character) & (~(0xC0)));		 // @NOCOVERAGE
+			out.character[5] = '\0';									 // @NOCOVERAGE
 		}
-		else if (_character <= 0x7FFFFFFF)
+		else if (_character <= 0x7fffffff)
 		{
-			out.character[0] = 0xFC | _character >> 30;
-			out.character[1] = 0x80 | ((_character >> 24) & (~(0xC0)));
-			out.character[2] = 0x80 | ((_character >> 18) & (~(0xC0)));
-			out.character[3] = 0x80 | ((_character >> 12) & (~(0xC0)));
-			out.character[4] = 0x80 | ((_character >> 6) & (~(0xC0)));
-			out.character[4] = 0x80 | ((_character) & (~(0xC0)));
-			out.character[5] = '\0';
+			out.character[0] = 0xFC | _character >> 30;					 // @NOCOVERAGE
+			out.character[1] = 0x80 | ((_character >> 24) & (~(0xC0)));	 // @NOCOVERAGE
+			out.character[2] = 0x80 | ((_character >> 18) & (~(0xC0)));	 // @NOCOVERAGE
+			out.character[3] = 0x80 | ((_character >> 12) & (~(0xC0)));	 // @NOCOVERAGE
+			out.character[4] = 0x80 | ((_character >> 6) & (~(0xC0)));	 // @NOCOVERAGE
+			out.character[4] = 0x80 | ((_character) & (~(0xC0)));		 // @NOCOVERAGE
+			out.character[5] = '\0';									 // @NOCOVERAGE
 		}
 		return out;
 	}
@@ -688,20 +688,20 @@ namespace Michka
 		u32 out = 0;
 		if ((_input[0] & 0xFE) == 0xFC)
 		{
-			out = (_input[0] & (~0xFE)) << 30;
-			out += (_input[1] & (~0xC0)) << 24;
-			out += (_input[2] & (~0xC0)) << 18;
-			out += (_input[3] & (~0xC0)) << 12;
-			out += (_input[4] & (~0xC0)) << 6;
-			out += (_input[5] & (~0xC0));
+			out = (_input[0] & (~0xFE)) << 30; 	 // @NOCOVERAGE
+			out += (_input[1] & (~0xC0)) << 24;	 // @NOCOVERAGE
+			out += (_input[2] & (~0xC0)) << 18;	 // @NOCOVERAGE
+			out += (_input[3] & (~0xC0)) << 12;	 // @NOCOVERAGE
+			out += (_input[4] & (~0xC0)) << 6;	 // @NOCOVERAGE
+			out += (_input[5] & (~0xC0));		 // @NOCOVERAGE
 		}
 		else if ((_input[0] & 0xFC) == 0xF8)
 		{
-			out = (_input[0] & (~0xFC)) << 24;
-			out += (_input[1] & (~0xC0)) << 18;
-			out += (_input[2] & (~0xC0)) << 12;
-			out += (_input[3] & (~0xC0)) << 6;
-			out += (_input[4] & (~0xC0));
+			out = (_input[0] & (~0xFC)) << 24;	 // @NOCOVERAGE
+			out += (_input[1] & (~0xC0)) << 18;	 // @NOCOVERAGE
+			out += (_input[2] & (~0xC0)) << 12;	 // @NOCOVERAGE
+			out += (_input[3] & (~0xC0)) << 6;	 // @NOCOVERAGE
+			out += (_input[4] & (~0xC0));		 // @NOCOVERAGE
 		}
 		else if ((_input[0] & 0xF8) == 0xF0)
 		{

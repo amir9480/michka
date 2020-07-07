@@ -230,11 +230,11 @@ namespace Michka
 			}
 			else if (character <= 0x3ffffff)
 			{
-				iterator += 5;
+				iterator += 5;  // @NOCOVERAGE
 			}
 			else if (character <= 0x7fffffff)
 			{
-				iterator += 6;
+				iterator += 6;  // @NOCOVERAGE
 			}
 		}
 		return out;
@@ -270,11 +270,11 @@ namespace Michka
 			}
 			else if (character <= 0x3ffffff)
 			{
-				iterator += 5;
+				iterator += 5;  // @NOCOVERAGE
 			}
 			else if (character <= 0x7fffffff)
 			{
-				iterator += 6;
+				iterator += 6;  // @NOCOVERAGE
 			}
 		}
 		return out;
@@ -460,11 +460,11 @@ namespace Michka
 			}
 			else if (character <= 0x3ffffff)
 			{
-				iterator += 5;
+				iterator += 5; // @NOCOVERAGE
 			}
 			else if (character <= 0x7fffffff)
 			{
-				iterator += 6;
+				iterator += 6; // @NOCOVERAGE
 			}
 			out++;
 		}

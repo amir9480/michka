@@ -31,6 +31,7 @@ TEST(Vector3Test, normalize)
 	ASSERT_FLOAT_EQ(a.getLength(), 1.0f);
 
 	a.setX(0.0f).setY(0.0f).setZ(0.0f);
+	ASSERT_FALSE(a.isNormalizable());
 	ASSERT_EQ(a.getNormalized(), Michka::Vector3::zero);
 }
 
@@ -52,17 +53,19 @@ TEST(Vector3Test, dotProduct)
 	ASSERT_FLOAT_EQ(b.getDotProduct(a), 32.0f);
 }
 
-TEST(Vector3Test, crossProduct)
+TEST(Vector3Test, reflect)
 {
-	ASSERT_EQ(Michka::Vector3::crossProduct(Michka::Vector3::right, Michka::Vector3::up), Michka::Vector3::forward);
-	ASSERT_EQ(Michka::Vector3::crossProduct(Michka::Vector3::right, Michka::Vector3::forward), Michka::Vector3::down);
-	ASSERT_EQ(Michka::Vector3::crossProduct(Michka::Vector3::back, Michka::Vector3::up), Michka::Vector3::right);
-	ASSERT_EQ(Michka::Vector3::crossProduct(Michka::Vector3::left, Michka::Vector3::back), Michka::Vector3::down);
-	ASSERT_EQ(Michka::Vector3::crossProduct(Michka::Vector3::right, Michka::Vector3::back), Michka::Vector3::up);
+	Michka::Vector3 a(1.0f, 1.0f, 0.0f);
+	a.reflect(Michka::Vector3::up);
 
-	Michka::Vector3 a(1.0f, 2.0f, 3.0f);
-	Michka::Vector3 b(1.0f, 5.0f, 7.0f);
-	ASSERT_EQ(a.getCrossProduct(b), Michka::Vector3(-1.0f, -4.0f, 3.0f));
+	ASSERT_EQ(a, Michka::Vector3(1.0f, -1.0f, 0.0f));
+}
+
+TEST(Vector3Test, angle)
+{
+	Michka::Vector3 a(0.0f, 1.0f, 0.0f);
+
+	ASSERT_FLOAT_EQ(a.getAngleFrom(Michka::Vector3::right), 90.0f);
 }
 
 TEST(Vector3Test, operators)
@@ -97,4 +100,17 @@ TEST(Vector3Test, operators)
 
 	ASSERT_EQ(a + Michka::Vector3(2.0f, 3.0f, 4.0f), Michka::Vector3(7.0f, -7.0f, 19.0f));
 	ASSERT_EQ(a - Michka::Vector3(2.0f, 3.0f, 4.0f), Michka::Vector3(3.0f, -13.0f, 11.0f));
+}
+
+TEST(Vector3Test, crossProduct)
+{
+	ASSERT_EQ(Michka::Vector3::crossProduct(Michka::Vector3::right, Michka::Vector3::up), Michka::Vector3::forward);
+	ASSERT_EQ(Michka::Vector3::crossProduct(Michka::Vector3::right, Michka::Vector3::forward), Michka::Vector3::down);
+	ASSERT_EQ(Michka::Vector3::crossProduct(Michka::Vector3::back, Michka::Vector3::up), Michka::Vector3::right);
+	ASSERT_EQ(Michka::Vector3::crossProduct(Michka::Vector3::left, Michka::Vector3::back), Michka::Vector3::down);
+	ASSERT_EQ(Michka::Vector3::crossProduct(Michka::Vector3::right, Michka::Vector3::back), Michka::Vector3::up);
+
+	Michka::Vector3 a(1.0f, 2.0f, 3.0f);
+	Michka::Vector3 b(1.0f, 5.0f, 7.0f);
+	ASSERT_EQ(a.getCrossProduct(b), Michka::Vector3(-1.0f, -4.0f, 3.0f));
 }

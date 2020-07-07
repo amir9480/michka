@@ -13,6 +13,14 @@ namespace Michka
         FORCE_INLINE Vector3(const Vector3& _other);
 
         /**
+         * @brief Angel between two directions.
+         *
+         * @param _a
+         * @param _b
+         */
+        FORCE_INLINE static f32 angle(const Vector3& _a, const Vector3& _b);
+
+        /**
          * @brief Get cross product of two directions.
          *
          * @param _a
@@ -35,6 +43,13 @@ namespace Michka
          * @param _b
          */
         FORCE_INLINE static f32 dotProduct(const Vector3& _a, const Vector3& _b);
+
+        /**
+         * @brief Get the angel between this vector direction and another vector.
+         *
+         * @param _other
+         */
+        FORCE_INLINE f32 getAngleFrom(const Vector3& _other) const;
 
         /**
          * @brief Get cross product of this vector and another vector.
@@ -68,9 +83,19 @@ namespace Michka
         FORCE_INLINE Vector3 getNormalized() const;
 
         /**
+         * @brief Get the reflected copy of this vector.
+         */
+        FORCE_INLINE Vector3 getReflected(const Vector3& _normal) const;
+
+        /**
          * @brief Get the sqaured length of vector.
          */
         FORCE_INLINE f32 getSqauredLength() const;
+
+        /**
+         * @brief Check vector can be normalize.
+         */
+        FORCE_INLINE bool isNormalizable() const;
 
         /**
          * @brief Check vector is normalized.
@@ -85,9 +110,19 @@ namespace Michka
         FORCE_INLINE bool normalize();
 
         /**
+         * @brief Reflect a vector by a normal vector.
+         *
+         * @param _normal
+         * @return Self
+         */
+        FORCE_INLINE Vector3& reflect(const Vector3& _normal);
+
+        /**
          * @brief Set Vector coordinates.
          *
          * @param _x
+         * @param _y
+         * @param _z
          * @return Self
          */
         FORCE_INLINE Vector3& set(const f32& _x, const f32& _y, const f32& _z);
