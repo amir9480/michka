@@ -11,6 +11,7 @@ set(
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/Vector2.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/Vector3.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/Vector4.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Math/Matrix.cpp
 
     # -------------------------------------------------------------------------- #
 

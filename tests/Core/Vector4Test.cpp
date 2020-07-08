@@ -65,7 +65,9 @@ TEST(Vector4Test, operators)
 TEST(Vector4Test, length)
 {
 	Michka::Vector4 a;
-	a.setX(7.0f).setY(4.0f).setZ(3.0f);
+	a.setX(7.0f).setY(4.0f).setZ(3.0f).setW(1.0f);
 
-	ASSERT_FLOAT_EQ(a.getLength(), 8.6023254f);
+	ASSERT_FLOAT_EQ(a.getLength(), 8.6602545f);
+	a.set(2.0f, 1.0f, 2.0f);
+	ASSERT_FLOAT_EQ(a.getSqauredLength(), 10.0f);
 }

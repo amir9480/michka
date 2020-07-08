@@ -15,5 +15,7 @@
 #include "Math/Utility.h"
 #include "Math/Vector2.h"
 #include "Math/Vector3.h"
+#include "Math/Vector4.h"
+#include "Math/Matrix.h"
 
 #endif // __CORE_H__
