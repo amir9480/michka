@@ -1,5 +1,6 @@
 #include "Matrix.h"
 #include "Core/Helpers.h"
+#include "Core/Math/Vector3.h"
 
 namespace Michka
 {
@@ -50,35 +51,35 @@ namespace Michka
 
     Matrix Matrix::createOrthgraphicProjection(const f32& _left, const f32& _right, const f32& _top, const f32& _bottom, const f32& _zNear, const f32& _zFar)
     {
-        f32 mat33 = 1.0f / (_zNear - _zFar);
+        f32 oneByFarMinusNear = 1.0f / (_zFar - _zNear);
         return Matrix(
             2.0f/(_right -_left), 0.0f, 0.0f, 0.0f,
             0.0f, 2.0f/(_top - _bottom), 0.0f, 0.0f,
-            0.0f, 0.0f, mat33, 0.0f,
-            (_left + _right) / (_left - _right), (_bottom + _top) / (_bottom - _top), -_zNear * mat33, 1.0f
+            0.0f, 0.0f, oneByFarMinusNear, 0.0f,
+            -(_right + _left) / (_right - _left), -(_top + _bottom) / (_top - _bottom), -_zNear * oneByFarMinusNear, 1.0f
         );
     }
 
     Matrix Matrix::createOrthgraphicProjection(const f32& _width, const f32& _height, const f32& _zNear, const f32& _zFar)
     {
-        f32 mat33 = 1.0f / (_zNear - _zFar);
+        f32 oneByFarMinusNear = 1.0f / (_zFar - _zNear);
         return Matrix(
-            2.0f/(_width), 0.0f, 0.0f, 0.0f,
-            0.0f, 2.0f/(_height), 0.0f, 0.0f,
-            0.0f, 0.0f, mat33, 0.0f,
-            0.0f, 0.0f, -_zNear * mat33, 1.0f
+            2.0f/_width, 0.0f, 0.0f, 0.0f,
+            0.0f, 2.0f/_height, 0.0f, 0.0f,
+            0.0f, 0.0f, oneByFarMinusNear, 0.0f,
+            0.0f, 0.0f, -_zNear * oneByFarMinusNear, 1.0f
         );
     }
 
     Matrix Matrix::createPerspectiveProjection(const f32& _fov, const f32& _aspectRatio, const f32& _zNear, const f32& _zFar)
     {
-        f32 mat22 = Math::cotan(_fov/2.0f);
-        f32 mat33 = 1.0f / (_zNear - _zFar);
+        f32 oneByTanFov = 1.0f / Math::tan(_fov * 0.5f);
+        f32 oneByFarMinusNear = 1.0f / (_zFar - _zNear);
         return Matrix(
-            mat22 / _aspectRatio, 0.0f, 0.0f, 0.0f,
-            0.0f, mat22, 0.0f, 0.0f,
-            0.0f, 0.0f, mat33, 1.0f,
-            0.0f, 0.0f, -_zNear * mat33, 0.0f
+            oneByTanFov / _aspectRatio, 0.0f, 0.0f, 0.0f,
+            0.0f, oneByTanFov, 0.0f, 0.0f,
+            0.0f, 0.0f, _zFar * oneByFarMinusNear, 1.0f,
+            0.0f, 0.0f, -(_zFar * _zNear) * oneByFarMinusNear, 0.0f
         );
     }
 
@@ -148,8 +149,8 @@ namespace Michka
 
     Matrix Matrix::createRotationMatrixZ(const f32& _angle)
     {
-        f32 cosAngle= Math::cos(_angle);
-        f32 sinAngle= Math::sin(_angle);
+        f32 cosAngle= Math::cos(-_angle);
+        f32 sinAngle= Math::sin(-_angle);
         return Matrix(
             cosAngle, sinAngle, 0.0f, 0.0f,
             sinAngle, cosAngle, 0.0f, 0.0f,

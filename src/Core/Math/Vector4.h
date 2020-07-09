@@ -5,6 +5,8 @@
 
 namespace Michka
 {
+    class Matrix;
+
     class MICHKA_API Vector4
     {
     public:
@@ -103,12 +105,13 @@ namespace Michka
         FORCE_INLINE Vector4& operator -= (const f32& _scaler);
         friend FORCE_INLINE Vector4 operator - (const f32& _a, const Vector4& _b);
 
-        // Note: These operators are NOT Cross/Dot  product.
         FORCE_INLINE Vector4 operator * (const Vector4& _other) const;
         FORCE_INLINE Vector4& operator *= (const Vector4& _other);
         FORCE_INLINE Vector4 operator * (const f32& _scaler) const;
         FORCE_INLINE Vector4& operator *= (const f32& _scaler);
         friend FORCE_INLINE Vector4 operator * (const f32& _a, const Vector4& _b);
+        Vector4 operator * (const Matrix& _other) const;
+        FORCE_INLINE Vector4& operator *= (const Matrix& _other);
 
         FORCE_INLINE Vector4 operator / (const Vector4& _other) const;
         FORCE_INLINE Vector4& operator /= (const Vector4& _other);

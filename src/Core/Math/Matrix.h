@@ -2,10 +2,11 @@
 #define __MATRIX_H__
 
 #include "Core/Defines.h"
-#include "Core/Math/Vector3.h"
 
 namespace Michka
 {
+    class Vector3;
+
     /**
      * @brief A 4x4 row major matrix.
      *
@@ -38,7 +39,7 @@ namespace Michka
          * @param _zNear
          * @param _zFar
          */
-        static Matrix createOrthgraphicProjection(const f32& _left = -4.0f, const f32& _right = 4.0f, const f32& _top = 3.0f, const f32& _bottom = -3.0f, const f32& _zNear = 0.1f, const f32& _zFar = 1000.0f);
+        static Matrix createOrthgraphicProjection(const f32& _left, const f32& _right, const f32& _top, const f32& _bottom, const f32& _zNear, const f32& _zFar);
 
         /**
          * @brief Create a Orthgraphic Projection matrix.
@@ -48,7 +49,7 @@ namespace Michka
          * @param _zNear
          * @param _zFar
          */
-        static Matrix createOrthgraphicProjection(const f32& _width = 4.0f, const f32& _height = 3.0f, const f32& _zNear = 0.1f, const f32& _zFar = 1000.0f);
+        static Matrix createOrthgraphicProjection(const f32& _width, const f32& _height, const f32& _zNear, const f32& _zFar);
 
         /**
          * @brief Create a Perspective Projection matrix

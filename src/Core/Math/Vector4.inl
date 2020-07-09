@@ -7,7 +7,7 @@ namespace Michka
         x(0.0f),
         y(0.0f),
         z(0.0f),
-        w(0.0f)
+        w(1.0f)
     {
         //
     }
@@ -256,6 +256,13 @@ namespace Michka
         out *= _other;
 
         return out;
+    }
+
+    FORCE_INLINE Vector4& Vector4::operator *= (const Matrix& _other)
+    {
+        *this = *this * _other;
+
+        return *this;
     }
 
     FORCE_INLINE Vector4 Vector4::operator / (const Vector4& _other) const

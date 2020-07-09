@@ -1,4 +1,5 @@
 #include "Vector4.h"
+#include "Core/Math/Matrix.h"
 
 namespace Michka
 {
@@ -10,4 +11,14 @@ namespace Michka
     const Vector4 Vector4::back    = Vector4( 0.0f,  0.0f, -1.0f);
     const Vector4 Vector4::zero    = Vector4( 0.0f,  0.0f,  0.0f);
     const Vector4 Vector4::one     = Vector4(+1.0f, +1.0f, +1.0f);
+
+    Vector4 Vector4::operator * (const Matrix& _other) const
+    {
+        return Vector4(
+            x*_other.m11 + y*_other.m21 + z*_other.m31 + w*_other.m41,
+            x*_other.m12 + y*_other.m22 + z*_other.m32 + w*_other.m42,
+            x*_other.m13 + y*_other.m23 + z*_other.m33 + w*_other.m43,
+            x*_other.m14 + y*_other.m24 + z*_other.m34 + w*_other.m44
+        );
+    }
 }
