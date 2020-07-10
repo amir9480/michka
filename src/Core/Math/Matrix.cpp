@@ -130,7 +130,7 @@ namespace Michka
         return Matrix(
             1.0f, 0.0f, 0.0f, 0.0f,
             0.0f, cosAngle, sinAngle, 0.0f,
-            0.0f, sinAngle, cosAngle, 0.0f,
+            0.0f, -sinAngle, cosAngle, 0.0f,
             0.0f, 0.0f, 0.0f, 1.0f
         );
     }
@@ -140,7 +140,7 @@ namespace Michka
         f32 cosAngle= Math::cos(_angle);
         f32 sinAngle= Math::sin(_angle);
         return Matrix(
-            cosAngle, 0.0f, sinAngle, 0.0f,
+            cosAngle, 0.0f, -sinAngle, 0.0f,
             0.0f, 1.0f, 0.0f, 0.0f,
             sinAngle, 0.0f, cosAngle, 0.0f,
             0.0f, 0.0f, 0.0f, 1.0f
@@ -149,11 +149,11 @@ namespace Michka
 
     Matrix Matrix::createRotationMatrixZ(const f32& _angle)
     {
-        f32 cosAngle= Math::cos(-_angle);
-        f32 sinAngle= Math::sin(-_angle);
+        f32 cosAngle= Math::cos(_angle);
+        f32 sinAngle= Math::sin(_angle);
         return Matrix(
             cosAngle, sinAngle, 0.0f, 0.0f,
-            sinAngle, cosAngle, 0.0f, 0.0f,
+            -sinAngle, cosAngle, 0.0f, 0.0f,
             0.0f, 0.0f, 1.0f, 0.0f,
             0.0f, 0.0f, 0.0f, 1.0f
         );

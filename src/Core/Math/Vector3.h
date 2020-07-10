@@ -5,6 +5,8 @@
 
 namespace Michka
 {
+    class Matrix;
+
     class MICHKA_API Vector3
     {
     public:
@@ -103,6 +105,15 @@ namespace Michka
         FORCE_INLINE bool isNormalized() const;
 
         /**
+         * @brief Get linear interpolation between two vector.
+         *
+         * @param _a
+         * @param _b
+         * @param _position
+         */
+        FORCE_INLINE static Vector3 lerp(const Vector3& _a, const Vector3& _b, const f32& _position);
+
+        /**
          * @brief Normalize vector.
          *
          * @return false if vector is not normalizable.
@@ -174,12 +185,14 @@ namespace Michka
         FORCE_INLINE Vector3& operator -= (const f32& _scaler);
         friend FORCE_INLINE Vector3 operator - (const f32& _a, const Vector3& _b);
 
-        // Note: These operators are NOT Cross/Dot  product.
+        // Note: These operators are NOT Cross/Dot product.
         FORCE_INLINE Vector3 operator * (const Vector3& _other) const;
         FORCE_INLINE Vector3& operator *= (const Vector3& _other);
         FORCE_INLINE Vector3 operator * (const f32& _scaler) const;
         FORCE_INLINE Vector3& operator *= (const f32& _scaler);
         friend FORCE_INLINE Vector3 operator * (const f32& _a, const Vector3& _b);
+        Vector3 operator * (const Matrix& _other) const;
+        Vector3& operator *= (const Matrix& _other);
 
         FORCE_INLINE Vector3 operator / (const Vector3& _other) const;
         FORCE_INLINE Vector3& operator /= (const Vector3& _other);

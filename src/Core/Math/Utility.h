@@ -12,7 +12,7 @@ namespace Michka
         static const f32 halfPi           = 1.57079632679489661923f;
         static const f32 radianPerDegree  = 0.01745329251994329576f;
         static const f32 degreePerRadian  = 57.29577951308232087684f;
-        static const f32 epsilon          = 0.00001f;
+        static const f32 epsilon          = 0.0001f;
         static const f32 infinity         = INFINITY;
 
         /**
@@ -53,6 +53,14 @@ namespace Michka
         FORCE_INLINE f32 atan(const f32& _number);
 
         /**
+         * @brief Arc tan 2.
+         *
+         * @param _x
+         * @param _y
+         */
+        FORCE_INLINE f32 atan2(const f32& _x, const f32& _y);
+
+        /**
          * @brief Round value up.
          *
          * @param _number
@@ -66,9 +74,10 @@ namespace Michka
          * @param _value
          * @param _min
          * @param _max
+         * @param _epsilon
          */
         template<typename T>
-        FORCE_INLINE T clamp(const T& _value, const T& _min = 0, const T& _max = 1);
+        FORCE_INLINE T clamp(const T& _value, const T& _min = 0, const T& _max = 1, const T& _epsilon = epsilon);
 
         /**
          * @brief Cos

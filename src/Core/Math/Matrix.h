@@ -128,17 +128,17 @@ namespace Michka
         f32 getDeterminant() const;
 
         /**
-         * @brief Get the inversed copy of this vector.
+         * @brief Get the inversed copy of this matrix.
          */
         FORCE_INLINE Matrix getInversed() const;
 
         /**
-         * @brief Get the inverse transposed copy of this vector.
+         * @brief Get the inverse transposed copy of this matrix.
          */
         FORCE_INLINE Matrix getInverseTransposed() const;
 
         /**
-         * @brief Get the transposed copy of this vector.
+         * @brief Get the transposed copy of this matrix.
          */
         FORCE_INLINE Matrix getTransposed() const;
 

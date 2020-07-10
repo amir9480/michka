@@ -16,6 +16,7 @@ set(
     ${CMAKE_CURRENT_SOURCE_DIR}/Vector3Test.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Vector4Test.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MatrixTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/QuaternionTest.cpp
 
     # -------------------------------------------------------------------------- #
 

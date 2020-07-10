@@ -68,6 +68,16 @@ TEST(Vector3Test, angle)
 	ASSERT_FLOAT_EQ(a.getAngleFrom(Michka::Vector3::right), 90.0f);
 }
 
+TEST(Vector3Test, lerp)
+{
+	Michka::Vector3 a(0.0f, 0.0f, 0.0f);
+	const Michka::Vector3 b(10.0f, 0.0f, 0.0f);
+
+	ASSERT_EQ(Michka::Vector3::lerp(a, b, 0.0f), a);
+	ASSERT_EQ(Michka::Vector3::lerp(a, b, 1.0f), b);
+	ASSERT_EQ(Michka::Vector3::lerp(a, b, 0.5f), Michka::Vector3(5.0f, 0.0f, 0.0f));
+}
+
 TEST(Vector3Test, operators)
 {
 	Michka::Vector3 a(5.0f, -10.0f, 15.0f);

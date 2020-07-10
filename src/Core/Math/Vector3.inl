@@ -107,6 +107,11 @@ namespace Michka
         return Math::equals(getSqauredLength(), 1.0f);
     }
 
+    FORCE_INLINE Vector3 Vector3::lerp(const Vector3& _a, const Vector3& _b, const f32& _position)
+    {
+        return _a + (_position * (_b - _a));
+    }
+
     FORCE_INLINE bool Vector3::normalize()
     {
         f32 length = getLength();

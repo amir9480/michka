@@ -37,7 +37,7 @@ TEST(ThreadTest, CallbackThread)
 {
     int testVar = 0;
     Michka::Vector<Michka::CallbackThread<void()>> threads;
-    for (u32 i = 0; i < 10; i++)
+    for (u32 i = 0; i < 5; i++)
     {
         threads.pushBack(Michka::CallbackThread<void()>([&]()
         {
@@ -53,7 +53,7 @@ TEST(ThreadTest, CallbackThread)
     {
         threads[i].join();
     }
-    ASSERT_EQ(testVar, 10);
+    ASSERT_EQ(testVar, 5);
     for (u32 i = 0; i < threads.getSize(); i++)
     {
         threads[i].start();
@@ -62,7 +62,7 @@ TEST(ThreadTest, CallbackThread)
     {
         threads[i].join();
     }
-    ASSERT_EQ(testVar, 20);
+    ASSERT_EQ(testVar, 10);
 }
 
 TEST(ThreadTest, Mutex)
@@ -81,7 +81,7 @@ TEST(ThreadTest, Mutex)
         testVar *= 2;
     });
     thread1.start();
-    Michka::Thread::sleep(50);
+    Michka::Thread::sleep(100);
     thread2.start();
     thread1.join();
     thread2.join();

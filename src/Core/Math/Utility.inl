@@ -32,6 +32,11 @@ namespace Michka
             return atanf(_number) * degreePerRadian;
         }
 
+        FORCE_INLINE f32 atan2(const f32& _x, const f32& _y)
+        {
+            return atan2f(_x, _y) * degreePerRadian;
+        }
+
         FORCE_INLINE f32 ceil(const f32& _number)
         {
             return ceilf(_number);
@@ -135,13 +140,13 @@ namespace Michka
         }
 
         template<typename T>
-        FORCE_INLINE T clamp(const T& _value, const T& _min, const T& _max)
+        FORCE_INLINE T clamp(const T& _value, const T& _min, const T& _max, const T& _epsilon)
         {
-            if (_value <= _min)
+            if (_value <= _min + _epsilon)
             {
                 return _min;
             }
-            if (_value >= _max)
+            if (_value >= _max - _epsilon)
             {
                 return _max;
             }

@@ -7,6 +7,11 @@ set(TEST_SOURCES "")
 add_subdirectory("Core")
 
 add_executable(MichkaTests ${SOURCES} ${TEST_SOURCES})
-target_link_libraries(MichkaTests gtest gtest_main)
+
+if(MICHKA_BUILD_TYPE STREQUAL "Debug")
+    target_link_libraries(MichkaTests gtestd gtest_maind)
+else()
+    target_link_libraries(MichkaTests gtest gtest_main)
+endif()
 
 add_test(MichkaTest MichkaTests)

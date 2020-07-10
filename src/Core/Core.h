@@ -17,5 +17,6 @@
 #include "Math/Vector3.h"
 #include "Math/Vector4.h"
 #include "Math/Matrix.h"
+#include "Math/Quaternion.h"
 
 #endif // __CORE_H__
