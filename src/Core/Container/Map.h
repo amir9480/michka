@@ -48,8 +48,8 @@ namespace Michka
          * @param _index
          * @return Element
          */
-		FORCE_INLINE Element& at(const u32& _index);
-		FORCE_INLINE Element at(const u32& _index) const;
+        FORCE_INLINE Element& at(const u32& _index);
+        FORCE_INLINE Element at(const u32& _index) const;
 
         /**
          * @brief Iterator to begin of array.
@@ -156,15 +156,15 @@ namespace Michka
         FORCE_INLINE Map<TKey, TValue>& insert(const TKey& _key, const TValue& _value);
         FORCE_INLINE Map<TKey, TValue>& insert(TKey&& _key, TValue&& _value);
 
-		/**
-		 * @brief Check map is empty.
-		 */
-		FORCE_INLINE bool isEmpty() const;
+        /**
+         * @brief Check map is empty.
+         */
+        FORCE_INLINE bool isEmpty() const;
 
-		/**
-		 * @brief Check map is not empty.
-		 */
-		FORCE_INLINE bool isNotEmpty() const;
+        /**
+         * @brief Check map is not empty.
+         */
+        FORCE_INLINE bool isNotEmpty() const;
 
         /**
          * @brief Remove specific key.
@@ -209,8 +209,8 @@ namespace Michka
         Map<TKey, TValue>& operator = (const Map<TKey, TValue>& _other);
         Map<TKey, TValue>& operator = (Map<TKey, TValue>&& _other);
 
-		FORCE_INLINE TValue& operator [] (const TKey& _key);
-		FORCE_INLINE TValue operator [] (const TKey& _key) const;
+        FORCE_INLINE TValue& operator [] (const TKey& _key);
+        FORCE_INLINE TValue operator [] (const TKey& _key) const;
 
         FORCE_INLINE bool operator == (const Map<TKey, TValue>& _other) const;
         FORCE_INLINE bool operator != (const Map<TKey, TValue>& _other) const;

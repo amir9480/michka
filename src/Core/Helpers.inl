@@ -7,26 +7,26 @@ namespace Michka
     template<typename T>
     FORCE_INLINE void swap(T& _a, T& _b)
     {
-		T temp = std::move(_a);
-		_a = std::move(_b);
-		_b = std::move(temp);
+        T temp = std::move(_a);
+        _a = std::move(_b);
+        _b = std::move(temp);
     }
 
     template<typename T>
-	FORCE_INLINE const T& min(const T& _a, const T& _b)
+    FORCE_INLINE const T& min(const T& _a, const T& _b)
     {
         return _a < _b ? _a : _b;
     }
 
-	template<typename T>
-	FORCE_INLINE const T& max(const T& _a, const T& _b)
+    template<typename T>
+    FORCE_INLINE const T& max(const T& _a, const T& _b)
     {
         return _a > _b ? _a : _b;
     }
 
     namespace Private
     {
-	    template<typename T, typename ElementType>
+        template<typename T, typename ElementType>
         FORCE_INLINE int quickSortPartitionAscending(T _array, const i32& _low, const i32& _high)
         {
             ElementType pivot = _array[_high];
@@ -45,7 +45,7 @@ namespace Michka
             return (partitionIndex + 1);
         }
 
-	    template<typename T, typename ElementType>
+        template<typename T, typename ElementType>
         void quickSortAscending(T _array, const i32& _low, const i32& _high)
         {
             if (_low < _high)
@@ -56,7 +56,7 @@ namespace Michka
             }
         }
 
-	    template<typename T, typename ElementType>
+        template<typename T, typename ElementType>
         FORCE_INLINE int quickSortPartitionDescending(T _array, const i32& _low, const i32& _high)
         {
             ElementType pivot = _array[_high];
@@ -75,7 +75,7 @@ namespace Michka
             return (partitionIndex + 1);
         }
 
-	    template<typename T, typename ElementType>
+        template<typename T, typename ElementType>
         void quickSortDescending(T _array, const i32& _low, const i32& _high)
         {
             if (_low < _high)
@@ -86,7 +86,7 @@ namespace Michka
             }
         }
 
-	    template<typename T, typename ElementType>
+        template<typename T, typename ElementType>
         FORCE_INLINE int quickSortPartitionCustom(T _array, const i32& _low, const i32& _high, const std::function<bool(const ElementType&, const ElementType&)>& _callback)
         {
             ElementType pivot = _array[_high];
@@ -105,7 +105,7 @@ namespace Michka
             return (partitionIndex + 1);
         }
 
-	    template<typename T, typename ElementType>
+        template<typename T, typename ElementType>
         void quickSortCustom(T _array, const i32& _low, const i32& _high, const std::function<bool(const ElementType&, const ElementType&)>& _callback)
         {
             if (_low < _high)
@@ -132,8 +132,8 @@ namespace Michka
         }
     }
 
-	template<typename T, typename ElementType>
-	FORCE_INLINE void sort(T _array, const u32& _size, const std::function<bool(const ElementType&, const ElementType&)>& _callback)
+    template<typename T, typename ElementType>
+    FORCE_INLINE void sort(T _array, const u32& _size, const std::function<bool(const ElementType&, const ElementType&)>& _callback)
     {
         Private::quickSortCustom<T, ElementType>(_array, 0, i32(_size) - 1, _callback);
     }

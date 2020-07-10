@@ -147,15 +147,15 @@ namespace Michka
         FORCE_INLINE Vector<T>& insert(const u32& _index, const std::initializer_list<T>& _items);
         Vector<T>& insert(const u32& _index, const T* _items, const u32& _size);
 
-		/**
-		 * @brief Check vector is empty.
-		 */
-		FORCE_INLINE bool isEmpty() const;
+        /**
+         * @brief Check vector is empty.
+         */
+        FORCE_INLINE bool isEmpty() const;
 
-		/**
-		 * @brief Check vector is not empty.
-		 */
-		FORCE_INLINE bool isNotEmpty() const;
+        /**
+         * @brief Check vector is not empty.
+         */
+        FORCE_INLINE bool isNotEmpty() const;
 
         /**
          * @brief Find index of a value with offset of from but in reversed order.
@@ -286,8 +286,8 @@ namespace Michka
         FORCE_INLINE Vector<T>& operator = (const Vector<T>& _other);
         Vector<T>& operator = (Vector<T>&& _other);
 
-		FORCE_INLINE T& operator [] (const u32& _index);
-		FORCE_INLINE T operator [] (const u32& _index) const;
+        FORCE_INLINE T& operator [] (const u32& _index);
+        FORCE_INLINE T operator [] (const u32& _index) const;
 
         template<typename T2>
         bool operator == (const Vector<T2>& _other) const;
@@ -308,10 +308,10 @@ namespace Michka
         FORCE_INLINE Vector<T>& operator << (const T& _item);
         FORCE_INLINE Vector<T>& operator << (T&& _item);
     public:
-		/**
-		 * @brief Not found index for search functions.
-		 */
-		static const u32 notFound = u32Info::max;
+        /**
+         * @brief Not found index for search functions.
+         */
+        static const u32 notFound = u32Info::max;
 
     protected:
         T*               mData = nullptr;

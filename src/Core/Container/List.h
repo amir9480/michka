@@ -190,15 +190,15 @@ namespace Michka
         FORCE_INLINE List<T>& insert(const u32& _index, const std::initializer_list<T>& _items);
         List<T>& insert(const u32& _index, const T* _items, const u32& _size);
 
-		/**
-		 * @brief Check list is empty.
-		 */
-		FORCE_INLINE bool isEmpty() const;
+        /**
+         * @brief Check list is empty.
+         */
+        FORCE_INLINE bool isEmpty() const;
 
-		/**
-		 * @brief Check list is not empty.
-		 */
-		FORCE_INLINE bool isNotEmpty() const;
+        /**
+         * @brief Check list is not empty.
+         */
+        FORCE_INLINE bool isNotEmpty() const;
 
         /**
          * @brief Find index of a value with offset of from but in reversed order.
@@ -322,8 +322,8 @@ namespace Michka
         FORCE_INLINE List<T>& operator = (const List<T>& _other);
         List<T>& operator = (List<T>&& _other);
 
-		FORCE_INLINE T& operator [] (const u32& _index);
-		FORCE_INLINE T operator [] (const u32& _index) const;
+        FORCE_INLINE T& operator [] (const u32& _index);
+        FORCE_INLINE T operator [] (const u32& _index) const;
 
         template<typename T2>
         bool operator == (const List<T2>& _other) const;
@@ -354,10 +354,10 @@ namespace Michka
         Element* findElement(const u32& _index) const;
 
     public:
-		/**
-		 * @brief Not found index for search functions.
-		 */
-		static const u32 notFound = u32Info::max;
+        /**
+         * @brief Not found index for search functions.
+         */
+        static const u32 notFound = u32Info::max;
 
     protected:
         Element*         mFirst = nullptr;

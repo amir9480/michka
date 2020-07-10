@@ -18,74 +18,74 @@
 #define MICHKA_OVERLOADED_MACRO(_NAME, ...) MICHKA_GLUE(_MICHKA_OVERLOADED_MACRO(_NAME, MICHKA_COUNT_ARGS(__VA_ARGS__)), (__VA_ARGS__))
 
 #define MICHKA_NON_COPYABLE_CLASS(_CLASSNAME)\
-	_CLASSNAME(const _CLASSNAME&) = delete;\
-	_CLASSNAME(_CLASSNAME&&) = delete;\
-	_CLASSNAME& operator = (const _CLASSNAME&) = delete;\
-	_CLASSNAME& operator = (_CLASSNAME&&) = delete;\
+    _CLASSNAME(const _CLASSNAME&) = delete;\
+    _CLASSNAME(_CLASSNAME&&) = delete;\
+    _CLASSNAME& operator = (const _CLASSNAME&) = delete;\
+    _CLASSNAME& operator = (_CLASSNAME&&) = delete;\
 
 #define MICHKA_SINGLETON_CLASS(_CLASSNAME)\
-	MICHKA_NON_COPYABLE_CLASS(_CLASSNAME)\
-	public:\
-	static _CLASSNAME& instance()\
-	{\
-		static _CLASSNAME o;\
-		return o;\
-	}\
-	private:
+    MICHKA_NON_COPYABLE_CLASS(_CLASSNAME)\
+    public:\
+    static _CLASSNAME& instance()\
+    {\
+        static _CLASSNAME o;\
+        return o;\
+    }\
+    private:
 
 namespace Michka
 {
-	enum SortDirection
-	{
-		Ascending,
-		Descending
-	};
+    enum SortDirection
+    {
+        Ascending,
+        Descending
+    };
 
-	/**
-	 * @brief Swap two variable value.
-	 */
-	template<typename T>
-	FORCE_INLINE void swap(T& _a, T& _b);
+    /**
+     * @brief Swap two variable value.
+     */
+    template<typename T>
+    FORCE_INLINE void swap(T& _a, T& _b);
 
-	/**
-	 * @brief Get minimum between two numbers.
-	 *
-	 * @param _a
-	 * @param _b
-	 */
-	template<typename T>
-	FORCE_INLINE const T& min(const T& _a, const T& _b);
+    /**
+     * @brief Get minimum between two numbers.
+     *
+     * @param _a
+     * @param _b
+     */
+    template<typename T>
+    FORCE_INLINE const T& min(const T& _a, const T& _b);
 
-	/**
-	 * @brief Get maximum between two numbers.
-	 *
-	 * @param _a
-	 * @param _b
-	 */
-	template<typename T>
-	FORCE_INLINE const T& max(const T& _a, const T& _b);
+    /**
+     * @brief Get maximum between two numbers.
+     *
+     * @param _a
+     * @param _b
+     */
+    template<typename T>
+    FORCE_INLINE const T& max(const T& _a, const T& _b);
 
-	/**
-	 * @brief Sort any iteratable.
-	 *
-	 * @tparam T
-	 * @tparam ElementType
-	 * @param _array
-	 * @param _direction
-	 */
-	template<typename T, typename ElementType = Type<T>::RemovedPointerType>
-	FORCE_INLINE void sort(T _array, const u32& _size, const SortDirection& _direction);
+    /**
+     * @brief Sort any iteratable.
+     *
+     * @tparam T
+     * @tparam ElementType
+     * @param _array
+     * @param _direction
+     */
+    template<typename T, typename ElementType = Type<T>::RemovedPointerType>
+    FORCE_INLINE void sort(T _array, const u32& _size, const SortDirection& _direction);
 
-	/**
-	 * @brief Sort any iteratable with custom callback.
-	 *
-	 * @tparam T
-	 * @tparam ElementType
-	 * @param _array
-	 * @param _callback
-	 */
-	template<typename T, typename ElementType = Type<T>::RemovedPointerType>
-	FORCE_INLINE void sort(T _array, const u32& _size, const std::function<bool(const ElementType&, const ElementType&)>& _callback);
+    /**
+     * @brief Sort any iteratable with custom callback.
+     *
+     * @tparam T
+     * @tparam ElementType
+     * @param _array
+     * @param _callback
+     */
+    template<typename T, typename ElementType = Type<T>::RemovedPointerType>
+    FORCE_INLINE void sort(T _array, const u32& _size, const std::function<bool(const ElementType&, const ElementType&)>& _callback);
 }
 
 #include "Helpers.inl"

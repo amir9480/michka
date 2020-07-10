@@ -41,25 +41,25 @@ public:
     {
     }
 
-	Person(const Michka::String& _name)
-	{
-		mName = _name;
-	}
+    Person(const Michka::String& _name)
+    {
+        mName = _name;
+    }
 
-	Person(const Person& _other)
-	{
-		mName = _other.mName;
-	}
+    Person(const Person& _other)
+    {
+        mName = _other.mName;
+    }
 
-	Person(Person&& _other)
-	{
-		mName = std::move(_other.mName);
-	}
+    Person(Person&& _other)
+    {
+        mName = std::move(_other.mName);
+    }
 
-	Michka::String getName() const
-	{
-		return mName;
-	}
+    Michka::String getName() const
+    {
+        return mName;
+    }
 
     void runSomething(int i)
     {
@@ -86,7 +86,7 @@ public:
         (p->runSomething)(14);
     }
 protected:
-	Michka::String mName;
+    Michka::String mName;
 };
 
 
