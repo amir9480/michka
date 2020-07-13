@@ -1,16 +1,16 @@
 #include <gtest/gtest.h>
 #include <utility>
 #include "Core/Container/String.h"
-#include "Core/Container/List.h"
+#include "Core/Container/Vector.h"
 #include "Core/Reflection/Type.h"
 #include "Core/Helpers.h"
-#include "../Classes/Person.h"
+#include "../../Classes/Person.h"
 
-TEST(ListTest, SetTest)
+TEST(VectorTest, SetTest)
 {
-    Michka::List<int> a = {1};
-    Michka::List<Person> b = {Person("A")};
-    Michka::List<int> c;
+    Michka::Vector<int> a = {1};
+    Michka::Vector<Person> b = {Person("A")};
+    Michka::Vector<int> c;
     ASSERT_EQ(a.getSize(), 1);
     ASSERT_EQ(b.getSize(), 1);
     ASSERT_TRUE(a[0] == 1);
@@ -27,8 +27,8 @@ TEST(ListTest, SetTest)
     ASSERT_TRUE(a[2] == 30);
     ASSERT_TRUE(b[2] == Person("CC"));
 
-    a = Michka::List<int>({1, 2, 3});
-    b = Michka::List<Person>({Person("A"), Person("B"), Person("C")});
+    a = Michka::Vector<int>({1, 2, 3});
+    b = Michka::Vector<Person>({Person("A"), Person("B"), Person("C")});
     ASSERT_EQ(a.getSize(), 3);
     ASSERT_EQ(b.getSize(), 3);
     ASSERT_TRUE(a[0] == 1);
@@ -46,10 +46,10 @@ TEST(ListTest, SetTest)
 
 }
 
-TEST(ListTest, PushTest)
+TEST(VectorTest, PushTest)
 {
-    Michka::List<int> a = {1};
-    Michka::List<Person> b = {Person("A")};
+    Michka::Vector<int> a = {1};
+    Michka::Vector<Person> b = {Person("A")};
 
     a.pushBack(2);
     b.pushBack(Person("B"));
@@ -88,10 +88,10 @@ TEST(ListTest, PushTest)
     ASSERT_TRUE(b[4] == Person("Hi Again"));
 }
 
-TEST(ListTest, InsertTest)
+TEST(VectorTest, InsertTest)
 {
-    Michka::List<int> a = {1, 2};
-    Michka::List<Person> b = {Person("A"), Person("B")};
+    Michka::Vector<int> a = {1, 2};
+    Michka::Vector<Person> b = {Person("A"), Person("B")};
 
     int testInsert = 40;
     Person testInsertMove("GG");
@@ -135,7 +135,7 @@ TEST(ListTest, InsertTest)
     }
     ASSERT_EQ(a.getSize(), 208);
 
-    Michka::List<int> c;
+    Michka::Vector<int> c;
     c.insert(0, a);
     ASSERT_EQ(c.getSize(), 208);
     ASSERT_TRUE(c[0] == 40);
@@ -143,36 +143,36 @@ TEST(ListTest, InsertTest)
     ASSERT_TRUE(c[2] == 1);
 }
 
-TEST(ListTest, EmptyTest)
+TEST(VectorTest, EmptyTest)
 {
-    Michka::List<int> a;
-    Michka::List<int> b = {1, 2};
+    Michka::Vector<int> a;
+    Michka::Vector<int> b = {1, 2};
 
     ASSERT_TRUE(a.isEmpty());
     ASSERT_TRUE(b.isNotEmpty());
 }
 
-TEST(ListTest, ConstantListTest)
+TEST(VectorTest, ConstantVectorTest)
 {
-    const Michka::List<int> a = {1, 2};
+    const Michka::Vector<int> a = {1, 2};
     ASSERT_EQ(a.getSize(), 2);
-    // ASSERT_EQ(a.getCapacity(), 8);
+    ASSERT_EQ(a.getCapacity(), 8);
     ASSERT_EQ(a[0], 1);
     ASSERT_EQ(a[1], 2);
 }
 
-TEST(ListTest, ClearListTest)
+TEST(VectorTest, ClearVectorTest)
 {
-    Michka::List<int> a = {1, 2};
+    Michka::Vector<int> a = {1, 2};
     ASSERT_EQ(a.getSize(), 2);
     a.clear();
     ASSERT_EQ(a.getSize(), 0);
 }
 
-TEST(ListTest, IteratorTest)
+TEST(VectorTest, IteratorTest)
 {
-    Michka::List<int> a = {1, 2, 3};
-    const Michka::List<int> b = {4, 6, 8, 10};
+    Michka::Vector<int> a = {1, 2, 3};
+    const Michka::Vector<int> b = {4, 6, 8, 10};
     u32 count = 0;
     u32 sum = 0;
     for (auto i: a)
@@ -194,9 +194,9 @@ TEST(ListTest, IteratorTest)
     ASSERT_EQ(sum, 28);
 }
 
-TEST(ListTest, SearchTest)
+TEST(VectorTest, SearchTest)
 {
-    Michka::List<int> a = {2, 4, 6, 8, 10, 2};
+    Michka::Vector<int> a = {2, 4, 6, 8, 10, 2};
     ASSERT_EQ(a.indexOf(3), a.notFound);
     ASSERT_EQ(a.indexOf(2), 0);
     ASSERT_EQ(a.indexOf(2, 1), 5);
@@ -208,7 +208,7 @@ TEST(ListTest, SearchTest)
     ASSERT_EQ(a.lastIndexOf(4, 0), a.notFound);
 
 
-    Michka::List<Person> b = {Person("michka")};
+    Michka::Vector<Person> b = {Person("michka")};
     ASSERT_EQ(b.indexOf(Person("michka")), 0);
     ASSERT_EQ(b.indexOf(Person("sparrow")), b.notFound);
 
@@ -240,9 +240,9 @@ TEST(ListTest, SearchTest)
     ASSERT_EQ(b.lastIndexOf(compareCallback2b), b.notFound);
 }
 
-TEST(ListTest, RemoveTest)
+TEST(VectorTest, RemoveTest)
 {
-    Michka::List<int> a = {2, 4, 6, 8, 10, 2};
+    Michka::Vector<int> a = {2, 4, 6, 8, 10, 2};
     a.remove(1);
     ASSERT_EQ(a.getSize(), 5);
     ASSERT_EQ(a[1], 6);
@@ -267,37 +267,37 @@ TEST(ListTest, RemoveTest)
     ASSERT_EQ(a.getSize(), 0);
 }
 
-TEST(ListTest, CompareTest)
+TEST(VectorTest, CompareTest)
 {
-    Michka::List<int> a = {1, 2, 3};
-    Michka::List<int> b = {1, 2, 3};
-    Michka::List<int> c = {3, 2, 1};
-    Michka::List<int> d = {1, 2, 3, 4};
+    Michka::Vector<int> a = {1, 2, 3};
+    Michka::Vector<int> b = {1, 2, 3};
+    Michka::Vector<int> c = {3, 2, 1};
+    Michka::Vector<int> d = {1, 2, 3, 4};
 
     ASSERT_EQ(a, b);
     ASSERT_NE(a, c);
     ASSERT_NE(a, d);
 }
 
-TEST(ListTest, ReverseTest)
+TEST(VectorTest, ReverseTest)
 {
-    Michka::List<int> a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    Michka::List<int> aReversed = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
-    Michka::List<int> b = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-    Michka::List<int> bReversed = {9, 8, 7, 6, 5, 4, 3, 2, 1};
+    Michka::Vector<int> a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    Michka::Vector<int> aReversed = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+    Michka::Vector<int> b = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    Michka::Vector<int> bReversed = {9, 8, 7, 6, 5, 4, 3, 2, 1};
 
     ASSERT_EQ(a.getReversed(), aReversed);
     ASSERT_EQ(b.getReversed(), bReversed);
 }
 
-TEST(ListTest, FilterTest)
+TEST(VectorTest, FilterTest)
 {
     auto filterFunction = [] (const int& _item)
     {
         return _item % 2 == 0;
     };
-    Michka::List<int> a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    Michka::List<int> b = a.getFiltered(filterFunction);
+    Michka::Vector<int> a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    Michka::Vector<int> b = a.getFiltered(filterFunction);
 
     ASSERT_EQ(a.getSize(), 10);
     ASSERT_EQ(b.getSize(), 5);
@@ -315,19 +315,19 @@ TEST(ListTest, FilterTest)
     ASSERT_EQ(a[4], 10);
 }
 
-TEST(ListTest, SortTest)
+TEST(VectorTest, SortTest)
 {
     {
-        Michka::List<int> a = {4, 7, 1779, 832, 4349, 2476, 3176, 3894, 1219, 1537, 910, 2699, 1207, 2858, 3850, 2871, 4937, 4954, 2759, 2254, 3414, 1860, 3686, 8, 5};
-        Michka::List<int> aSorted = {4, 5, 7, 8, 832, 910, 1207, 1219, 1537, 1779, 1860, 2254, 2476, 2699, 2759, 2858, 2871, 3176, 3414, 3686, 3850, 3894, 4349, 4937, 4954};
+        Michka::Vector<int> a = {4, 7, 1779, 832, 4349, 2476, 3176, 3894, 1219, 1537, 910, 2699, 1207, 2858, 3850, 2871, 4937, 4954, 2759, 2254, 3414, 1860, 3686, 8, 5};
+        Michka::Vector<int> aSorted = {4, 5, 7, 8, 832, 910, 1207, 1219, 1537, 1779, 1860, 2254, 2476, 2699, 2759, 2858, 2871, 3176, 3414, 3686, 3850, 3894, 4349, 4937, 4954};
 
         ASSERT_EQ(a.getSorted(), aSorted);
         ASSERT_EQ(a.getSorted(Michka::SortDirection::Descending), aSorted.getReversed());
     }
     {
-        Michka::List<Michka::String> a = {"Hello", "Hi", "World", "This is awesome", "Michka"};
-        Michka::List<Michka::String> aSorted = {"Hi", "World", "Hello", "Michka", "This is awesome"};
-        Michka::List<Michka::String> b;
+        Michka::Vector<Michka::String> a = {"Hello", "Hi", "World", "This is awesome", "Michka"};
+        Michka::Vector<Michka::String> aSorted = {"Hi", "World", "Hello", "Michka", "This is awesome"};
+        Michka::Vector<Michka::String> b;
 
         b = a.getSorted([] (const Michka::String& a, const Michka::String& b)
         {
@@ -343,9 +343,9 @@ TEST(ListTest, SortTest)
     }
 }
 
-TEST(ListTest, TakeAndPopTest)
+TEST(VectorTest, TakeAndPopTest)
 {
-    Michka::List<int> a = {1, 2, 4, 9, 10};
+    Michka::Vector<int> a = {1, 2, 4, 9, 10};
 
     ASSERT_EQ(a.popBack(), 10);
     ASSERT_EQ(a.getSize(), 4);
@@ -366,11 +366,11 @@ TEST(ListTest, TakeAndPopTest)
     ASSERT_EQ(a.popBack(), 9);
 }
 
-TEST(ListTest, OperatorAddTest)
+TEST(VectorTest, OperatorAddTest)
 {
-    Michka::List<int> a = {1, 2, 3, 4, 5};
-    Michka::List<int> b = {5, 6, 7, 8, 9, 10};
-    Michka::List<int> ab = {1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10};
+    Michka::Vector<int> a = {1, 2, 3, 4, 5};
+    Michka::Vector<int> b = {5, 6, 7, 8, 9, 10};
+    Michka::Vector<int> ab = {1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10};
 
     ASSERT_EQ(a + b, ab);
 
@@ -378,12 +378,12 @@ TEST(ListTest, OperatorAddTest)
     ASSERT_EQ(a, ab);
 }
 
-TEST(ListTest, SwapTest)
+TEST(VectorTest, SwapTest)
 {
-    Michka::List<int> a = {1, 2, 3, 4, 5};
-    Michka::List<int> b = {5, 6, 7, 8, 9, 10};
-    Michka::List<int> c = a;
-    Michka::List<int> d = b;
+    Michka::Vector<int> a = {1, 2, 3, 4, 5};
+    Michka::Vector<int> b = {5, 6, 7, 8, 9, 10};
+    Michka::Vector<int> c = a;
+    Michka::Vector<int> d = b;
 
     a.swap(b);
 

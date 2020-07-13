@@ -4,19 +4,20 @@ set(
 
     # -------------------------------------------------------------------------- #
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/Container/ListTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Container/MapTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Container/StringTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Container/VectorTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/HelpersTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ListTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/MapTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/MathUtilityTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/StringTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ThreadTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/TypeTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/VectorTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Vector2Test.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Vector3Test.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Vector4Test.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/MatrixTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/QuaternionTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Math/MathUtilityTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Math/MatrixTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Math/Matrix3Test.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Math/QuaternionTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Math/Vector2Test.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Math/Vector3Test.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Math/Vector4Test.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Reflection/TypeTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Thread/ThreadTest.cpp
 
     # -------------------------------------------------------------------------- #
 

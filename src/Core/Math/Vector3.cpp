@@ -1,5 +1,6 @@
 #include "Vector3.h"
 #include "Matrix.h"
+#include "Matrix3.h"
 
 namespace Michka
 {
@@ -25,6 +26,22 @@ namespace Michka
             x*_other.m11 + y*_other.m21 + z*_other.m31 + _other.m41,
             x*_other.m12 + y*_other.m22 + z*_other.m32 + _other.m42,
             x*_other.m13 + y*_other.m23 + z*_other.m33 + _other.m43
+        );
+    }
+
+    Vector3& Vector3::operator *= (const Matrix3& _other)
+    {
+        *this = *this * _other;
+
+        return *this;
+    }
+
+    Vector3 Vector3::operator * (const Matrix3& _other) const
+    {
+        return Vector3(
+            x*_other.m11 + y*_other.m21 + z*_other.m31,
+            x*_other.m12 + y*_other.m22 + z*_other.m32,
+            x*_other.m13 + y*_other.m23 + z*_other.m33
         );
     }
 }

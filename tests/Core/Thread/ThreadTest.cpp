@@ -3,7 +3,7 @@
 #include <utility>
 #include "Core/Container/Vector.h"
 #include "Core/Thread/Thread.h"
-#include "../Classes/TestThread.h"
+#include "../../Classes/TestThread.h"
 
 TEST(ThreadTest, CustomClassThread)
 {

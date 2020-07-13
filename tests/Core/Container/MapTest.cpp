@@ -3,7 +3,7 @@
 #include <utility>
 #include "Core/Container/Map.h"
 #include "Core/Container/String.h"
-#include "../Classes/Person.h"
+#include "../../Classes/Person.h"
 
 TEST(MapTest, CreateDefaultTest)
 {
