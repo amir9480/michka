@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "Core/Math/Vector3.h"
+#include "Core/Math/Vector4.h"
 
 TEST(Vector3Test, compare)
 {
@@ -123,4 +124,12 @@ TEST(Vector3Test, crossProduct)
     Michka::Vector3 a(1.0f, 2.0f, 3.0f);
     Michka::Vector3 b(1.0f, 5.0f, 7.0f);
     ASSERT_EQ(a.getCrossProduct(b), Michka::Vector3(-1.0f, -4.0f, 3.0f));
+}
+
+TEST(Vector3Test, cast)
+{
+    Michka::Vector3 a(1.0f, 2.0f, 3.0f);
+    Michka::Vector4 b = a;
+
+    ASSERT_EQ(b, Michka::Vector4(1.0f, 2.0f, 3.0f, 1.0f));
 }

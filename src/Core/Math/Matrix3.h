@@ -6,6 +6,7 @@
 namespace Michka
 {
     class Vector3;
+    class Matrix;
 
     /**
      * @brief A 3x3 row major matrix.
@@ -147,6 +148,8 @@ namespace Michka
         FORCE_INLINE Matrix3& operator -= (const Matrix3& _other);
         FORCE_INLINE Matrix3& operator *= (const f32& _scaler);
         FORCE_INLINE Matrix3& operator *= (const Matrix3& _other);
+
+        operator Matrix () const;
 
     public:
         static const Matrix3 identity;

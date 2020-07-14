@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 #include "Core/Math/Vector2.h"
+#include "Core/Math/Vector3.h"
+#include "Core/Math/Vector4.h"
 
 TEST(Vector2Test, compare)
 {
@@ -64,6 +66,16 @@ TEST(Vector2Test, angle)
     Michka::Vector2 a(0.0f, 1.0f);
 
     ASSERT_FLOAT_EQ(a.getAngleFrom(Michka::Vector2::right), 90.0f);
+}
+
+TEST(Vector2Test, cast)
+{
+    Michka::Vector2 a(1.0f, 2.0f);
+    Michka::Vector3 b = a;
+    Michka::Vector4 c = a;
+
+    ASSERT_EQ(b, Michka::Vector3(1.0f, 2.0f, 0.0f));
+    ASSERT_EQ(c, Michka::Vector4(1.0f, 2.0f, 0.0f, 1.0f));
 }
 
 TEST(Vector2Test, operators)

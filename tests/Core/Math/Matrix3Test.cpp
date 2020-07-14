@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "Core/Math/Matrix3.h"
+#include "Core/Math/Matrix.h"
 #include "Core/Math/Vector3.h"
 
 TEST(Matrix3Test, isIdentity)
@@ -109,6 +110,14 @@ TEST(Matrix3Test, createScaleMatrix3)
     pos *= mat;
 
     ASSERT_EQ(pos, Michka::Vector3(1.0f, 4.0f, 9.0f));
+}
+
+TEST(Matrix3Test, cast)
+{
+    Michka::Matrix3 a = Michka::Matrix3::createRotationMatrix(45.0f, 90.0f, 60.0f);
+    Michka::Matrix b = a;
+
+    ASSERT_EQ(b, Michka::Matrix::createRotationMatrix(45.0f, 90.0f, 60.0f));
 }
 
 TEST(Matrix3Test, operators)

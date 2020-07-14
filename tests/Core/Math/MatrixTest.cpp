@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "Core/Math/Matrix.h"
+#include "Core/Math/Matrix3.h"
 #include "Core/Math/Vector3.h"
 #include "Core/Math/Vector4.h"
 
@@ -196,6 +197,14 @@ TEST(MatrixTest, createOrthgraphicProjection)
 
         ASSERT_EQ(pos, Michka::Vector4(-1.0f, -1.0f, 0.0f));
     }
+}
+
+TEST(MatrixTest, cast)
+{
+    Michka::Matrix a = Michka::Matrix::createRotationMatrix(45.0f, 90.0f, 60.0f);
+    Michka::Matrix3 b = a;
+
+    ASSERT_EQ(b, Michka::Matrix3::createRotationMatrix(45.0f, 90.0f, 60.0f));
 }
 
 TEST(MatrixTest, operators)

@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "Core/Math/Vector4.h"
+#include "Core/Math/Vector3.h"
 
 TEST(Vector4Test, compare)
 {
@@ -70,4 +71,12 @@ TEST(Vector4Test, length)
     ASSERT_FLOAT_EQ(a.getLength(), 8.6602545f);
     a.set(2.0f, 1.0f, 2.0f);
     ASSERT_FLOAT_EQ(a.getSqauredLength(), 10.0f);
+}
+
+TEST(Vector4Test, cast)
+{
+    Michka::Vector4 a(1.0f, 2.0f, 3.0f, 4.0f);
+    Michka::Vector3 b = a;
+
+    ASSERT_EQ(b, Michka::Vector3(1.0f/4.0f, 2.0f/4.0f, 3.0f/4.0f));
 }

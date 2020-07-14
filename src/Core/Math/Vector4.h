@@ -6,6 +6,7 @@
 namespace Michka
 {
     class Matrix;
+    class Vector3;
 
     class MICHKA_API Vector4
     {
@@ -119,6 +120,7 @@ namespace Michka
         FORCE_INLINE Vector4& operator /= (const f32& _scaler);
         friend FORCE_INLINE Vector4 operator / (const f32& _a, const Vector4& _b);
 
+        operator Vector3 () const;
 
     public:
         static const Vector4 up;

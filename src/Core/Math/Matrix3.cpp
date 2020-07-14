@@ -1,6 +1,7 @@
 #include "Matrix3.h"
 #include "Core/Helpers.h"
 #include "Core/Math/Vector3.h"
+#include "Core/Math/Matrix.h"
 
 namespace Michka
 {
@@ -220,6 +221,16 @@ namespace Michka
             m31*_other.m11 + m32*_other.m21 + m33*_other.m31,
             m31*_other.m12 + m32*_other.m22 + m33*_other.m32,
             m31*_other.m13 + m32*_other.m23 + m33*_other.m33
+        );
+    }
+
+    Matrix3::operator Matrix () const
+    {
+        return Matrix(
+            m11, m12, m13, 0.0f,
+            m21, m22, m23, 0.0f,
+            m31, m32, m33, 0.0f,
+            0.0f, 0.0f, 0.0f, 1.0f
         );
     }
 }

@@ -1,4 +1,5 @@
 #include "Vector3.h"
+#include "Vector4.h"
 #include "Matrix.h"
 #include "Matrix3.h"
 
@@ -43,5 +44,10 @@ namespace Michka
             x*_other.m12 + y*_other.m22 + z*_other.m32,
             x*_other.m13 + y*_other.m23 + z*_other.m33
         );
+    }
+
+    Vector3::operator Vector4 () const
+    {
+        return Vector4(x, y, z);
     }
 }
