@@ -195,6 +195,7 @@ namespace Michka
         friend FORCE_INLINE Vector3 operator * (const f32& _a, const Vector3& _b);
         Vector3 operator * (const Matrix3& _other) const;
         Vector3& operator *= (const Matrix3& _other);
+        // Will act to the matrix like a 3x4 matrix.
         Vector3 operator * (const Matrix& _other) const;
         Vector3& operator *= (const Matrix& _other);
 
