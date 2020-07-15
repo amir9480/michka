@@ -216,6 +216,7 @@ namespace Michka
         static const Vector3 back;
         static const Vector3 zero;
         static const Vector3 one;
+        static const Vector3 infinity;
 
     public:
         union

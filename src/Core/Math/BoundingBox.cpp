@@ -1,4 +1,6 @@
 #include "BoundingBox.h"
+#include "Core/Math/Matrix.h"
+#include "Core/Math/Matrix3.h"
 
 namespace Michka
 {
@@ -38,7 +40,59 @@ namespace Michka
                 return Vector3(max.x, max.y, max.z);
         };
 
-        return Vector3::zero;
+        return Vector3::zero; // @NOCOVERAGE
+    }
+
+    Intersection BoundingBox::getIntersection(const BoundingBox& _other) const
+    {
+        if (
+            max.x < _other.min.x ||
+            max.y < _other.min.y ||
+            max.z < _other.min.z ||
+            min.x > _other.max.x ||
+            min.y > _other.max.y ||
+            min.z > _other.max.z
+        )
+        {
+            return Intersection::Outside;
+        }
+        if (
+            max.x < _other.max.x ||
+            max.y < _other.max.y ||
+            max.z < _other.max.z ||
+            min.x > _other.min.x ||
+            min.y > _other.min.y ||
+            min.z > _other.min.z
+        )
+        {
+            return Intersection::Intersect;
+        }
+
+        return Intersection::Inside;
+    }
+
+    bool BoundingBox::isInside(const Vector3& _point) const
+    {
+        return !(
+            max.x < _point.x ||
+            max.y < _point.y ||
+            max.z < _point.z ||
+            min.x > _point.x ||
+            min.y > _point.y ||
+            min.z > _point.z
+        );
+    }
+
+    bool BoundingBox::isInside(const BoundingBox& _other) const
+    {
+        return !(
+            max.x < _other.min.x ||
+            max.y < _other.min.y ||
+            max.z < _other.min.z ||
+            min.x > _other.max.x ||
+            min.y > _other.max.y ||
+            min.z > _other.max.z
+        );
     }
 
     BoundingBox& BoundingBox::merge(const Vector3& _point)
@@ -68,6 +122,34 @@ namespace Michka
         {
             max.z = _point.z;
         }
+
+        return *this;
+    }
+
+    BoundingBox& BoundingBox::transform(const Matrix3& _matrix)
+    {
+        Vector3 vMin = min * _matrix;
+        Vector3 vMax = max * _matrix;
+
+        min = Vector3::infinity;
+        max = -Vector3::infinity;
+
+        merge(vMin);
+        merge(vMax);
+
+        return *this;
+    }
+
+    BoundingBox& BoundingBox::transform(const Matrix& _matrix)
+    {
+        Vector3 vMin = min * _matrix;
+        Vector3 vMax = max * _matrix;
+
+        min = Vector3::infinity;
+        max = -Vector3::infinity;
+
+        merge(vMin);
+        merge(vMax);
 
         return *this;
     }

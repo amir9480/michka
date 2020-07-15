@@ -5,6 +5,13 @@
 
 namespace Michka
 {
+    enum Intersection
+    {
+        Outside,
+        Intersect,
+        Inside
+    };
+
     namespace Math
     {
         static const f32 pi               = 3.14159265358979323846f;

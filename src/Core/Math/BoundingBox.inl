@@ -4,8 +4,8 @@
 namespace Michka
 {
     FORCE_INLINE BoundingBox::BoundingBox() :
-        min(-Math::infinity, -Math::infinity, -Math::infinity),
-        max(Math::infinity, Math::infinity, Math::infinity)
+        min(Vector3::infinity),
+        max(-Vector3::infinity)
     {
         //
     }
@@ -46,6 +46,27 @@ namespace Michka
     FORCE_INLINE Vector3 BoundingBox::getCenter() const
     {
         return (max + min) * 0.5f;
+    }
+
+    FORCE_INLINE Vector3 BoundingBox::getSizeVector() const
+    {
+        return max - min;
+    }
+
+    FORCE_INLINE BoundingBox BoundingBox::getTransformed(const Matrix3& _matrix)
+    {
+        BoundingBox self = *this;
+        self.transform(_matrix);
+
+        return self;
+    }
+
+    FORCE_INLINE BoundingBox BoundingBox::getTransformed(const Matrix& _matrix)
+    {
+        BoundingBox self = *this;
+        self.transform(_matrix);
+
+        return self;
     }
 
     FORCE_INLINE BoundingBox& BoundingBox::merge(const BoundingBox& _box)

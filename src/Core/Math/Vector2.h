@@ -178,6 +178,7 @@ namespace Michka
         static const Vector2 back;
         static const Vector2 zero;
         static const Vector2 one;
+        static const Vector2 infinity;
 
     public:
         union
