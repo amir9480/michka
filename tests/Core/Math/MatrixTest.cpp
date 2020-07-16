@@ -4,7 +4,7 @@
 #include "Core/Math/Vector3.h"
 #include "Core/Math/Vector4.h"
 
-TEST(MatrixTest, isIdentity)
+TEST(MatrixTest, IsIdentity)
 {
     const Michka::Matrix a;
     const Michka::Matrix b(
@@ -18,7 +18,7 @@ TEST(MatrixTest, isIdentity)
     ASSERT_FALSE(b.isIdentity());
 }
 
-TEST(MatrixTest, determinant)
+TEST(MatrixTest, Determinant)
 {
     const Michka::Matrix a(
         1.0f,  2.0f,  3.0f,  4.0f,
@@ -37,7 +37,7 @@ TEST(MatrixTest, determinant)
     ASSERT_FLOAT_EQ(b.getDeterminant(), -60.0f);
 }
 
-TEST(MatrixTest, inverse)
+TEST(MatrixTest, Inverse)
 {
     const Michka::Matrix a(
         1.0f,  2.0f,  3.0f,  4.0f,
@@ -65,7 +65,7 @@ TEST(MatrixTest, inverse)
     ASSERT_EQ(b.getInverseTransposed(), bInv.getTransposed());
 }
 
-TEST(MatrixTest, transpose)
+TEST(MatrixTest, Transpose)
 {
     const Michka::Matrix a(
         1.0f,  2.0f,  3.0f,  4.0f,
@@ -83,7 +83,7 @@ TEST(MatrixTest, transpose)
     ASSERT_EQ(a.getTransposed(), aTransposed);
 }
 
-TEST(MatrixTest, createTranslationMatrix)
+TEST(MatrixTest, CreateTranslationMatrix)
 {
     Michka::Matrix mat = Michka::Matrix::createTranslationMatrix(Michka::Vector3(1.0f, 2.0f, 3.0f));
     Michka::Vector4 pos;
@@ -93,7 +93,7 @@ TEST(MatrixTest, createTranslationMatrix)
     ASSERT_EQ(pos, Michka::Vector4(1.0f, 2.0f, 3.0f));
 }
 
-TEST(MatrixTest, createRotationMatrix)
+TEST(MatrixTest, CreateRotationMatrix)
 {
     Michka::Vector4 pos;
     pos = Michka::Vector4(0.0f, 1.0f, 0.0f) * Michka::Matrix::createRotationMatrixX(90.0f);
@@ -127,7 +127,7 @@ TEST(MatrixTest, createRotationMatrix)
     ASSERT_EQ(pos, Michka::Vector4(1.0f, 0.0f, 0.0f));
 }
 
-TEST(MatrixTest, createScaleMatrix)
+TEST(MatrixTest, CreateScaleMatrix)
 {
     Michka::Matrix mat = Michka::Matrix::createScaleMatrix(Michka::Vector3(1.0f, 2.0f, 3.0f));
     Michka::Vector4 pos(1.0f, 2.0f, 3.0f);
@@ -137,7 +137,7 @@ TEST(MatrixTest, createScaleMatrix)
     ASSERT_EQ(pos, Michka::Vector4(1.0f, 4.0f, 9.0f));
 }
 
-TEST(MatrixTest, createViewMatrix)
+TEST(MatrixTest, CreateViewMatrix)
 {
     Michka::Matrix mat = Michka::Matrix::createViewMatrix(Michka::Vector3(0.0f, 1.0f, 1.0f), Michka::Vector3::forward, Michka::Vector3::up);
     Michka::Vector4 pos;
@@ -147,7 +147,7 @@ TEST(MatrixTest, createViewMatrix)
     ASSERT_EQ(pos, Michka::Vector4(0.0f, 1.0f, 1.0f));
 }
 
-TEST(MatrixTest, createPerspectiveProjection)
+TEST(MatrixTest, CreatePerspectiveProjection)
 {
     Michka::Matrix mat = Michka::Matrix::createPerspectiveProjection(45.0f, 4.0f/3.0f, 1.0f, 100.0f);
     Michka::Vector4 pos;
@@ -162,7 +162,7 @@ TEST(MatrixTest, createPerspectiveProjection)
     ASSERT_EQ(pos, Michka::Vector4(0.0f, 0.0f, 0.999999f));
 }
 
-TEST(MatrixTest, createOrthgraphicProjection)
+TEST(MatrixTest, CreateOrthgraphicProjection)
 {
     {
         // By left / right / top / bottom
@@ -199,7 +199,7 @@ TEST(MatrixTest, createOrthgraphicProjection)
     }
 }
 
-TEST(MatrixTest, cast)
+TEST(MatrixTest, Cast)
 {
     Michka::Matrix a = Michka::Matrix::createRotationMatrix(45.0f, 90.0f, 60.0f);
     Michka::Matrix3 b = a;
@@ -207,7 +207,7 @@ TEST(MatrixTest, cast)
     ASSERT_EQ(b, Michka::Matrix3::createRotationMatrix(45.0f, 90.0f, 60.0f));
 }
 
-TEST(MatrixTest, operators)
+TEST(MatrixTest, Operators)
 {
     Michka::Matrix a;
     const Michka::Matrix b(

@@ -89,6 +89,30 @@ namespace Michka
         }
 
         template<typename T>
+        FORCE_INLINE T max(const T& _a)
+        {
+            return _a;
+        }
+
+        template<typename T, typename... T2>
+        FORCE_INLINE T max(const T& _a, const T& _b, const T2&... _other)
+        {
+            return _a > _b ? max(_a, _other...) : max(_b, _other...);
+        }
+
+        template<typename T>
+        FORCE_INLINE T min(const T& _a)
+        {
+            return _a;
+        }
+
+        template<typename T, typename... T2>
+        FORCE_INLINE T min(const T& _a, const T& _b, const T2&... _other)
+        {
+            return _a < _b ? min(_a, _other...) : min(_b, _other...);
+        }
+
+        template<typename T>
         FORCE_INLINE T mod(const T& _a, const T& _b)
         {
             if constexpr (Type<T>::is<f32>())

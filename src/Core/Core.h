@@ -9,6 +9,7 @@
 #include "Defines.h"
 #include "Exception/Exception.h"
 #include "Math/BoundingBox.h"
+#include "Math/BoundingSphere.h"
 #include "Math/Matrix.h"
 #include "Math/Matrix3.h"
 #include "Math/Quaternion.h"

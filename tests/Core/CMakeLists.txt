@@ -10,6 +10,7 @@ set(
     ${CMAKE_CURRENT_SOURCE_DIR}/Container/VectorTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/HelpersTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/BoundingBoxTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Math/BoundingSphereTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/MathUtilityTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/MatrixTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/Matrix3Test.cpp

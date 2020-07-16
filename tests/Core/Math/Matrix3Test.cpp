@@ -3,7 +3,7 @@
 #include "Core/Math/Matrix.h"
 #include "Core/Math/Vector3.h"
 
-TEST(Matrix3Test, isIdentity)
+TEST(Matrix3Test, IsIdentity)
 {
     const Michka::Matrix3 a;
     const Michka::Matrix3 b(
@@ -16,7 +16,7 @@ TEST(Matrix3Test, isIdentity)
     ASSERT_FALSE(b.isIdentity());
 }
 
-TEST(Matrix3Test, determinant)
+TEST(Matrix3Test, Determinant)
 {
     const Michka::Matrix3 a(
         1.0f, 2.0f, 3.0f,
@@ -33,7 +33,7 @@ TEST(Matrix3Test, determinant)
     ASSERT_FLOAT_EQ(b.getDeterminant(), 134.0f);
 }
 
-TEST(Matrix3Test, inverse)
+TEST(Matrix3Test, Inverse)
 {
     const Michka::Matrix3 a(
         1.0f, 2.0f, 3.0f,
@@ -59,7 +59,7 @@ TEST(Matrix3Test, inverse)
     ASSERT_EQ(b.getInverseTransposed(), bInv.getTransposed());
 }
 
-TEST(Matrix3Test, transpose)
+TEST(Matrix3Test, Transpose)
 {
     const Michka::Matrix3 a(
         1.0f, 2.0f, 3.0f,
@@ -75,7 +75,7 @@ TEST(Matrix3Test, transpose)
     ASSERT_EQ(a.getTransposed(), aTransposed);
 }
 
-TEST(Matrix3Test, createRotationMatrix)
+TEST(Matrix3Test, CreateRotationMatrix)
 {
     Michka::Vector3 pos;
     pos = Michka::Vector3(0.0f, 1.0f, 0.0f) * Michka::Matrix3::createRotationMatrixX(90.0f);
@@ -103,7 +103,7 @@ TEST(Matrix3Test, createRotationMatrix)
     ASSERT_EQ(pos, Michka::Vector3(1.0f, 0.0f, 0.0f));
 }
 
-TEST(Matrix3Test, createScaleMatrix3)
+TEST(Matrix3Test, CreateScaleMatrix3)
 {
     Michka::Matrix3 mat = Michka::Matrix3::createScaleMatrix(Michka::Vector3(1.0f, 2.0f, 3.0f));
     Michka::Vector3 pos(1.0f, 2.0f, 3.0f);
@@ -112,7 +112,7 @@ TEST(Matrix3Test, createScaleMatrix3)
     ASSERT_EQ(pos, Michka::Vector3(1.0f, 4.0f, 9.0f));
 }
 
-TEST(Matrix3Test, cast)
+TEST(Matrix3Test, Cast)
 {
     Michka::Matrix3 a = Michka::Matrix3::createRotationMatrix(45.0f, 90.0f, 60.0f);
     Michka::Matrix b = a;
@@ -120,7 +120,7 @@ TEST(Matrix3Test, cast)
     ASSERT_EQ(b, Michka::Matrix::createRotationMatrix(45.0f, 90.0f, 60.0f));
 }
 
-TEST(Matrix3Test, operators)
+TEST(Matrix3Test, Operators)
 {
     Michka::Matrix3 a;
     const Michka::Matrix3 b(

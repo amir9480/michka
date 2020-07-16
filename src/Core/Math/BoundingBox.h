@@ -7,6 +7,7 @@
 
 namespace Michka
 {
+    class BoundingSphere;
     class Matrix3;
     class Matrix;
 
@@ -65,6 +66,20 @@ namespace Michka
         Intersection getIntersection(const BoundingBox& _other) const;
 
         /**
+         * @brief Get the copy of this merged with \a _point.
+         *
+         * @param _point
+         */
+        FORCE_INLINE BoundingBox getMerged(const Vector3& _point) const;
+
+        /**
+         * @brief Get the copy of this merged with \a _other box.
+         *
+         * @param _other
+         */
+        FORCE_INLINE BoundingBox getMerged(const BoundingBox& _other) const;
+
+        /**
          * @brief Get size vector. a vector from min to max.
          */
         FORCE_INLINE Vector3 getSizeVector() const;
@@ -74,8 +89,8 @@ namespace Michka
          *
          * @param _matrix
          */
-        FORCE_INLINE BoundingBox getTransformed(const Matrix3& _matrix);
-        FORCE_INLINE BoundingBox getTransformed(const Matrix& _matrix);
+        FORCE_INLINE BoundingBox getTransformed(const Matrix3& _matrix) const;
+        FORCE_INLINE BoundingBox getTransformed(const Matrix& _matrix) const;
 
         /**
          * @brief Is a point inside this box.
@@ -90,6 +105,13 @@ namespace Michka
          * @param _other
          */
         bool isInside(const BoundingBox& _other) const;
+
+        /**
+         * @brief Is a sphere inside this box partially/completely.
+         *
+         * @param _sphere
+         */
+        bool isInside(const BoundingSphere& _sphere) const;
 
         /**
          * @brief Merge a point to bounding box.

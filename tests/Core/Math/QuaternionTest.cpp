@@ -3,7 +3,7 @@
 #include "Core/Math/Matrix.h"
 #include "Core/Math/Vector3.h"
 
-TEST(QuaternionTest, create)
+TEST(QuaternionTest, Create)
 {
     {
         Michka::Quaternion q;
@@ -50,13 +50,13 @@ TEST(QuaternionTest, create)
     }
 }
 
-TEST(QuaternionTest, crossProduct)
+TEST(QuaternionTest, CrossProduct)
 {
     Michka::Quaternion a(0.0f, 90.0f, 0.0f);
     ASSERT_EQ(a.getCrossProduct(Michka::Quaternion(0.0f, 0.0f, 0.0f)), Michka::Quaternion(-90.0f, 0.0f, 0.0f));
 }
 
-TEST(QuaternionTest, dotProduct)
+TEST(QuaternionTest, DotProduct)
 {
     Michka::Quaternion a(1.0f, 2.0f, 3.0f, 1.0f);
     const Michka::Quaternion b(1.0f, 5.0f, 7.0f, 1.0f);
@@ -64,13 +64,13 @@ TEST(QuaternionTest, dotProduct)
     ASSERT_FLOAT_EQ(b.getDotProduct(a), 33.0f);
 }
 
-TEST(QuaternionTest, conjugate)
+TEST(QuaternionTest, Conjugate)
 {
     Michka::Quaternion a(1.0f, 2.0f, 3.0f, 1.0f);
     ASSERT_EQ(a.getConjugated(), Michka::Quaternion(-1.0f, -2.0f, -3.0f, 1.0f));
 }
 
-TEST(QuaternionTest, inverse)
+TEST(QuaternionTest, Inverse)
 {
     {
         Michka::Quaternion a(0.0f, 0.0f, 0.0f, 0.0f);
@@ -107,7 +107,7 @@ TEST(QuaternionTest, inverse)
     }
 }
 
-TEST(QuaternionTest, normalize)
+TEST(QuaternionTest, Normalize)
 {
     Michka::Quaternion a;
     ASSERT_EQ(a, Michka::Quaternion::identity);
@@ -123,7 +123,7 @@ TEST(QuaternionTest, normalize)
     ASSERT_EQ(a.getNormalized(), Michka::Quaternion::zero);
 }
 
-TEST(QuaternionTest, toAxes)
+TEST(QuaternionTest, ToAxes)
 {
     Michka::Vector3 forward, up, right;
     {
@@ -142,7 +142,7 @@ TEST(QuaternionTest, toAxes)
     }
 }
 
-TEST(QuaternionTest, toAxisAngle)
+TEST(QuaternionTest, ToAxisAngle)
 {
     f32 angle;
     Michka::Vector3 axis;
@@ -166,7 +166,7 @@ TEST(QuaternionTest, toAxisAngle)
     }
 }
 
-TEST(QuaternionTest, toEulerAngels)
+TEST(QuaternionTest, ToEulerAngels)
 {
     Michka::Quaternion a(0.0f, 45.0f, 0.0f);
     ASSERT_EQ(a.toEulerAngels(), Michka::Vector3(0.0f, 45.0f, 0.0f));
@@ -184,7 +184,7 @@ TEST(QuaternionTest, toEulerAngels)
     ASSERT_EQ(a.toEulerAngels(), Michka::Vector3(0.0f, 90.0f, 0.0f));
 }
 
-TEST(QuaternionTest, getExponent)
+TEST(QuaternionTest, GetExponent)
 {
     Michka::Quaternion a (0.0f, 90.0f, 0.0f);
     Michka::Quaternion b = a.getExponent();
@@ -195,7 +195,7 @@ TEST(QuaternionTest, getExponent)
     ASSERT_EQ(b, Michka::Quaternion(0.0f, 0.0f, 0.0f, 1.0f));
 }
 
-TEST(QuaternionTest, getLog)
+TEST(QuaternionTest, GetLog)
 {
     Michka::Quaternion a (0.0f, 90.0f, 0.0f);
     Michka::Quaternion b = a.getLog();
@@ -206,7 +206,7 @@ TEST(QuaternionTest, getLog)
     ASSERT_EQ(b, Michka::Quaternion(0.0f, 0.0f, 0.0f, 1.0f));
 }
 
-TEST(QuaternionTest, lerp)
+TEST(QuaternionTest, Lerp)
 {
     Michka::Quaternion a(0.0f, 0.0f, 0.0f);
     Michka::Quaternion b(0.0f, 90.0f, 0.0f);
@@ -219,7 +219,7 @@ TEST(QuaternionTest, lerp)
     ASSERT_EQ(Michka::Quaternion::lerp(a, b, 0.5f, true), Michka::Quaternion(0.0f, -45.0f, 0.0f));
 }
 
-TEST(QuaternionTest, slerp)
+TEST(QuaternionTest, Slerp)
 {
     Michka::Quaternion a(0.0f, 0.0f, 0.0f);
     Michka::Quaternion b(0.0f, 60.0f, 0.0f);
@@ -237,7 +237,7 @@ TEST(QuaternionTest, slerp)
     ASSERT_EQ(Michka::Quaternion::slerp(a, b, 0.5f), Michka::Quaternion(0.0f, -15.0f, 0.0f));
 }
 
-TEST(QuaternionTest, operators)
+TEST(QuaternionTest, Operators)
 {
     Michka::Quaternion a(5.0f, -10.0f, 15.0f, 1.0f);
     const Michka::Quaternion b(-5.0f, 10.0f, -15.0f, -1.0f);

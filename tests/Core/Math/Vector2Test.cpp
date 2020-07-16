@@ -3,7 +3,7 @@
 #include "Core/Math/Vector3.h"
 #include "Core/Math/Vector4.h"
 
-TEST(Vector2Test, compare)
+TEST(Vector2Test, Compare)
 {
     const Michka::Vector2 a(0.0f, 1.0f);
     Michka::Vector2 b (0.0f, 0.0f);
@@ -19,7 +19,7 @@ TEST(Vector2Test, compare)
     ASSERT_EQ(b, c);
 }
 
-TEST(Vector2Test, normalize)
+TEST(Vector2Test, Normalize)
 {
     Michka::Vector2 a;
     ASSERT_EQ(a, Michka::Vector2::zero);
@@ -35,7 +35,7 @@ TEST(Vector2Test, normalize)
     ASSERT_EQ(a.getNormalized(), Michka::Vector2::zero);
 }
 
-TEST(Vector2Test, distance)
+TEST(Vector2Test, Distance)
 {
     Michka::Vector2 a(7.0f, 4.0f);
     const Michka::Vector2 b(17.0f, 6.0f);
@@ -45,7 +45,7 @@ TEST(Vector2Test, distance)
     ASSERT_FLOAT_EQ(b.getDistanceFrom(b), 0.0f);
 }
 
-TEST(Vector2Test, dotProduct)
+TEST(Vector2Test, DotProduct)
 {
     Michka::Vector2 a(1.0f, 2.0f);
     const Michka::Vector2 b(1.0f, 5.0f);
@@ -53,7 +53,7 @@ TEST(Vector2Test, dotProduct)
     ASSERT_FLOAT_EQ(b.getDotProduct(a), 11.0f);
 }
 
-TEST(Vector2Test, reflect)
+TEST(Vector2Test, Reflect)
 {
     Michka::Vector2 a(1.0f, 1.0f);
     a.reflect(Michka::Vector2::up);
@@ -61,14 +61,14 @@ TEST(Vector2Test, reflect)
     ASSERT_EQ(a, Michka::Vector2(1.0f, -1.0f));
 }
 
-TEST(Vector2Test, angle)
+TEST(Vector2Test, Angle)
 {
     Michka::Vector2 a(0.0f, 1.0f);
 
     ASSERT_FLOAT_EQ(a.getAngleFrom(Michka::Vector2::right), 90.0f);
 }
 
-TEST(Vector2Test, cast)
+TEST(Vector2Test, Cast)
 {
     Michka::Vector2 a(1.0f, 2.0f);
     Michka::Vector3 b = a;
@@ -78,7 +78,7 @@ TEST(Vector2Test, cast)
     ASSERT_EQ(c, Michka::Vector4(1.0f, 2.0f, 0.0f, 1.0f));
 }
 
-TEST(Vector2Test, operators)
+TEST(Vector2Test, Operators)
 {
     Michka::Vector2 a(5.0f, -10.0f);
     const Michka::Vector2 b(-5.0f, 10.0f);

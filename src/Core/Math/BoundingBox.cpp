@@ -1,4 +1,5 @@
 #include "BoundingBox.h"
+#include "Core/Math/BoundingSphere.h"
 #include "Core/Math/Matrix.h"
 #include "Core/Math/Matrix3.h"
 
@@ -124,6 +125,46 @@ namespace Michka
         }
 
         return *this;
+    }
+
+    bool BoundingBox::isInside(const BoundingSphere& _sphere) const
+    {
+        Vector3 closestSide;
+        if (
+            _sphere.position.x >= min.x && _sphere.position.y >= min.y && _sphere.position.z >= min.z &&
+            _sphere.position.x <= max.x && _sphere.position.y <= max.y && _sphere.position.z <= max.z
+        )
+        {
+            return true;
+        }
+        if(_sphere.position.x >= max.x)
+        {
+            closestSide.x = max.x;
+        }
+        else if(_sphere.position.x <= min.x)
+        {
+            closestSide.x = min.x;
+        }
+
+        if(_sphere.position.y >= max.y)
+        {
+            closestSide.y = max.y;
+        }
+        else if(_sphere.position.y <= min.y)
+        {
+            closestSide.y = min.y;
+        }
+
+        if(_sphere.position.z >= max.z)
+        {
+            closestSide.z = max.z;
+        }
+        else if(_sphere.position.z <= min.z)
+        {
+            closestSide.z = min.z;
+        }
+
+        return (closestSide.getDistanceFrom(_sphere.position) <= _sphere.radius);
     }
 
     BoundingBox& BoundingBox::transform(const Matrix3& _matrix)

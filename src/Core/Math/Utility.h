@@ -148,9 +148,38 @@ namespace Michka
          */
         FORCE_INLINE f32 lerp(const f32& _start, const f32& _end, const f32& _position);
 
+        template<typename T>
+        FORCE_INLINE T max(const T& _a);
+
+        /**
+         * @brief Get minimum between multiple number.
+         *
+         * @tparam T
+         * @tparam T2
+         * @param _a
+         * @param _b
+         */
+        template<typename T, typename... T2>
+        FORCE_INLINE T max(const T& _a, const T2&... _b);
+
+        template<typename T>
+        FORCE_INLINE T min(const T& _a);
+
+        /**
+         * @brief Get minimum between multiple number.
+         *
+         * @tparam T
+         * @tparam T2
+         * @param _a
+         * @param _b
+         */
+        template<typename T, typename... T2>
+        FORCE_INLINE T min(const T& _a, const T2&... _b);
+
         /**
          * @brief Get remainder of _a/_b
          *
+         * @tparam T
          * @param _a
          * @param _b
          */

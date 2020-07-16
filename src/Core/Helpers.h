@@ -4,7 +4,12 @@
 #include <functional>
 #include "Reflection/Type.h"
 
-#define MICHKA_ASSERT(_CONDITION, _MESSAGE) if (!(_CONDITION)) {printf(_MESSAGE); std::exit(1);}
+#define MICHKA_ASSERT(_CONDITION, _MESSAGE) \
+    if (!(_CONDITION)) \
+    { \
+        printf(_MESSAGE); \
+        std::exit(1); \
+    }
 
 #define MICHKA_GLUE(_X, _Y) _X _Y
 

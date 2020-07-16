@@ -48,12 +48,28 @@ namespace Michka
         return (max + min) * 0.5f;
     }
 
+    FORCE_INLINE BoundingBox BoundingBox::getMerged(const Vector3& _point) const
+    {
+        BoundingBox self = *this;
+        self.merge(_point);
+
+        return self;
+    }
+
+    FORCE_INLINE BoundingBox BoundingBox::getMerged(const BoundingBox& _other) const
+    {
+        BoundingBox self = *this;
+        self.merge(_other);
+
+        return self;
+    }
+
     FORCE_INLINE Vector3 BoundingBox::getSizeVector() const
     {
         return max - min;
     }
 
-    FORCE_INLINE BoundingBox BoundingBox::getTransformed(const Matrix3& _matrix)
+    FORCE_INLINE BoundingBox BoundingBox::getTransformed(const Matrix3& _matrix) const
     {
         BoundingBox self = *this;
         self.transform(_matrix);
@@ -61,7 +77,7 @@ namespace Michka
         return self;
     }
 
-    FORCE_INLINE BoundingBox BoundingBox::getTransformed(const Matrix& _matrix)
+    FORCE_INLINE BoundingBox BoundingBox::getTransformed(const Matrix& _matrix) const
     {
         BoundingBox self = *this;
         self.transform(_matrix);

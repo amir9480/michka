@@ -3,19 +3,19 @@
 namespace Michka
 {
     template<typename T1, typename T2>
-    Pair<T1, T2>::Pair()
+    FORCE_INLINE Pair<T1, T2>::Pair()
     {
     }
 
     template<typename T1, typename T2>
-    Pair<T1, T2>::Pair(const T1& _first, const T2& _second):
+    FORCE_INLINE Pair<T1, T2>::Pair(const T1& _first, const T2& _second):
         first(_first),
         second(_second)
     {
     }
 
     template<typename T1, typename T2>
-    Pair<T1, T2>::Pair(T1&& _first, T2&& _second) :
+    FORCE_INLINE Pair<T1, T2>::Pair(T1&& _first, T2&& _second) :
         first(std::forward<T1>(_first)),
         second(std::forward<T2>(_second))
     {
@@ -23,26 +23,26 @@ namespace Michka
     }
 
     template<typename T1, typename T2>
-    Pair<T1, T2>::Pair(const Pair<T1, T2>& _other):
+    FORCE_INLINE Pair<T1, T2>::Pair(const Pair<T1, T2>& _other):
         first(_other.first),
         second(_other.second)
     {
     }
 
     template<typename T1, typename T2>
-    Pair<T1, T2>::Pair(Pair<T1, T2>&& _other):
+    FORCE_INLINE Pair<T1, T2>::Pair(Pair<T1, T2>&& _other):
         first(std::move(_other.first)),
         second(std::move(_other.second))
     {
     }
 
     template<typename T1, typename T2>
-    Pair<T1, T2>::~Pair()
+    FORCE_INLINE Pair<T1, T2>::~Pair()
     {
     }
 
     template<typename T1, typename T2>
-    Pair<T1, T2>& Pair<T1, T2>::operator = (const Pair<T1, T2>& _other)
+    FORCE_INLINE Pair<T1, T2>& Pair<T1, T2>::operator = (const Pair<T1, T2>& _other)
     {
         first = _other.first;
         second = _other.second;
@@ -51,7 +51,7 @@ namespace Michka
     }
 
     template<typename T1, typename T2>
-    Pair<T1, T2>& Pair<T1, T2>::operator = (Pair<T1, T2>&& _other)
+    FORCE_INLINE Pair<T1, T2>& Pair<T1, T2>::operator = (Pair<T1, T2>&& _other)
     {
         first = std::move(_other.first);
         second = std::move(_other.second);

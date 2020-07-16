@@ -12,24 +12,23 @@ namespace Michka
     public:
         struct Element: public Pair<TKey, TValue>
         {
-            Element(TKey&& _first, TValue&& _second): Pair(std::forward<TKey>(_first), std::forward<TValue>(_second)) {}
-            Element(const TKey& _first, const TValue& _second) : Pair(_first, _second) {}
-            Element(const Element& _other) : Pair(_other) {}
-            Element(Element&& _other) : Pair(std::forward<Element>(_other)) {}
-            ~Element() {}
+            FORCE_INLINE Element(TKey&& _first, TValue&& _second);
+            FORCE_INLINE Element(const TKey& _first, const TValue& _second);
+            FORCE_INLINE Element(const Element& _other);
+            FORCE_INLINE Element(Element&& _other);
 
-            TKey& key();
-            TKey key() const;
-            TValue& value();
-            TValue value() const;
+            FORCE_INLINE TKey& key();
+            FORCE_INLINE TKey key() const;
+            FORCE_INLINE TValue& value();
+            FORCE_INLINE TValue value() const;
 
             using Pair<TKey, TValue>::operator =;
 
-            Element& operator = (const Element& _other);
-            Element& operator = (Element&& _other);
+            FORCE_INLINE Element& operator = (const Element& _other);
+            FORCE_INLINE Element& operator = (Element&& _other);
 
-            bool operator == (const Element& _other) const;
-            bool operator != (const Element& _other) const;
+            FORCE_INLINE bool operator == (const Element& _other) const;
+            FORCE_INLINE bool operator != (const Element& _other) const;
         };
 
         typedef Element* Iterator;

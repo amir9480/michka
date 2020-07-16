@@ -4,43 +4,67 @@
 namespace Michka
 {
     template<typename TKey, typename TValue>
-    TKey& Map<TKey, TValue>::Element::key()
+    FORCE_INLINE Map<TKey, TValue>::Element::Element(TKey&& _first, TValue&& _second) : Pair(std::forward<TKey>(_first), std::forward<TValue>(_second))
+    {
+        //
+    }
+
+    template<typename TKey, typename TValue>
+    FORCE_INLINE Map<TKey, TValue>::Element::Element(const TKey& _first, const TValue& _second) : Pair(_first, _second)
+    {
+        //
+    }
+
+    template<typename TKey, typename TValue>
+    FORCE_INLINE Map<TKey, TValue>::Element::Element(const Element& _other) : Pair(_other)
+    {
+        //
+    }
+
+    template<typename TKey, typename TValue>
+    FORCE_INLINE Map<TKey, TValue>::Element::Element(Element&& _other) : Pair(std::forward<Element>(_other))
+    {
+        //
+    }
+
+    template<typename TKey, typename TValue>
+    FORCE_INLINE TKey& Map<TKey, TValue>::Element::key()
     {
         return first;
     }
 
     template<typename TKey, typename TValue>
-    TKey Map<TKey, TValue>::Element::key() const
+    FORCE_INLINE TKey Map<TKey, TValue>::Element::key() const
     {
         return first;
     }
 
     template<typename TKey, typename TValue>
-    TValue& Map<TKey, TValue>::Element::value()
+    FORCE_INLINE TValue& Map<TKey, TValue>::Element::value()
     {
         return second;
     }
 
     template<typename TKey, typename TValue>
-    TValue Map<TKey, TValue>::Element::value() const
+    FORCE_INLINE TValue Map<TKey, TValue>::Element::value() const
     {
         return second;
     }
 
     template<typename TKey, typename TValue>
-    bool Map<TKey, TValue>::Element::operator == (const Map<TKey, TValue>::Element& _other) const
+    FORCE_INLINE bool Map<TKey, TValue>::Element::operator == (const Map<TKey, TValue>::Element& _other) const
     {
         return first == _other.first && second == _other.second;
     }
 
     template<typename TKey, typename TValue>
-    bool Map<TKey, TValue>::Element::operator != (const Map<TKey, TValue>::Element& _other) const
+    FORCE_INLINE bool Map<TKey, TValue>::Element::operator != (const Map<TKey, TValue>::Element& _other) const
     {
         return !(*this == _other);
     }
 
     template<typename TKey, typename TValue>
-    typename Map<TKey, TValue>::Element& Map<TKey, TValue>::Element::operator = (const Map<TKey, TValue>::Element& _other)
+    FORCE_INLINE typename Map<TKey, TValue>::Element& Map<TKey, TValue>::Element::operator = (const Map<TKey, TValue>::Element& _other)
     {
         first = _other.first;
         second = _other.second;
@@ -49,7 +73,7 @@ namespace Michka
     }
 
     template<typename TKey, typename TValue>
-    typename Map<TKey, TValue>::Element& Map<TKey, TValue>::Element::operator = (Map<TKey, TValue>::Element&& _other)
+    FORCE_INLINE typename Map<TKey, TValue>::Element& Map<TKey, TValue>::Element::operator = (Map<TKey, TValue>::Element&& _other)
     {
         first = std::move(_other.first);
         second = std::move(_other.second);
