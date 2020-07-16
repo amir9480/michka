@@ -96,5 +96,9 @@
         "/source/{FILE}.cc",
         "/source/{FILE}.cp",
         "/source/{FILE}.c"
-    ]
+    ],
+    "licenser.author": "amir alizadeh",
+    "licenser.projectName": "Michka",
+    "licenser.license": "Custom",
+    "licenser.customHeaderFile": "E:/Cpp/Engine/.vscode/license.txt"
 }
