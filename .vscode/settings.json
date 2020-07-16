@@ -97,6 +97,7 @@
         "/source/{FILE}.cp",
         "/source/{FILE}.c"
     ],
+    "licenser.disableAutoHeaderInsertion": false,
     "licenser.author": "amir alizadeh",
     "licenser.projectName": "Michka",
     "licenser.license": "Custom",
