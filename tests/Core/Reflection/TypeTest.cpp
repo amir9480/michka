@@ -36,7 +36,36 @@ class MichkaTestClass {};
 union MichkaTestUnion {};
 enum MichkaTestEnum {};
 
-TEST(TypeTest, RangeTest)
+TEST(TypeTest, Compare)
+{
+    int a = 100;
+    ASSERT_FALSE(Michka::Type<int>::is<float>());
+    ASSERT_FALSE(Michka::Type<decltype(a)>::is<float>());
+    ASSERT_FALSE(Michka::Type<decltype(a)>::is<u32>());
+    ASSERT_TRUE(Michka::Type<decltype(a)>::is<int>());
+}
+
+TEST(TypeTest, HasOperator)
+{
+    int a = 100;
+    ASSERT_TRUE(Michka::Type<decltype(a)>::hasOperator<const int>::equal);
+    ASSERT_TRUE(Michka::Type<decltype(a)>::hasOperator<float>::equal);
+    ASSERT_TRUE(Michka::Type<int>::hasOperator<>::equal);
+    ASSERT_TRUE(Michka::Type<int>::hasOperator<>::notEqual);
+    ASSERT_TRUE(Michka::Type<int>::hasOperator<>::less);
+    ASSERT_TRUE(Michka::Type<int>::hasOperator<>::lessOrEqual);
+    ASSERT_TRUE(Michka::Type<int>::hasOperator<>::greater);
+    ASSERT_TRUE(Michka::Type<int>::hasOperator<>::greaterOrEqual);
+
+    ASSERT_FALSE(Michka::Type<Person>::hasOperator<int>::equal);
+    ASSERT_FALSE(Michka::Type<Person>::hasOperator<int>::notEqual);
+    ASSERT_FALSE(Michka::Type<Person>::hasOperator<int>::less);
+    ASSERT_FALSE(Michka::Type<Person>::hasOperator<int>::lessOrEqual);
+    ASSERT_FALSE(Michka::Type<Person>::hasOperator<int>::greater);
+    ASSERT_FALSE(Michka::Type<Person>::hasOperator<int>::greaterOrEqual);
+}
+
+TEST(TypeTest, Range)
 {
     ASSERT_TRUE(true);
     TYPE_TEST(short, "short int");
@@ -75,35 +104,6 @@ TEST(TypeTest, RangeTest)
     ASSERT_TRUE(Michka::Type<MichkaTestClass>::isClass);
     ASSERT_TRUE(Michka::Type<MichkaTestUnion>::isUnion);
     ASSERT_TRUE(Michka::Type<MichkaTestEnum>::isEnum);
-}
-
-TEST(TypeTest, CompareTest)
-{
-    int a = 100;
-    ASSERT_FALSE(Michka::Type<int>::is<float>());
-    ASSERT_FALSE(Michka::Type<decltype(a)>::is<float>());
-    ASSERT_FALSE(Michka::Type<decltype(a)>::is<u32>());
-    ASSERT_TRUE(Michka::Type<decltype(a)>::is<int>());
-}
-
-TEST(TypeTest, HasOperatorTest)
-{
-    int a = 100;
-    ASSERT_TRUE(Michka::Type<decltype(a)>::hasOperator<const int>::equal);
-    ASSERT_TRUE(Michka::Type<decltype(a)>::hasOperator<float>::equal);
-    ASSERT_TRUE(Michka::Type<int>::hasOperator<>::equal);
-    ASSERT_TRUE(Michka::Type<int>::hasOperator<>::notEqual);
-    ASSERT_TRUE(Michka::Type<int>::hasOperator<>::less);
-    ASSERT_TRUE(Michka::Type<int>::hasOperator<>::lessOrEqual);
-    ASSERT_TRUE(Michka::Type<int>::hasOperator<>::greater);
-    ASSERT_TRUE(Michka::Type<int>::hasOperator<>::greaterOrEqual);
-
-    ASSERT_FALSE(Michka::Type<Person>::hasOperator<int>::equal);
-    ASSERT_FALSE(Michka::Type<Person>::hasOperator<int>::notEqual);
-    ASSERT_FALSE(Michka::Type<Person>::hasOperator<int>::less);
-    ASSERT_FALSE(Michka::Type<Person>::hasOperator<int>::lessOrEqual);
-    ASSERT_FALSE(Michka::Type<Person>::hasOperator<int>::greater);
-    ASSERT_FALSE(Michka::Type<Person>::hasOperator<int>::greaterOrEqual);
 }
 
 TEST(TypeTest, RemovePointerAndReference)

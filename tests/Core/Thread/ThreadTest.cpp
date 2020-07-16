@@ -5,34 +5,6 @@
 #include "Core/Thread/Thread.h"
 #include "../../Classes/TestThread.h"
 
-TEST(ThreadTest, CustomClassThread)
-{
-    int testVar = 0;
-    Michka::Vector<TestThread> threads;
-    for (u32 i = 0; i < 10; i++)
-    {
-        threads.pushBack(TestThread(testVar));
-    }
-    for (u32 i = 0; i < threads.getSize(); i++)
-    {
-        threads[i].start();
-    }
-    for (u32 i = 0; i < threads.getSize(); i++)
-    {
-        threads[i].join();
-    }
-    ASSERT_EQ(testVar, 10);
-    for (u32 i = 0; i < threads.getSize(); i++)
-    {
-        threads[i].start();
-    }
-    for (u32 i = 0; i < threads.getSize(); i++)
-    {
-        threads[i].join();
-    }
-    ASSERT_EQ(testVar, 20);
-}
-
 TEST(ThreadTest, CallbackThread)
 {
     int testVar = 0;
@@ -63,6 +35,34 @@ TEST(ThreadTest, CallbackThread)
         threads[i].join();
     }
     ASSERT_EQ(testVar, 10);
+}
+
+TEST(ThreadTest, CustomClassThread)
+{
+    int testVar = 0;
+    Michka::Vector<TestThread> threads;
+    for (u32 i = 0; i < 10; i++)
+    {
+        threads.pushBack(TestThread(testVar));
+    }
+    for (u32 i = 0; i < threads.getSize(); i++)
+    {
+        threads[i].start();
+    }
+    for (u32 i = 0; i < threads.getSize(); i++)
+    {
+        threads[i].join();
+    }
+    ASSERT_EQ(testVar, 10);
+    for (u32 i = 0; i < threads.getSize(); i++)
+    {
+        threads[i].start();
+    }
+    for (u32 i = 0; i < threads.getSize(); i++)
+    {
+        threads[i].join();
+    }
+    ASSERT_EQ(testVar, 20);
 }
 
 TEST(ThreadTest, Mutex)

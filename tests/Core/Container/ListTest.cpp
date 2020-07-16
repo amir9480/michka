@@ -6,89 +6,70 @@
 #include "Core/Helpers.h"
 #include "../../Classes/Person.h"
 
-TEST(ListTest, SetTest)
+TEST(ListTest, ClearList)
 {
-    Michka::List<int> a = {1};
-    Michka::List<Person> b = {Person("A")};
-    Michka::List<int> c;
-    ASSERT_EQ(a.getSize(), 1);
-    ASSERT_EQ(b.getSize(), 1);
-    ASSERT_TRUE(a[0] == 1);
-    ASSERT_TRUE(b[0] == Person("A"));
-
-    a = {10, 20, 30};
-    b = {Person("AA"), Person("BB"), Person("CC")};
-    ASSERT_EQ(a.getSize(), 3);
-    ASSERT_EQ(b.getSize(), 3);
-    ASSERT_TRUE(a[0] == 10);
-    ASSERT_TRUE(b[0] == Person("AA"));
-    ASSERT_TRUE(a[1] == 20);
-    ASSERT_TRUE(b[1] == Person("BB"));
-    ASSERT_TRUE(a[2] == 30);
-    ASSERT_TRUE(b[2] == Person("CC"));
-
-    a = Michka::List<int>({1, 2, 3});
-    b = Michka::List<Person>({Person("A"), Person("B"), Person("C")});
-    ASSERT_EQ(a.getSize(), 3);
-    ASSERT_EQ(b.getSize(), 3);
-    ASSERT_TRUE(a[0] == 1);
-    ASSERT_TRUE(b[0] == Person("A"));
-    ASSERT_TRUE(a[1] == 2);
-    ASSERT_TRUE(b[1] == Person("B"));
-    ASSERT_TRUE(a[2] == 3);
-    ASSERT_TRUE(b[2] == Person("C"));
-
-    c = a;
-    ASSERT_EQ(c.getSize(), 3);
-    ASSERT_TRUE(c[0] == 1);
-    ASSERT_TRUE(c[1] == 2);
-    ASSERT_TRUE(c[2] == 3);
-
-}
-
-TEST(ListTest, PushTest)
-{
-    Michka::List<int> a = {1};
-    Michka::List<Person> b = {Person("A")};
-
-    a.pushBack(2);
-    b.pushBack(Person("B"));
-
+    Michka::List<int> a = {1, 2};
     ASSERT_EQ(a.getSize(), 2);
-    ASSERT_EQ(b.getSize(), 2);
-    ASSERT_TRUE(a[0] == 1);
-    ASSERT_TRUE(b[0] == Person("A"));
-    ASSERT_TRUE(a[1] == 2);
-    ASSERT_TRUE(b[1] == Person("B"));
-
-    a.pushFront(50);
-    b.pushFront(Person("Hello"));
-    ASSERT_EQ(a.getSize(), 3);
-    ASSERT_EQ(b.getSize(), 3);
-    ASSERT_TRUE(a[0] == 50);
-    ASSERT_TRUE(b[0] == Person("Hello"));
-    ASSERT_TRUE(a[1] == 1);
-    ASSERT_TRUE(b[1] == Person("A"));
-    ASSERT_TRUE(a[2] == 2);
-    ASSERT_TRUE(b[2] == Person("B"));
-
-    a << 500 << 5000;
-    b << Person("Hi") << Person("Hi Again");
-    ASSERT_EQ(a.getSize(), 5);
-    ASSERT_EQ(b.getSize(), 5);
-    ASSERT_TRUE(a[0] == 50);
-    ASSERT_TRUE(b[0] == Person("Hello"));
-    ASSERT_TRUE(a[1] == 1);
-    ASSERT_TRUE(b[1] == Person("A"));
-    ASSERT_TRUE(a[2] == 2);
-    ASSERT_TRUE(b[2] == Person("B"));
-    ASSERT_TRUE(a[3] == 500);
-    ASSERT_TRUE(b[3] == Person("Hi"));
-    ASSERT_TRUE(a[4] == 5000);
-    ASSERT_TRUE(b[4] == Person("Hi Again"));
+    a.clear();
+    ASSERT_EQ(a.getSize(), 0);
 }
 
-TEST(ListTest, InsertTest)
+TEST(ListTest, Compare)
+{
+    Michka::List<int> a = {1, 2, 3};
+    Michka::List<int> b = {1, 2, 3};
+    Michka::List<int> c = {3, 2, 1};
+    Michka::List<int> d = {1, 2, 3, 4};
+
+    ASSERT_EQ(a, b);
+    ASSERT_NE(a, c);
+    ASSERT_NE(a, d);
+}
+
+TEST(ListTest, ConstantList)
+{
+    const Michka::List<int> a = {1, 2};
+    ASSERT_EQ(a.getSize(), 2);
+    // ASSERT_EQ(a.getCapacity(), 8);
+    ASSERT_EQ(a[0], 1);
+    ASSERT_EQ(a[1], 2);
+}
+
+TEST(ListTest, Empty)
+{
+    Michka::List<int> a;
+    Michka::List<int> b = {1, 2};
+
+    ASSERT_TRUE(a.isEmpty());
+    ASSERT_TRUE(b.isNotEmpty());
+}
+
+TEST(ListTest, Filter)
+{
+    auto filterFunction = [] (const int& _item)
+    {
+        return _item % 2 == 0;
+    };
+    Michka::List<int> a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    Michka::List<int> b = a.getFiltered(filterFunction);
+
+    ASSERT_EQ(a.getSize(), 10);
+    ASSERT_EQ(b.getSize(), 5);
+    ASSERT_EQ(b[0], 2);
+    ASSERT_EQ(b[1], 4);
+    ASSERT_EQ(b[2], 6);
+    ASSERT_EQ(b[3], 8);
+    ASSERT_EQ(b[4], 10);
+
+    a.filter(filterFunction);
+    ASSERT_EQ(a[0], 2);
+    ASSERT_EQ(a[1], 4);
+    ASSERT_EQ(a[2], 6);
+    ASSERT_EQ(a[3], 8);
+    ASSERT_EQ(a[4], 10);
+}
+
+TEST(ListTest, Insert)
 {
     Michka::List<int> a = {1, 2};
     Michka::List<Person> b = {Person("A"), Person("B")};
@@ -143,33 +124,7 @@ TEST(ListTest, InsertTest)
     ASSERT_TRUE(c[2] == 1);
 }
 
-TEST(ListTest, EmptyTest)
-{
-    Michka::List<int> a;
-    Michka::List<int> b = {1, 2};
-
-    ASSERT_TRUE(a.isEmpty());
-    ASSERT_TRUE(b.isNotEmpty());
-}
-
-TEST(ListTest, ConstantListTest)
-{
-    const Michka::List<int> a = {1, 2};
-    ASSERT_EQ(a.getSize(), 2);
-    // ASSERT_EQ(a.getCapacity(), 8);
-    ASSERT_EQ(a[0], 1);
-    ASSERT_EQ(a[1], 2);
-}
-
-TEST(ListTest, ClearListTest)
-{
-    Michka::List<int> a = {1, 2};
-    ASSERT_EQ(a.getSize(), 2);
-    a.clear();
-    ASSERT_EQ(a.getSize(), 0);
-}
-
-TEST(ListTest, IteratorTest)
+TEST(ListTest, Iterator)
 {
     Michka::List<int> a = {1, 2, 3};
     const Michka::List<int> b = {4, 6, 8, 10};
@@ -194,7 +149,99 @@ TEST(ListTest, IteratorTest)
     ASSERT_EQ(sum, 28);
 }
 
-TEST(ListTest, SearchTest)
+TEST(ListTest, OperatorAdd)
+{
+    Michka::List<int> a = {1, 2, 3, 4, 5};
+    Michka::List<int> b = {5, 6, 7, 8, 9, 10};
+    Michka::List<int> ab = {1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10};
+
+    ASSERT_EQ(a + b, ab);
+
+    a += b;
+    ASSERT_EQ(a, ab);
+}
+
+TEST(ListTest, Push)
+{
+    Michka::List<int> a = {1};
+    Michka::List<Person> b = {Person("A")};
+
+    a.pushBack(2);
+    b.pushBack(Person("B"));
+
+    ASSERT_EQ(a.getSize(), 2);
+    ASSERT_EQ(b.getSize(), 2);
+    ASSERT_TRUE(a[0] == 1);
+    ASSERT_TRUE(b[0] == Person("A"));
+    ASSERT_TRUE(a[1] == 2);
+    ASSERT_TRUE(b[1] == Person("B"));
+
+    a.pushFront(50);
+    b.pushFront(Person("Hello"));
+    ASSERT_EQ(a.getSize(), 3);
+    ASSERT_EQ(b.getSize(), 3);
+    ASSERT_TRUE(a[0] == 50);
+    ASSERT_TRUE(b[0] == Person("Hello"));
+    ASSERT_TRUE(a[1] == 1);
+    ASSERT_TRUE(b[1] == Person("A"));
+    ASSERT_TRUE(a[2] == 2);
+    ASSERT_TRUE(b[2] == Person("B"));
+
+    a << 500 << 5000;
+    b << Person("Hi") << Person("Hi Again");
+    ASSERT_EQ(a.getSize(), 5);
+    ASSERT_EQ(b.getSize(), 5);
+    ASSERT_TRUE(a[0] == 50);
+    ASSERT_TRUE(b[0] == Person("Hello"));
+    ASSERT_TRUE(a[1] == 1);
+    ASSERT_TRUE(b[1] == Person("A"));
+    ASSERT_TRUE(a[2] == 2);
+    ASSERT_TRUE(b[2] == Person("B"));
+    ASSERT_TRUE(a[3] == 500);
+    ASSERT_TRUE(b[3] == Person("Hi"));
+    ASSERT_TRUE(a[4] == 5000);
+    ASSERT_TRUE(b[4] == Person("Hi Again"));
+}
+
+TEST(ListTest, Remove)
+{
+    Michka::List<int> a = {2, 4, 6, 8, 10, 2};
+    a.remove(1);
+    ASSERT_EQ(a.getSize(), 5);
+    ASSERT_EQ(a[1], 6);
+    ASSERT_EQ(a[4], 2);
+
+    a.remove(1, 2);
+    ASSERT_EQ(a.getSize(), 3);
+    ASSERT_EQ(a[1], 10);
+    ASSERT_EQ(a[2], 2);
+
+    a.remove(3); // remove out of range
+    a.remove(5);
+    ASSERT_EQ(a.getSize(), 3);
+    ASSERT_EQ(a[1], 10);
+    ASSERT_EQ(a[2], 2);
+
+    a.remove(1, Michka::u32Info::max);
+    ASSERT_EQ(a.getSize(), 1);
+    ASSERT_EQ(a[0], 2);
+
+    a.remove(0);
+    ASSERT_EQ(a.getSize(), 0);
+}
+
+TEST(ListTest, Reverse)
+{
+    Michka::List<int> a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    Michka::List<int> aReversed = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+    Michka::List<int> b = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    Michka::List<int> bReversed = {9, 8, 7, 6, 5, 4, 3, 2, 1};
+
+    ASSERT_EQ(a.getReversed(), aReversed);
+    ASSERT_EQ(b.getReversed(), bReversed);
+}
+
+TEST(ListTest, Search)
 {
     Michka::List<int> a = {2, 4, 6, 8, 10, 2};
     ASSERT_EQ(a.indexOf(3), a.notFound);
@@ -240,82 +287,46 @@ TEST(ListTest, SearchTest)
     ASSERT_EQ(b.lastIndexOf(compareCallback2b), b.notFound);
 }
 
-TEST(ListTest, RemoveTest)
+TEST(ListTest, Set)
 {
-    Michka::List<int> a = {2, 4, 6, 8, 10, 2};
-    a.remove(1);
-    ASSERT_EQ(a.getSize(), 5);
-    ASSERT_EQ(a[1], 6);
-    ASSERT_EQ(a[4], 2);
-
-    a.remove(1, 2);
-    ASSERT_EQ(a.getSize(), 3);
-    ASSERT_EQ(a[1], 10);
-    ASSERT_EQ(a[2], 2);
-
-    a.remove(3); // remove out of range
-    a.remove(5);
-    ASSERT_EQ(a.getSize(), 3);
-    ASSERT_EQ(a[1], 10);
-    ASSERT_EQ(a[2], 2);
-
-    a.remove(1, Michka::u32Info::max);
+    Michka::List<int> a = {1};
+    Michka::List<Person> b = {Person("A")};
+    Michka::List<int> c;
     ASSERT_EQ(a.getSize(), 1);
-    ASSERT_EQ(a[0], 2);
+    ASSERT_EQ(b.getSize(), 1);
+    ASSERT_TRUE(a[0] == 1);
+    ASSERT_TRUE(b[0] == Person("A"));
 
-    a.remove(0);
-    ASSERT_EQ(a.getSize(), 0);
+    a = {10, 20, 30};
+    b = {Person("AA"), Person("BB"), Person("CC")};
+    ASSERT_EQ(a.getSize(), 3);
+    ASSERT_EQ(b.getSize(), 3);
+    ASSERT_TRUE(a[0] == 10);
+    ASSERT_TRUE(b[0] == Person("AA"));
+    ASSERT_TRUE(a[1] == 20);
+    ASSERT_TRUE(b[1] == Person("BB"));
+    ASSERT_TRUE(a[2] == 30);
+    ASSERT_TRUE(b[2] == Person("CC"));
+
+    a = Michka::List<int>({1, 2, 3});
+    b = Michka::List<Person>({Person("A"), Person("B"), Person("C")});
+    ASSERT_EQ(a.getSize(), 3);
+    ASSERT_EQ(b.getSize(), 3);
+    ASSERT_TRUE(a[0] == 1);
+    ASSERT_TRUE(b[0] == Person("A"));
+    ASSERT_TRUE(a[1] == 2);
+    ASSERT_TRUE(b[1] == Person("B"));
+    ASSERT_TRUE(a[2] == 3);
+    ASSERT_TRUE(b[2] == Person("C"));
+
+    c = a;
+    ASSERT_EQ(c.getSize(), 3);
+    ASSERT_TRUE(c[0] == 1);
+    ASSERT_TRUE(c[1] == 2);
+    ASSERT_TRUE(c[2] == 3);
 }
 
-TEST(ListTest, CompareTest)
-{
-    Michka::List<int> a = {1, 2, 3};
-    Michka::List<int> b = {1, 2, 3};
-    Michka::List<int> c = {3, 2, 1};
-    Michka::List<int> d = {1, 2, 3, 4};
-
-    ASSERT_EQ(a, b);
-    ASSERT_NE(a, c);
-    ASSERT_NE(a, d);
-}
-
-TEST(ListTest, ReverseTest)
-{
-    Michka::List<int> a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    Michka::List<int> aReversed = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
-    Michka::List<int> b = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-    Michka::List<int> bReversed = {9, 8, 7, 6, 5, 4, 3, 2, 1};
-
-    ASSERT_EQ(a.getReversed(), aReversed);
-    ASSERT_EQ(b.getReversed(), bReversed);
-}
-
-TEST(ListTest, FilterTest)
-{
-    auto filterFunction = [] (const int& _item)
-    {
-        return _item % 2 == 0;
-    };
-    Michka::List<int> a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    Michka::List<int> b = a.getFiltered(filterFunction);
-
-    ASSERT_EQ(a.getSize(), 10);
-    ASSERT_EQ(b.getSize(), 5);
-    ASSERT_EQ(b[0], 2);
-    ASSERT_EQ(b[1], 4);
-    ASSERT_EQ(b[2], 6);
-    ASSERT_EQ(b[3], 8);
-    ASSERT_EQ(b[4], 10);
-
-    a.filter(filterFunction);
-    ASSERT_EQ(a[0], 2);
-    ASSERT_EQ(a[1], 4);
-    ASSERT_EQ(a[2], 6);
-    ASSERT_EQ(a[3], 8);
-    ASSERT_EQ(a[4], 10);
-}
-
-TEST(ListTest, SortTest)
+TEST(ListTest, Sort)
 {
     {
         Michka::List<int> a = {4, 7, 1779, 832, 4349, 2476, 3176, 3894, 1219, 1537, 910, 2699, 1207, 2858, 3850, 2871, 4937, 4954, 2759, 2254, 3414, 1860, 3686, 8, 5};
@@ -343,7 +354,25 @@ TEST(ListTest, SortTest)
     }
 }
 
-TEST(ListTest, TakeAndPopTest)
+TEST(ListTest, Swap)
+{
+    Michka::List<int> a = {1, 2, 3, 4, 5};
+    Michka::List<int> b = {5, 6, 7, 8, 9, 10};
+    Michka::List<int> c = a;
+    Michka::List<int> d = b;
+
+    a.swap(b);
+
+    ASSERT_EQ(b, c);
+    ASSERT_EQ(a, d);
+
+    a.swap(0, 4);
+
+    ASSERT_EQ(a[0], 9);
+    ASSERT_EQ(a[4], 5);
+}
+
+TEST(ListTest, TakeAndPop)
 {
     Michka::List<int> a = {1, 2, 4, 9, 10};
 
@@ -364,34 +393,4 @@ TEST(ListTest, TakeAndPopTest)
 
     ASSERT_EQ(a.popFront(), 2);
     ASSERT_EQ(a.popBack(), 9);
-}
-
-TEST(ListTest, OperatorAddTest)
-{
-    Michka::List<int> a = {1, 2, 3, 4, 5};
-    Michka::List<int> b = {5, 6, 7, 8, 9, 10};
-    Michka::List<int> ab = {1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10};
-
-    ASSERT_EQ(a + b, ab);
-
-    a += b;
-    ASSERT_EQ(a, ab);
-}
-
-TEST(ListTest, SwapTest)
-{
-    Michka::List<int> a = {1, 2, 3, 4, 5};
-    Michka::List<int> b = {5, 6, 7, 8, 9, 10};
-    Michka::List<int> c = a;
-    Michka::List<int> d = b;
-
-    a.swap(b);
-
-    ASSERT_EQ(b, c);
-    ASSERT_EQ(a, d);
-
-    a.swap(0, 4);
-
-    ASSERT_EQ(a[0], 9);
-    ASSERT_EQ(a[4], 5);
 }

@@ -2,6 +2,14 @@
 #include "Core/Math/Vector4.h"
 #include "Core/Math/Vector3.h"
 
+TEST(Vector4Test, Cast)
+{
+    Michka::Vector4 a(1.0f, 2.0f, 3.0f, 4.0f);
+    Michka::Vector3 b = a;
+
+    ASSERT_EQ(b, Michka::Vector3(1.0f/4.0f, 2.0f/4.0f, 3.0f/4.0f));
+}
+
 TEST(Vector4Test, Compare)
 {
     const Michka::Vector4 a(0.0f, 1.0f, 0.0f);
@@ -20,13 +28,22 @@ TEST(Vector4Test, Compare)
     ASSERT_EQ(b, c);
 }
 
-
 TEST(Vector4Test, DotProduct)
 {
     Michka::Vector4 a(1.0f, 2.0f, 3.0f);
     const Michka::Vector4 b(1.0f, 5.0f, 7.0f);
 
     ASSERT_FLOAT_EQ(b.getDotProduct(a), 33.0f);
+}
+
+TEST(Vector4Test, Length)
+{
+    Michka::Vector4 a;
+    a.setX(7.0f).setY(4.0f).setZ(3.0f).setW(1.0f);
+
+    ASSERT_FLOAT_EQ(a.getLength(), 8.6602545f);
+    a.set(2.0f, 1.0f, 2.0f);
+    ASSERT_FLOAT_EQ(a.getSqauredLength(), 10.0f);
 }
 
 TEST(Vector4Test, Operators)
@@ -61,22 +78,4 @@ TEST(Vector4Test, Operators)
 
     ASSERT_EQ(a + Michka::Vector4(2.0f, 3.0f, 4.0f), Michka::Vector4(7.0f, -7.0f, 19.0f, 2.0f));
     ASSERT_EQ(a - Michka::Vector4(2.0f, 3.0f, 4.0f), Michka::Vector4(3.0f, -13.0f, 11.0f, 0.0f));
-}
-
-TEST(Vector4Test, Length)
-{
-    Michka::Vector4 a;
-    a.setX(7.0f).setY(4.0f).setZ(3.0f).setW(1.0f);
-
-    ASSERT_FLOAT_EQ(a.getLength(), 8.6602545f);
-    a.set(2.0f, 1.0f, 2.0f);
-    ASSERT_FLOAT_EQ(a.getSqauredLength(), 10.0f);
-}
-
-TEST(Vector4Test, Cast)
-{
-    Michka::Vector4 a(1.0f, 2.0f, 3.0f, 4.0f);
-    Michka::Vector3 b = a;
-
-    ASSERT_EQ(b, Michka::Vector3(1.0f/4.0f, 2.0f/4.0f, 3.0f/4.0f));
 }

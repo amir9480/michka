@@ -2,6 +2,21 @@
 #include "Core/Math/Vector3.h"
 #include "Core/Math/Vector4.h"
 
+TEST(Vector3Test, Angle)
+{
+    Michka::Vector3 a(0.0f, 1.0f, 0.0f);
+
+    ASSERT_FLOAT_EQ(a.getAngleFrom(Michka::Vector3::right), 90.0f);
+}
+
+TEST(Vector3Test, Cast)
+{
+    Michka::Vector3 a(1.0f, 2.0f, 3.0f);
+    Michka::Vector4 b = a;
+
+    ASSERT_EQ(b, Michka::Vector4(1.0f, 2.0f, 3.0f, 1.0f));
+}
+
 TEST(Vector3Test, Compare)
 {
     const Michka::Vector3 a(0.0f, 1.0f, 0.0f);
@@ -20,20 +35,17 @@ TEST(Vector3Test, Compare)
     ASSERT_EQ(b, c);
 }
 
-TEST(Vector3Test, Normalize)
+TEST(Vector3Test, CrossProduct)
 {
-    Michka::Vector3 a;
-    ASSERT_EQ(a, Michka::Vector3::zero);
-    a.set(5.0f, 10.0f, 5.0f);
+    ASSERT_EQ(Michka::Vector3::crossProduct(Michka::Vector3::right, Michka::Vector3::up), Michka::Vector3::forward);
+    ASSERT_EQ(Michka::Vector3::crossProduct(Michka::Vector3::right, Michka::Vector3::forward), Michka::Vector3::down);
+    ASSERT_EQ(Michka::Vector3::crossProduct(Michka::Vector3::back, Michka::Vector3::up), Michka::Vector3::right);
+    ASSERT_EQ(Michka::Vector3::crossProduct(Michka::Vector3::left, Michka::Vector3::back), Michka::Vector3::down);
+    ASSERT_EQ(Michka::Vector3::crossProduct(Michka::Vector3::right, Michka::Vector3::back), Michka::Vector3::up);
 
-    ASSERT_EQ(a.getNormalized(), Michka::Vector3(0.40825f, 0.8165f, 0.40825f));
-    a.normalize();
-    ASSERT_TRUE(a.isNormalized());
-    ASSERT_FLOAT_EQ(a.getLength(), 1.0f);
-
-    a.setX(0.0f).setY(0.0f).setZ(0.0f);
-    ASSERT_FALSE(a.isNormalizable());
-    ASSERT_EQ(a.getNormalized(), Michka::Vector3::zero);
+    Michka::Vector3 a(1.0f, 2.0f, 3.0f);
+    Michka::Vector3 b(1.0f, 5.0f, 7.0f);
+    ASSERT_EQ(a.getCrossProduct(b), Michka::Vector3(-1.0f, -4.0f, 3.0f));
 }
 
 TEST(Vector3Test, Distance)
@@ -54,21 +66,6 @@ TEST(Vector3Test, DotProduct)
     ASSERT_FLOAT_EQ(b.getDotProduct(a), 32.0f);
 }
 
-TEST(Vector3Test, Reflect)
-{
-    Michka::Vector3 a(1.0f, 1.0f, 0.0f);
-    a.reflect(Michka::Vector3::up);
-
-    ASSERT_EQ(a, Michka::Vector3(1.0f, -1.0f, 0.0f));
-}
-
-TEST(Vector3Test, Angle)
-{
-    Michka::Vector3 a(0.0f, 1.0f, 0.0f);
-
-    ASSERT_FLOAT_EQ(a.getAngleFrom(Michka::Vector3::right), 90.0f);
-}
-
 TEST(Vector3Test, Lerp)
 {
     Michka::Vector3 a(0.0f, 0.0f, 0.0f);
@@ -77,6 +74,22 @@ TEST(Vector3Test, Lerp)
     ASSERT_EQ(Michka::Vector3::lerp(a, b, 0.0f), a);
     ASSERT_EQ(Michka::Vector3::lerp(a, b, 1.0f), b);
     ASSERT_EQ(Michka::Vector3::lerp(a, b, 0.5f), Michka::Vector3(5.0f, 0.0f, 0.0f));
+}
+
+TEST(Vector3Test, Normalize)
+{
+    Michka::Vector3 a;
+    ASSERT_EQ(a, Michka::Vector3::zero);
+    a.set(5.0f, 10.0f, 5.0f);
+
+    ASSERT_EQ(a.getNormalized(), Michka::Vector3(0.40825f, 0.8165f, 0.40825f));
+    a.normalize();
+    ASSERT_TRUE(a.isNormalized());
+    ASSERT_FLOAT_EQ(a.getLength(), 1.0f);
+
+    a.setX(0.0f).setY(0.0f).setZ(0.0f);
+    ASSERT_FALSE(a.isNormalizable());
+    ASSERT_EQ(a.getNormalized(), Michka::Vector3::zero);
 }
 
 TEST(Vector3Test, Operators)
@@ -113,23 +126,10 @@ TEST(Vector3Test, Operators)
     ASSERT_EQ(a - Michka::Vector3(2.0f, 3.0f, 4.0f), Michka::Vector3(3.0f, -13.0f, 11.0f));
 }
 
-TEST(Vector3Test, CrossProduct)
+TEST(Vector3Test, Reflect)
 {
-    ASSERT_EQ(Michka::Vector3::crossProduct(Michka::Vector3::right, Michka::Vector3::up), Michka::Vector3::forward);
-    ASSERT_EQ(Michka::Vector3::crossProduct(Michka::Vector3::right, Michka::Vector3::forward), Michka::Vector3::down);
-    ASSERT_EQ(Michka::Vector3::crossProduct(Michka::Vector3::back, Michka::Vector3::up), Michka::Vector3::right);
-    ASSERT_EQ(Michka::Vector3::crossProduct(Michka::Vector3::left, Michka::Vector3::back), Michka::Vector3::down);
-    ASSERT_EQ(Michka::Vector3::crossProduct(Michka::Vector3::right, Michka::Vector3::back), Michka::Vector3::up);
+    Michka::Vector3 a(1.0f, 1.0f, 0.0f);
+    a.reflect(Michka::Vector3::up);
 
-    Michka::Vector3 a(1.0f, 2.0f, 3.0f);
-    Michka::Vector3 b(1.0f, 5.0f, 7.0f);
-    ASSERT_EQ(a.getCrossProduct(b), Michka::Vector3(-1.0f, -4.0f, 3.0f));
-}
-
-TEST(Vector3Test, Cast)
-{
-    Michka::Vector3 a(1.0f, 2.0f, 3.0f);
-    Michka::Vector4 b = a;
-
-    ASSERT_EQ(b, Michka::Vector4(1.0f, 2.0f, 3.0f, 1.0f));
+    ASSERT_EQ(a, Michka::Vector3(1.0f, -1.0f, 0.0f));
 }

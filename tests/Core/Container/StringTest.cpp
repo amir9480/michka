@@ -3,21 +3,65 @@
 #include <utility>
 #include "Core/Container/String.h"
 
-TEST(StringTest, CreateDefaultStringTest)
+TEST(StringTest, Append)
+{
+    Michka::String test = "Hello";
+    ASSERT_EQ(test + " World", "Hello World");
+    ASSERT_EQ((test + " World").getSize(), 11);
+    ASSERT_EQ("World " + test, "World Hello");
+    ASSERT_EQ(("World " + test).getSize(), 11);
+
+    test += " World";
+    ASSERT_EQ(test, "Hello World");
+    ASSERT_EQ(test.getSize(), 11);
+}
+
+TEST(StringTest, AssignToAnotherString)
+{
+    {
+        Michka::String test = L"MICHKA TEST";
+        Michka::String test2 = test;
+        ASSERT_TRUE(test == L"MICHKA TEST");
+        test2 = L"Hello World";
+        ASSERT_TRUE(test == L"MICHKA TEST");
+        ASSERT_TRUE(test2 == L"Hello World");
+        test = test2;
+        ASSERT_TRUE(test == L"Hello World");
+        ASSERT_TRUE(test2 == L"Hello World");
+        test = (wchar_t*)nullptr;
+        ASSERT_TRUE(test == L"");
+    }
+    {
+        Michka::String8 test = (char*)nullptr;
+        ASSERT_TRUE(test == L"");
+        test = (wchar_t*)nullptr;
+        ASSERT_TRUE(test == L"");
+    }
+    {
+        Michka::String32 test = (char32_t*)nullptr;
+        ASSERT_TRUE(test == U"");
+        test = (wchar_t*)nullptr;
+        ASSERT_TRUE(test == L"");
+    }
+}
+
+TEST(StringTest, ClearString)
+{
+    Michka::String test = L"MICHKA TEST";
+    ASSERT_TRUE(test == L"MICHKA TEST");
+    test.clear();
+    ASSERT_TRUE(test == Michka::String::empty);
+    ASSERT_TRUE(test.isEmpty());
+    ASSERT_FALSE(test.isNotEmpty());
+}
+
+TEST(StringTest, CreateDefaultString)
 {
     Michka::String test;
     ASSERT_EQ(test.getSize(), 0);
 }
 
-TEST(StringTest, SizeTest)
-{
-    Michka::String test = L"Hello";
-    ASSERT_EQ(test.getSize(), 5);
-    test = L"Hello WORLD";
-    ASSERT_EQ(test.getSize(), 11);
-}
-
-TEST(StringTest, CreateStringTest)
+TEST(StringTest, CreateString)
 {
     {
         Michka::String test8 = "TEST CHAR";
@@ -89,7 +133,7 @@ TEST(StringTest, CreateStringTest)
     }
 }
 
-TEST(StringTest, EqualTest)
+TEST(StringTest, Equal)
 {
     {
         Michka::String test = L"MICHKA TEST";
@@ -129,44 +173,73 @@ TEST(StringTest, EqualTest)
     }
 }
 
-TEST(StringTest, NotEqualTest)
+TEST(StringTest, Find)
 {
-    Michka::String test = L"MICHKA TEST";
-    ASSERT_FALSE(test != L"MICHKA TEST");
-    ASSERT_TRUE(test != L"MICHKA_TEST");
-    ASSERT_TRUE(test != L"MICHKA TEST DIFFRENT SIZE");
+    Michka::String test = L"Hello World";
+    Michka::String test2 = "Hello World Hello";
+
+    ASSERT_EQ(test.find(L'H'), 0);
+    ASSERT_EQ(test.find(L'e'), 1);
+    ASSERT_EQ(test.find(L'l'), 2);
+    ASSERT_EQ(test.find(L'o'), 4);
+    ASSERT_EQ(test.find(L'l', 4), 9);
+    ASSERT_EQ(test.find(L'd'), 10);
+    ASSERT_EQ(test.find(L'T'), Michka::String::notFound);
+
+    ASSERT_EQ(test.findLast(L'H'), 0);
+    ASSERT_EQ(test.findLast(L'e'), 1);
+    ASSERT_EQ(test.findLast(L'l'), 9);
+    ASSERT_EQ(test.findLast(L'o'), 7);
+    ASSERT_EQ(test.findLast(L'l', 4), 3);
+    ASSERT_EQ(test.findLast(L'l', 3), 3);
+    ASSERT_EQ(test.findLast(L'l', 2), 2);
+    ASSERT_EQ(test.findLast(L'd'), 10);
+    ASSERT_EQ(test.findLast(L'T'), Michka::String::notFound);
+
+    ASSERT_EQ(test.find(L"Hello"), 0);
+    ASSERT_EQ(test.find(L"ello"), 1);
+    ASSERT_EQ(test.find(L"Hello", 1), Michka::String::notFound);
+    ASSERT_EQ(test2.find(L"Hello", 1), 12);
+    ASSERT_EQ(test.find(L"World"), 6);
+    ASSERT_EQ(test.find(L"World", 6), 6);
+    ASSERT_EQ(test.find(L"RandomStuff"), Michka::String::notFound);
+    ASSERT_EQ(test.find(L"Hello Random"), Michka::String::notFound);
+    ASSERT_EQ(test.find(L"Helloo"), Michka::String::notFound);
+    ASSERT_EQ(Michka::String().find(L"RandomStuff"), Michka::String::notFound);
+    ASSERT_EQ(Michka::String().find(Michka::String()), Michka::String::notFound);
+    ASSERT_EQ(test.find(Michka::String()), Michka::String::notFound);
+
+    ASSERT_EQ(test2.findLast(L"Hello"), 12);
+    ASSERT_EQ(test2.findLast(L"ello"), 13);
+    ASSERT_EQ(test2.findLast(L"World", 10), Michka::String::notFound);
+    ASSERT_EQ(test2.findLast(L"Hello", 16), 0);
+    ASSERT_EQ(test2.findLast(L"World"), 6);
+    ASSERT_EQ(test2.findLast(L"World", 12), 6);
+    ASSERT_EQ(test2.findLast(L"World", 11), 6);
+    ASSERT_EQ(test2.findLast(L"RandomStuff"), Michka::String::notFound);
+    ASSERT_EQ(test2.findLast(L"Helloo"), Michka::String::notFound);
+    ASSERT_EQ(test2.findLast(L"Hello Random"), Michka::String::notFound);
+    ASSERT_EQ(Michka::String().findLast(L"RandomStuff"), Michka::String::notFound);
+    ASSERT_EQ(Michka::String().findLast(Michka::String()), Michka::String::notFound);
+    ASSERT_EQ(test2.findLast(Michka::String()), Michka::String::notFound);
 }
 
-TEST(StringTest, AssignToAnotherStringTest)
+TEST(StringTest, GetCharacter)
 {
-    {
-        Michka::String test = L"MICHKA TEST";
-        Michka::String test2 = test;
-        ASSERT_TRUE(test == L"MICHKA TEST");
-        test2 = L"Hello World";
-        ASSERT_TRUE(test == L"MICHKA TEST");
-        ASSERT_TRUE(test2 == L"Hello World");
-        test = test2;
-        ASSERT_TRUE(test == L"Hello World");
-        ASSERT_TRUE(test2 == L"Hello World");
-        test = (wchar_t*)nullptr;
-        ASSERT_TRUE(test == L"");
-    }
-    {
-        Michka::String8 test = (char*)nullptr;
-        ASSERT_TRUE(test == L"");
-        test = (wchar_t*)nullptr;
-        ASSERT_TRUE(test == L"");
-    }
-    {
-        Michka::String32 test = (char32_t*)nullptr;
-        ASSERT_TRUE(test == U"");
-        test = (wchar_t*)nullptr;
-        ASSERT_TRUE(test == L"");
-    }
+    Michka::String test = L"Hello World";
+    ASSERT_EQ(test[0], L'H');
+    ASSERT_EQ(test[4], L'o');
+    ASSERT_EQ(test[10], L'd');
 }
 
-TEST(StringTest, MoveConstructorTest)
+TEST(StringTest, Insert)
+{
+    ASSERT_EQ(Michka::String("Hello").insert(" World!", 5), "Hello World!");
+    ASSERT_EQ(Michka::String("Hello").insert("World!", 0), "World!Hello");
+    ASSERT_EQ(Michka::String("Hello").insert("World!", 6), "Hello World!");
+}
+
+TEST(StringTest, MoveConstructor)
 {
     Michka::String test = L"MICHKA TEST";
     ASSERT_TRUE(test == L"MICHKA TEST");
@@ -176,17 +249,15 @@ TEST(StringTest, MoveConstructorTest)
     ASSERT_TRUE(test.isEmpty());
 }
 
-TEST(StringTest, ClearStringTest)
+TEST(StringTest, NotEqual)
 {
     Michka::String test = L"MICHKA TEST";
-    ASSERT_TRUE(test == L"MICHKA TEST");
-    test.clear();
-    ASSERT_TRUE(test == Michka::String::empty);
-    ASSERT_TRUE(test.isEmpty());
-    ASSERT_FALSE(test.isNotEmpty());
+    ASSERT_FALSE(test != L"MICHKA TEST");
+    ASSERT_TRUE(test != L"MICHKA_TEST");
+    ASSERT_TRUE(test != L"MICHKA TEST DIFFRENT SIZE");
 }
 
-TEST(StringTest, NumberToStringTest)
+TEST(StringTest, NumberToString)
 {
     ASSERT_TRUE(Michka::String::number(1) == L"1");
     ASSERT_TRUE(Michka::String::number(12) == L"12");
@@ -217,7 +288,86 @@ TEST(StringTest, NumberToStringTest)
     }, Michka::Exception);
 }
 
-TEST(StringTest, ToNumberTest)
+TEST(StringTest, Prepend)
+{
+    Michka::String test = "World";
+    test.prepend("Hello ");
+    ASSERT_EQ(test, "Hello World");
+    ASSERT_EQ(test.getSize(), 11);
+}
+
+TEST(StringTest, Remove)
+{
+    ASSERT_EQ(Michka::String("Hello World").remove(0), "");
+    ASSERT_EQ(Michka::String("Hello World").remove(1), "H");
+    ASSERT_EQ(Michka::String("Hello World").remove(2), "He");
+    ASSERT_EQ(Michka::String("Hello World").remove(2, 2), "Heo World");
+    ASSERT_EQ(Michka::String("Hello World").remove(0, 6), "World");
+    ASSERT_EQ(Michka::String("Hello World").remove(5, 6), "Hello");
+}
+
+TEST(StringTest, Repace)
+{
+    ASSERT_EQ(Michka::String("Hello World!").replace("test"), "Hello World!");
+    ASSERT_EQ(Michka::String("Hello World!").replace("Hello"), " World!");
+    ASSERT_EQ(Michka::String("Hello World!").replace("World"), "Hello !");
+    ASSERT_EQ(Michka::String("Hello World!").replace("Hello", "", 1), "Hello World!");
+    ASSERT_EQ(Michka::String("Hello World!").replace("World", "", 0, 5), "Hello World!");
+    ASSERT_EQ(Michka::String("Hello World!").replace("Hello", "Test"), "Test World!");
+    ASSERT_EQ(Michka::String("Hello World!").replace("Hello", "World"), "World World!");
+    ASSERT_EQ(Michka::String("Hello World!").replace("Hello", "Welcome to"), "Welcome to World!");
+    ASSERT_EQ(Michka::String("Hello World!").replace("World", "Test"), "Hello Test!");
+    ASSERT_EQ(Michka::String("Hello World!").replace("World", "Hello"), "Hello Hello!");
+    ASSERT_EQ(Michka::String("Hello World!").replace("World", "MICHKA the bird!"), "Hello MICHKA the bird!!");
+
+    ASSERT_EQ(Michka::String("Hello World").replace("World", "Test"), "Hello Test");
+    ASSERT_EQ(Michka::String("Hello World").replace("World", "Hello"), "Hello Hello");
+    ASSERT_EQ(Michka::String("Hello World").replace("World", "MICHKA the bird!"), "Hello MICHKA the bird!");
+}
+
+TEST(StringTest, Reverse)
+{
+    Michka::String test;
+    test.reverse();
+    ASSERT_TRUE(test == Michka::String::empty);
+    test = "Hello World";
+    test.reverse();
+    ASSERT_TRUE(test == "dlroW olleH");
+    test = "123";
+    test.reverse();
+    ASSERT_TRUE(test == "321");
+    test = "1234";
+    ASSERT_TRUE(test.getReversed() == "4321");
+    ASSERT_TRUE(test == "1234");
+}
+
+TEST(StringTest, Size)
+{
+    Michka::String test = L"Hello";
+    ASSERT_EQ(test.getSize(), 5);
+    test = L"Hello WORLD";
+    ASSERT_EQ(test.getSize(), 11);
+}
+
+TEST(StringTest, SubString)
+{
+    Michka::String test = "Hello World";
+    ASSERT_EQ(test.subString(0), "Hello World");
+    ASSERT_EQ(test.subString(1), "ello World");
+    ASSERT_EQ(test.subString(2), "llo World");
+    ASSERT_EQ(test.subString(0, 5), "Hello");
+    ASSERT_EQ(test.subString(6, 5), "World");
+    ASSERT_EQ(test.subString(0, 0), "");
+    test = "";
+    ASSERT_EQ(test.subString(0, 1), "");
+}
+
+TEST(StringTest, ToLower)
+{
+    ASSERT_EQ(Michka::String("Hello World!").toLower(), "hello world!");
+}
+
+TEST(StringTest, ToNumber)
 {
     {
         Michka::String test = L"12345";
@@ -292,126 +442,12 @@ TEST(StringTest, ToNumberTest)
     }
 }
 
-TEST(StringTest, ReverseTest)
+TEST(StringTest, ToUpper)
 {
-    Michka::String test;
-    test.reverse();
-    ASSERT_TRUE(test == Michka::String::empty);
-    test = "Hello World";
-    test.reverse();
-    ASSERT_TRUE(test == "dlroW olleH");
-    test = "123";
-    test.reverse();
-    ASSERT_TRUE(test == "321");
-    test = "1234";
-    ASSERT_TRUE(test.getReversed() == "4321");
-    ASSERT_TRUE(test == "1234");
+    ASSERT_EQ(Michka::String("Hello World!").toUpper(), "HELLO WORLD!");
 }
 
-TEST(StringTest, GetCharacterTest)
-{
-    Michka::String test = L"Hello World";
-    ASSERT_EQ(test[0], L'H');
-    ASSERT_EQ(test[4], L'o');
-    ASSERT_EQ(test[10], L'd');
-}
-
-TEST(StringTest, FindTest)
-{
-    Michka::String test = L"Hello World";
-    Michka::String test2 = "Hello World Hello";
-
-    ASSERT_EQ(test.find(L'H'), 0);
-    ASSERT_EQ(test.find(L'e'), 1);
-    ASSERT_EQ(test.find(L'l'), 2);
-    ASSERT_EQ(test.find(L'o'), 4);
-    ASSERT_EQ(test.find(L'l', 4), 9);
-    ASSERT_EQ(test.find(L'd'), 10);
-    ASSERT_EQ(test.find(L'T'), Michka::String::notFound);
-
-    ASSERT_EQ(test.findLast(L'H'), 0);
-    ASSERT_EQ(test.findLast(L'e'), 1);
-    ASSERT_EQ(test.findLast(L'l'), 9);
-    ASSERT_EQ(test.findLast(L'o'), 7);
-    ASSERT_EQ(test.findLast(L'l', 4), 3);
-    ASSERT_EQ(test.findLast(L'l', 3), 3);
-    ASSERT_EQ(test.findLast(L'l', 2), 2);
-    ASSERT_EQ(test.findLast(L'd'), 10);
-    ASSERT_EQ(test.findLast(L'T'), Michka::String::notFound);
-
-    ASSERT_EQ(test.find(L"Hello"), 0);
-    ASSERT_EQ(test.find(L"ello"), 1);
-    ASSERT_EQ(test.find(L"Hello", 1), Michka::String::notFound);
-    ASSERT_EQ(test2.find(L"Hello", 1), 12);
-    ASSERT_EQ(test.find(L"World"), 6);
-    ASSERT_EQ(test.find(L"World", 6), 6);
-    ASSERT_EQ(test.find(L"RandomStuff"), Michka::String::notFound);
-    ASSERT_EQ(test.find(L"Hello Random"), Michka::String::notFound);
-    ASSERT_EQ(test.find(L"Helloo"), Michka::String::notFound);
-    ASSERT_EQ(Michka::String().find(L"RandomStuff"), Michka::String::notFound);
-    ASSERT_EQ(Michka::String().find(Michka::String()), Michka::String::notFound);
-    ASSERT_EQ(test.find(Michka::String()), Michka::String::notFound);
-
-    ASSERT_EQ(test2.findLast(L"Hello"), 12);
-    ASSERT_EQ(test2.findLast(L"ello"), 13);
-    ASSERT_EQ(test2.findLast(L"World", 10), Michka::String::notFound);
-    ASSERT_EQ(test2.findLast(L"Hello", 16), 0);
-    ASSERT_EQ(test2.findLast(L"World"), 6);
-    ASSERT_EQ(test2.findLast(L"World", 12), 6);
-    ASSERT_EQ(test2.findLast(L"World", 11), 6);
-    ASSERT_EQ(test2.findLast(L"RandomStuff"), Michka::String::notFound);
-    ASSERT_EQ(test2.findLast(L"Helloo"), Michka::String::notFound);
-    ASSERT_EQ(test2.findLast(L"Hello Random"), Michka::String::notFound);
-    ASSERT_EQ(Michka::String().findLast(L"RandomStuff"), Michka::String::notFound);
-    ASSERT_EQ(Michka::String().findLast(Michka::String()), Michka::String::notFound);
-    ASSERT_EQ(test2.findLast(Michka::String()), Michka::String::notFound);
-}
-
-TEST(StringTest, AppendTest)
-{
-    Michka::String test = "Hello";
-    ASSERT_EQ(test + " World", "Hello World");
-    ASSERT_EQ((test + " World").getSize(), 11);
-    ASSERT_EQ("World " + test, "World Hello");
-    ASSERT_EQ(("World " + test).getSize(), 11);
-
-    test += " World";
-    ASSERT_EQ(test, "Hello World");
-    ASSERT_EQ(test.getSize(), 11);
-}
-
-TEST(StringTest, PrependTest)
-{
-    Michka::String test = "World";
-    test.prepend("Hello ");
-    ASSERT_EQ(test, "Hello World");
-    ASSERT_EQ(test.getSize(), 11);
-}
-
-TEST(StringTest, RemoveTest)
-{
-    ASSERT_EQ(Michka::String("Hello World").remove(0), "");
-    ASSERT_EQ(Michka::String("Hello World").remove(1), "H");
-    ASSERT_EQ(Michka::String("Hello World").remove(2), "He");
-    ASSERT_EQ(Michka::String("Hello World").remove(2, 2), "Heo World");
-    ASSERT_EQ(Michka::String("Hello World").remove(0, 6), "World");
-    ASSERT_EQ(Michka::String("Hello World").remove(5, 6), "Hello");
-}
-
-TEST(StringTest, SubStringTest)
-{
-    Michka::String test = "Hello World";
-    ASSERT_EQ(test.subString(0), "Hello World");
-    ASSERT_EQ(test.subString(1), "ello World");
-    ASSERT_EQ(test.subString(2), "llo World");
-    ASSERT_EQ(test.subString(0, 5), "Hello");
-    ASSERT_EQ(test.subString(6, 5), "World");
-    ASSERT_EQ(test.subString(0, 0), "");
-    test = "";
-    ASSERT_EQ(test.subString(0, 1), "");
-}
-
-TEST(StringTest, UnicodeTest)
+TEST(StringTest, Unicode)
 {
     const char* teststr = "سلام دنیا - 🌍 Hello World 你好，世界 - æ - © - ſ - ◌󠇓 - × - ~ - 𠀁";
     const wchar_t* teststr16 = L"\u0633\u0644\u0627\u0645 \u062F\u0646\u06CC\u0627 - \U0001f30d Hello World \u4F60\u597D\uFF0C\u4E16\u754C - \u00E6 - \u00A9 - \u017F - \u25CC\U000e01d3 - \u00D7 - ~ - \U00020001";
@@ -490,40 +526,4 @@ TEST(StringTest, UnicodeTest)
         Michka::String32 test = teststr32;
         ASSERT_TRUE(memcmp((void*)test.toUtf32().cstr(), (void*)teststr32, test.getSize() * sizeof(char32_t)) == 0);
     }
-}
-
-TEST(StringTest, InsertTest)
-{
-    ASSERT_EQ(Michka::String("Hello").insert(" World!", 5), "Hello World!");
-    ASSERT_EQ(Michka::String("Hello").insert("World!", 0), "World!Hello");
-    ASSERT_EQ(Michka::String("Hello").insert("World!", 6), "Hello World!");
-}
-
-TEST(StringTest, RepaceTest)
-{
-    ASSERT_EQ(Michka::String("Hello World!").replace("test"), "Hello World!");
-    ASSERT_EQ(Michka::String("Hello World!").replace("Hello"), " World!");
-    ASSERT_EQ(Michka::String("Hello World!").replace("World"), "Hello !");
-    ASSERT_EQ(Michka::String("Hello World!").replace("Hello", "", 1), "Hello World!");
-    ASSERT_EQ(Michka::String("Hello World!").replace("World", "", 0, 5), "Hello World!");
-    ASSERT_EQ(Michka::String("Hello World!").replace("Hello", "Test"), "Test World!");
-    ASSERT_EQ(Michka::String("Hello World!").replace("Hello", "World"), "World World!");
-    ASSERT_EQ(Michka::String("Hello World!").replace("Hello", "Welcome to"), "Welcome to World!");
-    ASSERT_EQ(Michka::String("Hello World!").replace("World", "Test"), "Hello Test!");
-    ASSERT_EQ(Michka::String("Hello World!").replace("World", "Hello"), "Hello Hello!");
-    ASSERT_EQ(Michka::String("Hello World!").replace("World", "MICHKA the bird!"), "Hello MICHKA the bird!!");
-
-    ASSERT_EQ(Michka::String("Hello World").replace("World", "Test"), "Hello Test");
-    ASSERT_EQ(Michka::String("Hello World").replace("World", "Hello"), "Hello Hello");
-    ASSERT_EQ(Michka::String("Hello World").replace("World", "MICHKA the bird!"), "Hello MICHKA the bird!");
-}
-
-TEST(StringTest, ToLowerTest)
-{
-    ASSERT_EQ(Michka::String("Hello World!").toLower(), "hello world!");
-}
-
-TEST(StringTest, ToUpperTest)
-{
-    ASSERT_EQ(Michka::String("Hello World!").toUpper(), "HELLO WORLD!");
 }

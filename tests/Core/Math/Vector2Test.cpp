@@ -3,6 +3,23 @@
 #include "Core/Math/Vector3.h"
 #include "Core/Math/Vector4.h"
 
+TEST(Vector2Test, Angle)
+{
+    Michka::Vector2 a(0.0f, 1.0f);
+
+    ASSERT_FLOAT_EQ(a.getAngleFrom(Michka::Vector2::right), 90.0f);
+}
+
+TEST(Vector2Test, Cast)
+{
+    Michka::Vector2 a(1.0f, 2.0f);
+    Michka::Vector3 b = a;
+    Michka::Vector4 c = a;
+
+    ASSERT_EQ(b, Michka::Vector3(1.0f, 2.0f, 0.0f));
+    ASSERT_EQ(c, Michka::Vector4(1.0f, 2.0f, 0.0f, 1.0f));
+}
+
 TEST(Vector2Test, Compare)
 {
     const Michka::Vector2 a(0.0f, 1.0f);
@@ -17,22 +34,6 @@ TEST(Vector2Test, Compare)
 
     Michka::Vector2 c = a;
     ASSERT_EQ(b, c);
-}
-
-TEST(Vector2Test, Normalize)
-{
-    Michka::Vector2 a;
-    ASSERT_EQ(a, Michka::Vector2::zero);
-    a.set(5.0f, 10.0f);
-
-    ASSERT_EQ(a.getNormalized(), Michka::Vector2(0.44721f, 0.89442f));
-    a.normalize();
-    ASSERT_TRUE(a.isNormalized());
-    ASSERT_FLOAT_EQ(a.getLength(), 1.0f);
-
-    a.setX(0.0f).setY(0.0f);
-    ASSERT_FALSE(a.isNormalizable());
-    ASSERT_EQ(a.getNormalized(), Michka::Vector2::zero);
 }
 
 TEST(Vector2Test, Distance)
@@ -53,29 +54,20 @@ TEST(Vector2Test, DotProduct)
     ASSERT_FLOAT_EQ(b.getDotProduct(a), 11.0f);
 }
 
-TEST(Vector2Test, Reflect)
+TEST(Vector2Test, Normalize)
 {
-    Michka::Vector2 a(1.0f, 1.0f);
-    a.reflect(Michka::Vector2::up);
+    Michka::Vector2 a;
+    ASSERT_EQ(a, Michka::Vector2::zero);
+    a.set(5.0f, 10.0f);
 
-    ASSERT_EQ(a, Michka::Vector2(1.0f, -1.0f));
-}
+    ASSERT_EQ(a.getNormalized(), Michka::Vector2(0.44721f, 0.89442f));
+    a.normalize();
+    ASSERT_TRUE(a.isNormalized());
+    ASSERT_FLOAT_EQ(a.getLength(), 1.0f);
 
-TEST(Vector2Test, Angle)
-{
-    Michka::Vector2 a(0.0f, 1.0f);
-
-    ASSERT_FLOAT_EQ(a.getAngleFrom(Michka::Vector2::right), 90.0f);
-}
-
-TEST(Vector2Test, Cast)
-{
-    Michka::Vector2 a(1.0f, 2.0f);
-    Michka::Vector3 b = a;
-    Michka::Vector4 c = a;
-
-    ASSERT_EQ(b, Michka::Vector3(1.0f, 2.0f, 0.0f));
-    ASSERT_EQ(c, Michka::Vector4(1.0f, 2.0f, 0.0f, 1.0f));
+    a.setX(0.0f).setY(0.0f);
+    ASSERT_FALSE(a.isNormalizable());
+    ASSERT_EQ(a.getNormalized(), Michka::Vector2::zero);
 }
 
 TEST(Vector2Test, Operators)
@@ -108,4 +100,12 @@ TEST(Vector2Test, Operators)
 
     ASSERT_EQ(a + Michka::Vector2(2.0f, 3.0f), Michka::Vector2(7.0f, -7.0f));
     ASSERT_EQ(a - Michka::Vector2(2.0f, 3.0f), Michka::Vector2(3.0f, -13.0f));
+}
+
+TEST(Vector2Test, Reflect)
+{
+    Michka::Vector2 a(1.0f, 1.0f);
+    a.reflect(Michka::Vector2::up);
+
+    ASSERT_EQ(a, Michka::Vector2(1.0f, -1.0f));
 }

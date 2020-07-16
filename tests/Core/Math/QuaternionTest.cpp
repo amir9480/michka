@@ -3,6 +3,12 @@
 #include "Core/Math/Matrix.h"
 #include "Core/Math/Vector3.h"
 
+TEST(QuaternionTest, Conjugate)
+{
+    Michka::Quaternion a(1.0f, 2.0f, 3.0f, 1.0f);
+    ASSERT_EQ(a.getConjugated(), Michka::Quaternion(-1.0f, -2.0f, -3.0f, 1.0f));
+}
+
 TEST(QuaternionTest, Create)
 {
     {
@@ -64,10 +70,26 @@ TEST(QuaternionTest, DotProduct)
     ASSERT_FLOAT_EQ(b.getDotProduct(a), 33.0f);
 }
 
-TEST(QuaternionTest, Conjugate)
+TEST(QuaternionTest, GetExponent)
 {
-    Michka::Quaternion a(1.0f, 2.0f, 3.0f, 1.0f);
-    ASSERT_EQ(a.getConjugated(), Michka::Quaternion(-1.0f, -2.0f, -3.0f, 1.0f));
+    Michka::Quaternion a (0.0f, 90.0f, 0.0f);
+    Michka::Quaternion b = a.getExponent();
+    ASSERT_EQ(b, Michka::Quaternion(0.0f, 0.0123f, 0.0f, 0.9999f));
+
+    a = Michka::Quaternion(0.0f, 0.0f, 0.0f);
+    b = a.getExponent();
+    ASSERT_EQ(b, Michka::Quaternion(0.0f, 0.0f, 0.0f, 1.0f));
+}
+
+TEST(QuaternionTest, GetLog)
+{
+    Michka::Quaternion a (0.0f, 90.0f, 0.0f);
+    Michka::Quaternion b = a.getLog();
+    ASSERT_EQ(b, Michka::Quaternion(0.0f, 24.9356f, 0.0f, 0.0f));
+
+    a = Michka::Quaternion(0.0f, 0.0f, 0.0f);
+    b = a.getExponent();
+    ASSERT_EQ(b, Michka::Quaternion(0.0f, 0.0f, 0.0f, 1.0f));
 }
 
 TEST(QuaternionTest, Inverse)
@@ -107,6 +129,19 @@ TEST(QuaternionTest, Inverse)
     }
 }
 
+TEST(QuaternionTest, Lerp)
+{
+    Michka::Quaternion a(0.0f, 0.0f, 0.0f);
+    Michka::Quaternion b(0.0f, 90.0f, 0.0f);
+    ASSERT_EQ(Michka::Quaternion::lerp(a, b, 0.0f), a);
+    ASSERT_EQ(Michka::Quaternion::lerp(a, b, 1.0f), b);
+    ASSERT_EQ(Michka::Quaternion::lerp(a, b, 0.5f), Michka::Quaternion(0.0f, 45.0f, 0.0f));
+
+    b.set(0.0f, 270.0f, 0.0f);
+    ASSERT_EQ(Michka::Quaternion::lerp(a, b, 0.5f), Michka::Quaternion(0.0f, 135.0f, 0.0f));
+    ASSERT_EQ(Michka::Quaternion::lerp(a, b, 0.5f, true), Michka::Quaternion(0.0f, -45.0f, 0.0f));
+}
+
 TEST(QuaternionTest, Normalize)
 {
     Michka::Quaternion a;
@@ -121,6 +156,58 @@ TEST(QuaternionTest, Normalize)
     a = Michka::Quaternion::zero;
     ASSERT_FALSE(a.isNormalizable());
     ASSERT_EQ(a.getNormalized(), Michka::Quaternion::zero);
+}
+
+TEST(QuaternionTest, Operators)
+{
+    Michka::Quaternion a(5.0f, -10.0f, 15.0f, 1.0f);
+    const Michka::Quaternion b(-5.0f, 10.0f, -15.0f, -1.0f);
+
+    ASSERT_EQ(+a, a);
+    ASSERT_EQ(-a, b);
+    ASSERT_FLOAT_EQ(a[0], 5.0f);
+    ASSERT_FLOAT_EQ(a[1], -10.0f);
+    ASSERT_FLOAT_EQ(a[2], 15.0f);
+    ASSERT_FLOAT_EQ(b[0], -5.0f);
+    ASSERT_FLOAT_EQ(b[1], 10.0f);
+    ASSERT_FLOAT_EQ(b[2], -15.0f);
+
+    a[0] = -a[0];
+    ASSERT_FLOAT_EQ(a[0], -5.0f);
+    a[0] = -a[0];
+
+    ASSERT_EQ(a + Michka::Quaternion(2.0f, 3.0f, 4.0f, 1.0f), Michka::Quaternion(7.0f, -7.0f, 19.0f, 2.0f));
+    ASSERT_EQ(a - Michka::Quaternion(2.0f, 3.0f, 4.0f, 1.0f), Michka::Quaternion(3.0f, -13.0f, 11.0f, 0.0f));
+
+    ASSERT_EQ(a * 2.0f, Michka::Quaternion(10, -20.0f, 30.0f, 2.0f));
+    ASSERT_EQ(2.0f * a, Michka::Quaternion(10, -20.0f, 30.0f, 2.0f));
+    ASSERT_EQ(a / 2.0f, Michka::Quaternion(2.5f, -5.0f, 7.5f, 0.5f));
+    ASSERT_EQ(1.0f / a, Michka::Quaternion(1.0f/5.0f, -1.0f/10.0f, 1.0f/15.0f, 1.0f));
+
+    a = Michka::Quaternion(0.0f, 90.0f, 0.0f);
+    ASSERT_EQ(a * Michka::Quaternion(0.0f, 0.0f, 0.0f), Michka::Quaternion(-90.0f, 0.0f, 0.0f));
+    ASSERT_EQ(Michka::Quaternion(-90.0f, 0.0f, 0.0f) / Michka::Quaternion(0.0f, 0.0f, 0.0f).getInversed(), a);
+
+    ASSERT_EQ(Michka::Quaternion::identity, Michka::Quaternion::identity);
+    ASSERT_NE(Michka::Quaternion::identity, Michka::Quaternion::zero);
+}
+
+TEST(QuaternionTest, Slerp)
+{
+    Michka::Quaternion a(0.0f, 0.0f, 0.0f);
+    Michka::Quaternion b(0.0f, 60.0f, 0.0f);
+    Michka::Vector3 test = Michka::Quaternion::slerp(a, b, 1.0f).toEulerAngels();
+    ASSERT_EQ(Michka::Quaternion::slerp(a, b, 0.0f), a);
+    ASSERT_EQ(Michka::Quaternion::slerp(a, b, 1.0f), b);
+    ASSERT_EQ(Michka::Quaternion::slerp(a, b, 0.5f), Michka::Quaternion(0.0f, 30.0f, 0.0f));
+    ASSERT_EQ(Michka::Quaternion::slerp(a, a, 0.0f), a);
+    ASSERT_EQ(Michka::Quaternion::slerp(a, a, 1.0f), a);
+
+    b.set(0.0f, 270.0f, 0.0f);
+    ASSERT_EQ(Michka::Quaternion::slerp(a, b, 0.5f), Michka::Quaternion(0.0f, -45.0f, 0.0f));
+
+    b.set(0.0f, -30.0f, 0.0f);
+    ASSERT_EQ(Michka::Quaternion::slerp(a, b, 0.5f), Michka::Quaternion(0.0f, -15.0f, 0.0f));
 }
 
 TEST(QuaternionTest, ToAxes)
@@ -182,91 +269,4 @@ TEST(QuaternionTest, ToEulerAngels)
     ASSERT_EQ(a.toEulerAngels(), Michka::Vector3(180.0f, 0.0f, 0.0f));
     a.set(Michka::Vector3(0.0f, 90.0f, 0.0f));
     ASSERT_EQ(a.toEulerAngels(), Michka::Vector3(0.0f, 90.0f, 0.0f));
-}
-
-TEST(QuaternionTest, GetExponent)
-{
-    Michka::Quaternion a (0.0f, 90.0f, 0.0f);
-    Michka::Quaternion b = a.getExponent();
-    ASSERT_EQ(b, Michka::Quaternion(0.0f, 0.0123f, 0.0f, 0.9999f));
-
-    a = Michka::Quaternion(0.0f, 0.0f, 0.0f);
-    b = a.getExponent();
-    ASSERT_EQ(b, Michka::Quaternion(0.0f, 0.0f, 0.0f, 1.0f));
-}
-
-TEST(QuaternionTest, GetLog)
-{
-    Michka::Quaternion a (0.0f, 90.0f, 0.0f);
-    Michka::Quaternion b = a.getLog();
-    ASSERT_EQ(b, Michka::Quaternion(0.0f, 24.9356f, 0.0f, 0.0f));
-
-    a = Michka::Quaternion(0.0f, 0.0f, 0.0f);
-    b = a.getExponent();
-    ASSERT_EQ(b, Michka::Quaternion(0.0f, 0.0f, 0.0f, 1.0f));
-}
-
-TEST(QuaternionTest, Lerp)
-{
-    Michka::Quaternion a(0.0f, 0.0f, 0.0f);
-    Michka::Quaternion b(0.0f, 90.0f, 0.0f);
-    ASSERT_EQ(Michka::Quaternion::lerp(a, b, 0.0f), a);
-    ASSERT_EQ(Michka::Quaternion::lerp(a, b, 1.0f), b);
-    ASSERT_EQ(Michka::Quaternion::lerp(a, b, 0.5f), Michka::Quaternion(0.0f, 45.0f, 0.0f));
-
-    b.set(0.0f, 270.0f, 0.0f);
-    ASSERT_EQ(Michka::Quaternion::lerp(a, b, 0.5f), Michka::Quaternion(0.0f, 135.0f, 0.0f));
-    ASSERT_EQ(Michka::Quaternion::lerp(a, b, 0.5f, true), Michka::Quaternion(0.0f, -45.0f, 0.0f));
-}
-
-TEST(QuaternionTest, Slerp)
-{
-    Michka::Quaternion a(0.0f, 0.0f, 0.0f);
-    Michka::Quaternion b(0.0f, 60.0f, 0.0f);
-    Michka::Vector3 test = Michka::Quaternion::slerp(a, b, 1.0f).toEulerAngels();
-    ASSERT_EQ(Michka::Quaternion::slerp(a, b, 0.0f), a);
-    ASSERT_EQ(Michka::Quaternion::slerp(a, b, 1.0f), b);
-    ASSERT_EQ(Michka::Quaternion::slerp(a, b, 0.5f), Michka::Quaternion(0.0f, 30.0f, 0.0f));
-    ASSERT_EQ(Michka::Quaternion::slerp(a, a, 0.0f), a);
-    ASSERT_EQ(Michka::Quaternion::slerp(a, a, 1.0f), a);
-
-    b.set(0.0f, 270.0f, 0.0f);
-    ASSERT_EQ(Michka::Quaternion::slerp(a, b, 0.5f), Michka::Quaternion(0.0f, -45.0f, 0.0f));
-
-    b.set(0.0f, -30.0f, 0.0f);
-    ASSERT_EQ(Michka::Quaternion::slerp(a, b, 0.5f), Michka::Quaternion(0.0f, -15.0f, 0.0f));
-}
-
-TEST(QuaternionTest, Operators)
-{
-    Michka::Quaternion a(5.0f, -10.0f, 15.0f, 1.0f);
-    const Michka::Quaternion b(-5.0f, 10.0f, -15.0f, -1.0f);
-
-    ASSERT_EQ(+a, a);
-    ASSERT_EQ(-a, b);
-    ASSERT_FLOAT_EQ(a[0], 5.0f);
-    ASSERT_FLOAT_EQ(a[1], -10.0f);
-    ASSERT_FLOAT_EQ(a[2], 15.0f);
-    ASSERT_FLOAT_EQ(b[0], -5.0f);
-    ASSERT_FLOAT_EQ(b[1], 10.0f);
-    ASSERT_FLOAT_EQ(b[2], -15.0f);
-
-    a[0] = -a[0];
-    ASSERT_FLOAT_EQ(a[0], -5.0f);
-    a[0] = -a[0];
-
-    ASSERT_EQ(a + Michka::Quaternion(2.0f, 3.0f, 4.0f, 1.0f), Michka::Quaternion(7.0f, -7.0f, 19.0f, 2.0f));
-    ASSERT_EQ(a - Michka::Quaternion(2.0f, 3.0f, 4.0f, 1.0f), Michka::Quaternion(3.0f, -13.0f, 11.0f, 0.0f));
-
-    ASSERT_EQ(a * 2.0f, Michka::Quaternion(10, -20.0f, 30.0f, 2.0f));
-    ASSERT_EQ(2.0f * a, Michka::Quaternion(10, -20.0f, 30.0f, 2.0f));
-    ASSERT_EQ(a / 2.0f, Michka::Quaternion(2.5f, -5.0f, 7.5f, 0.5f));
-    ASSERT_EQ(1.0f / a, Michka::Quaternion(1.0f/5.0f, -1.0f/10.0f, 1.0f/15.0f, 1.0f));
-
-    a = Michka::Quaternion(0.0f, 90.0f, 0.0f);
-    ASSERT_EQ(a * Michka::Quaternion(0.0f, 0.0f, 0.0f), Michka::Quaternion(-90.0f, 0.0f, 0.0f));
-    ASSERT_EQ(Michka::Quaternion(-90.0f, 0.0f, 0.0f) / Michka::Quaternion(0.0f, 0.0f, 0.0f).getInversed(), a);
-
-    ASSERT_EQ(Michka::Quaternion::identity, Michka::Quaternion::identity);
-    ASSERT_NE(Michka::Quaternion::identity, Michka::Quaternion::zero);
 }

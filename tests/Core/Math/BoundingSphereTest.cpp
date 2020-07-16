@@ -4,6 +4,22 @@
 #include "Core/Math/Matrix3.h"
 #include "Core/Math/Matrix.h"
 
+TEST(BoundingSphereTest, IsInside)
+{
+    Michka::BoundingSphere a(Michka::Vector3::zero, 1.0f);
+
+    ASSERT_TRUE(a.isInside(Michka::Vector3(0.3f, 0.3f, 0.3f)));
+    ASSERT_FALSE(a.isInside(Michka::Vector3(-2.0f, -1.0f, -1.0f)));
+
+    ASSERT_TRUE(a.isInside(Michka::BoundingSphere(Michka::Vector3::zero, 0.1f)));
+    ASSERT_TRUE(a.isInside(Michka::BoundingSphere(2.0f * Michka::Vector3::up, 2.0f)));
+    ASSERT_FALSE(a.isInside(Michka::BoundingSphere(2.0f * Michka::Vector3::up, 0.5f)));
+
+    ASSERT_TRUE(a.isInside(Michka::BoundingBox(Michka::Vector3::zero, Michka::Vector3::one)));
+    ASSERT_TRUE(a.isInside(Michka::BoundingBox(-Michka::Vector3::one, Michka::Vector3(-0.4f, -0.4f, -0.4f))));
+    ASSERT_FALSE(a.isInside(Michka::BoundingBox(-4.0f * Michka::Vector3::one, -3.0f * Michka::Vector3::one)));
+}
+
 TEST(BoundingSphereTest, Merge)
 {
     Michka::BoundingSphere a(Michka::Vector3::zero, 1.0f);
@@ -22,22 +38,6 @@ TEST(BoundingSphereTest, Merge)
 
     a.set(Michka::Vector3::zero, 1.0f);
     ASSERT_EQ(a, Michka::BoundingSphere(Michka::Vector3::zero, 1.0f));
-}
-
-TEST(BoundingSphereTest, IsInside)
-{
-    Michka::BoundingSphere a(Michka::Vector3::zero, 1.0f);
-
-    ASSERT_TRUE(a.isInside(Michka::Vector3(0.3f, 0.3f, 0.3f)));
-    ASSERT_FALSE(a.isInside(Michka::Vector3(-2.0f, -1.0f, -1.0f)));
-
-    ASSERT_TRUE(a.isInside(Michka::BoundingSphere(Michka::Vector3::zero, 0.1f)));
-    ASSERT_TRUE(a.isInside(Michka::BoundingSphere(2.0f * Michka::Vector3::up, 2.0f)));
-    ASSERT_FALSE(a.isInside(Michka::BoundingSphere(2.0f * Michka::Vector3::up, 0.5f)));
-
-    ASSERT_TRUE(a.isInside(Michka::BoundingBox(Michka::Vector3::zero, Michka::Vector3::one)));
-    ASSERT_TRUE(a.isInside(Michka::BoundingBox(-Michka::Vector3::one, Michka::Vector3(-0.4f, -0.4f, -0.4f))));
-    ASSERT_FALSE(a.isInside(Michka::BoundingBox(-4.0f * Michka::Vector3::one, -3.0f * Michka::Vector3::one)));
 }
 
 TEST(BoundingSphereTest, Transform)
