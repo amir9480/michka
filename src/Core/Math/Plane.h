@@ -24,132 +24,142 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __BOUNDING_SPHERE_H__
-#define __BOUNDING_SPHERE_H__
+#ifndef __PLANE_H__
+#define __PLANE_H__
 
 #include "Core/Defines.h"
-#include "Core/Math/Vector3.h"
+#include "Vector3.h"
+#include "Utility.h"
 
 namespace Michka
 {
-    class BoundingBox;
-    class Matrix3;
     class Matrix;
 
-    class MICHKA_API BoundingSphere
+    class MICHKA_API Plane
     {
     public:
-        FORCE_INLINE BoundingSphere();
-        FORCE_INLINE BoundingSphere(const Vector3& _position, const f32& _radius);
-        FORCE_INLINE BoundingSphere(const BoundingSphere& _other);
+        FORCE_INLINE Plane();
+        FORCE_INLINE Plane(const Vector3& _position, const Vector3& _normal);
+        FORCE_INLINE Plane(const Vector3& _point1, const Vector3& _point2, const Vector3& _point3);
+        FORCE_INLINE Plane(const f32& _a, const f32& _b, const f32& _c, const f32& _d);
+        FORCE_INLINE Plane(const Plane& _other);
 
         /**
-         * @brief Get the copy of this merged with \a _point.
-         *
-         * @param _point
+         * @brief Get the normal direction of plane.
          */
-        FORCE_INLINE BoundingSphere getMerged(const Vector3& _point) const;
+        FORCE_INLINE Vector3 getNormal() const;
 
         /**
-         * @brief Get the copy of this merged with \a _other sphere.
-         *
-         * @param _other
+         * @brief Get the normaled copy of this plane.
          */
-        FORCE_INLINE BoundingSphere getMerged(const BoundingSphere& _other) const;
+        FORCE_INLINE Plane getNormalized() const;
 
         /**
-         * @brief Get the copy of this merged with \a _box .
-         *
-         * @param _box
-         */
-        BoundingSphere getMerged(const BoundingBox& _box) const;
-
-        /**
-         * @brief Get transformed copy of this bounding box.
-         *
-         * @param _matrix
-         */
-        FORCE_INLINE BoundingSphere getTransformed(const Matrix3& _matrix) const;
-        FORCE_INLINE BoundingSphere getTransformed(const Matrix& _matrix) const;
-
-        /**
-         * @brief Is a point inside this sphere.
-         *
-         * @param _point
-         */
-        FORCE_INLINE bool isInside(const Vector3& _point) const;
-
-        /**
-         * @brief Is a box inside this sphere partially/completely.
-         *
-         * @param _box
-         */
-        bool isInside(const BoundingBox& _box) const;
-
-        /**
-         * @brief Is a sphere inside this sphere partially/completely.
-         *
-         * @param _other
-         */
-        bool isInside(const BoundingSphere& _other) const;
-
-        /**
-         * @brief Merge a point to bounding sphere.
-         *
-         * @param _point
-         * @return Self
-         */
-        BoundingSphere& merge(const Vector3& _point);
-
-        /**
-         * @brief Merge another bounding sphere to this bounding sphere.
-         *
-         * @param _sphere
-         * @return Self
-         */
-        BoundingSphere& merge(const BoundingSphere& _sphere);
-
-        /**
-         * @brief Merge a bounding box to this bounding sphere.
-         *
-         * @param _box
-         * @return Self
-         */
-        BoundingSphere& merge(const BoundingBox& _box);
-
-        /**
-         * @brief Set bounding sphere value.
+         * @brief Get the distance from \a _position .
          *
          * @param _position
-         * @param _radius
+         */
+        FORCE_INLINE f32 getDistanceFrom(const Vector3& _position) const;
+
+        /**
+         * @brief Get the position of plane.
+         */
+        FORCE_INLINE Vector3 getPosition() const;
+
+        /**
+         * @brief Get the Projected point on plane.
+         *
+         * @param _position
+         */
+        FORCE_INLINE Vector3 getProjected(const Vector3& _position) const;
+
+        /**
+         * @brief Get the Reflected point based on plane.
+         *
+         * @param _position
+         */
+        FORCE_INLINE Vector3 getReflected(const Vector3& _position) const;
+
+        /**
+         * @brief Get the reflection as matrix.
+         */
+        Matrix getReflectionMatrix() const;
+
+        /**
+         * @brief Get a position is in which side of plane.
+         *
+         * @param _position
+         */
+        FORCE_INLINE Side getSide(const Vector3& _position) const;
+
+        /**
+         * @brief Normalize plane.
+         *
          * @return Self
          */
-        FORCE_INLINE BoundingSphere& set(const Vector3& _position = Michka::Vector3::zero, const f32& _radius = -Math::infinity);
+        FORCE_INLINE Plane& normalize();
+
+        /**
+         * @brief Set from a position and a normal vector.
+         *
+         * @param _position
+         * @param _normal
+         * @return Self
+         */
+        FORCE_INLINE Plane& set(const Vector3& _position, const Vector3& _normal);
+
+        /**
+         * @brief Set from three points which creating plane.
+         *
+         * @param _point1
+         * @param _point2
+         * @param _point3
+         * @return Self
+         */
+        FORCE_INLINE Plane& set(const Vector3& _point1, const Vector3& _point2, const Vector3& _point3);
+
+        /**
+         * @brief Set directly.
+         *
+         * @param _a
+         * @param _b
+         * @param _c
+         * @param _d
+         * @return Self
+         */
+        FORCE_INLINE Plane& set(const f32& _a, const f32& _b, const f32& _c, const f32& _d);
+
+        /**
+         * @brief Calculate d from _position.
+         *
+         * @param _position
+         * @return Self
+         */
+        FORCE_INLINE Plane& setPosition(const Vector3& _position);
 
         /**
          * @brief Get value as string.
          */
         String toString() const;
 
-        /**
-         * @brief Transform bounding box using a matrix.
-         *
-         * @param _matrix
-         * @return Self
-         */
-        BoundingSphere& transform(const Matrix3& _matrix);
-        BoundingSphere& transform(const Matrix& _matrix);
+        FORCE_INLINE Plane& operator = (const Plane& _other);
 
-        FORCE_INLINE BoundingSphere& operator = (const BoundingSphere& _other);
+        FORCE_INLINE bool operator == (const Plane& _other) const;
+        FORCE_INLINE bool operator != (const Plane& _other) const;
 
-        FORCE_INLINE bool operator == (const BoundingSphere& _other) const;
-        FORCE_INLINE bool operator != (const BoundingSphere& _other) const;
     public:
-        Vector3 position;
-        f32 radius = 1.0f;
+        union
+        {
+            struct
+            {
+                f32 a, b, c;
+            };
+            Vector3 normal;
+        };
+        f32 d;
     };
 }
 
-#include "BoundingSphere.inl"
+#include "Plane.inl"
 
-#endif // __BOUNDING_SPHERE_H__
+#endif // __PLANE_H__

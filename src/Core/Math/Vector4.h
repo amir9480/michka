@@ -109,6 +109,11 @@ namespace Michka
          */
         FORCE_INLINE Vector4& setW(const f32& _w);
 
+        /**
+         * @brief Get value as string.
+         */
+        String toString() const;
+
         FORCE_INLINE Vector4& operator = (const Vector4& _other);
 
         FORCE_INLINE bool operator == (const Vector4& _other) const;

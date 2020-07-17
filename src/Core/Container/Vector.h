@@ -112,7 +112,7 @@ namespace Michka
          * @param _direction
          * @return Sorted Vector
          */
-        FORCE_INLINE Vector<T> getSorted(const SortDirection& _direction = SortDirection::Ascending) const;
+        FORCE_INLINE Vector<T> getSorted(const SortDirection& _direction = SortDirection::ascending) const;
 
         /**
          * @brief Get sorted copy of this vector with custom callback.
@@ -274,7 +274,7 @@ namespace Michka
          * @param _direction
          * @return Self
          */
-        Vector<T>& sort(const SortDirection& _direction = SortDirection::Ascending);
+        Vector<T>& sort(const SortDirection& _direction = SortDirection::ascending);
 
         /**
          * @brief Sort vector with a custom callback.

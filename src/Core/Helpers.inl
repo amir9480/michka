@@ -30,26 +30,6 @@
 
 namespace Michka
 {
-    template<typename T>
-    FORCE_INLINE void swap(T& _a, T& _b)
-    {
-        T temp = std::move(_a);
-        _a = std::move(_b);
-        _b = std::move(temp);
-    }
-
-    template<typename T>
-    FORCE_INLINE const T& min(const T& _a, const T& _b)
-    {
-        return _a < _b ? _a : _b;
-    }
-
-    template<typename T>
-    FORCE_INLINE const T& max(const T& _a, const T& _b)
-    {
-        return _a > _b ? _a : _b;
-    }
-
     namespace Private
     {
         template<typename T, typename ElementType>
@@ -143,10 +123,34 @@ namespace Michka
         }
     }
 
+    template<typename T>
+    FORCE_INLINE T max(const T& _a)
+    {
+        return _a;
+    }
+
+    template<typename T, typename... T2>
+    FORCE_INLINE T max(const T& _a, const T& _b, const T2&... _other)
+    {
+        return _a > _b ? max(_a, _other...) : max(_b, _other...);
+    }
+
+    template<typename T>
+    FORCE_INLINE T min(const T& _a)
+    {
+        return _a;
+    }
+
+    template<typename T, typename... T2>
+    FORCE_INLINE T min(const T& _a, const T& _b, const T2&... _other)
+    {
+        return _a < _b ? min(_a, _other...) : min(_b, _other...);
+    }
+
     template<typename T, typename ElementType>
     FORCE_INLINE void sort(T _array, const u32& _size, const SortDirection& _direction)
     {
-        if (_direction == SortDirection::Ascending)
+        if (_direction == SortDirection::ascending)
         {
             static_assert(Type<ElementType>::hasOperator<>::lessOrEqual, "Your type doesn't have <= operator to compare.");
             Private::quickSortAscending<T, ElementType>(_array, 0, i32(_size) - 1);
@@ -162,5 +166,13 @@ namespace Michka
     FORCE_INLINE void sort(T _array, const u32& _size, const std::function<bool(const ElementType&, const ElementType&)>& _callback)
     {
         Private::quickSortCustom<T, ElementType>(_array, 0, i32(_size) - 1, _callback);
+    }
+
+    template<typename T>
+    FORCE_INLINE void swap(T& _a, T& _b)
+    {
+        T temp = std::move(_a);
+        _a = std::move(_b);
+        _b = std::move(temp);
     }
 }

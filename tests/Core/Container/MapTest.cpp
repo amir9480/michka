@@ -29,6 +29,7 @@
 #include <utility>
 #include "Core/Container/Map.h"
 #include "Core/Container/String.h"
+#include "Core/Types.h"
 #include "../../Classes/Person.h"
 
 TEST(MapTest, At)

@@ -190,6 +190,11 @@ namespace Michka
          */
         FORCE_INLINE Vector3& setZ(const f32& _z);
 
+        /**
+         * @brief Get value as string.
+         */
+        String toString() const;
+
         FORCE_INLINE Vector3& operator = (const Vector3& _other);
 
         FORCE_INLINE bool operator == (const Vector3& _other) const;

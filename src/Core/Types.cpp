@@ -24,33 +24,77 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Vector4.h"
+#include "Types.h"
 #include "Core/Container/String.h"
+#include "Core/Math/BoundingBox.h"
+#include "Core/Math/BoundingSphere.h"
+#include "Core/Math/Matrix3.h"
+#include "Core/Math/Matrix.h"
+#include "Core/Math/Plane.h"
+#include "Core/Math/Quaternion.h"
+#include "Core/Math/Vector2.h"
+#include "Core/Math/Vector3.h"
+#include "Core/Math/Vector4.h"
 
 namespace Michka
 {
-    const Vector2 Vector2::up       = Vector2( 0.0f, +1.0f);
-    const Vector2 Vector2::down     = Vector2( 0.0f, -1.0f);
-    const Vector2 Vector2::left     = Vector2(-1.0f,  0.0f);
-    const Vector2 Vector2::right    = Vector2(+1.0f,  0.0f);
-    const Vector2 Vector2::zero     = Vector2( 0.0f,  0.0f);
-    const Vector2 Vector2::one      = Vector2(+1.0f, +1.0f);
-    const Vector2 Vector2::infinity = Vector2(Math::infinity, Math::infinity);
-
-    Vector2::operator Vector3 () const
+    std::ostream& operator << (std::ostream& _out, const String8& _value)
     {
-        return Vector3(x, y, 0.0f);
+        return _out << _value.cstr();
     }
 
-    Vector2::operator Vector4 () const
+    std::ostream& operator << (std::ostream& _out, const String& _value)
     {
-        return Vector4(x, y, 0.0f);
+        return _out << _value.toUtf8().cstr();
     }
 
-    String Vector2::toString() const
+    std::ostream& operator << (std::ostream& _out, const String32& _value)
     {
-        return String("Vector2(") + String::number(x) + ", " + String::number(y) + ")";
+        return _out << _value.toUtf8().cstr();
+    }
+
+    std::ostream& operator << (std::ostream& _out, const Vector2& _value)
+    {
+        return _out << _value.toString();
+    }
+
+    std::ostream& operator << (std::ostream& _out, const Vector3& _value)
+    {
+        return _out << _value.toString();
+    }
+
+    std::ostream& operator << (std::ostream& _out, const Vector4& _value)
+    {
+        return _out << _value.toString();
+    }
+
+    std::ostream& operator << (std::ostream& _out, const Quaternion& _value)
+    {
+        return _out << _value.toString();
+    }
+
+    std::ostream& operator << (std::ostream& _out, const Matrix3& _value)
+    {
+        return _out << _value.toString();
+    }
+
+    std::ostream& operator << (std::ostream& _out, const Matrix& _value)
+    {
+        return _out << _value.toString();
+    }
+
+    std::ostream& operator << (std::ostream& _out, const BoundingSphere& _value)
+    {
+        return _out << _value.toString();
+    }
+
+    std::ostream& operator << (std::ostream& _out, const BoundingBox& _value)
+    {
+        return _out << _value.toString();
+    }
+
+    std::ostream& operator << (std::ostream& _out, const Plane& _value)
+    {
+        return _out << _value.toString();
     }
 }

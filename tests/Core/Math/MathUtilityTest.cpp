@@ -26,6 +26,7 @@
 
 #include <gtest/gtest.h>
 #include "Core/Math/Utility.h"
+#include "Core/Types.h"
 
 TEST(MathUtilityTest, Abs)
 {
@@ -100,22 +101,6 @@ TEST(MathUtilityTest, Lerp)
     ASSERT_FLOAT_EQ(Michka::Math::lerp(1, 3, 0.5f), 2);
     ASSERT_FLOAT_EQ(Michka::Math::lerp(1, 3, 0.75f), 2.5f);
     ASSERT_FLOAT_EQ(Michka::Math::lerp(1, 3, 1), 3);
-}
-
-TEST(MathUtilityTest, Max)
-{
-    ASSERT_EQ(Michka::Math::max(1.0f, 2.0f), 2.0f);
-    ASSERT_EQ(Michka::Math::max(1.0f, 2.0f, 3.0f), 3.0f);
-    ASSERT_EQ(Michka::Math::max(1.0f, 2.0f, 3.0f, 4.0f), 4.0f);
-    ASSERT_EQ(Michka::Math::max(1.0f, 2.0f, 3.0f, 4.0f, 5.0f), 5.0f);
-}
-
-TEST(MathUtilityTest, Min)
-{
-    ASSERT_EQ(Michka::Math::min(1.0f, 2.0f), 1.0f);
-    ASSERT_EQ(Michka::Math::min(1.0f, 2.0f, 3.0f), 1.0f);
-    ASSERT_EQ(Michka::Math::min(1.0f, 2.0f, 3.0f, 4.0f), 1.0f);
-    ASSERT_EQ(Michka::Math::min(1.0f, 2.0f, 3.0f, 4.0f, 5.0f), 1.0f);
 }
 
 TEST(MathUtilityTest, Mod)

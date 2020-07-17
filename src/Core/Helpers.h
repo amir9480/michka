@@ -68,33 +68,37 @@ namespace Michka
 {
     enum SortDirection
     {
-        Ascending,
-        Descending
+        ascending,
+        descending
     };
 
-    /**
-     * @brief Swap two variable value.
-     */
     template<typename T>
-    FORCE_INLINE void swap(T& _a, T& _b);
+    FORCE_INLINE T max(const T& _a);
 
     /**
-     * @brief Get minimum between two numbers.
+     * @brief Get minimum between multiple number.
      *
+     * @tparam T
+     * @tparam T2
      * @param _a
      * @param _b
      */
+    template<typename T, typename... T2>
+    FORCE_INLINE T max(const T& _a, const T2&... _b);
+
     template<typename T>
-    FORCE_INLINE const T& min(const T& _a, const T& _b);
+    FORCE_INLINE T min(const T& _a);
 
     /**
-     * @brief Get maximum between two numbers.
+     * @brief Get minimum between multiple number.
      *
+     * @tparam T
+     * @tparam T2
      * @param _a
      * @param _b
      */
-    template<typename T>
-    FORCE_INLINE const T& max(const T& _a, const T& _b);
+    template<typename T, typename... T2>
+    FORCE_INLINE T min(const T& _a, const T2&... _b);
 
     /**
      * @brief Sort any iteratable.
@@ -117,6 +121,12 @@ namespace Michka
      */
     template<typename T, typename ElementType = Type<T>::RemovedPointerType>
     FORCE_INLINE void sort(T _array, const u32& _size, const std::function<bool(const ElementType&, const ElementType&)>& _callback);
+
+    /**
+     * @brief Swap two variable value.
+     */
+    template<typename T>
+    FORCE_INLINE void swap(T& _a, T& _b);
 }
 
 #include "Helpers.inl"

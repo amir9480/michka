@@ -38,6 +38,7 @@
 #include "Math/BoundingSphere.h"
 #include "Math/Matrix.h"
 #include "Math/Matrix3.h"
+#include "Math/Plane.h"
 #include "Math/Quaternion.h"
 #include "Math/Utility.h"
 #include "Math/Vector2.h"
@@ -47,5 +48,6 @@
 #include "Reflection/Type.h"
 #include "Thread/Mutex.h"
 #include "Thread/Thread.h"
+#include "Types.h"
 
 #endif // __CORE_H__

@@ -165,6 +165,11 @@ namespace Michka
         FORCE_INLINE BoundingBox& set(const Vector3& _min = Vector3::infinity, const Vector3& _max = -Vector3::infinity);
 
         /**
+         * @brief Get value as string.
+         */
+        String toString() const;
+
+        /**
          * @brief Transform bounding box using a matrix.
          *
          * @param _matrix

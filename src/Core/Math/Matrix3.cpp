@@ -25,6 +25,7 @@
 // ------------------------------------------------------------------------------- //
 
 #include "Matrix3.h"
+#include "Core/Container/String.h"
 #include "Core/Helpers.h"
 #include "Core/Math/Vector3.h"
 #include "Core/Math/Matrix.h"
@@ -176,6 +177,14 @@ namespace Michka
         *this = inversed;
 
         return true;
+    }
+
+    String Matrix3::toString() const
+    {
+        return String("Matrix3(\n") +
+            String::number(m11) + ", " + String::number(m12) + ", " + String::number(m13) + ",\n" +
+            String::number(m21) + ", " + String::number(m22) + ", " + String::number(m23) + ",\n" +
+            String::number(m31) + ", " + String::number(m32) + ", " + String::number(m33) + "\n)";
     }
 
     Matrix3& Matrix3::transpose()

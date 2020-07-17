@@ -287,6 +287,11 @@ namespace Michka
          */
         Matrix toMatrix() const;
 
+        /**
+         * @brief Get value as string.
+         */
+        String toString() const;
+
         FORCE_INLINE Quaternion& operator  = (const Quaternion& _other);
 
         FORCE_INLINE bool operator == (const Quaternion& _other) const;

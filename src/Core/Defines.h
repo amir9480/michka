@@ -82,4 +82,16 @@ typedef long double            f96;
 
 #include "Memory/Memory.h"
 
+/* --------------------------- Forward declartions -------------------------- */
+
+namespace Michka
+{
+    template<typename T>
+    class StringTemplate;
+
+    typedef StringTemplate<char> String8;
+    typedef StringTemplate<wchar_t> String;
+    typedef StringTemplate<char32_t> String32;
+}
+
 #endif // __DEFINES_H__

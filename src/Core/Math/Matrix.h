@@ -187,6 +187,11 @@ namespace Michka
         FORCE_INLINE bool isInversable() const;
 
         /**
+         * @brief Get value as string.
+         */
+        String toString() const;
+
+        /**
          * @brief Transpose matrix.
          *
          * @return Self

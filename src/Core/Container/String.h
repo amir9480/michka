@@ -298,21 +298,21 @@ namespace Michka
          *
          * @return
          */
-        StringTemplate<char> toUtf8();
+        StringTemplate<char> toUtf8() const;
 
         /**
          * @brief Convert to utf16 encoded string.
          *
          * @return
          */
-        StringTemplate<wchar_t> toUtf16();
+        StringTemplate<wchar_t> toUtf16() const;
 
         /**
          * @brief Convert to utf32 encoded string.
          *
          * @return
          */
-        StringTemplate<char32_t> toUtf32();
+        StringTemplate<char32_t> toUtf32() const;
 
         template<typename T2>
         StringTemplate<T>& operator = (const T2* _str);

@@ -25,6 +25,7 @@
 // ------------------------------------------------------------------------------- //
 
 #include "BoundingSphere.h"
+#include "Core/Container/String.h"
 #include "Core/Math/BoundingBox.h"
 #include "Core/Math/Matrix.h"
 #include "Core/Math/Matrix3.h"
@@ -120,10 +121,15 @@ namespace Michka
         return *this;
     }
 
+    String BoundingSphere::toString() const
+    {
+        return "BoundingSphere(position=" + position.toString() + ", radius=" + String::number(radius) + ")";
+    }
+
     BoundingSphere& BoundingSphere::transform(const Matrix3& _matrix)
     {
         position *= _matrix;
-        radius *= Math::max(_matrix.m11, _matrix.m22, _matrix.m33);
+        radius *= max(_matrix.m11, _matrix.m22, _matrix.m33);
 
         return *this;
     }
@@ -131,7 +137,7 @@ namespace Michka
     BoundingSphere& BoundingSphere::transform(const Matrix& _matrix)
     {
         position *= _matrix;
-        radius *= Math::max(_matrix.m11, _matrix.m22, _matrix.m33);
+        radius *= max(_matrix.m11, _matrix.m22, _matrix.m33);
 
         return *this;
     }

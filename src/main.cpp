@@ -6,12 +6,6 @@
 #include <Windows.h>
 using namespace Michka;
 
-std::ostream& operator << (std::ostream& _ostream, String _str)
-{
-    _ostream << _str.toUtf8().cstr();
-    return _ostream;
-}
-
 template<typename T>
 std::ostream& operator << (std::ostream& _ostream, Vector<T> _array)
 {

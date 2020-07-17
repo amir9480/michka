@@ -156,6 +156,11 @@ namespace Michka
          */
         FORCE_INLINE Vector2& setY(const f32& _y);
 
+        /**
+         * @brief Get value as string.
+         */
+        String toString() const;
+
         FORCE_INLINE Vector2& operator = (const Vector2& _other);
 
         FORCE_INLINE bool operator == (const Vector2& _other) const;

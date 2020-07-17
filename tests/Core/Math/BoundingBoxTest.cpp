@@ -29,6 +29,7 @@
 #include "Core/Math/BoundingSphere.h"
 #include "Core/Math/Matrix3.h"
 #include "Core/Math/Matrix.h"
+#include "Core/Types.h"
 
 TEST(BoundingBoxTest, Check)
 {
@@ -76,9 +77,9 @@ TEST(BoundingBoxTest, GetIntersection)
 {
     Michka::BoundingBox a(Michka::Vector3::one, Michka::Vector3::one * 2.0f);
 
-    ASSERT_EQ(a.getIntersection(Michka::BoundingBox(Michka::Vector3(0.5f, 0.5f, 0.5f), Michka::Vector3(1.5f, 1.5f, 1.5f))), Michka::Intersection::Intersect);
-    ASSERT_EQ(a.getIntersection(Michka::BoundingBox(-2.0 * Michka::Vector3::one, Michka::Vector3::zero)), Michka::Intersection::Outside);
-    ASSERT_EQ(a.getIntersection(Michka::BoundingBox(Michka::Vector3::one, Michka::Vector3(1.5f, 1.5f, 1.5f))), Michka::Intersection::Inside);
+    ASSERT_EQ(a.getIntersection(Michka::BoundingBox(Michka::Vector3(0.5f, 0.5f, 0.5f), Michka::Vector3(1.5f, 1.5f, 1.5f))), Michka::Intersection::intersect);
+    ASSERT_EQ(a.getIntersection(Michka::BoundingBox(-2.0 * Michka::Vector3::one, Michka::Vector3::zero)), Michka::Intersection::outside);
+    ASSERT_EQ(a.getIntersection(Michka::BoundingBox(Michka::Vector3::one, Michka::Vector3(1.5f, 1.5f, 1.5f))), Michka::Intersection::inside);
 }
 
 TEST(BoundingBoxTest, GetSizeVector)

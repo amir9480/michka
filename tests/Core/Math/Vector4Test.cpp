@@ -27,6 +27,7 @@
 #include <gtest/gtest.h>
 #include "Core/Math/Vector4.h"
 #include "Core/Math/Vector3.h"
+#include "Core/Types.h"
 
 TEST(Vector4Test, Cast)
 {

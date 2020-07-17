@@ -28,6 +28,7 @@
 #include <gtest/gtest.h>
 #include <utility>
 #include "Core/Container/String.h"
+#include "Core/Types.h"
 
 TEST(StringTest, Append)
 {

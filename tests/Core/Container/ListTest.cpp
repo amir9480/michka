@@ -30,6 +30,7 @@
 #include "Core/Container/List.h"
 #include "Core/Reflection/Type.h"
 #include "Core/Helpers.h"
+#include "Core/Types.h"
 #include "../../Classes/Person.h"
 
 TEST(ListTest, ClearList)
@@ -359,7 +360,7 @@ TEST(ListTest, Sort)
         Michka::List<int> aSorted = {4, 5, 7, 8, 832, 910, 1207, 1219, 1537, 1779, 1860, 2254, 2476, 2699, 2759, 2858, 2871, 3176, 3414, 3686, 3850, 3894, 4349, 4937, 4954};
 
         ASSERT_EQ(a.getSorted(), aSorted);
-        ASSERT_EQ(a.getSorted(Michka::SortDirection::Descending), aSorted.getReversed());
+        ASSERT_EQ(a.getSorted(Michka::SortDirection::descending), aSorted.getReversed());
     }
     {
         Michka::List<Michka::String> a = {"Hello", "Hi", "World", "This is awesome", "Michka"};

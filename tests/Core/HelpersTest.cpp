@@ -28,16 +28,23 @@
 #include <gtest/gtest.h>
 #include <utility>
 #include "Core/Container/String.h"
+#include "Core/Types.h"
 #include "Core/Helpers.h"
 
-TEST(HelpersTest, MinAndMax)
+TEST(HelpersTest, Max)
 {
-    int a = 10, b = 20;
-    ASSERT_EQ(Michka::min(a, b), 10);
-    ASSERT_EQ(Michka::max(a, b), 20);
+    ASSERT_EQ(Michka::max(1.0f, 2.0f), 2.0f);
+    ASSERT_EQ(Michka::max(1.0f, 2.0f, 3.0f), 3.0f);
+    ASSERT_EQ(Michka::max(1.0f, 2.0f, 3.0f, 4.0f), 4.0f);
+    ASSERT_EQ(Michka::max(1.0f, 2.0f, 3.0f, 4.0f, 5.0f), 5.0f);
+}
 
-    ASSERT_EQ(Michka::min(10, 20), 10);
-    ASSERT_EQ(Michka::max(10, 20), 20);
+TEST(HelpersTest, Min)
+{
+    ASSERT_EQ(Michka::min(1.0f, 2.0f), 1.0f);
+    ASSERT_EQ(Michka::min(1.0f, 2.0f, 3.0f), 1.0f);
+    ASSERT_EQ(Michka::min(1.0f, 2.0f, 3.0f, 4.0f), 1.0f);
+    ASSERT_EQ(Michka::min(1.0f, 2.0f, 3.0f, 4.0f, 5.0f), 1.0f);
 }
 
 TEST(HelpersTest, Swap)

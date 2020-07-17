@@ -28,6 +28,7 @@
 #include "Vector4.h"
 #include "Matrix.h"
 #include "Matrix3.h"
+#include "Core/Container/String.h"
 
 namespace Michka
 {
@@ -40,6 +41,11 @@ namespace Michka
     const Vector3 Vector3::zero     = Vector3( 0.0f,  0.0f,  0.0f);
     const Vector3 Vector3::one      = Vector3(+1.0f, +1.0f, +1.0f);
     const Vector3 Vector3::infinity = Vector3(Math::infinity, Math::infinity, Math::infinity);
+
+    String Vector3::toString() const
+    {
+        return String("Vector3(") + String::number(x) + ", " + String::number(y) + ", " + String::number(z) + ")";
+    }
 
     Vector3& Vector3::operator *= (const Matrix& _other)
     {

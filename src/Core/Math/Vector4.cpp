@@ -27,6 +27,7 @@
 #include "Vector4.h"
 #include "Core/Math/Matrix.h"
 #include "Core/Math/Vector3.h"
+#include "Core/Container/String.h"
 
 namespace Michka
 {
@@ -39,6 +40,11 @@ namespace Michka
     const Vector4 Vector4::zero     = Vector4( 0.0f,  0.0f,  0.0f);
     const Vector4 Vector4::one      = Vector4(+1.0f, +1.0f, +1.0f);
     const Vector4 Vector4::infinity = Vector4(Math::infinity, Math::infinity, Math::infinity);
+
+    String Vector4::toString() const
+    {
+        return String("Vector4(") + String::number(x) + ", " + String::number(y) + ", " + String::number(z) + ", " + String::number(w) + ")";
+    }
 
     Vector4 Vector4::operator * (const Matrix& _other) const
     {

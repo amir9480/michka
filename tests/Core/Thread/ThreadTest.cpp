@@ -29,6 +29,7 @@
 #include <utility>
 #include "Core/Container/Vector.h"
 #include "Core/Thread/Thread.h"
+#include "Core/Types.h"
 #include "../../Classes/TestThread.h"
 
 TEST(ThreadTest, CallbackThread)

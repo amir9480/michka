@@ -27,6 +27,7 @@
 #include "Quaternion.h"
 #include "Matrix.h"
 #include "Vector3.h"
+#include "Core/Container/String.h"
 
 namespace Michka
 {
@@ -328,5 +329,10 @@ namespace Michka
             xz - yw, yz + xw, 1.0f - x2 - y2, 0.0f,
             0.0f, 0.0f, 0.0f, 1.0f
         );
+    }
+
+    String Quaternion::toString() const
+    {
+        return String("Quaternion(") + String::number(x) + ", " + String::number(y) + ", " + String::number(z) + ", " + String::number(w) + ")";
     }
 }

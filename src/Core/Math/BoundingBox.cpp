@@ -25,6 +25,7 @@
 // ------------------------------------------------------------------------------- //
 
 #include "BoundingBox.h"
+#include "Core/Container/String.h"
 #include "Core/Math/BoundingSphere.h"
 #include "Core/Math/Matrix.h"
 #include "Core/Math/Matrix3.h"
@@ -81,7 +82,7 @@ namespace Michka
             min.z > _other.max.z
         )
         {
-            return Intersection::Outside;
+            return Intersection::outside;
         }
         if (
             max.x < _other.max.x ||
@@ -92,10 +93,10 @@ namespace Michka
             min.z > _other.min.z
         )
         {
-            return Intersection::Intersect;
+            return Intersection::intersect;
         }
 
-        return Intersection::Inside;
+        return Intersection::inside;
     }
 
     bool BoundingBox::isInside(const Vector3& _point) const
@@ -191,6 +192,11 @@ namespace Michka
         }
 
         return (closestSide.getDistanceFrom(_sphere.position) <= _sphere.radius);
+    }
+
+    String BoundingBox::toString() const
+    {
+        return "BoundingBox(min=" + min.toString() + ", max=" + max.toString() + ")";
     }
 
     BoundingBox& BoundingBox::transform(const Matrix3& _matrix)

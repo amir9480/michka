@@ -155,7 +155,7 @@ namespace Michka
          * @param _direction
          * @return Sorted List
          */
-        FORCE_INLINE List<T> getSorted(const SortDirection& _direction = SortDirection::Ascending) const;
+        FORCE_INLINE List<T> getSorted(const SortDirection& _direction = SortDirection::ascending) const;
 
         /**
          * @brief Get sorted copy of this list with custom callback.
@@ -310,7 +310,7 @@ namespace Michka
          * @param _direction
          * @return Self
          */
-        List<T>& sort(const SortDirection& _direction = SortDirection::Ascending);
+        List<T>& sort(const SortDirection& _direction = SortDirection::ascending);
 
         /**
          * @brief Sort list with a custom callback.

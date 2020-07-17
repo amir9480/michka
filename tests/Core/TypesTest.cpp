@@ -24,33 +24,59 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Vector4.h"
-#include "Core/Container/String.h"
+#include <gtest/gtest.h>
+#include <sstream>
+#include "Core/Core.h"
 
-namespace Michka
+TEST(TypesTest, Ostream)
 {
-    const Vector2 Vector2::up       = Vector2( 0.0f, +1.0f);
-    const Vector2 Vector2::down     = Vector2( 0.0f, -1.0f);
-    const Vector2 Vector2::left     = Vector2(-1.0f,  0.0f);
-    const Vector2 Vector2::right    = Vector2(+1.0f,  0.0f);
-    const Vector2 Vector2::zero     = Vector2( 0.0f,  0.0f);
-    const Vector2 Vector2::one      = Vector2(+1.0f, +1.0f);
-    const Vector2 Vector2::infinity = Vector2(Math::infinity, Math::infinity);
+    std::stringstream s;
 
-    Vector2::operator Vector3 () const
-    {
-        return Vector3(x, y, 0.0f);
-    }
+    s << Michka::String("Hello World");
+    ASSERT_EQ(s.str(), "Hello World");
+    s.str("");
 
-    Vector2::operator Vector4 () const
-    {
-        return Vector4(x, y, 0.0f);
-    }
+    s << Michka::String8("Hello World");
+    ASSERT_EQ(s.str(), "Hello World");
+    s.str("");
 
-    String Vector2::toString() const
-    {
-        return String("Vector2(") + String::number(x) + ", " + String::number(y) + ")";
-    }
+    s << Michka::String32("Hello World");
+    ASSERT_EQ(s.str(), "Hello World");
+    s.str("");
+
+    s << Michka::Vector2(1.5f, 2.0f);
+    ASSERT_EQ(s.str(), "Vector2(1.5, 2)");
+    s.str("");
+
+    s << Michka::Vector3(1.5f, 2.0f, 3.0f);
+    ASSERT_EQ(s.str(), "Vector3(1.5, 2, 3)");
+    s.str("");
+
+    s << Michka::Vector4(1.5f, 2.0f, 3.0f);
+    ASSERT_EQ(s.str(), "Vector4(1.5, 2, 3, 1)");
+    s.str("");
+
+    s << Michka::Quaternion(1.5f, 2.0f, 3.0f, 1.0f);
+    ASSERT_EQ(s.str(), "Quaternion(1.5, 2, 3, 1)");
+    s.str("");
+
+    s << Michka::Matrix3(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f);
+    ASSERT_EQ(s.str(), "Matrix3(\n1, 2, 3,\n4, 5, 6,\n7, 8, 9\n)");
+    s.str("");
+
+    s << Michka::Matrix(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f);
+    ASSERT_EQ(s.str(), "Matrix(\n1, 2, 3, 4,\n5, 6, 7, 8,\n9, 10, 11, 12,\n13, 14, 15, 16\n)");
+    s.str("");
+
+    s << Michka::BoundingBox(Michka::Vector3::zero, Michka::Vector3::one);
+    ASSERT_EQ(s.str(), "BoundingBox(min=Vector3(0, 0, 0), max=Vector3(1, 1, 1))");
+    s.str("");
+
+    s << Michka::BoundingSphere(Michka::Vector3::zero, 2.5f);
+    ASSERT_EQ(s.str(), "BoundingSphere(position=Vector3(0, 0, 0), radius=2.5)");
+    s.str("");
+
+    s << Michka::Plane(1.5f, 2.0f, 3.0f, 1.0f);
+    ASSERT_EQ(s.str(), "Plane(1.5, 2, 3, 1)");
+    s.str("");
 }

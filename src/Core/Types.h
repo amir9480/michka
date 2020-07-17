@@ -24,33 +24,36 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Vector4.h"
-#include "Core/Container/String.h"
+#ifndef __STD_TYPES_H__
+#define __STD_TYPES_H__
+
+#include "ostream"
+#include "Core/Defines.h"
 
 namespace Michka
 {
-    const Vector2 Vector2::up       = Vector2( 0.0f, +1.0f);
-    const Vector2 Vector2::down     = Vector2( 0.0f, -1.0f);
-    const Vector2 Vector2::left     = Vector2(-1.0f,  0.0f);
-    const Vector2 Vector2::right    = Vector2(+1.0f,  0.0f);
-    const Vector2 Vector2::zero     = Vector2( 0.0f,  0.0f);
-    const Vector2 Vector2::one      = Vector2(+1.0f, +1.0f);
-    const Vector2 Vector2::infinity = Vector2(Math::infinity, Math::infinity);
+    class BoundingSphere;
+    class BoundingBox;
+    class Matrix;
+    class Matrix3;
+    class Plane;
+    class Quaternion;
+    class Vector2;
+    class Vector3;
+    class Vector4;
 
-    Vector2::operator Vector3 () const
-    {
-        return Vector3(x, y, 0.0f);
-    }
+    std::ostream& operator << (std::ostream& _out, const String8& _value);
+    std::ostream& operator << (std::ostream& _out, const String& _value);
+    std::ostream& operator << (std::ostream& _out, const String32& _value);
+    std::ostream& operator << (std::ostream& _out, const Vector2& _value);
+    std::ostream& operator << (std::ostream& _out, const Vector3& _value);
+    std::ostream& operator << (std::ostream& _out, const Vector4& _value);
+    std::ostream& operator << (std::ostream& _out, const Quaternion& _value);
+    std::ostream& operator << (std::ostream& _out, const Matrix3& _value);
+    std::ostream& operator << (std::ostream& _out, const Matrix& _value);
+    std::ostream& operator << (std::ostream& _out, const BoundingSphere& _value);
+    std::ostream& operator << (std::ostream& _out, const BoundingBox& _value);
+    std::ostream& operator << (std::ostream& _out, const Plane& _value);
+};
 
-    Vector2::operator Vector4 () const
-    {
-        return Vector4(x, y, 0.0f);
-    }
-
-    String Vector2::toString() const
-    {
-        return String("Vector2(") + String::number(x) + ", " + String::number(y) + ")";
-    }
-}
+#endif // __STD_TYPES_H__

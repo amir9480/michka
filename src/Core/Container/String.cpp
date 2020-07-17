@@ -362,13 +362,13 @@ namespace Michka
     }
 
     template<>
-    StringTemplate<char> StringTemplate<char>::toUtf8()
+    StringTemplate<char> StringTemplate<char>::toUtf8() const
     {
         return StringTemplate<char>(*this);
     }
 
     template<>
-    StringTemplate<char> StringTemplate<wchar_t>::toUtf8()
+    StringTemplate<char> StringTemplate<wchar_t>::toUtf8() const
     {
         StringTemplate<char> out;
         u32 thisLength = getLength();
@@ -394,7 +394,7 @@ namespace Michka
     }
 
     template<>
-    StringTemplate<char> StringTemplate<char32_t>::toUtf8()
+    StringTemplate<char> StringTemplate<char32_t>::toUtf8() const
     {
         StringTemplate<char> out;
         u32 thisLength = getLength();
@@ -412,19 +412,19 @@ namespace Michka
     }
 
     template<>
-    StringTemplate<wchar_t> StringTemplate<char>::toUtf16()
+    StringTemplate<wchar_t> StringTemplate<char>::toUtf16() const
     {
         return StringTemplate<wchar_t>::fromUtf8(mData);
     }
 
     template<>
-    StringTemplate<wchar_t> StringTemplate<wchar_t>::toUtf16()
+    StringTemplate<wchar_t> StringTemplate<wchar_t>::toUtf16() const
     {
         return StringTemplate<wchar_t>(*this);
     }
 
     template<>
-    StringTemplate<wchar_t> StringTemplate<char32_t>::toUtf16()
+    StringTemplate<wchar_t> StringTemplate<char32_t>::toUtf16() const
     {
         StringTemplate<wchar_t> out;
         u32 stringLength = getLength();
@@ -442,19 +442,19 @@ namespace Michka
     }
 
     template<>
-    StringTemplate<char32_t> StringTemplate<char>::toUtf32()
+    StringTemplate<char32_t> StringTemplate<char>::toUtf32() const
     {
         return StringTemplate<char32_t>::fromUtf8(mData);
     }
 
     template<>
-    StringTemplate<char32_t> StringTemplate<wchar_t>::toUtf32()
+    StringTemplate<char32_t> StringTemplate<wchar_t>::toUtf32() const
     {
         return StringTemplate<char32_t>::fromUtf16(mData);
     }
 
     template<>
-    StringTemplate<char32_t> StringTemplate<char32_t>::toUtf32()
+    StringTemplate<char32_t> StringTemplate<char32_t>::toUtf32() const
     {
         return *this;
     }
