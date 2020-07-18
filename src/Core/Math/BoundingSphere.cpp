@@ -29,6 +29,7 @@
 #include "Core/Math/BoundingBox.h"
 #include "Core/Math/Matrix.h"
 #include "Core/Math/Matrix3.h"
+#include "Core/Math/Plane.h"
 
 namespace Michka
 {
@@ -56,6 +57,11 @@ namespace Michka
     bool BoundingSphere::isInside(const BoundingSphere& _other) const
     {
         return position.getDistanceFrom(_other.position) <= radius + _other.radius;
+    }
+
+    bool BoundingSphere::isIntersects(const Plane& _plane) const
+    {
+        return Math::abs(_plane.getDistanceFrom(position)) <= radius;
     }
 
     BoundingSphere& BoundingSphere::merge(const Vector3& _point)

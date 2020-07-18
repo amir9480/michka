@@ -29,6 +29,7 @@
 #include "Core/Math/BoundingSphere.h"
 #include "Core/Math/Matrix.h"
 #include "Core/Math/Matrix3.h"
+#include "Core/Math/Plane.h"
 
 namespace Michka
 {
@@ -192,6 +193,24 @@ namespace Michka
         }
 
         return (closestSide.getDistanceFrom(_sphere.position) <= _sphere.radius);
+    }
+
+    bool BoundingBox::isIntersects(const Plane& _plane) const
+    {
+        Side firstSide = _plane.getSide(min);
+        if (firstSide == Side::on)
+        {
+            return true;
+        }
+        return !(
+            _plane.getSide(Vector3(min.x, min.y, max.z)) == firstSide &&
+            _plane.getSide(Vector3(min.x, max.y, min.z)) == firstSide &&
+            _plane.getSide(Vector3(min.x, max.y, max.z)) == firstSide &&
+            _plane.getSide(Vector3(max.x, min.y, min.z)) == firstSide &&
+            _plane.getSide(Vector3(max.x, min.y, max.z)) == firstSide &&
+            _plane.getSide(Vector3(max.x, max.y, min.z)) == firstSide &&
+            _plane.getSide(max) == firstSide
+        );
     }
 
     String BoundingBox::toString() const

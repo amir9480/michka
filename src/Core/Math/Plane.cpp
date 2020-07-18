@@ -27,6 +27,8 @@
 #include "Plane.h"
 #include "Core/Container/String.h"
 #include "Core/Math/Matrix.h"
+#include "Core/Math/BoundingBox.h"
+#include "Core/Math/BoundingSphere.h"
 
 namespace Michka
 {
@@ -40,6 +42,16 @@ namespace Michka
             -2.0f * p.a * p.c,       -2.0f * p.b * p.c,       -2.0f * p.c * p.c+1.0f, 0.0f,
              2.0f * p.a * p.d,        2.0f * p.b * p.d,        2.0f * p.c * p.d,      1.0f
         );
+    }
+
+    bool Plane::isIntersects(const BoundingBox& _box) const
+    {
+        return _box.isIntersects(*this);
+    }
+
+    bool Plane::isIntersects(const BoundingSphere& _sphere) const
+    {
+        return _sphere.isIntersects(*this);
     }
 
     String Plane::toString() const

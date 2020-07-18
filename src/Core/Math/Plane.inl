@@ -114,6 +114,11 @@ namespace Michka
         return Side::on;
     }
 
+    FORCE_INLINE bool Plane::isSameSide(const Vector3& _a, const Vector3& _b)
+    {
+        return Math::sign(getDistanceFrom(_a)) == Math::sign(getDistanceFrom(_b));
+    }
+
     FORCE_INLINE Plane& Plane::normalize()
     {
         d /= normal.getLength();

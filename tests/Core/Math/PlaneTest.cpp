@@ -25,13 +25,17 @@
 // ------------------------------------------------------------------------------- //
 
 #include <gtest/gtest.h>
-#include "Core/Math/Plane.h"
+#include "Core/Math/BoundingBox.h"
+#include "Core/Math/BoundingSphere.h"
 #include "Core/Math/Matrix.h"
+#include "Core/Math/Plane.h"
 #include "Core/Types.h"
 
 TEST(PlaneTest, GetDistance)
 {
     Michka::Plane a(Michka::Vector3::down * 3.0f, Michka::Vector3::up);
+
+    ASSERT_NE(a, Michka::Plane());
 
     ASSERT_FLOAT_EQ(a.getDistanceFrom(Michka::Vector3::down * 3.0f), 0.0f);
     ASSERT_FLOAT_EQ(a.getDistanceFrom(Michka::Vector3::down * 1.0f), 2.0f);
@@ -60,7 +64,7 @@ TEST(PlaneTest, GetReflected)
     ASSERT_EQ(a.getReflected(Michka::Vector3(5.0f, 5.0f, 5.0f)), Michka::Vector3(5.0f, -11.0f, 5.0f));
 }
 
-TEST(PlaneTest, ReflectionMatrix)
+TEST(PlaneTest, GetReflectionMatrix)
 {
     Michka::Plane a(Michka::Vector3::down * 3.0f, Michka::Vector3::up);
 
@@ -76,6 +80,31 @@ TEST(PlaneTest, GetSide)
     ASSERT_EQ(a.getSide(Michka::Vector3::one * 1.0f), Michka::Side::back);
     ASSERT_EQ(a.getSide(Michka::Vector3::one * 3.0f), Michka::Side::on);
     ASSERT_EQ(a.getSide(Michka::Vector3::one * 4.0f), Michka::Side::front);
+}
+
+TEST(PlaneTest, IsIntersects)
+{
+    Michka::Plane a(Michka::Vector3::up * 3.0f, Michka::Vector3::up);
+
+    ASSERT_FALSE(a.isIntersects(Michka::BoundingBox(Michka::Vector3::zero, Michka::Vector3::one)));
+    ASSERT_FALSE(a.isIntersects(Michka::BoundingBox(3.5f * Michka::Vector3::up, 5.0f * Michka::Vector3::one)));
+    ASSERT_TRUE(a.isIntersects(Michka::BoundingBox(2.0f * Michka::Vector3::up, 4.0f * Michka::Vector3::one)));
+    ASSERT_TRUE(a.isIntersects(Michka::BoundingBox(3.0f * Michka::Vector3::up, 4.0f * Michka::Vector3::one)));
+
+    ASSERT_FALSE(a.isIntersects(Michka::BoundingSphere(Michka::Vector3::zero, 2.0f)));
+    ASSERT_FALSE(a.isIntersects(Michka::BoundingSphere(6.0f * Michka::Vector3::up, 2.0f)));
+    ASSERT_TRUE(a.isIntersects(Michka::BoundingSphere(2.0f * Michka::Vector3::up, 2.0f)));
+    ASSERT_TRUE(a.isIntersects(Michka::BoundingSphere(3.0f * Michka::Vector3::up, 2.0f)));
+    ASSERT_TRUE(a.isIntersects(Michka::BoundingSphere(4.0f * Michka::Vector3::up, 2.0f)));
+}
+
+TEST(PlaneTest, IsSide)
+{
+    Michka::Plane a(Michka::Vector3::up * 3.0f, Michka::Vector3::up);
+
+    ASSERT_TRUE(a.isSameSide(Michka::Vector3::one * 1.0f, Michka::Vector3::one * 2.0f));
+    ASSERT_TRUE(a.isSameSide(Michka::Vector3::one * 4.0f, Michka::Vector3::one * 5.0f));
+    ASSERT_FALSE(a.isSameSide(Michka::Vector3::one * 1.0f, Michka::Vector3::one * 5.0f));
 }
 
 TEST(PlaneTest, Normalize)

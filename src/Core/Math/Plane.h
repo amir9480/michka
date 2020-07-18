@@ -33,6 +33,8 @@
 
 namespace Michka
 {
+    class BoundingBox;
+    class BoundingSphere;
     class Matrix;
 
     class MICHKA_API Plane
@@ -91,6 +93,28 @@ namespace Michka
          * @param _position
          */
         FORCE_INLINE Side getSide(const Vector3& _position) const;
+
+        /**
+         * @brief Check plane intersects bounding box.
+         *
+         * @param _box
+         */
+        bool isIntersects(const BoundingBox& _box) const;
+
+        /**
+         * @brief Check plane intersects bounding sphere.
+         *
+         * @param _sphere
+         */
+        bool isIntersects(const BoundingSphere& _sphere) const;
+
+        /**
+         * @brief Check two diffrent points are in same side of plane.
+         *
+         * @param _a
+         * @param _b
+         */
+        FORCE_INLINE bool isSameSide(const Vector3& _a, const Vector3& _b);
 
         /**
          * @brief Normalize plane.

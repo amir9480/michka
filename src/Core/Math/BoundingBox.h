@@ -36,6 +36,7 @@ namespace Michka
     class BoundingSphere;
     class Matrix3;
     class Matrix;
+    class Plane;
 
     class MICHKA_API BoundingBox
     {
@@ -138,6 +139,13 @@ namespace Michka
          * @param _sphere
          */
         bool isInside(const BoundingSphere& _sphere) const;
+
+        /**
+         * @brief Check bounding sphere intersects plane.
+         *
+         * @param _plane
+         */
+        bool isIntersects(const Plane& _plane) const;
 
         /**
          * @brief Merge a point to bounding box.
