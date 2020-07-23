@@ -40,6 +40,7 @@
 #include "Math/Matrix3.h"
 #include "Math/Plane.h"
 #include "Math/Quaternion.h"
+#include "Math/Ray.h"
 #include "Math/Utility.h"
 #include "Math/Vector2.h"
 #include "Math/Vector3.h"

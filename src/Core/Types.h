@@ -38,6 +38,7 @@ namespace Michka
     class Matrix3;
     class Plane;
     class Quaternion;
+    class Ray;
     class Vector2;
     class Vector3;
     class Vector4;
@@ -54,6 +55,7 @@ namespace Michka
     std::ostream& operator << (std::ostream& _out, const BoundingSphere& _value);
     std::ostream& operator << (std::ostream& _out, const BoundingBox& _value);
     std::ostream& operator << (std::ostream& _out, const Plane& _value);
+    std::ostream& operator << (std::ostream& _out, const Ray& _value);
 };
 
 #endif // __STD_TYPES_H__

@@ -24,63 +24,70 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include <gtest/gtest.h>
-#include <sstream>
-#include "Core/Core.h"
+#include "Ray.h"
+#include "Core/Math/Utility.h"
 
-TEST(TypesTest, Ostream)
+namespace Michka
 {
-    std::stringstream s;
+    FORCE_INLINE Ray::Ray() :
+        direction(Vector3::forward)
+    {
+        //
+    }
 
-    s << Michka::String("Hello World");
-    ASSERT_EQ(s.str(), "Hello World");
-    s.str("");
+    FORCE_INLINE Ray::Ray(const Vector3& _position, const Vector3& _direction) :
+        position(_position)
+    {
+        direction = _direction.getNormalized();
+    }
 
-    s << Michka::String8("Hello World");
-    ASSERT_EQ(s.str(), "Hello World");
-    s.str("");
+    FORCE_INLINE Ray Ray::getNormalized() const
+    {
+        Ray self = *this;
+        self.normalize();
 
-    s << Michka::String32("Hello World");
-    ASSERT_EQ(s.str(), "Hello World");
-    s.str("");
+        return self;
+    }
 
-    s << Michka::Vector2(1.5f, 2.0f);
-    ASSERT_EQ(s.str(), "Vector2(1.5, 2)");
-    s.str("");
+    FORCE_INLINE Vector3 Ray::getPoint(const f32& _distance) const
+    {
+        return position + _distance*direction;
+    }
 
-    s << Michka::Vector3(1.5f, 2.0f, 3.0f);
-    ASSERT_EQ(s.str(), "Vector3(1.5, 2, 3)");
-    s.str("");
+    FORCE_INLINE Ray& Ray::normalize()
+    {
+        direction.normalize();
 
-    s << Michka::Vector4(1.5f, 2.0f, 3.0f);
-    ASSERT_EQ(s.str(), "Vector4(1.5, 2, 3, 1)");
-    s.str("");
+        return *this;
+    }
 
-    s << Michka::Quaternion(1.5f, 2.0f, 3.0f, 1.0f);
-    ASSERT_EQ(s.str(), "Quaternion(1.5, 2, 3, 1)");
-    s.str("");
+    FORCE_INLINE Ray& Ray::setPosition(const Vector3& _position)
+    {
+        position = _position;
+        return *this;
+    }
 
-    s << Michka::Matrix3(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f);
-    ASSERT_EQ(s.str(), "Matrix3(\n1, 2, 3,\n4, 5, 6,\n7, 8, 9\n)");
-    s.str("");
+    FORCE_INLINE Ray& Ray::setDirection(const Vector3& _direction)
+    {
+        direction = _direction.getNormalized();
+        return *this;
+    }
 
-    s << Michka::Matrix(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f);
-    ASSERT_EQ(s.str(), "Matrix(\n1, 2, 3, 4,\n5, 6, 7, 8,\n9, 10, 11, 12,\n13, 14, 15, 16\n)");
-    s.str("");
+    FORCE_INLINE Ray& Ray::operator = (const Ray& _other)
+    {
+        position = _other.position;
+        direction = _other.direction;
 
-    s << Michka::BoundingBox(Michka::Vector3::zero, Michka::Vector3::one);
-    ASSERT_EQ(s.str(), "BoundingBox(min=Vector3(0, 0, 0), max=Vector3(1, 1, 1))");
-    s.str("");
+        return *this;
+    }
 
-    s << Michka::BoundingSphere(Michka::Vector3::zero, 2.5f);
-    ASSERT_EQ(s.str(), "BoundingSphere(position=Vector3(0, 0, 0), radius=2.5)");
-    s.str("");
+    FORCE_INLINE bool Ray::operator == (const Ray& _other) const
+    {
+        return position == _other.position && direction == _other.direction;
+    }
 
-    s << Michka::Plane(1.5f, 2.0f, 3.0f, 1.0f);
-    ASSERT_EQ(s.str(), "Plane(1.5, 2, 3, 1)");
-    s.str("");
-
-    s << Michka::Ray(Michka::Vector3::one, Michka::Vector3::forward);
-    ASSERT_EQ(s.str(), "Ray(position=Vector3(1, 1, 1), direction=Vector3(0, 0, 1))");
-    s.str("");
+    FORCE_INLINE bool Ray::operator != (const Ray& _other) const
+    {
+        return !(*this == _other);
+    }
 }

@@ -141,7 +141,7 @@ namespace Michka
         bool isInside(const BoundingSphere& _sphere) const;
 
         /**
-         * @brief Check bounding sphere intersects plane.
+         * @brief Check bounding box intersects plane.
          *
          * @param _plane
          */

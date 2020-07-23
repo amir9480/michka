@@ -42,6 +42,7 @@ set(
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/Matrix3Test.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/PlaneTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/QuaternionTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Math/RayTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/Vector2Test.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/Vector3Test.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/Vector4Test.cpp

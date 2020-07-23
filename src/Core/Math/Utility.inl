@@ -99,7 +99,7 @@ namespace Michka
             return floorf(_number);
         }
 
-        FORCE_INLINE bool isInf(const f32& _number)
+        FORCE_INLINE bool isInfinity(const f32& _number)
         {
             return std::isinf(_number);
         }

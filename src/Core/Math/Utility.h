@@ -163,7 +163,7 @@ namespace Michka
          *
          * @param _number
          */
-        FORCE_INLINE bool isInf(const f32& _number);
+        FORCE_INLINE bool isInfinity(const f32& _number);
 
         /**
          * @brief Check float number is Not A Number.
