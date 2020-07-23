@@ -83,7 +83,7 @@ namespace Michka
          *
          * @param _corner
          */
-        Vector3 getCorner(const Corner& _corner) const;
+        FORCE_INLINE Vector3 getCorner(const Corner& _corner) const;
 
         /**
          * @brief Get intersection status to another bounding box.

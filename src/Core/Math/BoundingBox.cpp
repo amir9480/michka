@@ -47,31 +47,6 @@ namespace Michka
         return *this;
     }
 
-    Vector3 BoundingBox::getCorner(const Corner& _corner) const
-    {
-        switch (_corner)
-        {
-            case Corner::leftDownBack:
-                return Vector3(min.x, min.y, min.z);
-            case Corner::leftDownForward:
-                return Vector3(min.x, min.y, max.z);
-            case Corner::leftUpBack:
-                return Vector3(min.x, max.y, min.z);
-            case Corner::leftUpForward:
-                return Vector3(min.x, max.y, max.z);
-            case Corner::rightDownBack:
-                return Vector3(max.x, min.y, min.z);
-            case Corner::rightDownForward:
-                return Vector3(max.x, min.y, max.z);
-            case Corner::rightUpBack:
-                return Vector3(max.x, max.y, min.z);
-            case Corner::rightUpForward:
-                return Vector3(max.x, max.y, max.z);
-        };
-
-        return Vector3::zero; // @NOCOVERAGE
-    }
-
     Intersection BoundingBox::getIntersection(const BoundingBox& _other) const
     {
         if (

@@ -74,6 +74,11 @@ namespace Michka
         return (max + min) * 0.5f;
     }
 
+    FORCE_INLINE Vector3 BoundingBox::getCorner(const Corner& _corner) const
+    {
+        return Vector3(_corner/4 % 2 ? max.x : min.x, _corner/2 % 2 ? max.y : min.y, _corner % 2 ? max.z : min.z);
+    }
+
     FORCE_INLINE BoundingBox BoundingBox::getMerged(const Vector3& _point) const
     {
         BoundingBox self = *this;
