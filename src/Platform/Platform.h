@@ -24,11 +24,9 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __MICHKA_H__
-#define __MICHKA_H__
+#ifndef __PLATFORM_H__
+#define __PLATFORM_H__
 
-#include "Core/Core.h"
-#include "Graphics/Graphics.h"
-#include "Platform/Platform.h"
+#include "Window.h"
 
-#endif // __MICHKA_H__
+#endif // __PLATFORM_H__

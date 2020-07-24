@@ -24,11 +24,28 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __MICHKA_H__
-#define __MICHKA_H__
+#ifndef __WINDOW_H__
+#define __WINDOW_H__
 
-#include "Core/Core.h"
-#include "Graphics/Graphics.h"
-#include "Platform/Platform.h"
+#include "Core/Defines.h"
 
-#endif // __MICHKA_H__
+namespace Michka
+{
+    class MICHKA_API Window
+    {
+        MICHKA_NON_COPYABLE_CLASS(Window)
+    public:
+        Window(const u32& _width, const u32& _height);
+        ~Window();
+
+        void destroy();
+
+        bool proccess();
+
+    protected:
+        u32 mWidth;
+        u32 mHeight;
+    };
+}
+
+#endif // __WINDOW_H__

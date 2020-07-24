@@ -200,6 +200,14 @@ namespace Michka
         FORCE_INLINE Map<TKey, TValue>& remove(const TKey& _key);
 
         /**
+         * @brief Remove at specific index instead of searching for key.
+         *
+         * @param _index
+         * @return Self
+         */
+        FORCE_INLINE Map<TKey, TValue>& removeAt(const u32& _index);
+
+        /**
          * @brief Resize capacity of map.
          *
          * @return Self

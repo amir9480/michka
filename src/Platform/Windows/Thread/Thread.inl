@@ -72,13 +72,18 @@ namespace Michka
         return GetCurrentThreadId();
     }
 
-    FORCE_INLINE u64 Thread::getId()
+    FORCE_INLINE u64 Thread::getId() const
     {
         if (mThread)
         {
             return GetThreadId(mThread);
         }
         return 0;
+    }
+
+    FORCE_INLINE bool Thread::isRunning() const
+    {
+        return mIsRunning;
     }
 
     FORCE_INLINE void Thread::join()
@@ -98,7 +103,9 @@ namespace Michka
 
     FORCE_INLINE void Thread::runThread(Thread* _thread)
     {
+        _thread->mIsRunning = true;
         _thread->run();
+        _thread->mIsRunning = false;
     }
 
     FORCE_INLINE bool Thread::start()

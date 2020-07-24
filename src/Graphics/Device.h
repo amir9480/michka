@@ -24,11 +24,26 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __MICHKA_H__
-#define __MICHKA_H__
+#ifndef __DEVICE_H__
+#define __DEVICE_H__
 
-#include "Core/Core.h"
-#include "Graphics/Graphics.h"
-#include "Platform/Platform.h"
+#include "Core/Defines.h"
 
-#endif // __MICHKA_H__
+namespace Michka
+{
+    class MICHKA_API Device
+    {
+    public:
+        enum Driver
+        {
+            Direct3D12
+        };
+    public:
+        virtual ~Device();
+
+        static Device* instance(const Driver& _driver);
+    protected:
+    };
+}
+
+#endif // __DEVICE_H__

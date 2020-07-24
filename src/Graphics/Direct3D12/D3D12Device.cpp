@@ -24,11 +24,21 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __MICHKA_H__
-#define __MICHKA_H__
+#include "D3D12Device.h"
+#include "Core/Helpers.h"
+#include "Core/Container/String.h"
+#include <d3d12.h>
+#include <dxgi1_6.h>
+#include <d3dcompiler.h>
+#include <d3dx12.h>
 
-#include "Core/Core.h"
-#include "Graphics/Graphics.h"
-#include "Platform/Platform.h"
+namespace Michka
+{
+    D3D12Device::D3D12Device()
+    {
+    }
 
-#endif // __MICHKA_H__
+    D3D12Device::~D3D12Device()
+    {
+    }
+}

@@ -24,55 +24,19 @@
 ## SOFTWARE.                                                                       ##
 ## ------------------------------------------------------------------------------- ##
 
-cmake_minimum_required(VERSION 3.0.0)
-project(Michka VERSION 0.0.1)
-set(CMAKE_CXX_STANDARD 17)
+set(
+    SOURCES
+    ${SOURCES}
 
-set(SOURCES "")
+    # -------------------------------------------------------------------------- #
 
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/d3dx12")
-add_subdirectory("src/Core")
-add_subdirectory("src/Graphics")
-add_subdirectory("src/Platform")
+    ${CMAKE_CURRENT_SOURCE_DIR}/Device.cpp
 
-add_executable(Michka ${SOURCES} "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
-add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
-set_property(TARGET Michka PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
-# target_link_libraries(Michka ${LIBS})
-target_link_libraries(
-    Michka
-    d3d12.lib
-    dxgi.lib
-    dxguid.lib
+    # ---------------------------------- D3D12 --------------------------------- #
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Direct3D12/D3D12Device.cpp
+
+    # -------------------------------------------------------------------------- #
+
+    PARENT_SCOPE
 )
-
-if(MICHKA_BUILD_TYPE STREQUAL "MinSizeRel")
-    set(MICHKA_BUILD_TYPE "MinSizeRel")
-elseif(MICHKA_BUILD_TYPE STREQUAL "RelWithDebInfo")
-    set(MICHKA_BUILD_TYPE "RelWithDebInfo")
-elseif(MICHKA_BUILD_TYPE STREQUAL "Release")
-    set(MICHKA_BUILD_TYPE "Release")
-else()
-    set(MICHKA_BUILD_TYPE "Debug")
-endif()
-
-if(MICHKA_BUILD_TYPE STREQUAL "Debug")
-    set(MICHKA_LIBRARY_POSTFIX "d")
-else()
-    set(MICHKA_LIBRARY_POSTFIX "")
-endif()
-
-option(PACKAGE_TESTS "Build the tests" ON)
-if(PACKAGE_TESTS)
-    # Build Google Test if library file does not exists
-    if(EXISTS "${CMAKE_CURRENT_BINARY_DIR}/lib/${MICHKA_BUILD_TYPE}/gtest${MICHKA_LIBRARY_POSTFIX}.lib")
-        include_directories("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/googletest/googletest/include")
-        link_directories("${CMAKE_CURRENT_BINARY_DIR}/lib/${MICHKA_BUILD_TYPE}")
-        add_subdirectory("tests")
-    else()
-        set(gtest_force_shared_crt On)
-        add_subdirectory("thirdparty/googletest")
-        add_subdirectory("tests")
-    endif()
-endif()

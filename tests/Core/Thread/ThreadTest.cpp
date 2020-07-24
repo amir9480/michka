@@ -110,6 +110,7 @@ TEST(ThreadTest, Mutex)
     thread1.start();
     Michka::Thread::sleep(100);
     thread2.start();
+    ASSERT_TRUE(thread1.isRunning());
     thread1.join();
     thread2.join();
 

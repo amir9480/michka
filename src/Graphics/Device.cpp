@@ -24,11 +24,36 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __MICHKA_H__
-#define __MICHKA_H__
+#include "Device.h"
+#include "Direct3D12/D3D12Device.h"
 
-#include "Core/Core.h"
-#include "Graphics/Graphics.h"
-#include "Platform/Platform.h"
+extern "C"
+{
+    // Force to use dedicated graphic card
+    __declspec(dllexport) unsigned long NvOptimusEnablement = 1;
+    __declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
+}
 
-#endif // __MICHKA_H__
+namespace Michka
+{
+    Device::~Device()
+    {
+        //
+    }
+
+    Device* Device::instance(const Driver& _driver)
+    {
+        static Device* device = nullptr;
+        if (device == nullptr)
+        {
+            switch (_driver)
+            {
+                case Driver::Direct3D12:
+                    device = new D3D12Device();
+                    break;
+            }
+        }
+
+        return device;
+    }
+}

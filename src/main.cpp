@@ -116,42 +116,51 @@ int main()
     std::cout << "Welcome to engine!\n-------------------------------------\n\n";
     // std::cout << ThreadBase::id() << std::endl;
 
-    Vector<CallbackThread<void()>> a;
-    Vector<Person> persons = {
-        Person("a"),
-        Person("b"),
-        Person("c"),
-        Person("d"),
-        Person("e"),
-        Person("f"),
-        Person("g"),
-        Person("h"),
-        Person("i"),
-        Person("j"),
-        Person("k"),
-        Person("l"),
-    };
+    // Vector<CallbackThread<void()>> a;
+    // Vector<Person> persons = {
+    //     Person("a"),
+    //     Person("b"),
+    //     Person("c"),
+    //     Person("d"),
+    //     Person("e"),
+    //     Person("f"),
+    //     Person("g"),
+    //     Person("h"),
+    //     Person("i"),
+    //     Person("j"),
+    //     Person("k"),
+    //     Person("l"),
+    // };
 
-    for (int i = 0; i < 10; i++)
-    {
-        a.pushBack(CallbackThread<void()>(std::bind(&Person::runSomething2, persons[i])));
-    }
+    // for (int i = 0; i < 10; i++)
+    // {
+    //     a.pushBack(CallbackThread<void()>(std::bind(&Person::runSomething2, persons[i])));
+    // }
 
-    for (int i = 0; i < 10; i++)
-    {
-        a[i].start();
-    }
+    // for (int i = 0; i < 10; i++)
+    // {
+    //     a[i].start();
+    // }
 
-    for (int i = 0; i < 10; i++)
-    {
-        a[i].join();
-    }
+    // for (int i = 0; i < 10; i++)
+    // {
+    //     a[i].join();
+    // }
 
-    for (int i = 0; i < 10; i++)
-    {
-        a[i].join();
-    }
+    // for (int i = 0; i < 10; i++)
+    // {
+    //     a[i].join();
+    // }
 
-    system("PAUSE");
+    Michka::Window window(640, 480);
+    Michka::Window window2(640, 480);
+    bool a;
+    do {
+        a = window.proccess();
+        a |= window2.proccess();
+    } while(a);
+
+
+    // system("PAUSE");
     return 0;
 }

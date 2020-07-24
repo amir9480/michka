@@ -58,7 +58,12 @@ namespace Michka
          *
          * @return id
          */
-        FORCE_INLINE u64 getId();
+        FORCE_INLINE u64 getId() const;
+
+        /**
+         * @brief Check thread running.
+         */
+        FORCE_INLINE bool isRunning() const;
 
         /**
          * @brief Join to thread and wait until it finishes.
@@ -97,6 +102,7 @@ namespace Michka
 
     protected:
         void* mThread = nullptr;
+        bool mIsRunning = false;
 
     private:
         static Map<u64, Thread*> allThreads;
@@ -135,6 +141,6 @@ namespace Michka
     };
 }
 
-#include "Platform/Thread.inl"
+#include "Platform/Thread/Thread.inl"
 
 #endif // __THREAD_H__

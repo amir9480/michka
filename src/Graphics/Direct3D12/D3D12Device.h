@@ -24,11 +24,23 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __MICHKA_H__
-#define __MICHKA_H__
+#ifndef __D3D12DEVICE_H__
+#define __D3D12DEVICE_H__
 
-#include "Core/Core.h"
-#include "Graphics/Graphics.h"
-#include "Platform/Platform.h"
+#include "Core/Defines.h"
+#include "Graphics/Device.h"
+#include <Windows.h>
 
-#endif // __MICHKA_H__
+namespace Michka
+{
+    class MICHKA_API D3D12Device : public Device
+    {
+    public:
+        D3D12Device();
+        virtual ~D3D12Device();
+    protected:
+        HWND mWindowHandler;
+    };
+}
+
+#endif // __D3D12DEVICE_H__

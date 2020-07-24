@@ -28,6 +28,6 @@
 
 #if MICHKA_PLATFORM == MICHKA_PLATFORM_WIN32
 
-#include "Windows/Thread/Thread.inl"
+#include "Platform/Windows/Thread/Thread.inl"
 
 #endif

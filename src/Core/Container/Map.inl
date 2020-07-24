@@ -275,11 +275,19 @@ namespace Michka
     template<typename TKey, typename TValue>
     FORCE_INLINE Map<TKey, TValue>& Map<TKey, TValue>::remove(const TKey& _key)
     {
-        if (u32 index = indexOfKey(_key) != notFound)
+        u32 index = 0;
+        if ((index = indexOfKey(_key)) != notFound)
         {
-            mData.remove(index);
+            removeAt(index);
         }
 
+        return *this;
+    }
+
+    template<typename TKey, typename TValue>
+    FORCE_INLINE Map<TKey, TValue>& Map<TKey, TValue>::removeAt(const u32& _index)
+    {
+        mData.remove(_index);
         return *this;
     }
 
