@@ -30,7 +30,7 @@
 #include "Core/Math/Plane.h"
 #include "Core/Math/Ray.h"
 #include "Core/Math/Utility.h"
-#include "Core/Types.h"
+#include "Core/Foundation/Types.h"
 
 TEST(RayTest, GetPoint)
 {

@@ -146,6 +146,11 @@ namespace Michka
         static inline const bool isFloat = false;
 
         /**
+         * @brief Is type a numeric types.
+         */
+        static inline const bool isNumeric = std::is_arithmetic<T>::value;
+
+        /**
          * @brief Is type a custom class.
          */
         static inline const bool isClass = __is_class(T);
@@ -204,6 +209,16 @@ namespace Michka
     template<typename T>
     struct Type : public TypeBase<T>
     {};
+
+    /* --------------------------------- Boolean -------------------------------- */
+    template<>
+    struct Type<bool>: TypeBase<bool>
+    {
+        static inline const char* name = "bool";
+        static inline const bool max = true;
+        static inline const bool min = false;
+        static inline const bool isIntegral = true;
+    };
 
     /* ---------------------------- Signed Integrals ---------------------------- */
 

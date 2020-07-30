@@ -28,7 +28,7 @@
 #include <gtest/gtest.h>
 #include <utility>
 #include "Core/Container/String.h"
-#include "Core/Types.h"
+#include "Core/Foundation/Types.h"
 
 TEST(StringTest, Append)
 {
@@ -424,6 +424,7 @@ TEST(StringTest, ToNumber)
         ASSERT_EQ(test.toNumber<i64>(), 0);
 
         test = "3.1415";
+        ASSERT_EQ(test.toNumber<int>(), int(3));
         ASSERT_EQ(test.toNumber<float>(), float(3.1415f));
         ASSERT_EQ(test.toNumber<double>(), double(3.1415));
         ASSERT_EQ(test.toNumber<long double>(), long double(3.1415));

@@ -467,6 +467,10 @@ namespace Michka
             {
                 if ((index = numberCharacters.find(mData[iterator])) == notFound)
                 {
+                    if (mData[iterator] == '.')
+                    {
+                        return out;
+                    }
                     return 0;
                 }
                 else

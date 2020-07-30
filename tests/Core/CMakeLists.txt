@@ -33,7 +33,9 @@ set(
     ${CMAKE_CURRENT_SOURCE_DIR}/Container/ListTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Container/MapTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Container/StringTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Container/VariantTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Container/VectorTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Foundation/TypesTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/HelpersTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/BoundingBoxTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/BoundingSphereTest.cpp
@@ -48,7 +50,6 @@ set(
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/Vector4Test.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Reflection/TypeTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Thread/ThreadTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/TypesTest.cpp
 
     # -------------------------------------------------------------------------- #
 

@@ -152,15 +152,31 @@ int main()
     //     a[i].join();
     // }
 
-    Michka::Window window(640, 480);
-    Michka::Window window2(640, 480);
-    bool a;
-    do {
-        a = window.proccess();
-        a |= window2.proccess();
-    } while(a);
+    union tttt
+    {
+        i64 mInt;
+        double mFloat;
+        String* mString;
+        List<Variant>* mList;
+        void* mCustom;
+    };
+    std::cout << sizeof(Michka::Variant) << "\n"  << "\n"
+            << sizeof(i64) << "\n"
+            << sizeof(double) << "\n"
+            << sizeof(String) << "\n"
+            << sizeof(List<Variant>*) << "\n"
+            << sizeof(void*) << "\n"
+            << sizeof(tttt) << "\n" << std::endl;
+
+    // Michka::Window window(640, 480);
+    // Michka::Window window2(640, 480);
+    // bool a;
+    // do {
+    //     a = window.proccess();
+    //     a |= window2.proccess();
+    // } while(a);
 
 
-    // system("PAUSE");
+    system("PAUSE");
     return 0;
 }

@@ -30,7 +30,7 @@
 #include <type_traits>
 #include "Core/Reflection/Type.h"
 #include "Core/Helpers.h"
-#include "Core/Types.h"
+#include "Core/Foundation/Types.h"
 #include "../../Classes/Person.h"
 
 #define TYPE_NAME_TEST(TYPE, TYPENAME) ASSERT_TRUE(strcmp(Michka::Type<TYPE>::name, TYPENAME) == 0)

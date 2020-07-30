@@ -31,14 +31,14 @@
 
 namespace Michka
 {
-    enum Intersection
+    enum class Intersection
     {
         outside,
         intersect,
         inside
     };
 
-    enum Side
+    enum class Side
     {
         front = 1,
         on = 0,

@@ -30,7 +30,7 @@
 #include "Core/Container/Vector.h"
 #include "Core/Reflection/Type.h"
 #include "Core/Helpers.h"
-#include "Core/Types.h"
+#include "Core/Foundation/Types.h"
 #include "../../Classes/Person.h"
 
 TEST(VectorTest, ClearVector)

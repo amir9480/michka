@@ -26,7 +26,7 @@
 
 #include <gtest/gtest.h>
 #include "Core/Math/Utility.h"
-#include "Core/Types.h"
+#include "Core/Foundation/Types.h"
 
 TEST(MathUtilityTest, Abs)
 {

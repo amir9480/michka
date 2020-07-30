@@ -29,7 +29,7 @@
 #include "Core/Math/BoundingBox.h"
 #include "Core/Math/Matrix3.h"
 #include "Core/Math/Matrix.h"
-#include "Core/Types.h"
+#include "Core/Foundation/Types.h"
 
 TEST(BoundingSphereTest, IsInside)
 {

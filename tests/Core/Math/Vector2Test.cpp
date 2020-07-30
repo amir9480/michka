@@ -28,7 +28,7 @@
 #include "Core/Math/Vector2.h"
 #include "Core/Math/Vector3.h"
 #include "Core/Math/Vector4.h"
-#include "Core/Types.h"
+#include "Core/Foundation/Types.h"
 
 TEST(Vector2Test, Angle)
 {

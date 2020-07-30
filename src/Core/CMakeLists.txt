@@ -31,6 +31,8 @@ set(
     # -------------------------------------------------------------------------- #
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Container/String.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Container/Variant.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Foundation/Types.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/BoundingBox.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/BoundingSphere.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/Matrix.cpp
@@ -44,7 +46,6 @@ set(
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/Vector4.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Memory/Memory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Thread/Thread.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Types.cpp
 
     # -------------------------------------------------------------------------- #
 

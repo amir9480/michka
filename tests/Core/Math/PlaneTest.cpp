@@ -29,7 +29,7 @@
 #include "Core/Math/BoundingSphere.h"
 #include "Core/Math/Matrix.h"
 #include "Core/Math/Plane.h"
-#include "Core/Types.h"
+#include "Core/Foundation/Types.h"
 
 TEST(PlaneTest, GetDistance)
 {

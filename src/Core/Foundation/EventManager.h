@@ -24,26 +24,23 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __DEVICE_H__
-#define __DEVICE_H__
+#ifndef __EVENTMANAGER_H__
+#define __EVENTMANAGER_H__
 
+#include <functional>
 #include "Core/Defines.h"
+#include "Core/Container/String.h"
+#include "Core/Container/Map.h"
+#include "Core/Container/List.h"
 
 namespace Michka
 {
-    class MICHKA_API Device
+    class EventManager
     {
     public:
-        enum class Driver
-        {
-            Direct3D12
-        };
-    public:
-        virtual ~Device();
-
-        static Device* instance(const Driver& _driver);
-    protected:
+        EventManager();
+        virtual ~EventManager();
     };
 }
 
-#endif // __DEVICE_H__
+#endif // __EVENTMANAGER_H__

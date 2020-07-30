@@ -65,7 +65,6 @@ namespace Michka
         FORCE_INLINE Map(const std::initializer_list<Element>& _array);
         FORCE_INLINE Map(const Map<TKey, TValue>& _other);
         FORCE_INLINE Map(Map<TKey, TValue>&& _other);
-        virtual ~Map();
 
         /**
          * @brief Get key and value in specific index

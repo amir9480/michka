@@ -31,7 +31,9 @@
 #include "Container/Map.h"
 #include "Container/Pair.h"
 #include "Container/String.h"
+#include "Container/Variant.h"
 #include "Container/Vector.h"
+#include "Foundation/Types.h"
 #include "Defines.h"
 #include "Exception/Exception.h"
 #include "Math/BoundingBox.h"
@@ -49,6 +51,5 @@
 #include "Reflection/Type.h"
 #include "Thread/Mutex.h"
 #include "Thread/Thread.h"
-#include "Types.h"
 
 #endif // __CORE_H__

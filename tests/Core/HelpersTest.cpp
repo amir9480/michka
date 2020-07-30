@@ -28,7 +28,7 @@
 #include <gtest/gtest.h>
 #include <utility>
 #include "Core/Container/String.h"
-#include "Core/Types.h"
+#include "Core/Foundation/Types.h"
 #include "Core/Helpers.h"
 
 TEST(HelpersTest, Max)

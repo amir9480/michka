@@ -131,11 +131,6 @@ namespace Michka
     }
 
     template<typename TKey, typename TValue>
-    Map<TKey, TValue>::~Map()
-    {
-    }
-
-    template<typename TKey, typename TValue>
     FORCE_INLINE typename Map<TKey, TValue>::Element& Map<TKey, TValue>::at(const u32& _index)
     {
         return mData[_index];

@@ -123,7 +123,7 @@ static void MICHKA_ATTACH(__michka_call, __LINE__)()
 
 namespace Michka
 {
-    enum SortDirection
+    enum class SortDirection
     {
         ascending,
         descending

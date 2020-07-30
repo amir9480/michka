@@ -28,9 +28,9 @@
 #include <utility>
 #include "Core/Container/String.h"
 #include "Core/Container/List.h"
-#include "Core/Reflection/Type.h"
+#include "Core/Foundation/Types.h"
 #include "Core/Helpers.h"
-#include "Core/Types.h"
+#include "Core/Reflection/Type.h"
 #include "../../Classes/Person.h"
 
 TEST(ListTest, ClearList)
