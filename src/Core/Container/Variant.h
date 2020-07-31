@@ -30,9 +30,105 @@
 #include "Core/Defines.h"
 #include "Core/Container/String.h"
 #include "Core/Container/List.h"
+#include <initializer_list>
 
 namespace Michka
 {
+    class Variant;
+
+    namespace Private
+    {
+        class MICHKA_API CustomVariantBase
+        {
+        public:
+            FORCE_INLINE CustomVariantBase();
+            virtual ~CustomVariantBase();
+
+            /**
+             * @brief Get a copy of this.
+             */
+            virtual CustomVariantBase* clone() = 0;
+
+            /**
+             * @brief Compare to another custom variant.
+             *
+             * @param _other
+             */
+            virtual bool equal(CustomVariantBase* _other);
+
+            /**
+             * @brief Get type name.
+             */
+            FORCE_INLINE String getType() const;
+
+            /**
+             * @brief Get value as string.
+             */
+            virtual String toString() const;
+
+        protected:
+            String mType;
+        };
+
+        template<typename T>
+        class MICHKA_API CustomVariant : public CustomVariantBase
+        {
+            friend class Variant;
+        public:
+            CustomVariant(const T& _value);
+            virtual ~CustomVariant();
+
+            /**
+             * @brief Get a copy of this.
+             */
+            virtual CustomVariantBase* clone();
+
+            /**
+             * @brief Compare to another custom variant.
+             *
+             * @param _other
+             */
+            virtual bool equal(CustomVariantBase* _other);
+
+            /**
+             * @brief Get value as string.
+             */
+            virtual String toString() const;
+
+        protected:
+            T* mData = nullptr;
+        };
+
+        template<typename T>
+        class MICHKA_API CustomVariantReference : public CustomVariantBase
+        {
+            friend class Variant;
+        public:
+            CustomVariantReference(T* _value);
+            virtual ~CustomVariantReference();
+
+            /**
+             * @brief Get a copy of this.
+             */
+            virtual CustomVariantBase* clone();
+
+            /**
+             * @brief Compare to another custom variant.
+             *
+             * @param _other
+             */
+            virtual bool equal(CustomVariantBase* _other);
+
+            /**
+             * @brief Get value as string.
+             */
+            virtual String toString() const;
+
+        protected:
+            T* mData = nullptr;
+        };
+    }
+
     class MICHKA_API Variant
     {
     public:
@@ -44,30 +140,38 @@ namespace Michka
             typeFloat,
             typeString,
             typeArray,
-            typeCustom
+            typeReference,
+            typeCustom,
         };
     public:
         FORCE_INLINE Variant();
-        FORCE_INLINE Variant(const std::nullptr_t& _val);
-        FORCE_INLINE Variant(const int& _val);
-        FORCE_INLINE Variant(const unsigned int& _val);
-        FORCE_INLINE Variant(const float& _val);
-        FORCE_INLINE Variant(const double& _val);
-        FORCE_INLINE Variant(const bool& _val);
-        FORCE_INLINE Variant(const short int& _val);
-        FORCE_INLINE Variant(const unsigned short int& _val);
-        FORCE_INLINE Variant(const long long int& _val);
-        FORCE_INLINE Variant(const unsigned long long int& _val);
-        FORCE_INLINE Variant(const char& _val);
-        FORCE_INLINE Variant(const unsigned char& _val);
-        FORCE_INLINE Variant(const wchar_t& _val);
-        FORCE_INLINE Variant(const char16_t& _val);
-        FORCE_INLINE Variant(const char32_t& _val);
-        FORCE_INLINE Variant(const char* _val);
-        FORCE_INLINE Variant(const wchar_t* _val);
-        FORCE_INLINE Variant(const char32_t* _val);
-        FORCE_INLINE Variant(const String& _val);
-        FORCE_INLINE Variant(const Variant& _val);
+        FORCE_INLINE Variant(const std::nullptr_t& _value);
+        FORCE_INLINE Variant(const float& _value);
+        FORCE_INLINE Variant(const double& _value);
+        FORCE_INLINE Variant(const bool& _value);
+        FORCE_INLINE Variant(const int& _value);
+        FORCE_INLINE Variant(const unsigned int& _value);
+        FORCE_INLINE Variant(const short int& _value);
+        FORCE_INLINE Variant(const unsigned short int& _value);
+        FORCE_INLINE Variant(const long long int& _value);
+        FORCE_INLINE Variant(const unsigned long long int& _value);
+        FORCE_INLINE Variant(const char& _value);
+        FORCE_INLINE Variant(const unsigned char& _value);
+        FORCE_INLINE Variant(const wchar_t& _value);
+        FORCE_INLINE Variant(const char16_t& _value);
+        FORCE_INLINE Variant(const char32_t& _value);
+        FORCE_INLINE Variant(const char* _value);
+        FORCE_INLINE Variant(const wchar_t* _value);
+        FORCE_INLINE Variant(const char32_t* _value);
+        FORCE_INLINE Variant(const String& _value);
+        FORCE_INLINE Variant(const List<Variant>& _value);
+        template<typename T>
+        FORCE_INLINE Variant(const std::initializer_list<T>& _value);
+        template<typename T>
+        FORCE_INLINE Variant(const T& _value);
+        template<typename T>
+        FORCE_INLINE Variant(T* _value);
+        FORCE_INLINE Variant(const Variant& _value);
         FORCE_INLINE ~Variant();
 
         /**
@@ -83,6 +187,12 @@ namespace Michka
         FORCE_INLINE Type getType() const;
 
         /**
+         * @brief Check variant can convert to.
+         */
+        template<typename T>
+        bool isConvertibleTo() const;
+
+        /**
          * @brief Convert variant to native type.
          *
          * @tparam T
@@ -90,36 +200,56 @@ namespace Michka
         template<typename T>
         T to() const;
 
-        FORCE_INLINE Variant& operator = (const std::nullptr_t& _val);
-        FORCE_INLINE Variant& operator = (const int& _val);
-        FORCE_INLINE Variant& operator = (const unsigned int& _val);
-        FORCE_INLINE Variant& operator = (const float& _val);
-        FORCE_INLINE Variant& operator = (const double& _val);
-        FORCE_INLINE Variant& operator = (const bool& _val);
-        FORCE_INLINE Variant& operator = (const short int& _val);
-        FORCE_INLINE Variant& operator = (const unsigned short int& _val);
-        FORCE_INLINE Variant& operator = (const long long int& _val);
-        FORCE_INLINE Variant& operator = (const unsigned long long int& _val);
-        FORCE_INLINE Variant& operator = (const char& _val);
-        FORCE_INLINE Variant& operator = (const unsigned char& _val);
-        FORCE_INLINE Variant& operator = (const wchar_t& _val);
-        FORCE_INLINE Variant& operator = (const char16_t& _val);
-        FORCE_INLINE Variant& operator = (const char32_t& _val);
-        FORCE_INLINE Variant& operator = (const char* _val);
-        FORCE_INLINE Variant& operator = (const wchar_t* _val);
-        FORCE_INLINE Variant& operator = (const char32_t* _val);
-        FORCE_INLINE Variant& operator = (const String& _val);
-        FORCE_INLINE Variant& operator = (const Variant& _val);
+        /**
+         * @brief Get value as string.
+         */
+        String toString() const;
+
+        FORCE_INLINE Variant& operator = (const std::nullptr_t& _value);
+        FORCE_INLINE Variant& operator = (const float& _value);
+        FORCE_INLINE Variant& operator = (const double& _value);
+        FORCE_INLINE Variant& operator = (const bool& _value);
+        FORCE_INLINE Variant& operator = (const int& _value);
+        FORCE_INLINE Variant& operator = (const unsigned int& _value);
+        FORCE_INLINE Variant& operator = (const short int& _value);
+        FORCE_INLINE Variant& operator = (const unsigned short int& _value);
+        FORCE_INLINE Variant& operator = (const long long int& _value);
+        FORCE_INLINE Variant& operator = (const unsigned long long int& _value);
+        FORCE_INLINE Variant& operator = (const char& _value);
+        FORCE_INLINE Variant& operator = (const unsigned char& _value);
+        FORCE_INLINE Variant& operator = (const wchar_t& _value);
+        FORCE_INLINE Variant& operator = (const char16_t& _value);
+        FORCE_INLINE Variant& operator = (const char32_t& _value);
+        FORCE_INLINE Variant& operator = (const char* _value);
+        FORCE_INLINE Variant& operator = (const wchar_t* _value);
+        FORCE_INLINE Variant& operator = (const char32_t* _value);
+        FORCE_INLINE Variant& operator = (const String& _value);
+        FORCE_INLINE Variant& operator = (const List<Variant>& _value);
+        template<typename T>
+        FORCE_INLINE Variant& operator = (const std::initializer_list<T>& _value);
+        template<typename T>
+        FORCE_INLINE Variant& operator = (const T& _value);
+        template<typename T>
+        FORCE_INLINE Variant& operator = (T* _value);
+        FORCE_INLINE Variant& operator = (const Variant& _value);
+
+        bool operator == (const Variant& _other) const;
+        FORCE_INLINE bool operator != (const Variant& _other) const;
+
+        template<typename T>
+        operator T () const;
 
     private:
-        Type mType;
+        Type mType = Type::typeNull;
         union
         {
             i64 mInt;
             double mFloat;
+            i64* mIntReference;
+            double* mFloatReference;
             String* mString;
             List<Variant>* mList;
-            void* mCustom;
+            Private::CustomVariantBase* mCustom;
         };
     };
 }

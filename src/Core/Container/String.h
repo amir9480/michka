@@ -135,6 +135,13 @@ namespace Michka
         static StringTemplate<T> fromUtf32(const char32_t* _string);
 
         /**
+         * @brief Get copy of this with removed space (or any other character) from beginning.
+         *
+         * @param _characters
+         */
+        FORCE_INLINE StringTemplate<T> getLeftTrimed(const StringTemplate<T>& _characters = "\t\n\r ") const;
+
+        /**
          * @brief Count of characters.
          *
          * @sa getSize
@@ -150,6 +157,13 @@ namespace Michka
         FORCE_INLINE StringTemplate<T> getReversed() const;
 
         /**
+         * @brief Get copy of this with removed space (or any other character) from end.
+         *
+         * @param _characters
+         */
+        FORCE_INLINE StringTemplate<T> getRightTrimed(const StringTemplate<T>& _characters = "\t\n\r ") const;
+
+        /**
          * @brief Get size of string.
          * @warning This is not count of characters. for counting characters use getLength instead..
          *
@@ -157,6 +171,13 @@ namespace Michka
          * @return size
          */
         FORCE_INLINE u32 getSize() const;
+
+        /**
+         * @brief Get copy of this with removed space (or any other character) from beginning and end.
+         *
+         * @param _characters
+         */
+        FORCE_INLINE StringTemplate<T> getTrimed(const StringTemplate<T>& _characters = "\t\n\r ") const;
 
         /**
          * @brief Insert a substring in middle of string.
@@ -176,6 +197,18 @@ namespace Michka
          * @brief Check string is not empty.
          */
         FORCE_INLINE bool isNotEmpty() const;
+
+        /**
+         * @brief Remove space (or any other character) from beginning.
+         *
+         * @return Self
+         */
+        FORCE_INLINE StringTemplate<T>& leftTrim(const StringTemplate<T>& _characters = "\t\n\r ");
+
+        /**
+         * @brief Convert boolean to string.
+         */
+        static StringTemplate<T> number(bool _bool);
 
         /**
          * @brief Convert float number to string.
@@ -238,6 +271,13 @@ namespace Michka
          * @return Self
          */
         StringTemplate<T>& resize(u32 _newSize);
+
+        /**
+         * @brief Remove space (or any other character) from end.
+         *
+         * @return Self
+         */
+        FORCE_INLINE StringTemplate<T>& rightTrim(const StringTemplate<T>& _characters = "\t\n\r ");
 
         /**
          * @brief Get size of string.
@@ -313,6 +353,13 @@ namespace Michka
          * @return
          */
         StringTemplate<char32_t> toUtf32() const;
+
+        /**
+         * @brief Remove space (or any other character) from beginning and end.
+         *
+         * @return Self
+         */
+        FORCE_INLINE StringTemplate<T>& trim(const StringTemplate<T>& _characters = "\t\n\r ");
 
         template<typename T2>
         StringTemplate<T>& operator = (const T2* _str);

@@ -35,6 +35,8 @@ namespace Michka
     template<typename T>
     class MICHKA_API List
     {
+        template<class U>
+        friend class List;
     public:
         class Element
         {
@@ -164,6 +166,13 @@ namespace Michka
          * @return Sorted List
          */
         FORCE_INLINE List<T> getSorted(const std::function<bool(const T&, const T&)>& _callback) const;
+
+        /**
+         * @brief Join list elements as a string.
+         *
+         * @param _seperator
+         */
+        String implode(const String& _seperator = ",") const;
 
         /**
          * @brief Find index of a value with offset of from.
@@ -343,6 +352,13 @@ namespace Michka
          * @param _index
          */
         T take(const u32& _index);
+
+        /**
+         * @brief Get values as string.
+         *
+         * @return String
+         */
+        String toString() const;
 
         FORCE_INLINE List<T>& operator = (const std::initializer_list<T>& _array);
         FORCE_INLINE List<T>& operator = (const List<T>& _other);

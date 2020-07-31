@@ -83,4 +83,28 @@ TEST(TypesTest, Ostream)
     s << Michka::Ray(Michka::Vector3::one, Michka::Vector3::forward);
     ASSERT_EQ(s.str(), "Ray(position=Vector3(1, 1, 1), direction=Vector3(0, 0, 1))");
     s.str("");
+
+    s << Michka::Variant();
+    ASSERT_EQ(s.str(), "null");
+    s.str("");
+
+    s << Michka::Variant(14);
+    ASSERT_EQ(s.str(), "14");
+    s.str("");
+
+    s << Michka::Vector<int>();
+    ASSERT_EQ(s.str(), "Vector(size=0)");
+    s.str("");
+
+    s << Michka::List<int>();
+    ASSERT_EQ(s.str(), "List(size=0)");
+    s.str("");
+
+    s << Michka::Vector({1,2,4});
+    ASSERT_EQ(s.str(), "Vector{1,2,4}");
+    s.str("");
+
+    s << Michka::List({1,2,4});
+    ASSERT_EQ(s.str(), "List{1,2,4}");
+    s.str("");
 }

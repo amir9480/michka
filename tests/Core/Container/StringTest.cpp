@@ -286,6 +286,8 @@ TEST(StringTest, NotEqual)
 
 TEST(StringTest, NumberToString)
 {
+    ASSERT_TRUE(Michka::String::number(false) == L"false");
+    ASSERT_TRUE(Michka::String::number(true) == L"true");
     ASSERT_TRUE(Michka::String::number(1) == L"1");
     ASSERT_TRUE(Michka::String::number(12) == L"12");
     ASSERT_TRUE(Michka::String::number(123) == L"123");
@@ -387,6 +389,8 @@ TEST(StringTest, SubString)
     ASSERT_EQ(test.subString(0, 0), "");
     test = "";
     ASSERT_EQ(test.subString(0, 1), "");
+    ASSERT_EQ(Michka::String::empty.subString(0), "");
+    ASSERT_EQ(Michka::String::empty.subString(0, 1), "");
 }
 
 TEST(StringTest, ToLower)
@@ -473,6 +477,24 @@ TEST(StringTest, ToNumber)
 TEST(StringTest, ToUpper)
 {
     ASSERT_EQ(Michka::String("Hello World!").toUpper(), "HELLO WORLD!");
+}
+
+TEST(StringTest, Trim)
+{
+    Michka::String test = "  Hello World   ";
+    ASSERT_EQ(test.getLeftTrimed(), "Hello World   ");
+    ASSERT_EQ(test.getRightTrimed(), "  Hello World");
+    ASSERT_EQ(test.getTrimed(), "Hello World");
+    ASSERT_EQ(test.getTrimed("-"), "  Hello World   ");
+
+    test = "--Hello World";
+    ASSERT_EQ(test.getLeftTrimed(), "--Hello World");
+    ASSERT_EQ(test.getRightTrimed(), "--Hello World");
+    ASSERT_EQ(test.getTrimed(), "--Hello World");
+    ASSERT_EQ(test.getRightTrimed("-"), "--Hello World");
+    ASSERT_EQ(test.getLeftTrimed("-"), "Hello World");
+    ASSERT_EQ(test.getTrimed("-"), "Hello World");
+    ASSERT_EQ(Michka::String::empty.getTrimed(), "");
 }
 
 TEST(StringTest, Unicode)

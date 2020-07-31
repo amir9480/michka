@@ -36,6 +36,8 @@ namespace Michka
     template<typename T>
     class MICHKA_API Vector
     {
+        template<class U>
+        friend class Vector;
     public:
         typedef T* Iterator;
         typedef const T* ConstIterator;
@@ -121,6 +123,13 @@ namespace Michka
          * @return Sorted Vector
          */
         FORCE_INLINE Vector<T> getSorted(const std::function<bool(const T&, const T&)>& _callback) const;
+
+        /**
+         * @brief Join vector elements as a string.
+         *
+         * @param _seperator
+         */
+        String implode(const String& _seperator = ",") const;
 
         /**
          * @brief Find index of a value with offset of from.
@@ -307,6 +316,13 @@ namespace Michka
          * @param _index
          */
         T take(const u32& _index);
+
+        /**
+         * @brief Get values as string.
+         *
+         * @return String
+         */
+        String toString() const;
 
         FORCE_INLINE Vector<T>& operator = (const std::initializer_list<T>& _array);
         FORCE_INLINE Vector<T>& operator = (const Vector<T>& _other);

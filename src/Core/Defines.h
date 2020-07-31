@@ -80,18 +80,20 @@ typedef long double            f96;
 
 #define new MICHKA_NEW
 
-#include "Memory/Memory.h"
-
 /* --------------------------- Forward declartions -------------------------- */
 
 namespace Michka
 {
     template<typename T>
-    class StringTemplate;
+    class MICHKA_API StringTemplate;
 
     typedef StringTemplate<char> String8;
     typedef StringTemplate<wchar_t> String;
     typedef StringTemplate<char32_t> String32;
 }
+
+/* ----------------------------- Memory Manager ----------------------------- */
+
+#include "Memory/Memory.h"
 
 #endif // __DEFINES_H__

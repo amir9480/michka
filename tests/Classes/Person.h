@@ -53,6 +53,16 @@ public:
         return mName;
     }
 
+    void setName(const Michka::String& _name)
+    {
+        mName = _name;
+    }
+
+    Michka::String toString() const
+    {
+        return "Person(" + mName + ")";
+    }
+
     bool operator == (const Michka::String& _name) const
     {
         return mName == _name;
@@ -65,5 +75,11 @@ public:
 protected:
     Michka::String mName;
 };
+
+static std::ostream& operator << (std::ostream& _out, const Person& _value)
+{
+    _out << "Person(" << _value.getName().toUtf8().cstr() << ")";
+    return _out;
+}
 
 #endif // __PERSON_H__

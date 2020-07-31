@@ -142,3 +142,13 @@ TEST(TypeTest, RemovePointerAndReference)
     ASSERT_TRUE(Michka::Type<typename Michka::Type<int&>::RemovedReferenceType>::is<int>());
     ASSERT_TRUE(Michka::Type<typename Michka::Type<int&&>::RemovedReferenceType>::is<int>());
 }
+
+TEST(TypeTest, Signed)
+{
+    int a = 100;
+    ASSERT_TRUE(Michka::Type<int>::isSigned);
+    ASSERT_TRUE(Michka::Type<unsigned int>::isUnsigned);
+    ASSERT_TRUE(Michka::Type<float>::isSigned);
+    ASSERT_TRUE(Michka::Type<double>::isSigned);
+    ASSERT_TRUE(Michka::Type<long double>::isSigned);
+}

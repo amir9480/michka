@@ -27,7 +27,7 @@
 #ifndef __STD_TYPES_H__
 #define __STD_TYPES_H__
 
-#include "ostream"
+#include <ostream>
 #include "Core/Defines.h"
 
 namespace Michka
@@ -39,9 +39,14 @@ namespace Michka
     class Plane;
     class Quaternion;
     class Ray;
+    class Variant;
     class Vector2;
     class Vector3;
     class Vector4;
+    template<typename T>
+    class List;
+    template<typename T>
+    class Vector;
 
     std::ostream& operator << (std::ostream& _out, const String8& _value);
     std::ostream& operator << (std::ostream& _out, const String& _value);
@@ -56,6 +61,13 @@ namespace Michka
     std::ostream& operator << (std::ostream& _out, const BoundingBox& _value);
     std::ostream& operator << (std::ostream& _out, const Plane& _value);
     std::ostream& operator << (std::ostream& _out, const Ray& _value);
+    std::ostream& operator << (std::ostream& _out, const Variant& _value);
+    template<typename T>
+    std::ostream& operator << (std::ostream& _out, const List<T>& _value);
+    template<typename T>
+    std::ostream& operator << (std::ostream& _out, const Vector<T>& _value);
 };
+
+#include "Types.inl"
 
 #endif // __STD_TYPES_H__

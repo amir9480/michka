@@ -25,13 +25,13 @@
 // ------------------------------------------------------------------------------- //
 
 #include "List.h"
+#include "Core/Container/String.h"
 #include "Core/Memory/Memory.h"
 #include "Core/Helpers.h"
 #include "Vector.h"
 
 namespace Michka
 {
-
     /* --------------------------------- Element -------------------------------- */
 
     template<typename T>
@@ -326,6 +326,42 @@ namespace Michka
         out.sort(_callback);
 
         return out;
+    }
+
+    template<typename T>
+    String List<T>::implode(const String& _seperator) const
+    {
+        String out;
+        if constexpr (HasToString<Type<T>::RemovedPointerType>::value)
+        {
+            for (auto element : *this)
+            {
+                if constexpr (Type<T>::isPointer)
+                {
+                    out += _seperator + element->toString();
+                }
+                else
+                {
+                    out += _seperator + element.toString();
+                }
+            }
+        }
+        else if constexpr (Type<T>::isNumeric)
+        {
+            for (auto element : *this)
+            {
+                out += _seperator + String::number(element);
+            }
+        }
+        else if constexpr (Type<T>::is<String>() || Type<T>::is<String8>() || Type<T>::is<String32>())
+        {
+            for (auto element : *this)
+            {
+                out += _seperator + element;
+            }
+        }
+
+        return out.getTrimed(_seperator);
     }
 
     template<typename T>
@@ -664,6 +700,21 @@ namespace Michka
         remove(_index);
 
         return value;
+    }
+
+    template<typename T>
+    String List<T>::toString() const
+    {
+        String out = implode();
+        if (out.isEmpty())
+        {
+            out = "List(size=" + String::number(mSize) + ")";
+        }
+        else
+        {
+            out = "List{" + out + "}";
+        }
+        return out;
     }
 
     template<typename T>

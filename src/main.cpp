@@ -111,9 +111,37 @@ protected:
     }
 };
 
+void ttt()
+{
+    std::cout << "1\n";
+}
+
+void ttt(int a)
+{
+    std::cout << "2\n";
+}
+
+void ttt(int a, int b)
+{
+    std::cout << "3\n";
+}
+
+#define TEST_VA_COMMA(...) MICHKA_OVERLOADED_VA_MACRO(_TEST_VA_COMMA_, __VA_ARGS__)
+#define _TEST_VA_COMMA_ZERO()
+#define _TEST_VA_COMMA_MULTIPLE(...) ,
+
+
+#define _TEST_MACRO0() std::cout << "Hello 0" << std::endl
+#define _TEST_MACRO1(a) std::cout << "Hello 1" << std::endl
+#define _TEST_MACRO2(a,b) std::cout << "Hello 2" << std::endl
+#define TEST_MACRO(...) TEST_OVERLOADED_MACRO(_TEST_MACRO, __VA_ARGS__)
+
 int main()
 {
     std::cout << "Welcome to engine!\n-------------------------------------\n\n";
+
+    ttt(2 TEST_VA_COMMA());
+
     // std::cout << ThreadBase::id() << std::endl;
 
     // Vector<CallbackThread<void()>> a;
@@ -151,22 +179,6 @@ int main()
     // {
     //     a[i].join();
     // }
-
-    union tttt
-    {
-        i64 mInt;
-        double mFloat;
-        String* mString;
-        List<Variant>* mList;
-        void* mCustom;
-    };
-    std::cout << sizeof(Michka::Variant) << "\n"  << "\n"
-            << sizeof(i64) << "\n"
-            << sizeof(double) << "\n"
-            << sizeof(String) << "\n"
-            << sizeof(List<Variant>*) << "\n"
-            << sizeof(void*) << "\n"
-            << sizeof(tttt) << "\n" << std::endl;
 
     // Michka::Window window(640, 480);
     // Michka::Window window2(640, 480);

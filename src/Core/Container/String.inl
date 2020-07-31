@@ -216,6 +216,15 @@ namespace Michka
     }
 
     template<typename T>
+    FORCE_INLINE StringTemplate<T> StringTemplate<T>::getLeftTrimed(const StringTemplate<T>& _characters) const
+    {
+        StringTemplate<T> self = *this;
+        self.leftTrim(_characters);
+
+        return self;
+    }
+
+    template<typename T>
     FORCE_INLINE u32 StringTemplate<T>::getLength() const
     {
         return stringLength(mData);
@@ -228,10 +237,28 @@ namespace Michka
     }
 
     template<typename T>
+    FORCE_INLINE StringTemplate<T> StringTemplate<T>::getTrimed(const StringTemplate<T>& _characters) const
+    {
+        StringTemplate<T> self = *this;
+        self.trim(_characters);
+
+        return self;
+    }
+
+    template<typename T>
     inline FORCE_INLINE StringTemplate<T> StringTemplate<T>::getReversed() const
     {
         StringTemplate<T> out = mData;
         return out.reverse();
+    }
+
+    template<typename T>
+    FORCE_INLINE StringTemplate<T> StringTemplate<T>::getRightTrimed(const StringTemplate<T>& _characters) const
+    {
+        StringTemplate<T> self = *this;
+        self.rightTrim(_characters);
+
+        return self;
     }
 
     template<typename T>
@@ -272,6 +299,20 @@ namespace Michka
     }
 
     template<typename T>
+    FORCE_INLINE StringTemplate<T>& StringTemplate<T>::leftTrim(const StringTemplate<T>& _characters)
+    {
+        u32 pos = 0;
+        u32 size = getSize();
+        if (size > 0)
+        {
+            for (pos = 0; pos < size && _characters.find(mData[pos]) != notFound; pos++);
+            *this = subString(pos);
+        }
+
+        return *this;
+    }
+
+    template<typename T>
     template<typename NumberType>
     StringTemplate<T> StringTemplate<T>::number(NumberType _number, const u8& _base)
     {
@@ -284,10 +325,13 @@ namespace Michka
         out.resize((sizeof(NumberType) * 8) + 1);
         bool negetive = false;
         int index = 0;
-        if (_number < 0)
+        if constexpr (Type<NumberType>::isSigned)
         {
-            negetive = true;
-            _number = -_number;
+            if (_number < 0)
+            {
+                negetive = true;
+                _number = -_number;
+            }
         }
         do
         {
@@ -299,6 +343,12 @@ namespace Michka
             out[index++] = (T)'-';
         }
         return out.reverse();
+    }
+
+    template<typename T>
+    StringTemplate<T> StringTemplate<T>::number(bool _bool)
+    {
+        return _bool ? StringTemplate<T>("true") : StringTemplate<T>("false");
     }
 
     template<typename T>
@@ -420,6 +470,20 @@ namespace Michka
     }
 
     template<typename T>
+    FORCE_INLINE StringTemplate<T>& StringTemplate<T>::rightTrim(const StringTemplate<T>& _characters)
+    {
+        u32 pos = 0;
+        u32 size = getSize();
+        if (size > 0)
+        {
+            for (pos = size - 1; pos >= 0 && _characters.find(mData[pos]) != notFound; pos--);
+            *this = subString(0, pos + 1);
+        }
+
+        return *this;
+    }
+
+    template<typename T>
     StringTemplate<T> StringTemplate<T>::subString(const u32& _start, const u32& _size) const
     {
         u32 thisSize = getSize();
@@ -453,6 +517,10 @@ namespace Michka
         if (_base < 2 || _base > 16)
         {
             throw Exception("String::number(...) : Base must be between 2 & 16.");
+        }
+        if constexpr (Type<T>::is<bool>())
+        {
+            return *this == "true" || *this == "1";
         }
         static const StringTemplate<T> numberCharacters = "0123456789abcdef";
         NumberType out = 0;
@@ -500,6 +568,12 @@ namespace Michka
             out.mData[i] = (out.mData[i] >= 'a' && out.mData[i] <= 'z') ? out.mData[i] - 32 : out.mData[i];
         }
         return out;
+    }
+
+    template<typename T>
+    FORCE_INLINE StringTemplate<T>& StringTemplate<T>::trim(const StringTemplate<T>& _characters)
+    {
+        return leftTrim(_characters).rightTrim(_characters);
     }
 
     template<typename T>

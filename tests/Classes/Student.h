@@ -24,89 +24,63 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Types.h"
+#ifndef __STUDENT_H__
+#define __STUDENT_H__
+
+#include <ostream>
 #include "Core/Container/String.h"
-#include "Core/Container/Variant.h"
-#include "Core/Math/BoundingBox.h"
-#include "Core/Math/BoundingSphere.h"
-#include "Core/Math/Matrix3.h"
-#include "Core/Math/Matrix.h"
-#include "Core/Math/Plane.h"
-#include "Core/Math/Quaternion.h"
-#include "Core/Math/Ray.h"
-#include "Core/Math/Vector2.h"
-#include "Core/Math/Vector3.h"
-#include "Core/Math/Vector4.h"
 
-namespace Michka
+// A class just for testing
+class Student
 {
-    std::ostream& operator << (std::ostream& _out, const String8& _value)
+public:
+    Student()
     {
-        return _out << _value.cstr();
+        //
     }
 
-    std::ostream& operator << (std::ostream& _out, const String& _value)
+    Student(const Michka::String& _name)
     {
-        return _out << _value.toUtf8().cstr();
+        mName = _name;
     }
 
-    std::ostream& operator << (std::ostream& _out, const String32& _value)
+    Student(const Student& _other)
     {
-        return _out << _value.toUtf8().cstr();
+        mName = _other.mName;
     }
 
-    std::ostream& operator << (std::ostream& _out, const Vector2& _value)
+    Student(Student&& _other)
     {
-        return _out << _value.toString();
+        mName = std::move(_other.mName);
     }
 
-    std::ostream& operator << (std::ostream& _out, const Vector3& _value)
+    Michka::String getName() const
     {
-        return _out << _value.toString();
+        return mName;
     }
 
-    std::ostream& operator << (std::ostream& _out, const Vector4& _value)
+    void setName(const Michka::String& _name)
     {
-        return _out << _value.toString();
+        mName = _name;
     }
 
-    std::ostream& operator << (std::ostream& _out, const Quaternion& _value)
+    bool operator == (const Michka::String& _name) const
     {
-        return _out << _value.toString();
+        return mName == _name;
     }
 
-    std::ostream& operator << (std::ostream& _out, const Matrix3& _value)
+    bool operator == (const Student& _other) const
     {
-        return _out << _value.toString();
+        return mName == _other.mName;
     }
+protected:
+    Michka::String mName;
+};
 
-    std::ostream& operator << (std::ostream& _out, const Matrix& _value)
-    {
-        return _out << _value.toString();
-    }
-
-    std::ostream& operator << (std::ostream& _out, const BoundingSphere& _value)
-    {
-        return _out << _value.toString();
-    }
-
-    std::ostream& operator << (std::ostream& _out, const BoundingBox& _value)
-    {
-        return _out << _value.toString();
-    }
-
-    std::ostream& operator << (std::ostream& _out, const Plane& _value)
-    {
-        return _out << _value.toString();
-    }
-
-    std::ostream& operator << (std::ostream& _out, const Ray& _value)
-    {
-        return _out << _value.toString();
-    }
-
-    std::ostream& operator << (std::ostream& _out, const Variant& _value)
-    {
-        return _out << _value.toString();
-    }
+static std::ostream& operator << (std::ostream& _out, const Student& _value)
+{
+    _out << "Student(" << _value.getName().toUtf8().cstr() << ")";
+    return _out;
 }
+
+#endif // __STUDENT_H__
