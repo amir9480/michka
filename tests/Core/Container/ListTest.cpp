@@ -379,6 +379,15 @@ TEST(ListTest, Set)
     ASSERT_TRUE(c[0] == 1);
     ASSERT_TRUE(c[1] == 2);
     ASSERT_TRUE(c[2] == 3);
+
+    c = {};
+    ASSERT_EQ(c.getSize(), 0);
+    c = std::move(a);
+    ASSERT_EQ(c.getSize(), 3);
+    ASSERT_TRUE(c[0] == 1);
+    ASSERT_TRUE(c[1] == 2);
+    ASSERT_TRUE(c[2] == 3);
+    ASSERT_EQ(a.getSize(), 0);
 }
 
 TEST(ListTest, Sort)

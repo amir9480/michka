@@ -35,6 +35,7 @@ set(
     ${CMAKE_CURRENT_SOURCE_DIR}/Container/StringTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Container/VariantTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Container/VectorTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Foundation/EventTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Foundation/TypesTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/HelpersTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/BoundingBoxTest.cpp

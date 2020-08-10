@@ -158,6 +158,8 @@ namespace Michka
     FORCE_INLINE Map<TKey, TValue>& Map<TKey, TValue>::clear()
     {
         mData.clear();
+
+        return *this;
     }
 
     template<typename TKey, typename TValue>

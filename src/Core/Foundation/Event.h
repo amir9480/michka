@@ -27,19 +27,43 @@
 #ifndef __EVENT_H__
 #define __EVENT_H__
 
+#include <functional>
 #include "Core/Container/String.h"
-#include "Core/Container/List.h"
+#include "Core/Container/Map.h"
+#include "Core/Container/Variant.h"
 
 namespace Michka
 {
-    class Event
+    class MICHKA_API Event
     {
+        friend class EventManager;
     public:
         Event();
         virtual ~Event();
+
+        /**
+         * @brief Get event name.
+         */
+        FORCE_INLINE String getName() const;
+
+        /**
+         * @brief Get parameter by name.
+         *
+         * @param _name
+         */
+        FORCE_INLINE Variant getParameter(const String& _name) const;
+
+        /**
+         * @brief Get all parameters.
+         */
+        FORCE_INLINE const Map<String, Variant>& getParameters() const;
+
     protected:
         String mName;
+        Map<String, Variant> mParameters;
     };
 }
+
+#include "Event.inl"
 
 #endif // __EVENT_H__

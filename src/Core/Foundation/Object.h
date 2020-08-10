@@ -24,93 +24,26 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __EVENTMANAGER_H__
-#define __EVENTMANAGER_H__
+#ifndef __MICHKA_OBJECT_H__
+#define __MICHKA_OBJECT_H__
 
-#include <functional>
 #include "Core/Defines.h"
-#include "Core/Foundation/Event.h"
-#include "Core/Container/List.h"
+#include "Core/Foundation/EventManager.h"
 
 namespace Michka
 {
-    class Event;
-    typedef std::function<void(const Event*)> EventCallback;
-
-    class EventHandler
-    {
-        friend class EventManager;
-    public:
-        FORCE_INLINE EventHandler(const EventCallback& _callback, const bool& _once = false);
-
-    private:
-        u64 mId;
-        EventCallback mCallback;
-        bool mOnce;
-
-    private:
-        static u64 lastHandlerId;
-    };
-
-    class MICHKA_API EventManager
+    class MICHKA_API Object : public EventManager
     {
     public:
-        FORCE_INLINE EventManager();
-        virtual ~EventManager();
+        FORCE_INLINE Object();
+        FORCE_INLINE Object(const Object& _other);
+        FORCE_INLINE Object(Object&& _other);
 
-        /**
-         * @brief Clear all event listeners.
-         */
-        FORCE_INLINE void clearEvents();
-
-        /**
-         * @brief Emit an event.
-         *
-         * @param _name
-         * @param _parameters
-         */
-        void emit(const String& _name, const Map<String, Variant>& _parameters = {});
-
-        /**
-         * @brief Remove all listeners to an event.
-         *
-         * @param _name
-         */
-        FORCE_INLINE void off(const String& _name);
-
-        /**
-         * @brief Remove specific event listener by handler id
-         *
-         * @param _name
-         * @param _handlerId
-         */
-        FORCE_INLINE void off(const String& _name, const u64& _handlerId);
-
-        /**
-         * @brief Add an event listener.
-         *
-         * @param _name
-         * @param _callback
-         * @param _once
-         * @return event listener id
-         */
-        FORCE_INLINE u64 on(const String& _name, const EventCallback& _callback, const bool& _once = false);
-
-        /**
-         * @brief Add an event listener but listen only once.
-         *
-         * @param _name
-         * @param _callback
-         * @param _once
-         * @return event listener id
-         */
-        FORCE_INLINE u64 once(const String& _name, const EventCallback& _callback);
-
-    private:
-        Map<String, List<EventHandler>> mEventHandlers;
+        FORCE_INLINE Object operator = (const Object& _other);
+        FORCE_INLINE Object operator = (Object&& _other);
     };
 }
 
-#include "EventManager.inl"
+#include "Object.inl"
 
-#endif // __EVENTMANAGER_H__
+#endif // __MICHKA_OBJECT_H__

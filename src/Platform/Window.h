@@ -28,10 +28,11 @@
 #define __WINDOW_H__
 
 #include "Core/Defines.h"
+#include "Core/Foundation/Object.h"
 
 namespace Michka
 {
-    class MICHKA_API Window
+    class MICHKA_API Window : public Object
     {
         MICHKA_NON_COPYABLE_CLASS(Window)
     public:

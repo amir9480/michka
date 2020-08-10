@@ -110,7 +110,7 @@ namespace \
         } \
         static const MICHKA_ATTACH(__michka_fake_type, __LINE__) m; \
     }; \
-const MICHKA_ATTACH(__michka_fake_type, __LINE__) MICHKA_ATTACH(__michka_fake_type, __LINE__)::m; \
+    const MICHKA_ATTACH(__michka_fake_type, __LINE__) MICHKA_ATTACH(__michka_fake_type, __LINE__)::m; \
 } \
 static void MICHKA_ATTACH(__michka_call, __LINE__)()
 
@@ -134,8 +134,8 @@ namespace \
         } \
         static const MICHKA_ATTACH(__michka_fake_type, __LINE__) m; \
     }; \
-const MICHKA_ATTACH(__michka_fake_type, __LINE__) MICHKA_ATTACH(__michka_fake_type, __LINE__)::m; \
-}\
+    const MICHKA_ATTACH(__michka_fake_type, __LINE__) MICHKA_ATTACH(__michka_fake_type, __LINE__)::m; \
+} \
 static void MICHKA_ATTACH(__michka_call, __LINE__)()
 
 
@@ -147,7 +147,8 @@ static void MICHKA_ATTACH(__michka_call, __LINE__)()
         { \
             static_assert( \
                 std::integral_constant<T, false>::value, \
-                "Second template parameter needs to be of function type."); \
+                "Second template parameter needs to be of function type." \
+            ); \
         }; \
         template<typename Class, typename ReturnType, typename... Args> \
         class _NAME<Class, ReturnType(Args...)> \
