@@ -48,6 +48,7 @@ namespace Michka
 
     FORCE_INLINE Object Object::operator = (const Object& _other)
     {
+        EventManager::operator=(_other);
         return *this;
     }
 

@@ -46,6 +46,11 @@ namespace Michka
         mEventHandlers.clear();
     }
 
+    FORCE_INLINE bool EventManager::getCallEventListenersManually() const
+    {
+        return mCallEventListenersManually;
+    }
+
     FORCE_INLINE void EventManager::off(const String& _name)
     {
         if (mEventHandlers.hasKey(_name))
@@ -79,5 +84,14 @@ namespace Michka
     FORCE_INLINE u64 EventManager::once(const String& _name, const EventCallback& _callback)
     {
         return on(_name, _callback, true);
+    }
+
+    FORCE_INLINE void EventManager::setCallEventListenersManually(const bool& _value)
+    {
+        if (_value == false)
+        {
+            callQueueListeners();
+        }
+        mCallEventListenersManually = _value;
     }
 }

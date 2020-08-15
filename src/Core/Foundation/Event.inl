@@ -28,6 +28,25 @@
 
 namespace Michka
 {
+    FORCE_INLINE Event::Event()
+    {
+        //
+    }
+
+    FORCE_INLINE Event::Event(const Event& _event) :
+        mName(_event.mName),
+        mParameters(_event.mParameters)
+    {
+        //
+    }
+
+    FORCE_INLINE Event::Event(Event&& _event) :
+        mName(std::move(_event.mName)),
+        mParameters(std::move(_event.mParameters))
+    {
+        //
+    }
+
     FORCE_INLINE String Event::getName() const
     {
         return mName;

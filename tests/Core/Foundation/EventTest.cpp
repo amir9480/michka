@@ -123,3 +123,36 @@ TEST(EventTest, Once)
     test.emit("testEvent");
     ASSERT_EQ(testVar, 12);
 }
+
+TEST(EventTest, Queue)
+{
+    MichkaObject test;
+    test.setCallEventListenersManually(true);
+    ASSERT_TRUE(test.getCallEventListenersManually());
+    int testVar = 0;
+    test.on("testEvent", [&testVar] (const Michka::Event* _event) {
+        testVar++;
+    });
+    test.on("testEvent2", [&testVar] (const Michka::Event* _event) {
+        testVar += 2;
+    });
+    test.emit("testEvent");
+    ASSERT_EQ(testVar, 0);
+    test.emit("testEvent2");
+    ASSERT_EQ(testVar, 0);
+
+    test.callQueueListeners();
+    ASSERT_EQ(testVar, 3);
+
+    test.emit("testEvent");
+    ASSERT_EQ(testVar, 3);
+
+    test.callQueueListeners();
+    ASSERT_EQ(testVar, 4);
+
+    test.emit("testEvent");
+    ASSERT_EQ(testVar, 4);
+    test.setCallEventListenersManually(false);
+    ASSERT_FALSE(test.getCallEventListenersManually());
+    ASSERT_EQ(testVar, 5);
+}

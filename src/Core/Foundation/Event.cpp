@@ -28,11 +28,6 @@
 
 namespace Michka
 {
-    Event::Event()
-    {
-        //
-    }
-
     Event::~Event()
     {
         //

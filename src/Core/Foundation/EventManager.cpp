@@ -35,21 +35,49 @@ namespace Michka
         //
     }
 
+    void EventManager::callQueueListeners()
+    {
+        for (auto event : mEventsQueue)
+        {
+            if (this->onEvent(&event) == false && mEventHandlers.hasKey(event.getName()))
+            {
+                for (EventHandler eventHandler : mEventHandlers[event.getName()])
+                {
+                    eventHandler.mCallback(&event);
+                }
+                mEventHandlers[event.getName()].filter([] (const EventHandler& _handler) {
+                    return _handler.mOnce == false;
+                });
+            }
+        }
+        mEventsQueue.clear();
+    }
+
     void EventManager::emit(const String& _name, const Map<String, Variant>& _parameters)
     {
-        if (mEventHandlers.hasKey(_name))
+        Event event;
+        event.mName = _name;
+        event.mParameters = _parameters;
+        if (mCallEventListenersManually)
         {
-            Event event;
-            event.mName = _name;
-            event.mParameters = _parameters;
+            mEventsQueue.pushBack(std::move(event));
+            return;
+        }
+
+        if (this->onEvent(&event) == false && mEventHandlers.hasKey(_name))
+        {
             for (EventHandler eventHandler : mEventHandlers[_name])
             {
                 eventHandler.mCallback(&event);
             }
-
             mEventHandlers[_name].filter([] (const EventHandler& _handler) {
                 return _handler.mOnce == false;
             });
         }
+    }
+
+    bool EventManager::onEvent(const Event* _event)
+    {
+        return false;
     }
 }

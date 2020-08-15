@@ -111,36 +111,9 @@ protected:
     }
 };
 
-void ttt()
-{
-    std::cout << "1\n";
-}
-
-void ttt(int a)
-{
-    std::cout << "2\n";
-}
-
-void ttt(int a, int b)
-{
-    std::cout << "3\n";
-}
-
-#define TEST_VA_COMMA(...) MICHKA_OVERLOADED_VA_MACRO(_TEST_VA_COMMA_, __VA_ARGS__)
-#define _TEST_VA_COMMA_ZERO()
-#define _TEST_VA_COMMA_MULTIPLE(...) ,
-
-
-#define _TEST_MACRO0() std::cout << "Hello 0" << std::endl
-#define _TEST_MACRO1(a) std::cout << "Hello 1" << std::endl
-#define _TEST_MACRO2(a,b) std::cout << "Hello 2" << std::endl
-#define TEST_MACRO(...) TEST_OVERLOADED_MACRO(_TEST_MACRO, __VA_ARGS__)
-
 int main()
 {
     std::cout << "Welcome to engine!\n-------------------------------------\n\n";
-
-    ttt(2 TEST_VA_COMMA());
 
     // std::cout << ThreadBase::id() << std::endl;
 
@@ -180,15 +153,15 @@ int main()
     //     a[i].join();
     // }
 
-    // Michka::Window window(640, 480);
-    // Michka::Window window2(640, 480);
-    // bool a;
-    // do {
-    //     a = window.proccess();
-    //     a |= window2.proccess();
-    // } while(a);
+    Michka::Window window(640, 480);
+    Sleep(1000);
+    window.resize(1024, 768);
+    while (window.isDestroyed() == false)
+    {
+        Sleep(100);
+    }
 
-
+    std::cout << "\nBYE\n";
     system("PAUSE");
     return 0;
 }

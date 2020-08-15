@@ -37,6 +37,7 @@ namespace Michka
 
     Mutex windowMutex;
     Map<Window*, HWND> windowInstances;
+    Map<Window*, WindowLoopThread*> windowThreads;
 
     LRESULT CALLBACK michkaMainWindowProc(HWND _hwnd, u32 _msg, WPARAM _wParam, LPARAM _lParam);
 
@@ -68,14 +69,13 @@ namespace Michka
             windowMutex.lock();
             if ((removeIndex = windowInstances.indexOfValue(_hwnd)) != windowInstances.notFound)
             {
+                windowInstances.at(removeIndex).first->destroy();
                 windowInstances.removeAt(removeIndex);
             }
             windowMutex.unlock();
-            removeIndex = windowInstances.getSize();
-            if (windowInstances.getSize() < 1)
-            {
-                PostQuitMessage(0);
-            }
+            break;
+        case WM_CLOSE:
+            DestroyWindow(_hwnd);
             break;
         case WM_GETMINMAXINFO:
             {
@@ -89,80 +89,148 @@ namespace Michka
         return DefWindowProcW(_hwnd, _msg, _wParam, _lParam);
     }
 
-    class WindowLoopThread : public Thread
+    class MICHKA_API WindowLoopThread : public Thread
     {
         friend class Window;
     public:
-        WindowLoopThread(Window* _window): Thread(), mWindow(_window), mDestroyed(false)
+        WindowLoopThread(Window* _window): mWindow(_window)
         {
+            //
         }
         virtual ~WindowLoopThread()
         {
+            //
         }
+        bool onEvent(const Event* _event)
+        {
+            if (windowInstances.hasKey(mWindow))
+            {
+                MutexLock lock(windowMutex);
+                if (_event->getName() == "changeTitle" && _event->getParameter("title").isString())
+                {
+                    SetWindowTextW(windowInstances[mWindow], _event->getParameter("title").toString().cstr());
+                    return true;
+                }
+                if (_event->getName() == "changeSize")
+                {
+                    RECT windowRect;
+                    GetWindowRect(windowInstances[mWindow], &windowRect);
+                    SetWindowPos(windowInstances[mWindow], 0, windowRect.left, windowRect.top, mWindow->getWidth(), mWindow->getHeight(), 0);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
     protected:
         virtual void run()
         {
+            HWND hwnd = CreateWindowExW(
+                (DWORD)0,
+                L"MichkaMainWindow",
+                (Michka::String(MICHKA_NAME)+" "+MICHKA_VERSION).cstr(),
+                WS_VISIBLE|WS_CAPTION|WS_OVERLAPPED|WS_SYSMENU|WS_MINIMIZEBOX,
+                0,
+                0,
+                640,
+                480,
+                nullptr,
+                nullptr,
+                GetModuleHandleA(0),
+                nullptr
+            );
+            ShowWindow(hwnd, SW_SHOW);
+            UpdateWindow(hwnd);
+            windowMutex.lock();
+            windowInstances[mWindow] = hwnd;
+            windowMutex.unlock();
+
+            MSG msg;
+            do
+            {
+                if (PeekMessageW(&msg, 0, 0, 0, PM_REMOVE))
+                {
+                    TranslateMessage(&msg);
+                    DispatchMessageW(&msg);
+                }
+                else
+                {
+                    mWindow->callQueueListeners();
+                }
+            } while(mWindow->isDestroyed() == false);
+
+            DestroyWindow(hwnd);
         }
     protected:
         Window* mWindow;
-        bool mDestroyed;
     };
 
     Window::Window(const u32& _width, const u32& _height) :
         mWidth(_width),
         mHeight(_height)
     {
-        HWND hwnd = CreateWindowExW(
-            (DWORD)0,
-            L"MichkaMainWindow",
-            (Michka::String(MICHKA_NAME)+" "+MICHKA_VERSION).cstr(),
-            WS_VISIBLE|WS_CAPTION|WS_OVERLAPPED|WS_SYSMENU|WS_MINIMIZEBOX,
-            0,
-            0,
-            640,
-            480,
-            nullptr,
-            nullptr,
-            GetModuleHandleA(0),
-            nullptr
-        );
-        ShowWindow(hwnd, SW_SHOW);
-        UpdateWindow(hwnd);
-        windowMutex.lock();
-        windowInstances[this] = hwnd;
-        windowMutex.unlock();
+        MutexLock lock(windowMutex);
+        WindowLoopThread* windowThread = new WindowLoopThread(this);
+        windowThreads.insert(this, windowThread);
+        windowThread->start();
     }
 
     Window::~Window()
     {
         destroy();
+        windowThreads[this]->join();
+        MutexLock lock(windowMutex);
+        delete windowThreads[this];
+        windowThreads.remove(this);
     }
 
     void Window::destroy()
     {
-        if (windowInstances.hasKey(this))
-        {
-            DestroyWindow(windowInstances[this]);
-        }
+        mDestroyed = true;
     }
 
-    bool Window::proccess()
+    u32 Window::getHeight() const
     {
-        MSG msg;
-        if (! windowInstances.hasKey(this))
-        {
-            return false;
-        }
-        while(PeekMessageW(&msg, 0, 0, 0, PM_REMOVE))
-        {
-            if (msg.message == WM_QUIT)
-            {
-                return false;
-            }
-            TranslateMessage(&msg);
-            DispatchMessageW(&msg);
-        }
+        return mHeight;
+    }
 
-        return true;
+    u32 Window::getWidth() const
+    {
+        return mWidth;
+    }
+
+    bool Window::isDestroyed()
+    {
+        return mDestroyed;
+    }
+
+    void Window::resize(const u32& _width, const u32& _height)
+    {
+        mWidth = _width;
+        mHeight = _height;
+        emit("changeSize");
+    }
+
+    void Window::setHeight(const u32& _height)
+    {
+        mHeight = _height;
+        emit("changeSize");
+    }
+
+    void Window::setTitle(const String& _title)
+    {
+        emit("changeTitle", {{"title", _title}});
+    }
+
+    void Window::setWidth(const u32& _width)
+    {
+        mWidth = _width;
+        emit("changeSize");
+    }
+
+    bool Window::onEvent(const Event* _event)
+    {
+        return windowThreads[this]->onEvent(_event);
     }
 }

@@ -39,13 +39,68 @@ namespace Michka
         Window(const u32& _width, const u32& _height);
         ~Window();
 
+        /**
+         * @brief Destroy window.
+         */
         void destroy();
 
-        bool proccess();
+        /**
+         * @brief Get the Height of window
+         */
+        u32 getHeight() const;
+
+        /**
+         * @brief Get the Width of window
+         */
+        u32 getWidth() const;
+
+        /**
+         * @brief Check window destroyed or not.
+         */
+        bool isDestroyed();
+
+        /**
+         * @brief Resize window.
+         *
+         * @param _width
+         * @param _height
+         */
+        void resize(const u32& _width, const u32& _height);
+
+        /**
+         * @brief Set the Height of window.
+         *
+         * @param _height
+         */
+        void setHeight(const u32& _height);
+
+        /**
+         * @brief Set window title.
+         *
+         * @param _title
+         */
+        void setTitle(const String& _title);
+
+        /**
+         * @brief Set the Width of window
+         *
+         * @param _width
+         */
+        void setWidth(const u32& _width);
 
     protected:
-        u32 mWidth;
-        u32 mHeight;
+        /**
+         * @brief callback to handle window event.
+         *
+         * @param _event
+         */
+        virtual bool onEvent(const Event* _event) override;
+
+    protected:
+        u32 mWidth = 640;
+        u32 mHeight = 480;
+        bool mDestroyed = false;
+        bool mCallEventListenersManually = true;
     };
 }
 

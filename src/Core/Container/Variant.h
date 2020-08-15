@@ -187,6 +187,53 @@ namespace Michka
         FORCE_INLINE Type getType() const;
 
         /**
+         * @brief Check type is a special variant type.
+         *
+         * @param _type
+         */
+        FORCE_INLINE bool is(const Type& _type) const;
+
+        /**
+         * @brief Check type is string
+         */
+        FORCE_INLINE bool isNull() const;
+
+        /**
+         * @brief Check type is bool
+         */
+        FORCE_INLINE bool isBool() const;
+
+        /**
+         * @brief Check type is int
+         */
+        FORCE_INLINE bool isInt() const;
+
+        /**
+         * @brief Check type is float
+         */
+        FORCE_INLINE bool isFloat() const;
+
+        /**
+         * @brief Check type is string
+         */
+        FORCE_INLINE bool isString() const;
+
+        /**
+         * @brief Check type is array
+         */
+        FORCE_INLINE bool isArray() const;
+
+        /**
+         * @brief Check type is reference
+         */
+        FORCE_INLINE bool isReference() const;
+
+        /**
+         * @brief Check type is custom
+         */
+        FORCE_INLINE bool isCustom() const;
+
+        /**
          * @brief Check variant can convert to.
          */
         template<typename T>

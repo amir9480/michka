@@ -59,6 +59,11 @@ namespace Michka
         virtual ~EventManager();
 
         /**
+         * @brief Run listeners in queue if mCallEventListenersManually is used.
+         */
+        void callQueueListeners();
+
+        /**
          * @brief Clear all event listeners.
          */
         FORCE_INLINE void clearEvents();
@@ -70,6 +75,14 @@ namespace Michka
          * @param _parameters
          */
         void emit(const String& _name, const Map<String, Variant>& _parameters = {});
+
+        /**
+         * @brief Get event listeners should be called manually.
+         * @sa callQueueListeners
+         *
+         * @return bool
+         */
+        FORCE_INLINE bool getCallEventListenersManually() const;
 
         /**
          * @brief Remove all listeners to an event.
@@ -106,8 +119,27 @@ namespace Michka
          */
         FORCE_INLINE u64 once(const String& _name, const EventCallback& _callback);
 
+        /**
+         * @brief Set this to true to prevent automatically call listeners after emit and use an event queue instead.
+         * @sa callQueueListeners
+         */
+        FORCE_INLINE void setCallEventListenersManually(const bool& _value);
+
+    protected:
+        /**
+         * @brief Callback to handle all events.
+         *
+         * @param _event
+         * @return true  if you want ignore listeners
+         * @return false if you don't want change default behavior for listeners
+         */
+        virtual bool onEvent(const Event* _event);
+
+    protected:
+        bool mCallEventListenersManually = true;
     private:
         Map<String, List<EventHandler>> mEventHandlers;
+        List<Event> mEventsQueue;
     };
 }
 

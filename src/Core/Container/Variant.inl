@@ -317,6 +317,51 @@ namespace Michka
         return mType;
     }
 
+    FORCE_INLINE bool Variant::is(const Type& _type) const
+    {
+        return mType == _type;
+    }
+
+    FORCE_INLINE bool Variant::isNull() const
+    {
+        return mType == Type::typeNull;
+    }
+
+    FORCE_INLINE bool Variant::isBool() const
+    {
+        return mType == Type::typeBool;
+    }
+
+    FORCE_INLINE bool Variant::isInt() const
+    {
+        return mType == Type::typeInt;
+    }
+
+    FORCE_INLINE bool Variant::isFloat() const
+    {
+        return mType == Type::typeFloat;
+    }
+
+    FORCE_INLINE bool Variant::isString() const
+    {
+        return mType == Type::typeString;
+    }
+
+    FORCE_INLINE bool Variant::isArray() const
+    {
+        return mType == Type::typeArray;
+    }
+
+    FORCE_INLINE bool Variant::isReference() const
+    {
+        return mType == Type::typeReference;
+    }
+
+    FORCE_INLINE bool Variant::isCustom() const
+    {
+        return mType == Type::typeCustom;
+    }
+
     template<typename T>
     bool Variant::isConvertibleTo() const
     {

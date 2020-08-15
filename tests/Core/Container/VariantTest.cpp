@@ -100,6 +100,8 @@ TEST(VariantTest, Create)
     {
         Michka::Variant a;
         ASSERT_EQ(a.getType(), Michka::Variant::Type::typeNull);
+        ASSERT_TRUE(a.is(Michka::Variant::Type::typeNull));
+        ASSERT_TRUE(a.isNull());
         ASSERT_TRUE(a.isConvertibleTo<int>());
         ASSERT_EQ(a.to<int>(), 0);
         ASSERT_EQ(a.to<Michka::String>(), "null");
@@ -115,6 +117,8 @@ TEST(VariantTest, Create)
     {
         Michka::Variant a(nullptr);
         ASSERT_EQ(a.getType(), Michka::Variant::Type::typeNull);
+        ASSERT_TRUE(a.is(Michka::Variant::Type::typeNull));
+        ASSERT_TRUE(a.isNull());
         ASSERT_TRUE(a.isConvertibleTo<int>());
         ASSERT_EQ(a.to<int>(), 0);
         ASSERT_EQ(a.toString(), "null");
@@ -124,6 +128,8 @@ TEST(VariantTest, Create)
     {
         Michka::Variant a(true);
         ASSERT_EQ(a.getType(), Michka::Variant::Type::typeBool);
+        ASSERT_TRUE(a.is(Michka::Variant::Type::typeBool));
+        ASSERT_TRUE(a.isBool());
         ASSERT_TRUE(a.isConvertibleTo<int>());
         ASSERT_EQ(a.to<int>(), 1);
         ASSERT_TRUE(a.isConvertibleTo<bool>());
@@ -151,6 +157,8 @@ TEST(VariantTest, Create)
     {
         Michka::Variant a(5);
         ASSERT_EQ(a.getType(), Michka::Variant::Type::typeInt);
+        ASSERT_TRUE(a.is(Michka::Variant::Type::typeInt));
+        ASSERT_TRUE(a.isInt());
         ASSERT_TRUE(a.isConvertibleTo<int>());
         ASSERT_EQ(a.to<int>(), 5);
         ASSERT_TRUE(a.isConvertibleTo<float>());
@@ -344,6 +352,8 @@ TEST(VariantTest, Create)
     {
         Michka::Variant a(3.14);
         ASSERT_EQ(a.getType(), Michka::Variant::Type::typeFloat);
+        ASSERT_TRUE(a.is(Michka::Variant::Type::typeFloat));
+        ASSERT_TRUE(a.isFloat());
         ASSERT_TRUE(a.isConvertibleTo<int>());
         ASSERT_EQ(a.to<int>(), 3);
         ASSERT_TRUE(a.isConvertibleTo<float>());
@@ -368,6 +378,8 @@ TEST(VariantTest, Create)
     {
         Michka::Variant a("3.14");
         ASSERT_EQ(a.getType(), Michka::Variant::Type::typeString);
+        ASSERT_TRUE(a.is(Michka::Variant::Type::typeString));
+        ASSERT_TRUE(a.isString());
         ASSERT_TRUE(a.isConvertibleTo<int>());
         ASSERT_EQ(a.to<int>(), 3);
         ASSERT_TRUE(a.isConvertibleTo<float>());
@@ -420,6 +432,8 @@ TEST(VariantTest, Create)
     {
         Michka::Variant a = {1, 2, 4};
         ASSERT_EQ(a.getType(), Michka::Variant::Type::typeArray);
+        ASSERT_TRUE(a.is(Michka::Variant::Type::typeArray));
+        ASSERT_TRUE(a.isArray());
         ASSERT_TRUE(a.isConvertibleTo<Michka::List<Michka::Variant>>());
         ASSERT_EQ(a.to<Michka::List<Michka::Variant>>(), Michka::List({1, 2, 4}));
         ASSERT_FALSE(a.isConvertibleTo<Michka::String>());
@@ -435,6 +449,8 @@ TEST(VariantTest, Create)
     {
         Michka::Variant a = Student("test");
         ASSERT_EQ(a.getType(), Michka::Variant::Type::typeCustom);
+        ASSERT_TRUE(a.is(Michka::Variant::Type::typeCustom));
+        ASSERT_TRUE(a.isCustom());
         ASSERT_TRUE(a.isConvertibleTo<Student>());
         ASSERT_TRUE(a.isConvertibleTo<Student*>());
         ASSERT_FALSE(a.isConvertibleTo<Michka::String>());
@@ -467,6 +483,8 @@ TEST(VariantTest, Create)
         Student test("Hello World");
         Michka::Variant a = &test;
         ASSERT_EQ(a.getType(), Michka::Variant::Type::typeReference);
+        ASSERT_TRUE(a.is(Michka::Variant::Type::typeReference));
+        ASSERT_TRUE(a.isReference());
         ASSERT_TRUE(a.isConvertibleTo<Student>());
         ASSERT_TRUE(a.isConvertibleTo<Student*>());
         ASSERT_EQ(a.to<Student>().getName(), "Hello World");

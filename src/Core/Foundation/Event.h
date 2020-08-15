@@ -38,7 +38,9 @@ namespace Michka
     {
         friend class EventManager;
     public:
-        Event();
+        FORCE_INLINE Event();
+        FORCE_INLINE Event(const Event& _event);
+        FORCE_INLINE Event(Event&& _event);
         virtual ~Event();
 
         /**
