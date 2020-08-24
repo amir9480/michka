@@ -34,6 +34,8 @@
 #define MICHKA_VERSION_NUMBER 1
 #define MICHKA_DEBUG _DEBUG
 
+#define MICHKA_OPEN_GL_SUPPORT 1
+
 /* -------------------------------- Compiler -------------------------------- */
 
 #define MICHKA_COMPILER_MSVC 1
@@ -54,6 +56,7 @@
 #   define MICHKA_PLATFORM MICHKA_PLATFORM_WIN32
 #   define MICHKA_PLATFORM_NAME "Windows"
 #   define MICHKA_API __declspec(dllexport)
+#   define NOMINMAX
 #endif
 
 /* ---------------------------------- Types --------------------------------- */

@@ -153,12 +153,10 @@ int main()
     //     a[i].join();
     // }
 
-    Michka::Window window(640, 480);
-    Sleep(1000);
-    window.resize(1024, 768);
-    while (window.isDestroyed() == false)
+    Device* device = Device::instance(Device::Driver::OpenGL);
+    while (1)
     {
-        Sleep(100);
+        device->clear(true, true, true, Vector4(0.0f, 1.0f, 0.0f, 1.0f));
     }
 
     std::cout << "\nBYE\n";

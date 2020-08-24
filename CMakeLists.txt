@@ -31,21 +31,26 @@ set(CMAKE_CXX_STANDARD 17)
 set(SOURCES "")
 
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/d3dx12")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glad/include")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/opengl")
 add_subdirectory("src/Core")
 add_subdirectory("src/Graphics")
 add_subdirectory("src/Platform")
 
+set(
+    SOURCES
+    ${SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glad/src/glad.c
+)
+
 add_executable(Michka ${SOURCES} "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
 add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
 set_property(TARGET Michka PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
-# target_link_libraries(Michka ${LIBS})
-target_link_libraries(
-    Michka
-    d3d12.lib
-    dxgi.lib
-    dxguid.lib
+set(
+    LIBS
+    opengl32.lib
 )
+target_link_libraries(Michka ${LIBS})
 
 if(MICHKA_BUILD_TYPE STREQUAL "MinSizeRel")
     set(MICHKA_BUILD_TYPE "MinSizeRel")
@@ -69,10 +74,9 @@ if(PACKAGE_TESTS)
     if(EXISTS "${CMAKE_CURRENT_BINARY_DIR}/lib/${MICHKA_BUILD_TYPE}/gtest${MICHKA_LIBRARY_POSTFIX}.lib")
         include_directories("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/googletest/googletest/include")
         link_directories("${CMAKE_CURRENT_BINARY_DIR}/lib/${MICHKA_BUILD_TYPE}")
-        add_subdirectory("tests")
     else()
         set(gtest_force_shared_crt On)
         add_subdirectory("thirdparty/googletest")
-        add_subdirectory("tests")
     endif()
+    add_subdirectory("tests")
 endif()

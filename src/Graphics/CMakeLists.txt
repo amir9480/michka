@@ -31,10 +31,12 @@ set(
     # -------------------------------------------------------------------------- #
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Device.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/VertexBuffer.cpp
 
-    # ---------------------------------- D3D12 --------------------------------- #
+    # --------------------------------- OpenGL --------------------------------- #
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/Direct3D12/D3D12Device.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/OpenGL/OpenGLDevice.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/OpenGL/OpenGLVertexBuffer.cpp
 
     # -------------------------------------------------------------------------- #
 

@@ -25,11 +25,10 @@
 // ------------------------------------------------------------------------------- //
 
 #include "Memory.h"
-#include <iostream>
 
 #undef new
 
-#if MICHKA_DEBUG
+#if (MICHKA_DEBUG)
 
 void* operator new (const size_t _size, const char* _filename, u32 _line) noexcept
 {

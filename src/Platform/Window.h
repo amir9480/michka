@@ -36,7 +36,7 @@ namespace Michka
     {
         MICHKA_NON_COPYABLE_CLASS(Window)
     public:
-        Window(const u32& _width, const u32& _height);
+        Window(const u32& _width = 800, const u32& _height = 600);
         ~Window();
 
         /**
@@ -57,7 +57,7 @@ namespace Michka
         /**
          * @brief Check window destroyed or not.
          */
-        bool isDestroyed();
+        bool isDestroyed() const;
 
         /**
          * @brief Resize window.
@@ -87,6 +87,11 @@ namespace Michka
          * @param _width
          */
         void setWidth(const u32& _width);
+
+        /**
+         * @brief Show window
+         */
+        void show();
 
     protected:
         /**

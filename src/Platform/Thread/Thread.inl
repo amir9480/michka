@@ -26,7 +26,7 @@
 
 #include "Core/Defines.h"
 
-#if MICHKA_PLATFORM == MICHKA_PLATFORM_WIN32
+#if (MICHKA_PLATFORM == MICHKA_PLATFORM_WIN32)
 
 #include "Platform/Windows/Thread/Thread.inl"
 

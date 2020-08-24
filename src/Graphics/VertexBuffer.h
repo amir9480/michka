@@ -24,41 +24,23 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Device.h"
-#include "OpenGL/OpenGLDevice.h"
+#ifndef __VERTEX_BUFFER_H__
+#define __VERTEX_BUFFER_H__
 
-extern "C"
-{
-    // Force to use dedicated graphic card
-    __declspec(dllexport) unsigned long NvOptimusEnablement = 1;
-    __declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
-}
+#include "Core/Defines.h"
 
 namespace Michka
 {
-    Device::~Device()
+    class MICHKA_API VertexBuffer
     {
-        //
-    }
+    public:
+        virtual ~VertexBuffer();
 
-    Window* Device::getWindow() const
-    {
-        return mWindow;
-    }
-
-    Device* Device::instance(const Driver& _driver)
-    {
-        static Device* device = nullptr;
-        if (device == nullptr)
-        {
-            switch (_driver)
-            {
-                case Driver::OpenGL:
-                    device = new OpenGLDevice();
-                    break;
-            }
-        }
-
-        return device;
-    }
+        /**
+         * @brief Destroy vertex buffer.
+         */
+        virtual void destroy() = 0;
+    };
 }
+
+#endif // __VERTEX_BUFFER_H__

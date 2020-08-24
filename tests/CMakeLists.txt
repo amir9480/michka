@@ -33,6 +33,7 @@ set(TEST_SOURCES "")
 add_subdirectory("Core")
 
 add_executable(MichkaTests ${SOURCES} ${TEST_SOURCES})
+target_link_libraries(MichkaTests ${LIBS})
 
 if(MICHKA_BUILD_TYPE STREQUAL "Debug")
     target_link_libraries(MichkaTests gtestd gtest_maind)

@@ -24,21 +24,12 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "D3D12Device.h"
-#include "Core/Helpers.h"
-#include "Core/Container/String.h"
-#include <d3d12.h>
-#include <dxgi1_6.h>
-#include <d3dcompiler.h>
-#include <d3dx12.h>
+#include "VertexBuffer.h"
 
 namespace Michka
 {
-    D3D12Device::D3D12Device()
+    VertexBuffer::~VertexBuffer()
     {
-    }
-
-    D3D12Device::~D3D12Device()
-    {
+        //
     }
 }

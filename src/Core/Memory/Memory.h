@@ -49,7 +49,7 @@ namespace Michka
 
 #undef new
 
-#if MICHKA_DEBUG
+#if (MICHKA_DEBUG)
 
 void* operator new (const std::size_t _size, const char* _filename, u32 _line) noexcept;
 void operator delete (void* _ptr) noexcept;

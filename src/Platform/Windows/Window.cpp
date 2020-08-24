@@ -49,7 +49,7 @@ namespace Michka
         michkaWndClass.hInstance = GetModuleHandleW(0);
         michkaWndClass.lpfnWndProc = michkaMainWindowProc;
         michkaWndClass.lpszClassName = L"MichkaMainWindow";
-        michkaWndClass.style = CS_HREDRAW | CS_VREDRAW;
+        michkaWndClass.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
         RegisterClassW(&michkaWndClass);
     }
 
@@ -106,12 +106,17 @@ namespace Michka
             if (windowInstances.hasKey(mWindow))
             {
                 MutexLock lock(windowMutex);
-                if (_event->getName() == "changeTitle" && _event->getParameter("title").isString())
+                if (_event->getName() == "show")
+                {
+                    ShowWindow(windowInstances[mWindow], SW_SHOW);
+                    UpdateWindow(windowInstances[mWindow]);
+                }
+                else if (_event->getName() == "changeTitle" && _event->getParameter("title").isString())
                 {
                     SetWindowTextW(windowInstances[mWindow], _event->getParameter("title").toString().cstr());
                     return true;
                 }
-                if (_event->getName() == "changeSize")
+                else if (_event->getName() == "changeSize")
                 {
                     RECT windowRect;
                     GetWindowRect(windowInstances[mWindow], &windowRect);
@@ -130,18 +135,16 @@ namespace Michka
                 (DWORD)0,
                 L"MichkaMainWindow",
                 (Michka::String(MICHKA_NAME)+" "+MICHKA_VERSION).cstr(),
-                WS_VISIBLE|WS_CAPTION|WS_OVERLAPPED|WS_SYSMENU|WS_MINIMIZEBOX,
+                WS_CAPTION|WS_OVERLAPPED|WS_SYSMENU|WS_MINIMIZEBOX,
                 0,
                 0,
-                640,
-                480,
+                mWindow->getWidth(),
+                mWindow->getHeight(),
                 nullptr,
                 nullptr,
                 GetModuleHandleA(0),
                 nullptr
             );
-            ShowWindow(hwnd, SW_SHOW);
-            UpdateWindow(hwnd);
             windowMutex.lock();
             windowInstances[mWindow] = hwnd;
             windowMutex.unlock();
@@ -149,6 +152,7 @@ namespace Michka
             MSG msg;
             do
             {
+                //! TODO: add sleep to use less CPU
                 if (PeekMessageW(&msg, 0, 0, 0, PM_REMOVE))
                 {
                     TranslateMessage(&msg);
@@ -157,6 +161,7 @@ namespace Michka
                 else
                 {
                     mWindow->callQueueListeners();
+                    Thread::sleep(10);
                 }
             } while(mWindow->isDestroyed() == false);
 
@@ -200,7 +205,7 @@ namespace Michka
         return mWidth;
     }
 
-    bool Window::isDestroyed()
+    bool Window::isDestroyed() const
     {
         return mDestroyed;
     }
@@ -227,6 +232,11 @@ namespace Michka
     {
         mWidth = _width;
         emit("changeSize");
+    }
+
+    void Window::show()
+    {
+        emit("show");
     }
 
     bool Window::onEvent(const Event* _event)

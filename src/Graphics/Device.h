@@ -28,21 +28,55 @@
 #define __DEVICE_H__
 
 #include "Core/Defines.h"
+#include "Core/Math/Vector4.h"
+#include "Platform/Window.h"
 
 namespace Michka
 {
+    class VertexBuffer;
+
     class MICHKA_API Device
     {
     public:
         enum class Driver
         {
-            Direct3D12
+#           if MICHKA_OPEN_GL_SUPPORT
+                OpenGL,
+#           endif
         };
     public:
         virtual ~Device();
 
+        /**
+         * @brief Clear render target.
+         *
+         * @param _backBuffer
+         * @param _depthBuffer
+         * @param _stencil
+         * @param _backBufferValue
+         * @param _depthValue
+         * @param _stencilValue
+         */
+        virtual void clear(const bool& _backBuffer = true, const bool& _depthBuffer = true, const bool& _stencil = true, const Vector4& _backBufferValue = Vector4(0.0f, 0.0f, 0.0f, 0.0f), const f32& _depthValue = 0.0f, const u8& _stencilValue = 0) = 0;
+
+        /**
+         * @brief Create a Vertex Buffer.
+         */
+        virtual VertexBuffer* createVertexBuffer() = 0;
+
+        /**
+         * @brief Get the output window.
+         */
+        virtual Window* getWindow() const;
+
+        /**
+         * @brief Singleton instance getter.
+         *
+         * @param _driver
+         */
         static Device* instance(const Driver& _driver);
     protected:
+        Window* mWindow;
     };
 }
 

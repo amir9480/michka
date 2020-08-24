@@ -24,41 +24,32 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Device.h"
-#include "OpenGL/OpenGLDevice.h"
+#ifndef __OPENGL_DEVICE_H__
+#define __OPENGL_DEVICE_H__
 
-extern "C"
-{
-    // Force to use dedicated graphic card
-    __declspec(dllexport) unsigned long NvOptimusEnablement = 1;
-    __declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
-}
+#include "Core/Defines.h"
+#include "Graphics/Device.h"
+#include "OpenGLHeaders.h"
 
 namespace Michka
 {
-    Device::~Device()
+    class OpenGLDevice : public Device
     {
-        //
-    }
+    public:
+        OpenGLDevice();
+        virtual ~OpenGLDevice();
 
-    Window* Device::getWindow() const
-    {
-        return mWindow;
-    }
+        virtual void clear(const bool& _backBuffer = true, const bool& _depthBuffer = true, const bool& _stencil = true, const Vector4& _backBufferValue = Vector4(0.0f, 0.0f, 0.0f, 0.0f), const f32& _depthValue = 0.0f, const u8& _stencilValue = 0) override;
 
-    Device* Device::instance(const Driver& _driver)
-    {
-        static Device* device = nullptr;
-        if (device == nullptr)
-        {
-            switch (_driver)
-            {
-                case Driver::OpenGL:
-                    device = new OpenGLDevice();
-                    break;
-            }
-        }
+        virtual VertexBuffer* createVertexBuffer() override;
 
-        return device;
-    }
+    private:
+#       if (MICHKA_PLATFORM == MICHKA_PLATFORM_WIN32)
+            HWND mHwnd = 0;
+            HDC mHdc = 0;
+            HGLRC mOGLRenderContext = 0;
+#       endif
+    };
 }
+
+#endif // __OPENGL_DEVICE_H__
