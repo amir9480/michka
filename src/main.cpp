@@ -154,6 +154,7 @@ int main()
     // }
 
     Device* device = Device::instance(Device::Driver::OpenGL);
+    VertexBuffer* vertexBuffer = device->createVertexBuffer();
     while (device->getWindow()->isDestroyed() == false)
     {
         device->clear(true, true, true, Vector4(0.0f, 1.0f, 0.0f, 1.0f));

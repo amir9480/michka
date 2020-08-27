@@ -33,7 +33,7 @@
 
 namespace Michka
 {
-    class Matrix;
+    class Matrix3;
     class Vector3;
 
     /**
@@ -49,7 +49,7 @@ namespace Michka
         Quaternion(const Vector3& _axis, const f32& _angle);
         Quaternion(const Vector3& _from, const Vector3& _to);
         Quaternion(const Vector3& _right, const Vector3& _up, const Vector3& _forward);
-        Quaternion(const Matrix& _matrix);
+        Quaternion(const Matrix3& _matrix);
         FORCE_INLINE Quaternion(const Quaternion& _other);
 
         /**
@@ -240,7 +240,7 @@ namespace Michka
          * @param _matrix
          * @return Self
          */
-        Quaternion& set(const Matrix& _matrix);
+        Quaternion& set(const Matrix3& _matrix);
 
         /**
          * @brief Set from axes.
@@ -285,14 +285,14 @@ namespace Michka
         /**
          * @brief Convert to rotation matrix.
          */
-        Matrix toMatrix() const;
+        Matrix3 toMatrix() const;
 
         /**
          * @brief Get value as string.
          */
         String toString() const;
 
-        FORCE_INLINE Quaternion& operator  = (const Quaternion& _other);
+        FORCE_INLINE Quaternion& operator = (const Quaternion& _other);
 
         FORCE_INLINE bool operator == (const Quaternion& _other) const;
         FORCE_INLINE bool operator != (const Quaternion& _other) const;

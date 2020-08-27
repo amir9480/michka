@@ -25,7 +25,7 @@
 // ------------------------------------------------------------------------------- //
 
 #include "Quaternion.h"
-#include "Matrix.h"
+#include "Matrix3.h"
 #include "Vector3.h"
 #include "Core/Container/String.h"
 
@@ -39,7 +39,7 @@ namespace Michka
         set(_x, _y, _z);
     }
 
-    Quaternion::Quaternion(const Matrix& _matrix)
+    Quaternion::Quaternion(const Matrix3& _matrix)
     {
         set(_matrix);
     }
@@ -190,7 +190,7 @@ namespace Michka
         return *this;
     }
 
-    Quaternion& Quaternion::set(const Matrix& _matrix)
+    Quaternion& Quaternion::set(const Matrix3& _matrix)
     {
         // Adapted from http://www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToQuaternion/index.htm
         f32 t = _matrix.m11 + _matrix.m22 + _matrix.m33;
@@ -236,11 +236,10 @@ namespace Michka
 
     void Quaternion::set(const Vector3& _right, const Vector3& _up, const Vector3& _forward)
     {
-        set(Matrix(
-            _right.x  , _right.y  , _right.z  , 0.0f,
-            _up.x     , _up.y     , _up.z     , 0.0f,
-            _forward.x, _forward.y, _forward.z, 0.0f,
-            0.0f      , 0.0f      , 0.0f      , 1.0f
+        set(Matrix3(
+            _right.x  , _right.y  , _right.z  ,
+            _up.x     , _up.y     , _up.z     ,
+            _forward.x, _forward.y, _forward.z
         ));
     }
 
@@ -311,7 +310,7 @@ namespace Michka
         );
     }
 
-    Matrix Quaternion::toMatrix() const
+    Matrix3 Quaternion::toMatrix() const
     {
         f32 x2 = 2.0f * x * x;
         f32 y2 = 2.0f * y * y;
@@ -323,11 +322,10 @@ namespace Michka
         f32 yz = 2.0f * y * z;
         f32 zw = 2.0f * -w * z;
 
-        return Matrix(
-            1.0f - y2 - z2, xy - zw, xz + yw, 0.0f,
-            xy + zw, 1.0f - x2 - z2, yz - xw, 0.0f,
-            xz - yw, yz + xw, 1.0f - x2 - y2, 0.0f,
-            0.0f, 0.0f, 0.0f, 1.0f
+        return Matrix3(
+            1.0f - y2 - z2, xy - zw, xz + yw,
+            xy + zw, 1.0f - x2 - z2, yz - xw,
+            xz - yw, yz + xw, 1.0f - x2 - y2
         );
     }
 

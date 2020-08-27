@@ -26,6 +26,7 @@
 
 #include <gtest/gtest.h>
 #include "Core/Math/Quaternion.h"
+#include "Core/Math/Matrix3.h"
 #include "Core/Math/Matrix.h"
 #include "Core/Math/Vector3.h"
 #include "Core/Foundation/Types.h"
@@ -60,14 +61,14 @@ TEST(QuaternionTest, Create)
         ASSERT_EQ(q, Michka::Quaternion(0.331413f, -0.461939f, -0.191341f, 0.800103f));
     }
     {
-        Michka::Quaternion q(Michka::Matrix::createRotationMatrixY(90.0f));
+        Michka::Quaternion q(Michka::Matrix3::createRotationMatrixY(90.0f));
         ASSERT_EQ(q, Michka::Quaternion(0.0f, 90.0f, 0.0f));
 
-        q = Michka::Matrix::createRotationMatrixX(180.0f);
+        q = Michka::Matrix3::createRotationMatrixX(180.0f);
         ASSERT_EQ(q, Michka::Quaternion(180.0f, 0.0f, 0.0f));
-        q = Michka::Matrix::createRotationMatrixY(180.0f);
+        q = Michka::Matrix3::createRotationMatrixY(180.0f);
         ASSERT_EQ(q, Michka::Quaternion(0.0f, 180.0f, 0.0f));
-        q = Michka::Matrix::createRotationMatrixZ(180.0f);
+        q = Michka::Matrix3::createRotationMatrixZ(180.0f);
         ASSERT_EQ(q, Michka::Quaternion(0.0f, 0.0f, 180.0f));
 
         Michka::Quaternion q2(q);
