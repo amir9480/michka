@@ -154,7 +154,7 @@ int main()
     // }
 
     Device* device = Device::instance(Device::Driver::OpenGL);
-    while (1)
+    while (device->getWindow()->isDestroyed() == false)
     {
         device->clear(true, true, true, Vector4(0.0f, 1.0f, 0.0f, 1.0f));
     }

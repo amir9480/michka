@@ -85,6 +85,11 @@ namespace Michka
         FORCE_INLINE bool getCallEventListenersManually() const;
 
         /**
+         * @brief Check there are not-called event listeners on queue.
+         */
+        FORCE_INLINE bool hasEventsOnQueue() const;
+
+        /**
          * @brief Remove all listeners to an event.
          *
          * @param _name
@@ -136,7 +141,7 @@ namespace Michka
         virtual bool onEvent(const Event* _event);
 
     protected:
-        bool mCallEventListenersManually = true;
+        bool mCallEventListenersManually = false;
     private:
         Map<String, List<EventHandler>> mEventHandlers;
         List<Event> mEventsQueue;

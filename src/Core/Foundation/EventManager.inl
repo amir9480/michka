@@ -51,6 +51,11 @@ namespace Michka
         return mCallEventListenersManually;
     }
 
+    FORCE_INLINE bool EventManager::hasEventsOnQueue() const
+    {
+        return mEventsQueue.getSize() > 0;
+    }
+
     FORCE_INLINE void EventManager::off(const String& _name)
     {
         if (mEventHandlers.hasKey(_name))

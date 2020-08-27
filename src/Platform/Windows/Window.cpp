@@ -82,8 +82,8 @@ namespace Michka
                 LPMINMAXINFO m = (LPMINMAXINFO) _lParam;
                 m->ptMinTrackSize.x = 640;
                 m->ptMinTrackSize.y = 480;
-                break;
             }
+            break;
         }
 
         return DefWindowProcW(_hwnd, _msg, _wParam, _lParam);
@@ -105,22 +105,27 @@ namespace Michka
         {
             if (windowInstances.hasKey(mWindow))
             {
+                HWND hwnd = windowInstances[mWindow];
                 MutexLock lock(windowMutex);
                 if (_event->getName() == "show")
                 {
-                    ShowWindow(windowInstances[mWindow], SW_SHOW);
-                    UpdateWindow(windowInstances[mWindow]);
+                    ShowWindow(hwnd, SW_SHOW);
+                    UpdateWindow(hwnd);
                 }
                 else if (_event->getName() == "changeTitle" && _event->getParameter("title").isString())
                 {
-                    SetWindowTextW(windowInstances[mWindow], _event->getParameter("title").toString().cstr());
+                    SetWindowTextW(hwnd, _event->getParameter("title").toString().cstr());
                     return true;
                 }
                 else if (_event->getName() == "changeSize")
                 {
                     RECT windowRect;
-                    GetWindowRect(windowInstances[mWindow], &windowRect);
-                    SetWindowPos(windowInstances[mWindow], 0, windowRect.left, windowRect.top, mWindow->getWidth(), mWindow->getHeight(), 0);
+                    GetWindowRect(hwnd, &windowRect);
+                    windowRect.right = windowRect.left + mWindow->getWidth();
+                    windowRect.bottom = windowRect.top + mWindow->getHeight();
+                    i32 windowStyle = GetWindowLongW(hwnd, GWL_STYLE);
+                    AdjustWindowRect(&windowRect, windowStyle, 0);
+                    SetWindowPos(hwnd, 0, windowRect.left, windowRect.top, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, 0);
                     return true;
                 }
             }
@@ -131,15 +136,18 @@ namespace Michka
     protected:
         virtual void run()
         {
+            i32 windowStyle = WS_CAPTION|WS_OVERLAPPED|WS_SYSMENU|WS_MINIMIZEBOX;
+            RECT windowRect = {0, 0, i32(mWindow->getWidth()), i32(mWindow->getHeight())};
+            AdjustWindowRect(&windowRect, windowStyle, 0);
             HWND hwnd = CreateWindowExW(
                 (DWORD)0,
                 L"MichkaMainWindow",
-                (Michka::String(MICHKA_NAME)+" "+MICHKA_VERSION).cstr(),
-                WS_CAPTION|WS_OVERLAPPED|WS_SYSMENU|WS_MINIMIZEBOX,
+                (Michka::String(MICHKA_NAME) + " " + MICHKA_VERSION).cstr(),
+                windowStyle,
                 0,
                 0,
-                mWindow->getWidth(),
-                mWindow->getHeight(),
+                windowRect.right - windowRect.left,
+                windowRect.bottom - windowRect.top,
                 nullptr,
                 nullptr,
                 GetModuleHandleA(0),

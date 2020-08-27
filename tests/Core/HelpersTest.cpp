@@ -24,7 +24,6 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-
 #include <gtest/gtest.h>
 #include <utility>
 #include "Core/Container/String.h"
