@@ -35,17 +35,25 @@ class Person
 public:
     Person(const Michka::String& _name)
     {
+        count++;
         mName = _name;
     }
 
     Person(const Person& _other)
     {
+        count++;
         mName = _other.mName;
     }
 
     Person(Person&& _other)
     {
+        count++;
         mName = std::move(_other.mName);
+    }
+
+    ~Person()
+    {
+        count--;
     }
 
     Michka::String getName() const
@@ -63,6 +71,18 @@ public:
         return "Person(" + mName + ")";
     }
 
+    Person& operator = (const Person& _other)
+    {
+        mName = _other.mName;
+        return *this;
+    }
+
+    Person& operator = (Person&& _other)
+    {
+        mName = std::move(_other.mName);
+        return *this;
+    }
+
     bool operator == (const Michka::String& _name) const
     {
         return mName == _name;
@@ -72,14 +92,14 @@ public:
     {
         return mName == _other.mName;
     }
+
+public:
+    static u32 count;
+
 protected:
     Michka::String mName;
 };
 
-static std::ostream& operator << (std::ostream& _out, const Person& _value)
-{
-    _out << "Person(" << _value.getName().toUtf8().cstr() << ")";
-    return _out;
-}
+std::ostream& operator << (std::ostream& _out, const Person& _value);
 
 #endif // __PERSON_H__

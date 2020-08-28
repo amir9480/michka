@@ -260,29 +260,47 @@ TEST(VectorTest, Push)
 
 TEST(VectorTest, Remove)
 {
-    Michka::Vector<int> a = {2, 4, 6, 8, 10, 2};
-    a.remove(1);
-    ASSERT_EQ(a.getSize(), 5);
-    ASSERT_EQ(a[1], 6);
-    ASSERT_EQ(a[4], 2);
+    {
+        Michka::Vector<int> a = {2, 4, 6, 8, 10, 2};
+        a.remove(1);
+        ASSERT_EQ(a.getSize(), 5);
+        ASSERT_EQ(a[1], 6);
+        ASSERT_EQ(a[4], 2);
 
-    a.remove(1, 2);
-    ASSERT_EQ(a.getSize(), 3);
-    ASSERT_EQ(a[1], 10);
-    ASSERT_EQ(a[2], 2);
+        a.remove(1, 2);
+        ASSERT_EQ(a.getSize(), 3);
+        ASSERT_EQ(a[1], 10);
+        ASSERT_EQ(a[2], 2);
 
-    a.remove(3); // remove out of range
-    a.remove(5);
-    ASSERT_EQ(a.getSize(), 3);
-    ASSERT_EQ(a[1], 10);
-    ASSERT_EQ(a[2], 2);
+        a.remove(3); // remove out of range
+        a.remove(5);
+        ASSERT_EQ(a.getSize(), 3);
+        ASSERT_EQ(a[1], 10);
+        ASSERT_EQ(a[2], 2);
 
-    a.remove(1, Michka::u32Info::max);
-    ASSERT_EQ(a.getSize(), 1);
-    ASSERT_EQ(a[0], 2);
+        a.remove(1, Michka::u32Info::max);
+        ASSERT_EQ(a.getSize(), 1);
+        ASSERT_EQ(a[0], 2);
 
-    a.remove(0);
-    ASSERT_EQ(a.getSize(), 0);
+        a.remove(0);
+        ASSERT_EQ(a.getSize(), 0);
+
+        a = {2, 4, 6, 8, 10, 2};
+        a.remove(0, 6);
+        ASSERT_EQ(a.getSize(), 0);
+    }
+
+    {
+        Person::count = 0;
+        Michka::Vector<Person> a = {Person("2"), Person("4"), Person("6"), Person("8"), Person("1"), Person("2")};
+        ASSERT_EQ(Person::count, 6);
+        a.remove(1);
+        ASSERT_EQ(a.getSize(), 5);
+        ASSERT_EQ(Person::count, 5);
+        a.remove(0, 5);
+        ASSERT_EQ(a.getSize(), 0);
+        ASSERT_EQ(Person::count, 0);
+    }
 }
 
 TEST(VectorTest, Reverse)

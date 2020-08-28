@@ -432,6 +432,10 @@ namespace Michka
             {
                 mData[i] = std::move(mData[i + count]);
             }
+            for (u32 i = mSize - count; i < mSize; i++)
+            {
+                mData[i].~T();
+            }
             mSize -= count;
         }
 

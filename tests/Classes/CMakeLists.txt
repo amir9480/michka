@@ -24,23 +24,15 @@
 ## SOFTWARE.                                                                       ##
 ## ------------------------------------------------------------------------------- ##
 
-cmake_minimum_required(VERSION 3.0.0)
-project(MichkaTests)
+set(
+    TEST_SOURCES
+    ${TEST_SOURCES}
 
-enable_testing()
+    # -------------------------------------------------------------------------- #
 
-set(TEST_SOURCES "")
-add_subdirectory("Classes")
-add_subdirectory("Core")
-add_subdirectory("Platform")
+    ${CMAKE_CURRENT_SOURCE_DIR}/Person.cpp
 
-add_executable(MichkaTests ${SOURCES} ${TEST_SOURCES})
-target_link_libraries(MichkaTests ${LIBS})
+    # -------------------------------------------------------------------------- #
 
-if(MICHKA_BUILD_TYPE STREQUAL "Debug")
-    target_link_libraries(MichkaTests gtestd gtest_maind)
-else()
-    target_link_libraries(MichkaTests gtest gtest_main)
-endif()
-
-add_test(MichkaTest MichkaTests)
+    PARENT_SCOPE
+)
