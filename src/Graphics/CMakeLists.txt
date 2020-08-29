@@ -32,6 +32,7 @@ set(
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Device.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/VertexBuffer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/VertexDeclaration.cpp
 
     # --------------------------------- OpenGL --------------------------------- #
 

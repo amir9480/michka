@@ -110,6 +110,7 @@ namespace Michka
     template<typename TKey, typename TValue>
     FORCE_INLINE Map<TKey, TValue>::Map()
     {
+        //
     }
 
     template<typename TKey, typename TValue>

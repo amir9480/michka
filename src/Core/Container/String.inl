@@ -40,6 +40,7 @@ namespace Michka
     template<typename T>
     FORCE_INLINE StringTemplate<T>::StringTemplate()
     {
+        //
     }
 
     template<typename T>

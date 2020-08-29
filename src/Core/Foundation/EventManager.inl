@@ -38,7 +38,7 @@ namespace Michka
 
     FORCE_INLINE EventManager::EventManager()
     {
-
+        //
     }
 
     FORCE_INLINE void EventManager::clearEvents()

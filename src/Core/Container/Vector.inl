@@ -33,6 +33,7 @@ namespace Michka
     template<typename T>
     FORCE_INLINE Vector<T>::Vector()
     {
+        //
     }
 
     template<typename T>

@@ -42,6 +42,7 @@ namespace Michka
 
     FORCE_INLINE Thread::Thread()
     {
+        //
     }
 
     FORCE_INLINE Thread::Thread(Thread&& _other)

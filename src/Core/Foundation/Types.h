@@ -43,6 +43,8 @@ namespace Michka
     class Vector2;
     class Vector3;
     class Vector4;
+    struct VertexAttribute;
+    class VertexDeclaration;
     template<typename T>
     class List;
     template<typename T>
@@ -62,6 +64,8 @@ namespace Michka
     std::ostream& operator << (std::ostream& _out, const Plane& _value);
     std::ostream& operator << (std::ostream& _out, const Ray& _value);
     std::ostream& operator << (std::ostream& _out, const Variant& _value);
+    std::ostream& operator << (std::ostream& _out, const VertexAttribute& _value);
+    std::ostream& operator << (std::ostream& _out, const VertexDeclaration& _value);
     template<typename T>
     std::ostream& operator << (std::ostream& _out, const List<T>& _value);
     template<typename T>

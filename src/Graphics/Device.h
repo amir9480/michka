@@ -61,8 +61,10 @@ namespace Michka
 
         /**
          * @brief Create a Vertex Buffer.
+         *
+         * @param _dynamic
          */
-        virtual VertexBuffer* createVertexBuffer() = 0;
+        virtual VertexBuffer* createVertexBuffer(const bool& _static = true) = 0;
 
         /**
          * @brief Get the output window.

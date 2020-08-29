@@ -38,17 +38,20 @@ namespace Michka
     FORCE_INLINE List<T>::Element::Element(const T& _val):
         value(_val)
     {
+        //
     }
 
     template<typename T>
     FORCE_INLINE List<T>::Element::Element(T&& _val):
         value(std::forward<T>(_val))
     {
+        //
     }
 
     template<typename T>
     List<T>::Element::~Element()
     {
+        //
     }
 
     /* ----------------------------- Const Iterator ----------------------------- */
@@ -56,6 +59,7 @@ namespace Michka
     template<typename T>
     FORCE_INLINE List<T>::ConstIterator::ConstIterator()
     {
+        //
     }
 
     template<typename T>
@@ -162,12 +166,14 @@ namespace Michka
     List<T>::Iterator::Iterator()
         : ConstIterator()
     {
+        //
     }
 
     template<typename T>
     FORCE_INLINE List<T>::Iterator::Iterator(typename List<T>::Element* _element)
         : ConstIterator(_element)
     {
+        //
     }
 
     template<typename T>
@@ -199,6 +205,7 @@ namespace Michka
     template<typename T>
     FORCE_INLINE List<T>::List()
     {
+        //
     }
 
     template<typename T>

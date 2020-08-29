@@ -33,6 +33,7 @@ class Person
 public:
     Person()
     {
+        //
     }
 
     Person(const Michka::String& _name)
@@ -111,10 +112,29 @@ protected:
     }
 };
 
+struct CustomVertex
+{
+    Vector3 pos;
+    Vector3 normal;
+    Vector2 uv;
+    static const VertexDeclaration& decl()
+    {
+        static auto d =
+        VertexDeclaration::begin()
+            .float32(3, VertexAttribute::Name::position)
+            .float32(3, VertexAttribute::Name::normal)
+            .float32(2, VertexAttribute::Name::texcoord0)
+        .end();
+        return d;
+    }
+};
+
 int main()
 {
     std::cout << "Welcome to engine!\n-------------------------------------\n\n";
-
+    VertexDeclaration test = CustomVertex::decl();
+    String ts = test.toString();
+    std::cout << ts << std::endl;
     // std::cout << ThreadBase::id() << std::endl;
 
     // Vector<CallbackThread<void()>> a;
@@ -153,12 +173,12 @@ int main()
     //     a[i].join();
     // }
 
-    Device* device = Device::instance(Device::Driver::OpenGL);
-    VertexBuffer* vertexBuffer = device->createVertexBuffer();
-    while (device->getWindow()->isDestroyed() == false)
-    {
-        device->clear(true, true, true, Vector4(0.0f, 1.0f, 0.0f, 1.0f));
-    }
+    // Device* device = Device::instance(Device::Driver::OpenGL);
+    // VertexBuffer* vertexBuffer = device->createVertexBuffer();
+    // while (device->getWindow()->isDestroyed() == false)
+    // {
+    //     device->clear(true, true, true, Vector4(0.0f, 1.0f, 0.0f, 1.0f));
+    // }
 
     std::cout << "\nBYE\n";
     system("PAUSE");

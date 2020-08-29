@@ -37,6 +37,7 @@
 #include "Core/Math/Vector2.h"
 #include "Core/Math/Vector3.h"
 #include "Core/Math/Vector4.h"
+#include "Graphics/VertexDeclaration.h"
 
 namespace Michka
 {
@@ -106,6 +107,16 @@ namespace Michka
     }
 
     std::ostream& operator << (std::ostream& _out, const Variant& _value)
+    {
+        return _out << _value.toString();
+    }
+
+    std::ostream& operator << (std::ostream& _out, const VertexAttribute& _value)
+    {
+        return _out << _value.toString();
+    }
+
+    std::ostream& operator << (std::ostream& _out, const VertexDeclaration& _value)
     {
         return _out << _value.toString();
     }

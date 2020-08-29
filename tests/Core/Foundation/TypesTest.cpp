@@ -27,6 +27,7 @@
 #include <gtest/gtest.h>
 #include <sstream>
 #include "Core/Core.h"
+#include "Graphics/Graphics.h"
 
 TEST(TypesTest, Ostream)
 {
@@ -107,4 +108,27 @@ TEST(TypesTest, Ostream)
     s << Michka::List({1,2,4});
     ASSERT_EQ(s.str(), "List{1,2,4}");
     s.str("");
+
+    s << Michka::VertexAttribute({Michka::VertexAttribute::Name::normal, Michka::VertexAttribute::Type::float32, 3});
+    ASSERT_EQ(s.str(), "VertexAttribute(name=normal,type=float32,elements=3)");
+    s.str("");
+
+    s << Michka::VertexDeclaration::begin()
+        .float32(3, Michka::VertexAttribute::Name::position)
+        .float32(3, Michka::VertexAttribute::Name::normal)
+        .float32(3, Michka::VertexAttribute::Name::binormal)
+        .float32(3, Michka::VertexAttribute::Name::tangent)
+        .float32(2, Michka::VertexAttribute::Name::texcoord0)
+    .end();
+
+    ASSERT_EQ(
+        s.str(),
+        "VertexDeclaration(\n"
+        "    VertexAttribute(name=position,type=float32,elements=3),\n"
+        "    VertexAttribute(name=normal,type=float32,elements=3),\n"
+        "    VertexAttribute(name=binormal,type=float32,elements=3),\n"
+        "    VertexAttribute(name=tangent,type=float32,elements=3),\n"
+        "    VertexAttribute(name=texcoord0,type=float32,elements=2)\n"
+        ")"
+    );
 }

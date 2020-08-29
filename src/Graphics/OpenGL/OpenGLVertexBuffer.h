@@ -41,11 +41,15 @@ namespace Michka
         virtual ~OpenGLVertexBuffer();
 
         virtual void destroy() override;
+
+        virtual void set(const void* _vertices, const u32& _size) override;
+
     protected:
         OpenGLDevice* mDevice = nullptr;
         u32           mSize = 0;
 	    u32	          mVAO = 0;
 	    u32	          mVBO = 0;
+        bool          mStatic = false;
     };
 }
 

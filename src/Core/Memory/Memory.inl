@@ -31,10 +31,12 @@ namespace Michka
 {
     FORCE_INLINE MemoryManager::MemoryManager()
     {
+        //
     }
 
     FORCE_INLINE MemoryManager::~MemoryManager()
     {
+        //
     }
 
     FORCE_INLINE void* MemoryManager::malloc(const std::size_t& _size)

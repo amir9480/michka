@@ -24,6 +24,69 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Device.h"
-#include "VertexBuffer.h"
-#include "VertexDeclaration.h"
+#ifndef __VERTEX_DECLARATION_H__
+#define __VERTEX_DECLARATION_H__
+
+#include "Core/Defines.h"
+#include "Core/Container/Vector.h"
+
+namespace Michka
+{
+    struct VertexAttribute
+    {
+        enum class Name
+        {
+            position,
+		    normal,
+		    tangent,
+		    binormal,
+		    blendIndices,
+		    blendWeight,
+		    color0,
+		    color1,
+		    color2,
+		    color3,
+		    texcoord0,
+		    texcoord1,
+		    texcoord2,
+		    texcoord3,
+		    texcoord4,
+		    texcoord5,
+		    texcoord6,
+		    texcoord7,
+        };
+
+        enum class Type
+        {
+            float32,
+            int16,
+            int32,
+        };
+
+        String toString() const;
+
+        Name name;
+        Type type;
+        u8 elements = 1;
+    };
+
+    class VertexDeclaration
+    {
+    public:
+        static VertexDeclaration begin();
+
+        VertexDeclaration& end();
+
+        VertexDeclaration& float32(const u8& _elements, const VertexAttribute::Name& _name);
+
+        VertexDeclaration& int16(const u8& _elements, const VertexAttribute::Name& _name);
+
+        VertexDeclaration& int32(const u8& _elements, const VertexAttribute::Name& _name);
+
+        String toString() const;
+    protected:
+        Vector<VertexAttribute> mAttributes;
+    };
+}
+
+#endif // __VERTEX_DECLARATION_H__

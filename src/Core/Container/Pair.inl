@@ -31,6 +31,7 @@ namespace Michka
     template<typename T1, typename T2>
     FORCE_INLINE Pair<T1, T2>::Pair()
     {
+        //
     }
 
     template<typename T1, typename T2>
@@ -38,6 +39,7 @@ namespace Michka
         first(_first),
         second(_second)
     {
+        //
     }
 
     template<typename T1, typename T2>
@@ -45,7 +47,7 @@ namespace Michka
         first(std::forward<T1>(_first)),
         second(std::forward<T2>(_second))
     {
-
+        //
     }
 
     template<typename T1, typename T2>
@@ -53,6 +55,7 @@ namespace Michka
         first(_other.first),
         second(_other.second)
     {
+        //
     }
 
     template<typename T1, typename T2>
@@ -60,11 +63,13 @@ namespace Michka
         first(std::move(_other.first)),
         second(std::move(_other.second))
     {
+        //
     }
 
     template<typename T1, typename T2>
     FORCE_INLINE Pair<T1, T2>::~Pair()
     {
+        //
     }
 
     template<typename T1, typename T2>

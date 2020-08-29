@@ -40,6 +40,14 @@ namespace Michka
          * @brief Destroy vertex buffer.
          */
         virtual void destroy() = 0;
+
+        /**
+         * @brief Set vertex buffer.
+         *
+         * @param _vertices
+         * @param _size
+         */
+        virtual void set(const void* _vertices, const u32& _size) = 0;
     };
 }
 

@@ -193,10 +193,11 @@ namespace Michka
         InvalidateRect(mHwnd, 0, 1);
     }
 
-    VertexBuffer* OpenGLDevice::createVertexBuffer()
+    VertexBuffer* OpenGLDevice::createVertexBuffer(const bool& _static)
     {
         OpenGLVertexBuffer* out = new OpenGLVertexBuffer;
         out->mDevice = this;
+        out->mStatic = _static;
         return out;
     }
 }

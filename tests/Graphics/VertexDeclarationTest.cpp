@@ -24,6 +24,26 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Device.h"
-#include "VertexBuffer.h"
-#include "VertexDeclaration.h"
+#include <gtest/gtest.h>
+#include "Core/Container/String.h"
+#include "Graphics/VertexDeclaration.h"
+
+TEST(VertexDeclarationTest, TestToString)
+{
+    auto dec =
+        Michka::VertexDeclaration::begin()
+            .float32(3, Michka::VertexAttribute::Name::position)
+            .float32(3, Michka::VertexAttribute::Name::normal)
+            .int16(3, Michka::VertexAttribute::Name::texcoord0)
+            .int32(2, Michka::VertexAttribute::Name::texcoord1)
+        .end();
+    ASSERT_EQ(
+        dec.toString(),
+        "VertexDeclaration(\n"
+        "    VertexAttribute(name=position,type=float32,elements=3),\n"
+        "    VertexAttribute(name=normal,type=float32,elements=3),\n"
+        "    VertexAttribute(name=texcoord0,type=int16,elements=3),\n"
+        "    VertexAttribute(name=texcoord1,type=int32,elements=2)\n"
+        ")"
+    );
+}

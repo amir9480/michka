@@ -32,12 +32,12 @@ namespace Michka
 {
     OpenGLVertexBuffer::OpenGLVertexBuffer()
     {
-
+        //
     }
 
     OpenGLVertexBuffer::~OpenGLVertexBuffer()
     {
-
+        destroy();
     }
 
     void OpenGLVertexBuffer::destroy()
@@ -50,5 +50,18 @@ namespace Michka
             mVAO = 0;
             mVBO = 0;
         }
+    }
+
+    void OpenGLVertexBuffer::set(const void* _vertices, const u32& _size)
+    {
+        destroy();
+        mSize = _size;
+
+        glGenVertexArrays(1, &mVAO);
+        glGenBuffers(1, &mVBO);
+
+	    glBindVertexArray(mVAO);
+        glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+        glBufferData(GL_ARRAY_BUFFER, mSize, _vertices, mStatic ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW);
     }
 }
