@@ -24,36 +24,16 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __CORE_H__
-#define __CORE_H__
+#include <gtest/gtest.h>
+#include "Core/Container/Hash.h"
+#include "../../Classes/Person.h"
 
-#include "Container/Hash.h"
-#include "Container/List.h"
-#include "Container/Map.h"
-#include "Container/Pair.h"
-#include "Container/String.h"
-#include "Container/Variant.h"
-#include "Container/Vector.h"
-#include "Foundation/Event.h"
-#include "Foundation/EventManager.h"
-#include "Foundation/Object.h"
-#include "Foundation/Types.h"
-#include "Defines.h"
-#include "Exception/Exception.h"
-#include "Math/BoundingBox.h"
-#include "Math/BoundingSphere.h"
-#include "Math/Matrix.h"
-#include "Math/Matrix3.h"
-#include "Math/Plane.h"
-#include "Math/Quaternion.h"
-#include "Math/Ray.h"
-#include "Math/Utility.h"
-#include "Math/Vector2.h"
-#include "Math/Vector3.h"
-#include "Math/Vector4.h"
-#include "Memory/Memory.h"
-#include "Reflection/Type.h"
-#include "Thread/Mutex.h"
-#include "Thread/Thread.h"
-
-#endif // __CORE_H__
+TEST(HashTest, Make)
+{
+    ASSERT_EQ(Michka::Hash::make(50000), 8890329748430039920);
+    ASSERT_EQ(Michka::Hash::make("Hello World!"), 10092224619179044402);
+    ASSERT_EQ(Michka::Hash::make(Michka::String("Hello World!")), 10092224619179044402);
+    ASSERT_EQ(Michka::Hash::make(Michka::String8("Hello World!")), 10092224619179044402);
+    ASSERT_EQ(Michka::Hash::make(Michka::String32("Hello World!")), 10092224619179044402);
+    ASSERT_EQ(Michka::Hash::make(Person("michka")), 13600492811701842044);
+}

@@ -91,6 +91,16 @@ namespace Michka
         using RemovedReferenceType = typename std::remove_reference<T>::type;
 
         /**
+         * @brief Type without const.
+         */
+        using RemovedConstType = typename std::remove_const<T>::type;
+
+        /**
+         * @brief Type without volatile.
+         */
+        using RemovedVolatileType = typename std::remove_volatile<T>::type;
+
+        /**
          * @brief Sizeof type
          */
         static inline const u32 size = sizeof(T);
@@ -169,6 +179,16 @@ namespace Michka
          * @brief Is type a pointer type.
          */
         static inline const bool isPointer = std::is_pointer<T>::value;
+
+        /**
+         * @brief Is type a c string
+         */
+        static inline const bool isCString =
+            (std::is_array<typename std::remove_cv<RemovedReferenceType>::type>::value && std::is_same<char, typename std::remove_extent<typename std::remove_cv<RemovedReferenceType>::type>::type>::value) ||
+            std::is_same<char *, typename std::remove_cv<RemovedReferenceType>::type>::value ||
+            std::is_same<const char *, typename std::remove_cv<RemovedReferenceType>::type>::value ||
+            std::is_same<char[], typename std::remove_cv<RemovedReferenceType>::type>::value ||
+            std::is_same<const char [], typename std::remove_cv<RemovedReferenceType>::type>::value;
 
         /**
          * @brief Is type assaignable.
