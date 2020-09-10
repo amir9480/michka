@@ -24,36 +24,32 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __OPENGL_VERTEX_BUFFER_H__
-#define __OPENGL_VERTEX_BUFFER_H__
+#ifndef __OPENGL_INDEX_BUFFER_H__
+#define __OPENGL_INDEX_BUFFER_H__
 
 #include "Core/Defines.h"
-#include "Graphics/VertexBuffer.h"
+#include "Graphics/IndexBuffer.h"
 #include "OpenGLHeaders.h"
 
 namespace Michka
 {
-    class VertexDeclaration;
-
-    class OpenGLVertexBuffer : public VertexBuffer
+    class OpenGLIndexBuffer : public IndexBuffer
     {
         friend class OpenGLDevice;
     public:
-        OpenGLVertexBuffer();
-        virtual ~OpenGLVertexBuffer();
+        OpenGLIndexBuffer();
+        virtual ~OpenGLIndexBuffer();
 
         virtual void destroy() override;
 
-        virtual void set(const void* _vertices, const u32& _size) override;
+        virtual void set(const u32* _indices, const u32& _count) override;
 
     protected:
         OpenGLDevice*       mDevice = nullptr;
-        VertexDeclaration*  mVertexDeclaration = nullptr;
-        u32                 mSize = 0;
-	    u32	                mVAO = 0;
-	    u32	                mVBO = 0;
+        u32                 mCount = 0;
+	    u32	                mEBO = 0;
         bool                mStatic = false;
     };
 }
 
-#endif // __OPENGL_VERTEX_BUFFER_H__
+#endif // __OPENGL_INDEX_BUFFER_H__

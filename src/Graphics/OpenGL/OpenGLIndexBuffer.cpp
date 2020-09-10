@@ -24,36 +24,41 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __OPENGL_VERTEX_BUFFER_H__
-#define __OPENGL_VERTEX_BUFFER_H__
-
-#include "Core/Defines.h"
-#include "Graphics/VertexBuffer.h"
-#include "OpenGLHeaders.h"
+#include "OpenGLIndexBuffer.h"
+#include "Graphics/VertexDeclaration.h"
 
 namespace Michka
 {
-    class VertexDeclaration;
-
-    class OpenGLVertexBuffer : public VertexBuffer
+    OpenGLIndexBuffer::OpenGLIndexBuffer()
     {
-        friend class OpenGLDevice;
-    public:
-        OpenGLVertexBuffer();
-        virtual ~OpenGLVertexBuffer();
+        //
+    }
 
-        virtual void destroy() override;
+    OpenGLIndexBuffer::~OpenGLIndexBuffer()
+    {
+        destroy();
+    }
 
-        virtual void set(const void* _vertices, const u32& _size) override;
+    void OpenGLIndexBuffer::destroy()
+    {
+        if (mCount > 0)
+        {
+	        glDeleteBuffers(1, &mEBO);
+            mCount = 0;
+            mEBO = 0;
+        }
+    }
 
-    protected:
-        OpenGLDevice*       mDevice = nullptr;
-        VertexDeclaration*  mVertexDeclaration = nullptr;
-        u32                 mSize = 0;
-	    u32	                mVAO = 0;
-	    u32	                mVBO = 0;
-        bool                mStatic = false;
-    };
+    void OpenGLIndexBuffer::set(const u32* _indices, const u32& _count)
+    {
+        destroy();
+        mCount = _count;
+
+        glGenBuffers(1, &mEBO);
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, _count * sizeof(u32), (void*)_indices, mStatic ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW);
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    }
 }
-
-#endif // __OPENGL_VERTEX_BUFFER_H__

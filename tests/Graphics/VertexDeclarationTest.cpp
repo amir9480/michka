@@ -28,7 +28,7 @@
 #include "Core/Container/String.h"
 #include "Graphics/VertexDeclaration.h"
 
-TEST(VertexDeclarationTest, TestToString)
+TEST(VertexDeclarationTest, Create)
 {
     auto dec =
         Michka::VertexDeclaration::begin()
@@ -46,4 +46,5 @@ TEST(VertexDeclarationTest, TestToString)
         "    VertexAttribute(name=texcoord1,type=int32,elements=2)\n"
         ")"
     );
+    ASSERT_EQ(dec.getHash(), 2634101685743308180);
 }

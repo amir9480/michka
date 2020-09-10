@@ -63,6 +63,11 @@ namespace Michka
             int32,
         };
 
+        /**
+         * @brief Get the size of attribute in bytes.
+         */
+        u8 getSize() const;
+
         String toString() const;
 
         Name name;
@@ -73,19 +78,69 @@ namespace Michka
     class VertexDeclaration
     {
     public:
+        /**
+         * @brief Begin declaration.
+         */
         static VertexDeclaration begin();
 
+        /**
+         * @brief End of declaration.
+         */
         VertexDeclaration& end();
 
+        /**
+         * @brief Add 32-bit float point number to layout.
+         *
+         * @param _elements number of elements
+         * @param _name name of vertex part
+         */
         VertexDeclaration& float32(const u8& _elements, const VertexAttribute::Name& _name);
 
+        /**
+         * @brief Get the vertex declaration attributes.
+         */
+        const Vector<VertexAttribute>& getAttributes() const;
+
+        /**
+         * @brief Get vertex declaration
+         *
+         * @return u64 const
+         */
+        u64 getHash() const;
+
+        /**
+         * @brief Get the Stride size in bytes.
+         */
+        u8 getStride() const;
+
+        /**
+         * @brief Add 16-bit integer number to layout.
+         *
+         * @param _elements number of elements
+         * @param _name name of vertex part
+         */
         VertexDeclaration& int16(const u8& _elements, const VertexAttribute::Name& _name);
 
+        /**
+         * @brief Add 32-bit integer number to layout.
+         *
+         * @param _elements number of elements
+         * @param _name name of vertex part
+         */
         VertexDeclaration& int32(const u8& _elements, const VertexAttribute::Name& _name);
 
+        /**
+         * @brief Show as string.
+         */
         String toString() const;
+
+    protected:
+        VertexDeclaration();
+
     protected:
         Vector<VertexAttribute> mAttributes;
+        u64 mHash = 0;
+        u8 mStride = 0;
     };
 }
 

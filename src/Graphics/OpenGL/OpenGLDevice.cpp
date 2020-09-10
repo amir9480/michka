@@ -28,6 +28,7 @@
 #include "Core/Thread/Thread.h"
 #include "Core/Thread/Mutex.h"
 #include "OpenGLVertexBuffer.h"
+#include "OpenGLIndexBuffer.h"
 
 namespace Michka
 {
@@ -193,11 +194,50 @@ namespace Michka
         InvalidateRect(mHwnd, 0, 1);
     }
 
-    VertexBuffer* OpenGLDevice::createVertexBuffer(const bool& _static)
+    IndexBuffer* OpenGLDevice::createIndexBuffer(const bool& _static)
+    {
+        OpenGLIndexBuffer* out = new OpenGLIndexBuffer;
+        out->mDevice = this;
+        out->mStatic = _static;
+        return out;
+    }
+
+    VertexBuffer* OpenGLDevice::createVertexBuffer(VertexDeclaration* _vertexDeclaration, const bool& _static)
     {
         OpenGLVertexBuffer* out = new OpenGLVertexBuffer;
         out->mDevice = this;
         out->mStatic = _static;
+        out->mVertexDeclaration = _vertexDeclaration;
         return out;
+    }
+
+    void OpenGLDevice::setVertexBuffer(VertexBuffer* _vertexBuffer)
+    {
+        if (_vertexBuffer)
+        {
+            OpenGLVertexBuffer* vertexBuffer = dynamic_cast<OpenGLVertexBuffer*>(_vertexBuffer);
+            glBindVertexArray(vertexBuffer->mVAO);
+            glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer->mVBO);
+        }
+        else
+        {
+            glBindVertexArray(0);
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
+        }
+        mCurrentVertexBuffer = _vertexBuffer;
+    }
+
+    void OpenGLDevice::setIndexBuffer(IndexBuffer* _indexBuffer)
+    {
+        if (_indexBuffer)
+        {
+            OpenGLIndexBuffer* vertexBuffer = dynamic_cast<OpenGLIndexBuffer*>(_indexBuffer);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vertexBuffer->mEBO);
+        }
+        else
+        {
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        }
+        mCurrentIndexBuffer = _indexBuffer;
     }
 }

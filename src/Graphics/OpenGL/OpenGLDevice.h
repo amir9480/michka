@@ -41,7 +41,13 @@ namespace Michka
 
         virtual void clear(const bool& _backBuffer = true, const bool& _depthBuffer = true, const bool& _stencil = true, const Vector4& _backBufferValue = Vector4(0.0f, 0.0f, 0.0f, 0.0f), const f32& _depthValue = 0.0f, const u8& _stencilValue = 0) override;
 
-        virtual VertexBuffer* createVertexBuffer(const bool& _static = true) override;
+        virtual IndexBuffer* createIndexBuffer(const bool& _static = true);
+
+        virtual VertexBuffer* createVertexBuffer(VertexDeclaration* _vertexDeclaration, const bool& _static = true) override;
+
+        virtual void setVertexBuffer(VertexBuffer* _vertexBuffer = nullptr) override;
+
+        virtual void setIndexBuffer(IndexBuffer* _indexBuffer = nullptr) override;
 
     private:
 #       if (MICHKA_PLATFORM == MICHKA_PLATFORM_WIN32)

@@ -25,8 +25,7 @@
 // ------------------------------------------------------------------------------- //
 
 #include "OpenGLVertexBuffer.h"
-#include "Core/Thread/Thread.h"
-#include "Core/Thread/Mutex.h"
+#include "Graphics/VertexDeclaration.h"
 
 namespace Michka
 {
@@ -63,5 +62,8 @@ namespace Michka
 	    glBindVertexArray(mVAO);
         glBindBuffer(GL_ARRAY_BUFFER, mVBO);
         glBufferData(GL_ARRAY_BUFFER, mSize, _vertices, mStatic ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW);
+
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+	    glBindVertexArray(0);
     }
 }

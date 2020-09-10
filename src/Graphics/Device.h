@@ -30,10 +30,13 @@
 #include "Core/Defines.h"
 #include "Core/Math/Vector4.h"
 #include "Platform/Window.h"
+#include "Shader.h"
 
 namespace Michka
 {
+    class IndexBuffer;
     class VertexBuffer;
+    class VertexDeclaration;
 
     class MICHKA_API Device
     {
@@ -60,11 +63,19 @@ namespace Michka
         virtual void clear(const bool& _backBuffer = true, const bool& _depthBuffer = true, const bool& _stencil = true, const Vector4& _backBufferValue = Vector4(0.0f, 0.0f, 0.0f, 0.0f), const f32& _depthValue = 0.0f, const u8& _stencilValue = 0) = 0;
 
         /**
+         * @brief Create an Index Buffer.
+         *
+         * @param _static
+         */
+        virtual IndexBuffer* createIndexBuffer(const bool& _static = true) = 0;
+
+        /**
          * @brief Create a Vertex Buffer.
          *
-         * @param _dynamic
+         * @param _vertexDeclaration
+         * @param _static
          */
-        virtual VertexBuffer* createVertexBuffer(const bool& _static = true) = 0;
+        virtual VertexBuffer* createVertexBuffer(VertexDeclaration* _vertexDeclaration, const bool& _static = true) = 0;
 
         /**
          * @brief Get the output window.
@@ -77,8 +88,25 @@ namespace Michka
          * @param _driver
          */
         static Device* instance(const Driver& _driver);
+
+        /**
+         * @brief Set current index buffer.
+         *
+         * @param _indexBuffer
+         */
+        virtual void setIndexBuffer(IndexBuffer* _indexBuffer = nullptr) = 0;
+
+        /**
+         * @brief Set current vertex buffer.
+         *
+         * @param _vertexBuffer
+         */
+        virtual void setVertexBuffer(VertexBuffer* _vertexBuffer = nullptr) = 0;
+
     protected:
-        Window* mWindow;
+        Window* mWindow = nullptr;
+        IndexBuffer* mCurrentIndexBuffer = nullptr;
+        VertexBuffer* mCurrentVertexBuffer = nullptr;
     };
 }
 
