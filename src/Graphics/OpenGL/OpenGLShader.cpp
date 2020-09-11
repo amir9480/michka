@@ -38,7 +38,97 @@ namespace Michka
         destroy();
     }
 
+    bool OpenGLShader::compile()
+    {
+        char* tempStr = nullptr;
+        int success = 0;
+        char errorsBuffer[2048];
+        Map<Shader::Type, u32> shaders;
+        Map<Shader::Type, String8> shaderSources;
+        for (auto shaderSource : mShadersSources)
+        {
+            shaderSources[shaderSource.key()] = shaderSource.value().toUtf8();
+        }
+
+        if (shaderSources.hasKey(Shader::Type::Vertex))
+        {
+            u32 vertexShader = glCreateShader(GL_VERTEX_SHADER);
+            tempStr = (char *)(shaderSources[Shader::Type::Vertex].cstr());
+            glShaderSource(vertexShader, 1, &tempStr, 0);
+            glCompileShader(vertexShader);
+            glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+            if (! success)
+            {
+                glGetShaderInfoLog(vertexShader, 2048, 0, errorsBuffer);
+                mErrors += String("Vertex shader error: ") + errorsBuffer + "\n";
+            }
+            shaders[Shader::Type::Vertex] = vertexShader;
+        }
+
+        if (shaderSources.hasKey(Shader::Type::Pixel))
+        {
+            u32 pixelShader = glCreateShader(GL_FRAGMENT_SHADER);
+            tempStr = (char *)shaderSources[Shader::Type::Pixel].cstr();
+            glShaderSource(pixelShader, 1, &tempStr, 0);
+            glCompileShader(pixelShader);
+            glGetShaderiv(pixelShader, GL_COMPILE_STATUS, &success);
+            if (! success)
+            {
+                glGetShaderInfoLog(pixelShader, 2048, 0, errorsBuffer);
+                mErrors += String("Pixel shader error: ") + errorsBuffer + "\n";
+            }
+            shaders[Shader::Type::Pixel] = pixelShader;
+        }
+
+        if (mErrors.isNotEmpty())
+        {
+            for (auto shader : shaders)
+            {
+                glDeleteShader(shader.value());
+            }
+            return false;
+        }
+
+        mProgram = glCreateProgram();
+        for (auto shader : shaders)
+        {
+            glAttachShader(mProgram, shader.value());
+        }
+        glLinkProgram(mProgram);
+
+        glGetProgramiv(mProgram, GL_LINK_STATUS, &success);
+        if (! success)
+        {
+            glGetProgramInfoLog(mProgram, 2048, 0, errorsBuffer);
+            mErrors += String("Shader link error: ") + errorsBuffer + "\n";
+            glDeleteProgram(mProgram);
+            mProgram = 0;
+        }
+
+        for (auto shader : shaders)
+        {
+            glDeleteShader(shader.value());
+        }
+
+        return mErrors.isEmpty();
+    }
+
     void OpenGLShader::destroy()
     {
+        if (mProgram)
+        {
+            glDeleteProgram(mProgram);
+            mProgram = 0;
+        }
+    }
+
+    void OpenGLShader::setPixelShader(const String& _source)
+    {
+        mShadersSources[Shader::Type::Pixel] = _source;
+    }
+
+    void OpenGLShader::setVertexShader(const String& _source)
+    {
+        mShadersSources[Shader::Type::Vertex] = _source;
     }
 }

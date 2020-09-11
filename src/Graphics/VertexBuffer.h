@@ -28,6 +28,7 @@
 #define __VERTEX_BUFFER_H__
 
 #include "Core/Defines.h"
+#include "VertexDeclaration.h"
 
 namespace Michka
 {

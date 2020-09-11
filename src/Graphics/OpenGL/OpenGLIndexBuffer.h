@@ -47,7 +47,7 @@ namespace Michka
     protected:
         OpenGLDevice*       mDevice = nullptr;
         u32                 mCount = 0;
-	    u32	                mEBO = 0;
+	    u32	                mIndexBuffer = 0;
         bool                mStatic = false;
     };
 }

@@ -30,11 +30,11 @@
 #include "Core/Defines.h"
 #include "Core/Math/Vector4.h"
 #include "Platform/Window.h"
-#include "Shader.h"
 
 namespace Michka
 {
     class IndexBuffer;
+    class Shader;
     class VertexBuffer;
     class VertexDeclaration;
 
@@ -70,12 +70,30 @@ namespace Michka
         virtual IndexBuffer* createIndexBuffer(const bool& _static = true) = 0;
 
         /**
+         * @brief Create a Shader.
+         *
+         * @param _vertexShader
+         * @param _pixelShader
+         */
+        virtual Shader* createShader(const String& _vertexShader = "", const String& _pixelShader = "") = 0;
+
+        /**
          * @brief Create a Vertex Buffer.
          *
          * @param _vertexDeclaration
          * @param _static
          */
         virtual VertexBuffer* createVertexBuffer(VertexDeclaration* _vertexDeclaration, const bool& _static = true) = 0;
+
+        /**
+         * @brief Draw on render target.
+         */
+        virtual void draw() = 0;
+
+        /**
+         * @brief Show current render target on screen.
+         */
+        virtual void drawOnScreen() = 0;
 
         /**
          * @brief Get the output window.
@@ -97,6 +115,13 @@ namespace Michka
         virtual void setIndexBuffer(IndexBuffer* _indexBuffer = nullptr) = 0;
 
         /**
+         * @brief Set curren shader.
+         *
+         * @param _shader
+         */
+        virtual void setShader(Shader* _shader) = 0;
+
+        /**
          * @brief Set current vertex buffer.
          *
          * @param _vertexBuffer
@@ -104,9 +129,10 @@ namespace Michka
         virtual void setVertexBuffer(VertexBuffer* _vertexBuffer = nullptr) = 0;
 
     protected:
-        Window* mWindow = nullptr;
-        IndexBuffer* mCurrentIndexBuffer = nullptr;
-        VertexBuffer* mCurrentVertexBuffer = nullptr;
+        Window*         mWindow = nullptr;
+        IndexBuffer*    mCurrentIndexBuffer = nullptr;
+        VertexBuffer*   mCurrentVertexBuffer = nullptr;
+        Shader*         mCurrentShader = nullptr;
     };
 }
 

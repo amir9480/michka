@@ -43,11 +43,9 @@ namespace Michka
     {
         if (mSize > 0)
         {
-            glDeleteVertexArrays(1, &mVAO);
-            glDeleteBuffers(1, &mVBO);
+            glDeleteBuffers(1, &mVertexBuffer);
             mSize = 0;
-            mVAO = 0;
-            mVBO = 0;
+            mVertexBuffer = 0;
         }
     }
 
@@ -56,14 +54,10 @@ namespace Michka
         destroy();
         mSize = _size;
 
-        glGenVertexArrays(1, &mVAO);
-        glGenBuffers(1, &mVBO);
+        glGenBuffers(1, &mVertexBuffer);
 
-	    glBindVertexArray(mVAO);
-        glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+	    glBindBuffer(GL_ARRAY_BUFFER, mVertexBuffer);
         glBufferData(GL_ARRAY_BUFFER, mSize, _vertices, mStatic ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW);
-
         glBindBuffer(GL_ARRAY_BUFFER, 0);
-	    glBindVertexArray(0);
     }
 }

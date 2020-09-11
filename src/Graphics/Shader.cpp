@@ -32,4 +32,9 @@ namespace Michka
     {
         //
     }
+
+    String Shader::getErrors() const
+    {
+        return mErrors;
+    }
 }

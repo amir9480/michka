@@ -43,9 +43,9 @@ namespace Michka
     {
         if (mCount > 0)
         {
-	        glDeleteBuffers(1, &mEBO);
+	        glDeleteBuffers(1, &mIndexBuffer);
             mCount = 0;
-            mEBO = 0;
+            mIndexBuffer = 0;
         }
     }
 
@@ -54,9 +54,9 @@ namespace Michka
         destroy();
         mCount = _count;
 
-        glGenBuffers(1, &mEBO);
+        glGenBuffers(1, &mIndexBuffer);
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIndexBuffer);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, _count * sizeof(u32), (void*)_indices, mStatic ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);

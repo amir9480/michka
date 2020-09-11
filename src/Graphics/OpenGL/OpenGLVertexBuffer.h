@@ -50,8 +50,7 @@ namespace Michka
         OpenGLDevice*       mDevice = nullptr;
         VertexDeclaration*  mVertexDeclaration = nullptr;
         u32                 mSize = 0;
-	    u32	                mVAO = 0;
-	    u32	                mVBO = 0;
+	    u32	                mVertexBuffer = 0;
         bool                mStatic = false;
     };
 }

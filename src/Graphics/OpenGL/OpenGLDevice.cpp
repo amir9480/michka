@@ -27,8 +27,9 @@
 #include "OpenGLDevice.h"
 #include "Core/Thread/Thread.h"
 #include "Core/Thread/Mutex.h"
-#include "OpenGLVertexBuffer.h"
 #include "OpenGLIndexBuffer.h"
+#include "OpenGLShader.h"
+#include "OpenGLVertexBuffer.h"
 
 namespace Michka
 {
@@ -165,11 +166,15 @@ namespace Michka
 
 #       endif
 
+        glGenVertexArrays(1, &mVertexArray);
+        glBindVertexArray(mVertexArray);
+
         mWindow->show();
     }
 
     OpenGLDevice::~OpenGLDevice()
     {
+        glDeleteVertexArrays(1, &mVertexArray);
 #       if (MICHKA_PLATFORM == MICHKA_PLATFORM_WIN32)
             wglDeleteContext(mOGLRenderContext);
             ReleaseDC(mHwnd, mHdc);
@@ -189,9 +194,6 @@ namespace Michka
             (_depthBuffer ? GL_DEPTH_BUFFER_BIT : 0) |
             (_stencil ? GL_STENCIL_BUFFER_BIT : 0)
         );
-
-        SwapBuffers(mHdc);
-        InvalidateRect(mHwnd, 0, 1);
     }
 
     IndexBuffer* OpenGLDevice::createIndexBuffer(const bool& _static)
@@ -199,6 +201,21 @@ namespace Michka
         OpenGLIndexBuffer* out = new OpenGLIndexBuffer;
         out->mDevice = this;
         out->mStatic = _static;
+        return out;
+    }
+
+    Shader* OpenGLDevice::createShader(const String& _vertexShader, const String& _pixelShader)
+    {
+        OpenGLShader* out = new OpenGLShader;
+        out->mDevice = this;
+        if (_vertexShader.isNotEmpty())
+        {
+            out->setVertexShader(_vertexShader);
+        }
+        if (_pixelShader.isNotEmpty())
+        {
+            out->setPixelShader(_pixelShader);
+        }
         return out;
     }
 
@@ -211,33 +228,70 @@ namespace Michka
         return out;
     }
 
-    void OpenGLDevice::setVertexBuffer(VertexBuffer* _vertexBuffer)
+    void OpenGLDevice::draw()
     {
-        if (_vertexBuffer)
+        if (mCurrentIndexBuffer)
         {
-            OpenGLVertexBuffer* vertexBuffer = dynamic_cast<OpenGLVertexBuffer*>(_vertexBuffer);
-            glBindVertexArray(vertexBuffer->mVAO);
-            glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer->mVBO);
+            OpenGLIndexBuffer* indexBuffer = dynamic_cast<OpenGLIndexBuffer*>(mCurrentIndexBuffer);
+            glDrawElements(GL_TRIANGLES, indexBuffer->mCount, GL_UNSIGNED_INT, 0);
         }
-        else
-        {
-            glBindVertexArray(0);
-            glBindBuffer(GL_ARRAY_BUFFER, 0);
-        }
-        mCurrentVertexBuffer = _vertexBuffer;
+    }
+
+    void OpenGLDevice::drawOnScreen()
+    {
+        SwapBuffers(mHdc);
+        InvalidateRect(mHwnd, 0, 1);
     }
 
     void OpenGLDevice::setIndexBuffer(IndexBuffer* _indexBuffer)
     {
         if (_indexBuffer)
         {
-            OpenGLIndexBuffer* vertexBuffer = dynamic_cast<OpenGLIndexBuffer*>(_indexBuffer);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vertexBuffer->mEBO);
+            OpenGLIndexBuffer* indexBuffer = dynamic_cast<OpenGLIndexBuffer*>(_indexBuffer);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer->mIndexBuffer);
         }
         else
         {
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         }
         mCurrentIndexBuffer = _indexBuffer;
+    }
+
+    void OpenGLDevice::setShader(Shader* _shader)
+    {
+        if (_shader)
+        {
+            OpenGLShader* shader = dynamic_cast<OpenGLShader*>(_shader);
+            glUseProgram(shader->mProgram);
+        }
+        else
+        {
+            glUseProgram(0);
+        }
+        mCurrentShader = _shader;
+    }
+
+    void OpenGLDevice::setVertexBuffer(VertexBuffer* _vertexBuffer)
+    {
+        if (_vertexBuffer)
+        {
+            OpenGLVertexBuffer* vertexBuffer = dynamic_cast<OpenGLVertexBuffer*>(_vertexBuffer);
+            glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer->mVertexBuffer);
+            auto vertexAttributes = vertexBuffer->mVertexDeclaration->getAttributes();
+            u64 offset = 0;
+            int glTypes[] = {GL_FLOAT, GL_SHORT, GL_INT};
+            for (u32 i = 0; i < vertexAttributes.getSize(); i++)
+            {
+                auto vertexAttribute = vertexAttributes[i];
+                glEnableVertexAttribArray(i);
+                glVertexAttribPointer(i, vertexAttribute.elements, glTypes[(u32)vertexAttribute.type], GL_FALSE, vertexBuffer->mVertexDeclaration->getStride(), (void*)offset);
+                offset += vertexAttribute.getSize();
+            }
+        }
+        else
+        {
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
+        }
+        mCurrentVertexBuffer = _vertexBuffer;
     }
 }

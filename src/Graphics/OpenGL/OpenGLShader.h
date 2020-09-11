@@ -30,6 +30,7 @@
 #include "Core/Defines.h"
 #include "Graphics/Shader.h"
 #include "OpenGLHeaders.h"
+#include "Core/Container/Map.h"
 
 namespace Michka
 {
@@ -40,10 +41,17 @@ namespace Michka
         OpenGLShader();
         virtual ~OpenGLShader();
 
+        virtual bool compile() override;
+
         virtual void destroy() override;
 
+        virtual void setPixelShader(const String& _source) override;
+
+        virtual void setVertexShader(const String& _source) override;
+
     protected:
-        OpenGLDevice*       mDevice = nullptr;
+        OpenGLDevice* mDevice = nullptr;
+        u32           mProgram = 0;
     };
 }
 

@@ -194,31 +194,93 @@ Vertex vertices[] =
     Vertex(-1.0f,  1.0f, -1.0f,  0.0f, 1.0f, 0.0f,  1.0f,  0.0f), // top-left
     Vertex(+1.0f,  1.0f,  1.0f,  1.0f, 0.0f, 0.0f,  1.0f,  0.0f), // bottom-right
     Vertex(+1.0f,  1.0f, -1.0f,  1.0f, 1.0f, 0.0f,  1.0f,  0.0f), // top-right
-    Vertex(-1.0f,  1.0f,  1.0f,  0.0f, 0.0f, 0.0f,  1.0f,  0.0f)  // bottom-left
+    Vertex(-1.0f,  1.0f,  1.0f,  0.0f, 0.0f, 0.0f,  1.0f,  0.0f), // bottom-left
 };
 
 u32 indices[] = {1, 0, 2, 0, 1, 3, 5, 4, 6, 6, 4, 7, 9, 8, 10, 10, 8, 11, 13, 12, 14, 12, 13, 15, 17, 16, 18, 18, 16, 19, 21, 20, 22, 20, 21, 23};
+
+Vertex vertices2[] =
+{
+    Vertex(-0.8f, -0.8f, 0.0f, 0.0f, 0.0f),
+    Vertex( 0.0f,  0.8f, 0.0f, 0.0f, 0.0f),
+    Vertex( 0.8f, -0.8f, 0.0f, 0.0f, 0.0f),
+};
+
+u32 indices2[] = {0, 1, 2};
+
+const char* vertexShaderSource = R"(
+#version 440 core
+
+layout (location = 0) in vec3 aPos;
+layout (location = 1) in vec3 aNormal;
+layout (location = 2) in vec3 aTangent;
+layout (location = 3) in vec2 aTexCoord;
+
+out vec2 TexCoord;
+
+void main()
+{
+    gl_Position = vec4(aPos, 1.0);
+	TexCoord = aTexCoord;
+}
+
+
+)";
+
+const char* pixelShaderSource = R"(
+#version 440 core
+
+out vec4 FragColor;
+
+void main()
+{
+    FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+}
+
+)";
+
+#include "Graphics/OpenGL/OpenGLHeaders.h"
 
 int main()
 {
     std::cout << "Welcome to engine!\n-------------------------------------\n\n";
 
     Device* device = Device::instance(Device::Driver::OpenGL);
-    VertexBuffer* vb = device->createVertexBuffer(&Vertex::decl());
-    vb->set(&vertices, sizeof(vertices));
     IndexBuffer* ib = device->createIndexBuffer();
-    vb->set(&indices, sizeof(indices) / sizeof(indices[0]));
+    ib->set(indices2, sizeof(indices2) / sizeof(indices2[0]));
+    VertexBuffer* vb = device->createVertexBuffer(&Vertex::decl());
+    vb->set(vertices2, sizeof(vertices2));
+
+	// glEnableVertexAttribArray(0);
+    // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 44, (void*)0);
+    // glEnableVertexAttribArray(1);
+    // glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 44, (void*)12);
+    // glEnableVertexAttribArray(2);
+    // glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 44, (void*)24);
+    // glEnableVertexAttribArray(3);
+    // glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, 44, (void*)36);
+
+    Shader* shader = device->createShader(vertexShaderSource, pixelShaderSource);
+    if (! shader->compile())
+    {
+        MessageBoxW(0, shader->getErrors().cstr(), L"ERROR", MB_OK);
+        exit(-1);
+    }
 
     while (device->getWindow()->isDestroyed() == false)
     {
         device->clear(true, true, true, Vector4(0.2f, 0.7f, 1.0f, 1.0f));
-        device->setVertexBuffer(vb);
         device->setIndexBuffer(ib);
-        //
+        device->setVertexBuffer(vb);
+        device->setShader(shader);
+        device->draw();
+
+        device->drawOnScreen();
     }
 
     delete vb;
     delete ib;
+    delete shader;
 
     std::cout << "\nBYE\n";
     system("PAUSE");
