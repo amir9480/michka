@@ -33,6 +33,9 @@
 namespace Michka
 {
     template<typename T>
+    class Vector;
+
+    template<typename T>
     class MICHKA_API StringTemplate
     {
     public:
@@ -148,6 +151,16 @@ namespace Michka
          * @return length
          */
         FORCE_INLINE u32 getLength() const;
+
+        /**
+         * @brief Clone string, find a sub string and replace it with another substring and returns result.
+         *
+         * @param _find
+         * @param _replace
+         * @param _offset
+         * @return String copy after replace
+         */
+        FORCE_INLINE StringTemplate<T> getReplaced(const StringTemplate<T>& _find, const StringTemplate<T>& _replace = StringTemplate<T>::empty, const u32& _start = 0, const u32& _end = u32Info::max) const;
 
         /**
          * @brief Get reversed copy of this string.
@@ -278,6 +291,20 @@ namespace Michka
          * @return Self
          */
         FORCE_INLINE StringTemplate<T>& rightTrim(const StringTemplate<T>& _characters = "\t\n\r ");
+
+        /**
+         * @brief Split string to sub string based on character.
+         *
+         * @param _character
+         */
+        Vector<StringTemplate<T>> split(const T& _character) const;
+
+        /**
+         * @brief Split string to sub string based on string.
+         *
+         * @param _character
+         */
+        Vector<StringTemplate<T>> split(const StringTemplate<T>& _string) const;
 
         /**
          * @brief Get size of string.

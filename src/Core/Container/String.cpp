@@ -256,11 +256,11 @@ namespace Michka
             }
             else if (character <= 0x3ffffff)
             {
-                iterator += 5;  // @NOCOVERAGE
+                iterator += 5; // @NOCOVERAGE
             }
             else if (character <= 0x7fffffff)
             {
-                iterator += 6;  // @NOCOVERAGE
+                iterator += 6; // @NOCOVERAGE
             }
         }
         return out;

@@ -349,9 +349,9 @@ TEST(StringTest, Repace)
     ASSERT_EQ(Michka::String("Hello World!").replace("World", "Hello"), "Hello Hello!");
     ASSERT_EQ(Michka::String("Hello World!").replace("World", "MICHKA the bird!"), "Hello MICHKA the bird!!");
 
-    ASSERT_EQ(Michka::String("Hello World").replace("World", "Test"), "Hello Test");
-    ASSERT_EQ(Michka::String("Hello World").replace("World", "Hello"), "Hello Hello");
-    ASSERT_EQ(Michka::String("Hello World").replace("World", "MICHKA the bird!"), "Hello MICHKA the bird!");
+    ASSERT_EQ(Michka::String("Hello World").getReplaced("World", "Test"), "Hello Test");
+    ASSERT_EQ(Michka::String("Hello World").getReplaced("World", "Hello"), "Hello Hello");
+    ASSERT_EQ(Michka::String("Hello World").getReplaced("World", "MICHKA the bird!"), "Hello MICHKA the bird!");
 }
 
 TEST(StringTest, Reverse)
@@ -376,6 +376,32 @@ TEST(StringTest, Size)
     ASSERT_EQ(test.getSize(), 5);
     test = L"Hello WORLD";
     ASSERT_EQ(test.getSize(), 11);
+}
+
+TEST(StringTest, Split)
+{
+    Michka::String test = L"Hello|World|Welcome|Test";
+    Michka::Vector<Michka::String> testResult = {"Hello", "World", "Welcome", "Test"};
+    ASSERT_EQ(test.split('|'), testResult);
+    ASSERT_EQ(test.split("|"), testResult);
+
+    test = L"Hello,|,World,|Welcome,|,Test";
+    testResult = {"Hello", "World,|Welcome", "Test"};
+    ASSERT_EQ(test.split(",|,"), testResult);
+
+    testResult = {"Hello,|,World,|Welcome,|,Test"};
+    ASSERT_EQ(test.split('\\0'), testResult);
+    ASSERT_EQ(test.split('&'), testResult);
+    ASSERT_EQ(test.split("&&&"), testResult);
+
+    testResult = {"H", "e", "l", "l", "o", ",", "|", ",", "W", "o", "r", "l", "d", ",", "|", "W", "e", "l", "c", "o", "m", "e", ",", "|", ",", "T", "e", "s", "t"};
+    ASSERT_EQ(test.split(""), testResult);
+
+
+    test = L"";
+    testResult = {};
+    ASSERT_EQ(test.split(','), testResult);
+    ASSERT_EQ(test.split(""), testResult);
 }
 
 TEST(StringTest, SubString)

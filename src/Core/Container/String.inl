@@ -25,6 +25,7 @@
 // ------------------------------------------------------------------------------- //
 
 #include "String.h"
+#include "Core/Container/Vector.h"
 #include "Core/Helpers.h"
 #include "Core/Reflection/Type.h"
 #include "Core/Exception/Exception.h"
@@ -229,6 +230,15 @@ namespace Michka
     FORCE_INLINE u32 StringTemplate<T>::getLength() const
     {
         return stringLength(mData);
+    }
+
+    template<typename T>
+    FORCE_INLINE StringTemplate<T> StringTemplate<T>::getReplaced(const StringTemplate<T>& _find, const StringTemplate<T>& _replace, const u32& _start, const u32& _end) const
+    {
+        StringTemplate<T> self = *this;
+        self.replace(_find, _replace, _start, _end);
+
+        return self;
     }
 
     template<typename T>
@@ -482,6 +492,57 @@ namespace Michka
         }
 
         return *this;
+    }
+
+    template<typename T>
+    Vector<StringTemplate<T>> StringTemplate<T>::split(const T& _character) const
+    {
+        Vector<StringTemplate<T>> out;
+        if (isEmpty())
+        {
+            return out;
+        }
+
+        u32 lastPosition = 0, position = 0;
+        while ((position = find(_character, lastPosition)) != notFound)
+        {
+            out.pushBack(subString(lastPosition, position - lastPosition));
+            lastPosition = position + 1;
+        }
+        out.pushBack(subString(lastPosition));
+
+        return out;
+    }
+
+    template<typename T>
+    Vector<StringTemplate<T>> StringTemplate<T>::split(const StringTemplate<T>& _string) const
+    {
+        Vector<StringTemplate<T>> out;
+        if (isEmpty())
+        {
+            return out;
+        }
+
+        u32 lastPosition = 0, position = 0;
+        if (_string.isEmpty())
+        {
+            u32 size = getSize();
+            for (u32 i = 0; i < size; i++)
+            {
+                out.pushBack(subString(i, 1));
+            }
+        }
+        else
+        {
+            while ((position = find(_string, lastPosition)) != notFound)
+            {
+                out.pushBack(subString(lastPosition, position - lastPosition));
+                lastPosition = position + _string.getSize();
+            }
+            out.pushBack(subString(lastPosition));
+        }
+
+        return out;
     }
 
     template<typename T>
