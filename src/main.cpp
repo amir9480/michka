@@ -245,42 +245,36 @@ int main()
 {
     std::cout << "Welcome to engine!\n-------------------------------------\n\n";
 
-    Device* device = Device::instance(Device::Driver::OpenGL);
-    IndexBuffer* ib = device->createIndexBuffer();
-    ib->set(indices2, sizeof(indices2) / sizeof(indices2[0]));
-    VertexBuffer* vb = device->createVertexBuffer(&Vertex::decl());
-    vb->set(vertices2, sizeof(vertices2));
+    File f("test.txt", File::OpenMode::WriteOnly);
+    std::cout << f.write("Hello World") << "\n\n";
+    f.close();
 
-	// glEnableVertexAttribArray(0);
-    // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 44, (void*)0);
-    // glEnableVertexAttribArray(1);
-    // glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 44, (void*)12);
-    // glEnableVertexAttribArray(2);
-    // glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 44, (void*)24);
-    // glEnableVertexAttribArray(3);
-    // glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, 44, (void*)36);
+    // Device* device = Device::instance(Device::Driver::OpenGL);
+    // IndexBuffer* ib = device->createIndexBuffer();
+    // ib->set(indices2, sizeof(indices2) / sizeof(indices2[0]));
+    // VertexBuffer* vb = device->createVertexBuffer(&Vertex::decl());
+    // vb->set(vertices2, sizeof(vertices2));
+    // Shader* shader = device->createShader(vertexShaderSource, pixelShaderSource);
+    // if (! shader->compile())
+    // {
+    //     MessageBoxW(0, shader->getErrors().cstr(), L"ERROR", MB_OK);
+    //     exit(-1);
+    // }
 
-    Shader* shader = device->createShader(vertexShaderSource, pixelShaderSource);
-    if (! shader->compile())
-    {
-        MessageBoxW(0, shader->getErrors().cstr(), L"ERROR", MB_OK);
-        exit(-1);
-    }
+    // while (device->getWindow()->isDestroyed() == false)
+    // {
+    //     device->clear(true, true, true, Vector4(0.2f, 0.7f, 1.0f, 1.0f));
+    //     device->setIndexBuffer(ib);
+    //     device->setVertexBuffer(vb);
+    //     device->setShader(shader);
+    //     device->draw();
 
-    while (device->getWindow()->isDestroyed() == false)
-    {
-        device->clear(true, true, true, Vector4(0.2f, 0.7f, 1.0f, 1.0f));
-        device->setIndexBuffer(ib);
-        device->setVertexBuffer(vb);
-        device->setShader(shader);
-        device->draw();
+    //     device->drawOnScreen();
+    // }
 
-        device->drawOnScreen();
-    }
-
-    delete vb;
-    delete ib;
-    delete shader;
+    // delete vb;
+    // delete ib;
+    // delete shader;
 
     std::cout << "\nBYE\n";
     system("PAUSE");

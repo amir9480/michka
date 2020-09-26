@@ -47,4 +47,8 @@ TEST(VertexDeclarationTest, Create)
         ")"
     );
     ASSERT_EQ(dec.getHash(), 2634101685743308180);
+    ASSERT_EQ(dec.getStride(), 38);
+    ASSERT_EQ(dec.getAttributes()[0].name, Michka::VertexAttribute::Name::position);
+    ASSERT_EQ(dec.getAttributes()[0].type, Michka::VertexAttribute::Type::float32);
+    ASSERT_EQ(dec.getAttributes()[0].elements, 3);
 }

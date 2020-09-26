@@ -71,20 +71,20 @@
 #define _MICHKA_VA_COMMA_ZERO()
 #define _MICHKA_VA_COMMA_MULTIPLE(...) ,
 
-#define MICHKA_NON_COPYABLE_CLASS(_CLASSNAME)\
-    _CLASSNAME(const _CLASSNAME&) = delete;\
-    _CLASSNAME(_CLASSNAME&&) = delete;\
-    _CLASSNAME& operator = (const _CLASSNAME&) = delete;\
-    _CLASSNAME& operator = (_CLASSNAME&&) = delete;\
+#define MICHKA_NON_COPYABLE_CLASS(_CLASSNAME) \
+    _CLASSNAME(const _CLASSNAME&) = delete; \
+    _CLASSNAME(_CLASSNAME&&) = delete; \
+    _CLASSNAME& operator = (const _CLASSNAME&) = delete; \
+    _CLASSNAME& operator = (_CLASSNAME&&) = delete;
 
-#define MICHKA_SINGLETON_CLASS(_CLASSNAME)\
-    MICHKA_NON_COPYABLE_CLASS(_CLASSNAME)\
-    public:\
-    static _CLASSNAME& instance()\
-    {\
-        static _CLASSNAME o;\
-        return o;\
-    }\
+#define MICHKA_SINGLETON_CLASS(_CLASSNAME) \
+    MICHKA_NON_COPYABLE_CLASS(_CLASSNAME) \
+    public: \
+    static _CLASSNAME& instance() \
+    { \
+        static _CLASSNAME o; \
+        return o; \
+    } \
     private:
 
 #define MICHKA_ATTACH(...) MICHKA_OVERLOADED_MACRO(_MICHKA_ATTACH, __VA_ARGS__)
@@ -93,6 +93,120 @@
 #define _MICHKA_ATTACH3(_A, _B, _C) _A##_B##_C
 #define _MICHKA_ATTACH4(_A, _B, _C, _D) _A##_B##_C##_D
 #define _MICHKA_ATTACH5(_A, _B, _C, _D, _E) _A##_B##_C##_D##_E
+
+
+/**
+ * @brief this macro is using to detect a member function exists or not.
+ *
+ * @example
+ * First define class with this macro:
+ * @code{.cpp}
+ * MICHKA_HAS_MEMBER_FUNCTION_ADD(HasGetSum, getSum, int, int, int); // int getSum(int, int)
+ * @endcode
+ *
+ * To check method exists in specific class:
+ * @code{.cpp}
+ * HasGetSum<YourClassToCheck>::value
+ * @endcode
+ *
+ * If you have a overloaded method you can also check for other types of method.
+ * @code{.cpp}
+ * MichkaHasMemberFunction::HasGetSum<YourClassToCheck, float(float, float, float)>::value
+ * @endcode
+ */
+#define MICHKA_HAS_MEMBER_FUNCTION_ADD(_NAME, _FUNCTION_NAME, _RETURN_TYPE, ...) \
+    namespace MichkaHasMemberFunction \
+    { \
+        template<typename, typename T> \
+        class MICHKA_ATTACH(, _NAME) \
+        { \
+            static_assert( \
+                std::integral_constant<T, false>::value, \
+                "Second template parameter needs to be of function type." \
+            ); \
+        }; \
+        template<typename Class, typename ReturnType, typename... Args> \
+        class _NAME<Class, ReturnType(Args...)> \
+        { \
+            template<typename T> \
+            static constexpr auto check(T*) \
+            -> typename std::is_same< \
+                    decltype(std::declval<T>()._FUNCTION_NAME(std::declval<Args>()...)), \
+                    ReturnType \
+                >::type; \
+        \
+            template<typename> \
+            static constexpr std::false_type check(...); \
+        \
+            typedef decltype(check<Class>(0)) type; \
+        \
+        public: \
+            static constexpr bool value = type::value; \
+        }; \
+    } \
+    template<typename Class> \
+    class _NAME : public MichkaHasMemberFunction::_NAME<Class, _RETURN_TYPE(__VA_ARGS__)> \
+    { \
+    }
+
+MICHKA_HAS_MEMBER_FUNCTION_ADD(HasToString, toString, Michka::String);
+
+/**
+ * @brief To easily define binary operators for enums
+ */
+#define MICHKA_ENUM_OPERATORS(_ENUM) \
+    FORCE_INLINE _ENUM operator ~ (const _ENUM& _a) \
+    { \
+        return (_ENUM)(~(int)_a); \
+    } \
+    FORCE_INLINE _ENUM operator | (const _ENUM& _a, const _ENUM& _b) \
+    { \
+        return (_ENUM)((int)_a | (int)_b); \
+    } \
+    FORCE_INLINE _ENUM operator & (const _ENUM& _a, const _ENUM& _b) \
+    { \
+        return (_ENUM)((int)_a & (int)_b); \
+    } \
+    FORCE_INLINE _ENUM operator ^ (const _ENUM& _a, const _ENUM& _b) \
+    { \
+        return (_ENUM)((int)_a ^ (int)_b); \
+    } \
+    FORCE_INLINE _ENUM& operator |= (_ENUM& _a, const _ENUM& _b) \
+    { \
+        return (_ENUM&)((int&)_a |= (int)_b); \
+    } \
+    FORCE_INLINE _ENUM& operator &= (_ENUM& _a, const _ENUM& _b) \
+    { \
+        return (_ENUM&)((int&)_a &= (int)_b); \
+    } \
+    FORCE_INLINE _ENUM& operator ^= (_ENUM& _a, const _ENUM& _b) \
+    { \
+        return (_ENUM&)((int&)_a ^= (int)_b); \
+    } \
+    FORCE_INLINE _ENUM operator | (const _ENUM& _a, const int& _b) \
+    { \
+        return (_ENUM)((int)_a | _b); \
+    } \
+    FORCE_INLINE _ENUM operator & (const _ENUM& _a, const int& _b) \
+    { \
+        return (_ENUM)((int)_a & _b); \
+    } \
+    FORCE_INLINE _ENUM operator ^ (const _ENUM& _a, const int& _b) \
+    { \
+        return (_ENUM)((int)_a ^ _b); \
+    } \
+    FORCE_INLINE _ENUM& operator |= (_ENUM& _a, const int& _b) \
+    { \
+        return (_ENUM&)((int&)_a |= _b); \
+    } \
+    FORCE_INLINE _ENUM& operator &= (_ENUM& _a, const int& _b) \
+    { \
+        return (_ENUM&)((int&)_a &= _b); \
+    } \
+    FORCE_INLINE _ENUM& operator ^= (_ENUM& _a, const int& _b) \
+    { \
+        return (_ENUM&)((int&)_a ^= _b); \
+    }
 
 
 /*!
@@ -143,43 +257,6 @@ namespace \
 } \
 static void MICHKA_ATTACH(__michka_call, __LINE__)()
 
-
-#define MICHKA_HAS_MEMBER_FUNCTION_ADD(_NAME, _FUNCTION_NAME, _RETURN_TYPE, ...) \
-    namespace MichkaHasMemberFunction \
-    { \
-        template<typename, typename T> \
-        class MICHKA_ATTACH(, _NAME) \
-        { \
-            static_assert( \
-                std::integral_constant<T, false>::value, \
-                "Second template parameter needs to be of function type." \
-            ); \
-        }; \
-        template<typename Class, typename ReturnType, typename... Args> \
-        class _NAME<Class, ReturnType(Args...)> \
-        { \
-            template<typename T> \
-            static constexpr auto check(T*) \
-            -> typename std::is_same< \
-                    decltype(std::declval<T>()._FUNCTION_NAME(std::declval<Args>()...)), \
-                    ReturnType \
-                >::type; \
-        \
-            template<typename> \
-            static constexpr std::false_type check(...); \
-        \
-            typedef decltype(check<Class>(0)) type; \
-        \
-        public: \
-            static constexpr bool value = type::value; \
-        }; \
-    } \
-    template<typename Class> \
-    class _NAME : public MichkaHasMemberFunction::_NAME<Class, _RETURN_TYPE(__VA_ARGS__)> \
-    { \
-    }
-
-MICHKA_HAS_MEMBER_FUNCTION_ADD(HasToString, toString, Michka::String);
 
 namespace Michka
 {

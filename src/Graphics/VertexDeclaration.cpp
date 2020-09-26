@@ -13,7 +13,8 @@ namespace Michka
             case Type::int16:
                 return elements * 2;
         }
-        return 0;
+
+        return 0; // @NOCOVERAGE
     }
 
     String VertexAttribute::toString() const

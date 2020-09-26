@@ -34,6 +34,7 @@ set(
     ${CMAKE_CURRENT_SOURCE_DIR}/Container/Variant.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Foundation/Event.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Foundation/EventManager.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Foundation/File.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Foundation/Types.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/BoundingBox.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/BoundingSphere.cpp
