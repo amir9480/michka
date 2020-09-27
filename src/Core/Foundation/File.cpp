@@ -54,6 +54,46 @@ namespace Michka
         }
     }
 
+    String File::directory(const String& _path)
+    {
+        String path = realpath(_path);
+        auto pathSplited = path.split('/');
+        pathSplited.remove(pathSplited.getSize() - 1);
+        return pathSplited.implode("/");
+    }
+
+    bool File::exists(const String& _path)
+    {
+        return std::filesystem::exists(_path.toUtf8().cstr());
+    }
+
+    String File::filename(const String& _path)
+    {
+        String path = realpath(_path);
+
+        auto pathSplited = path.split('/');
+        if (pathSplited.getSize() - 1 > 0)
+        {
+            pathSplited.remove(0, pathSplited.getSize() - 1);
+        }
+        return pathSplited.implode("/");
+    }
+
+    bool File::flush()
+    {
+        if(mFile == nullptr)
+        {
+            return false;
+        }
+
+        return fflush(mFile) == 0;
+    }
+
+    String File::getContents(const String& _path)
+    {
+        return File(_path).readAll();
+    }
+
     String File::getPath() const
     {
         return mPath;
@@ -66,9 +106,7 @@ namespace Michka
             return String::empty;
         }
 
-        auto pathSplited = mPath.split('/');
-        pathSplited.remove(pathSplited.getSize() - 1);
-        return pathSplited.implode("/");
+        return directory(mPath);
     }
 
     String File::getFileName() const
@@ -78,12 +116,7 @@ namespace Michka
             return String::empty;
         }
 
-        auto pathSplited = mPath.split('/');
-        if (pathSplited.getSize() - 1 > 0)
-        {
-            pathSplited.remove(0, pathSplited.getSize() - 1);
-        }
-        return pathSplited.implode("/");
+        return filename(mPath);
     }
 
     i32 File::getPosition() const
@@ -96,21 +129,55 @@ namespace Michka
         return ftell(mFile);
     }
 
+    u32 File::getSize()
+    {
+        if(mFile == nullptr)
+        {
+            return 0;
+        }
+
+        i32 position = getPosition();
+        seek(-1);
+        u32 size = getPosition();
+        seek(position);
+
+        return size;
+    }
+
+    bool File::isEndOfFile() const
+    {
+        if (mFile == nullptr)
+        {
+            return false;
+        }
+
+        return feof(mFile);
+    }
+
+    bool File::isOpen() const
+    {
+        return mFile != nullptr;
+    }
+
     bool File::open(const String& _path, const OpenMode& _openmode)
     {
         close();
-        mPath = _path.getReplaced("\\", "/");
-        mPath = std::filesystem::absolute(mPath.toUtf8().cstr()).c_str();
-        mPath = mPath.getReplaced("\\", "/");
+        mPath = realpath(_path);
         String8 path = mPath.toUtf8();
         String8 openmode;
-        switch (_openmode & 0x03)
+        switch (_openmode & 0x07)
         {
             case OpenMode::ReadOnly:
                 openmode += "r";
                 break;
             case OpenMode::WriteOnly:
                 openmode += "w";
+                break;
+            case OpenMode::Append:
+                openmode += "a";
+                break;
+            case OpenMode::ReadAppend:
+                openmode += "a+";
                 break;
             case OpenMode::ReadWrite:
                 openmode += "r+";
@@ -124,6 +191,77 @@ namespace Michka
         mFile = fopen(path.cstr(), openmode.cstr());
 
         return mFile != nullptr;
+    }
+
+    bool File::putContents(const String& _path, const String& _contents)
+    {
+        return File(_path, OpenMode::WriteOnly).write(_contents);
+    }
+
+    bool File::read(void* _buffer, const u32& _size)
+    {
+        if (mFile == nullptr)
+        {
+            return false;
+        }
+
+        return fread(_buffer, 1, _size, mFile) != 0;
+    }
+
+    String File::readAll()
+    {
+        i32 position = getPosition();
+        u32 fileSize = getSize();
+        char* fileContent = new char[fileSize + 1];
+        memset((void*)fileContent, 0, sizeof(char) * (fileSize + 1));
+
+        seek(0);
+        read((void*)fileContent, fileSize);
+        fileContent[fileSize] = '\0';
+
+        String output = String::fromUtf8(fileContent);
+        delete[] fileContent;
+
+        seek(position);
+
+        return output;
+    }
+
+    char File::readCharacter()
+    {
+        if (mFile == nullptr)
+        {
+            return '\0';
+        }
+
+        return fgetc(mFile);
+    }
+
+    String File::readLine()
+    {
+        if (mFile == nullptr)
+        {
+            return String::empty;
+        }
+
+        char line[2048];
+        u32 size = 0;
+        if (fgets(line, 2048, mFile))
+        {
+            return line;
+        }
+
+        return String::empty;
+    }
+
+    String File::realpath(const String& _path)
+    {
+        return String(std::filesystem::absolute(_path.toUtf8().cstr()).c_str()).getReplaced("\\", "/");
+    }
+
+    bool File::remove(const String& _path)
+    {
+        return exists(_path) && std::filesystem::remove(_path.toUtf8().cstr());
     }
 
     bool File::seek(const i32& _pos)

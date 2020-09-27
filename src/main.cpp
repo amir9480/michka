@@ -245,8 +245,10 @@ int main()
 {
     std::cout << "Welcome to engine!\n-------------------------------------\n\n";
 
-    File f("test.txt", File::OpenMode::WriteOnly);
-    std::cout << f.write("Hello World") << "\n\n";
+    File f("test.txt", File::OpenMode::ReadOnly);
+    // std::cout << f.getSize() << std::endl;
+    std::cout << "*" << File::filename(__FILE__) << "\n\n" << File::directory(String(__FILE__)) << "\n";
+    // std::cout << f.write("Hello World") << "\n\n";
     f.close();
 
     // Device* device = Device::instance(Device::Driver::OpenGL);
