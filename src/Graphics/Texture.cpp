@@ -24,61 +24,14 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __SHADER_H__
-#define __SHADER_H__
-
-#include "Core/Defines.h"
-#include "Core/Container/Map.h"
-#include "Core/Container/String.h"
+#include "Texture.h"
 
 namespace Michka
 {
-    class MICHKA_API Shader
+    Texture::~Texture()
     {
-    public:
-        enum class Type : u8
-        {
-            vertex,
-            pixel
-        };
-    public:
-        virtual ~Shader();
+        //
+    }
 
-        /**
-         * @brief Compile shader.
-         *
-         * @return true if compiled and linked successfully.
-         */
-        virtual bool compile() = 0;
-
-        /**
-         * @brief Get the Compile/Link Errors if \fn compile failed.
-         */
-        virtual String getErrors() const;
-
-        /**
-         * @brief Destroy vertex buffer.
-         */
-        virtual void destroy() = 0;
-
-        /**
-         * @brief Set the Pixel Shader source.
-         *
-         * @param _source
-         */
-        virtual void setPixelShader(const String& _source) = 0;
-
-        /**
-         * @brief Set the Vertex Shader source.
-         *
-         * @param _source
-         */
-        virtual void setVertexShader(const String& _source) = 0;
-
-    protected:
-        String mErrors;
-        Map<Shader::Type, String> mShadersSources;
-    };
+    //
 }
-
-#endif // __SHADER_H__

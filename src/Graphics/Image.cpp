@@ -24,61 +24,57 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __SHADER_H__
-#define __SHADER_H__
-
-#include "Core/Defines.h"
-#include "Core/Container/Map.h"
+#include "Image.h"
 #include "Core/Container/String.h"
+#include "Core/Helpers.h"
+ #define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
 
 namespace Michka
 {
-    class MICHKA_API Shader
+    Image::Image(const String& _path)
     {
-    public:
-        enum class Type : u8
+        stbi_set_flip_vertically_on_load(true);
+        int channels = 0;
+        mData = stbi_load(_path.toUtf8().cstr(), (int*)&mWidth, (int*)&mHeight, &channels, 0);
+        switch (channels)
         {
-            vertex,
-            pixel
-        };
-    public:
-        virtual ~Shader();
+        case 3:
+            mFormat = Format::rgb8;
+            break;
+        case 4:
+            mFormat = Format::rgba8;
+            break;
+        default:
+            MICHKA_ERROR("Unknown format.");
+        }
+        if (mData == nullptr)
+        {
+            MICHKA_ERROR(("Image file \"" + _path + "\" does not exists.").toUtf8().cstr());
+        }
+    }
 
-        /**
-         * @brief Compile shader.
-         *
-         * @return true if compiled and linked successfully.
-         */
-        virtual bool compile() = 0;
+    Image::Image(const u32& _width, const u32& _height, const Format& _format, u8* _data) :
+        mWidth(_width),
+        mHeight(_height),
+        mFormat(_format),
+        mData(_data)
+    {
+        //
+    }
 
-        /**
-         * @brief Get the Compile/Link Errors if \fn compile failed.
-         */
-        virtual String getErrors() const;
+    Image::~Image()
+    {
+        destroy();
+    }
 
-        /**
-         * @brief Destroy vertex buffer.
-         */
-        virtual void destroy() = 0;
-
-        /**
-         * @brief Set the Pixel Shader source.
-         *
-         * @param _source
-         */
-        virtual void setPixelShader(const String& _source) = 0;
-
-        /**
-         * @brief Set the Vertex Shader source.
-         *
-         * @param _source
-         */
-        virtual void setVertexShader(const String& _source) = 0;
-
-    protected:
-        String mErrors;
-        Map<Shader::Type, String> mShadersSources;
-    };
+    void Image::destroy()
+    {
+        if (mData)
+        {
+            delete[] mData;
+        }
+        mWidth = mHeight = 0;
+        mFormat = Format::unknown;
+    }
 }
-
-#endif // __SHADER_H__

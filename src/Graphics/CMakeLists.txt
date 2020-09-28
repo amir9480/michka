@@ -31,8 +31,10 @@ set(
     # -------------------------------------------------------------------------- #
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Device.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Image.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/IndexBuffer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Shader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Texture.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/VertexBuffer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/VertexDeclaration.cpp
 
@@ -41,6 +43,7 @@ set(
     ${CMAKE_CURRENT_SOURCE_DIR}/OpenGL/OpenGLDevice.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/OpenGL/OpenGLIndexBuffer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/OpenGL/OpenGLShader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/OpenGL/OpenGLTexture.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/OpenGL/OpenGLVertexBuffer.cpp
 
     # -------------------------------------------------------------------------- #

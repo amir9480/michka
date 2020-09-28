@@ -27,20 +27,20 @@
 #include <gtest/gtest.h>
 #include "Core/Foundation/File.h"
 
-TEST(FileTest, Append)
+TEST(FileTest, append)
 {
     Michka::String testFilePath = Michka::File::realpath(Michka::String(__FILE__) + "/../../../files/Core/file_test_append.txt");
     Michka::String testFileContents = "Hello\nWorld";
-    Michka::File file(testFilePath, Michka::File::OpenMode::WriteOnly);
+    Michka::File file(testFilePath, Michka::File::OpenMode::writeOnly);
     file.write(testFileContents);
     file.close();
     ASSERT_EQ(Michka::File::getContents(testFilePath), testFileContents);
-    file.open(testFilePath, Michka::File::OpenMode::Append);
+    file.open(testFilePath, Michka::File::OpenMode::append);
     file.write("\nTest");
     file.close();
     ASSERT_EQ(Michka::File::getContents(testFilePath), testFileContents + "\nTest");
 
-    file.open(testFilePath, Michka::File::OpenMode::ReadAppend);
+    file.open(testFilePath, Michka::File::OpenMode::readAppend);
     file.write(".");
     file.flush();
     ASSERT_EQ(file.readAll(), testFileContents + "\nTest.");
@@ -79,7 +79,7 @@ TEST(FileTest, Read)
 {
     Michka::String testFilePath = Michka::File::realpath(Michka::String(__FILE__) + "/../../../files/Core/file_test_read.txt");
     Michka::String testFileContents = "Hello\nWorld\nMichka";
-    Michka::File file(testFilePath, Michka::File::OpenMode::ReadOnly);
+    Michka::File file(testFilePath, Michka::File::OpenMode::readOnly);
 
     ASSERT_TRUE(file.isOpen());
     ASSERT_EQ(file.getSize(), 20);
@@ -117,19 +117,19 @@ TEST(FileTest, Write)
 {
     Michka::String testFilePath = Michka::File::realpath(Michka::String(__FILE__) + "/../../../files/Core/file_test_write.txt");
     Michka::String testFileContents = "Hello\nWorld";
-    Michka::File file(testFilePath, Michka::File::OpenMode::WriteOnly);
+    Michka::File file(testFilePath, Michka::File::OpenMode::writeOnly);
     file.write(testFileContents);
     file.close();
     ASSERT_EQ(Michka::File::getContents(testFilePath), testFileContents);
     ASSERT_TRUE(Michka::File::remove(testFilePath));
 
-    file.open(testFilePath, Michka::File::OpenMode::WriteOnly | Michka::File::OpenMode::Binary);
+    file.open(testFilePath, Michka::File::OpenMode::writeOnly | Michka::File::OpenMode::Binary);
     file.write(testFileContents);
     file.close();
-    file.open(testFilePath, Michka::File::OpenMode::ReadOnly | Michka::File::OpenMode::Binary);
+    file.open(testFilePath, Michka::File::OpenMode::readOnly | Michka::File::OpenMode::Binary);
     ASSERT_EQ(file.readAll(), testFileContents);
     file.close();
-    file.open(testFilePath, Michka::File::OpenMode::ReadWrite);
+    file.open(testFilePath, Michka::File::OpenMode::readWrite);
     file.write(testFileContents);
     file.flush();
     ASSERT_EQ(file.readAll(), testFileContents);

@@ -208,55 +208,20 @@ Vertex vertices2[] =
 
 u32 indices2[] = {0, 1, 2};
 
-const char* vertexShaderSource = R"(
-#version 440 core
-
-layout (location = 0) in vec3 aPos;
-layout (location = 1) in vec3 aNormal;
-layout (location = 2) in vec3 aTangent;
-layout (location = 3) in vec2 aTexCoord;
-
-out vec2 TexCoord;
-
-void main()
-{
-    gl_Position = vec4(aPos, 1.0);
-	TexCoord = aTexCoord;
-}
-
-
-)";
-
-const char* pixelShaderSource = R"(
-#version 440 core
-
-out vec4 FragColor;
-
-void main()
-{
-    FragColor = vec4(1.0, 0.0, 0.0, 1.0);
-}
-
-)";
-
 #include "Graphics/OpenGL/OpenGLHeaders.h"
 
 int main()
 {
     std::cout << "Welcome to engine!\n-------------------------------------\n\n";
 
-    File f("test.txt", File::OpenMode::ReadOnly);
-    // std::cout << f.getSize() << std::endl;
-    std::cout << "*" << File::filename(__FILE__) << "\n\n" << File::directory(String(__FILE__)) << "\n";
-    // std::cout << f.write("Hello World") << "\n\n";
-    f.close();
+    Image image("build/wall.jpg");
 
-    // Device* device = Device::instance(Device::Driver::OpenGL);
+    // Device* device = Device::instance(Device::Driver::openGL);
     // IndexBuffer* ib = device->createIndexBuffer();
     // ib->set(indices2, sizeof(indices2) / sizeof(indices2[0]));
     // VertexBuffer* vb = device->createVertexBuffer(&Vertex::decl());
     // vb->set(vertices2, sizeof(vertices2));
-    // Shader* shader = device->createShader(vertexShaderSource, pixelShaderSource);
+    // Shader* shader = device->createShader(File::getContents("shaders/test.vert"), File::getContents("shaders/test.frag"));
     // if (! shader->compile())
     // {
     //     MessageBoxW(0, shader->getErrors().cstr(), L"ERROR", MB_OK);

@@ -35,7 +35,7 @@ namespace Michka
 {
     class VertexDeclaration;
 
-    class OpenGLVertexBuffer : public VertexBuffer
+    class MICHKA_API OpenGLVertexBuffer : public VertexBuffer
     {
         friend class OpenGLDevice;
     public:

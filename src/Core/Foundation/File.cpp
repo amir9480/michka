@@ -167,19 +167,19 @@ namespace Michka
         String8 openmode;
         switch (_openmode & 0x07)
         {
-            case OpenMode::ReadOnly:
+            case OpenMode::readOnly:
                 openmode += "r";
                 break;
-            case OpenMode::WriteOnly:
+            case OpenMode::writeOnly:
                 openmode += "w";
                 break;
-            case OpenMode::Append:
+            case OpenMode::append:
                 openmode += "a";
                 break;
-            case OpenMode::ReadAppend:
+            case OpenMode::readAppend:
                 openmode += "a+";
                 break;
-            case OpenMode::ReadWrite:
+            case OpenMode::readWrite:
                 openmode += "r+";
                 break;
         }
@@ -195,7 +195,7 @@ namespace Michka
 
     bool File::putContents(const String& _path, const String& _contents)
     {
-        return File(_path, OpenMode::WriteOnly).write(_contents);
+        return File(_path, OpenMode::writeOnly).write(_contents);
     }
 
     bool File::read(void* _buffer, const u32& _size)

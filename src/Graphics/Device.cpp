@@ -53,7 +53,7 @@ namespace Michka
         {
             switch (_driver)
             {
-                case Driver::OpenGL:
+                case Driver::openGL:
                     device = new OpenGLDevice();
                     break;
             }

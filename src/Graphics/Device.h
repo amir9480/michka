@@ -35,6 +35,7 @@ namespace Michka
 {
     class IndexBuffer;
     class Shader;
+    class Texture;
     class VertexBuffer;
     class VertexDeclaration;
 
@@ -44,7 +45,7 @@ namespace Michka
         enum class Driver
         {
 #           if MICHKA_OPEN_GL_SUPPORT
-                OpenGL,
+                openGL,
 #           endif
         };
     public:

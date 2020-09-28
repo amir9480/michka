@@ -33,7 +33,7 @@
 
 namespace Michka
 {
-    class OpenGLIndexBuffer : public IndexBuffer
+    class MICHKA_API OpenGLIndexBuffer : public IndexBuffer
     {
         friend class OpenGLDevice;
     public:

@@ -50,10 +50,10 @@ namespace Michka
             shaderSources[shaderSource.key()] = shaderSource.value().toUtf8();
         }
 
-        if (shaderSources.hasKey(Shader::Type::Vertex))
+        if (shaderSources.hasKey(Shader::Type::vertex))
         {
             u32 vertexShader = glCreateShader(GL_VERTEX_SHADER);
-            tempStr = (char *)(shaderSources[Shader::Type::Vertex].cstr());
+            tempStr = (char *)(shaderSources[Shader::Type::vertex].cstr());
             glShaderSource(vertexShader, 1, &tempStr, 0);
             glCompileShader(vertexShader);
             glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
@@ -62,13 +62,13 @@ namespace Michka
                 glGetShaderInfoLog(vertexShader, 2048, 0, errorsBuffer);
                 mErrors += String("Vertex shader error: ") + errorsBuffer + "\n";
             }
-            shaders[Shader::Type::Vertex] = vertexShader;
+            shaders[Shader::Type::vertex] = vertexShader;
         }
 
-        if (shaderSources.hasKey(Shader::Type::Pixel))
+        if (shaderSources.hasKey(Shader::Type::pixel))
         {
             u32 pixelShader = glCreateShader(GL_FRAGMENT_SHADER);
-            tempStr = (char *)shaderSources[Shader::Type::Pixel].cstr();
+            tempStr = (char *)shaderSources[Shader::Type::pixel].cstr();
             glShaderSource(pixelShader, 1, &tempStr, 0);
             glCompileShader(pixelShader);
             glGetShaderiv(pixelShader, GL_COMPILE_STATUS, &success);
@@ -77,7 +77,7 @@ namespace Michka
                 glGetShaderInfoLog(pixelShader, 2048, 0, errorsBuffer);
                 mErrors += String("Pixel shader error: ") + errorsBuffer + "\n";
             }
-            shaders[Shader::Type::Pixel] = pixelShader;
+            shaders[Shader::Type::pixel] = pixelShader;
         }
 
         if (mErrors.isNotEmpty())
@@ -124,11 +124,11 @@ namespace Michka
 
     void OpenGLShader::setPixelShader(const String& _source)
     {
-        mShadersSources[Shader::Type::Pixel] = _source;
+        mShadersSources[Shader::Type::pixel] = _source;
     }
 
     void OpenGLShader::setVertexShader(const String& _source)
     {
-        mShadersSources[Shader::Type::Vertex] = _source;
+        mShadersSources[Shader::Type::vertex] = _source;
     }
 }

@@ -33,7 +33,7 @@
 
 namespace Michka
 {
-    class OpenGLDevice : public Device
+    class MICHKA_API OpenGLDevice : public Device
     {
     public:
         OpenGLDevice();

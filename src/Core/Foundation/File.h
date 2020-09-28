@@ -38,17 +38,17 @@ namespace Michka
     public:
         enum class OpenMode
         {
-            ReadOnly   = 1 << 0,
-            WriteOnly  = 1 << 1,
-            Append     = 1 << 2,
+            readOnly   = 1 << 0,
+            writeOnly  = 1 << 1,
+            append     = 1 << 2,
             Binary     = 1 << 3,
-            ReadAppend = ReadOnly | Append,
-            ReadWrite  = ReadOnly | WriteOnly,
+            readAppend = readOnly | append,
+            readWrite  = readOnly | writeOnly,
         };
 
     public:
         File();
-        File(const String& _path, const OpenMode& _openmode = OpenMode::ReadOnly);
+        File(const String& _path, const OpenMode& _openmode = OpenMode::readOnly);
         ~File();
 
         /**
@@ -146,7 +146,7 @@ namespace Michka
          * @param _openmode
          * @return false if opening file failed.
          */
-        bool open(const String& _path, const OpenMode& _openmode = OpenMode::ReadOnly);
+        bool open(const String& _path, const OpenMode& _openmode = OpenMode::readOnly);
 
         /**
          * @brief Put string to a file.

@@ -34,7 +34,7 @@
 
 namespace Michka
 {
-    class OpenGLShader : public Shader
+    class MICHKA_API OpenGLShader : public Shader
     {
         friend class OpenGLDevice;
     public:

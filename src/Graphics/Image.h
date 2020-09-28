@@ -24,61 +24,39 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __SHADER_H__
-#define __SHADER_H__
+#ifndef __IMAGE_H__
+#define __IMAGE_H__
 
 #include "Core/Defines.h"
-#include "Core/Container/Map.h"
-#include "Core/Container/String.h"
 
 namespace Michka
 {
-    class MICHKA_API Shader
+    class MICHKA_API Image
     {
     public:
-        enum class Type : u8
+        enum class Format
         {
-            vertex,
-            pixel
+            unknown,
+            rgb8,
+            rgba8,
+            float32,
         };
     public:
-        virtual ~Shader();
+        Image(const String& _path);
+        Image(const u32& _width, const u32& _height, const Format& _format, u8* _data = nullptr);
+        virtual ~Image();
 
         /**
-         * @brief Compile shader.
-         *
-         * @return true if compiled and linked successfully.
+         * @brief Destroy image data.
          */
-        virtual bool compile() = 0;
-
-        /**
-         * @brief Get the Compile/Link Errors if \fn compile failed.
-         */
-        virtual String getErrors() const;
-
-        /**
-         * @brief Destroy vertex buffer.
-         */
-        virtual void destroy() = 0;
-
-        /**
-         * @brief Set the Pixel Shader source.
-         *
-         * @param _source
-         */
-        virtual void setPixelShader(const String& _source) = 0;
-
-        /**
-         * @brief Set the Vertex Shader source.
-         *
-         * @param _source
-         */
-        virtual void setVertexShader(const String& _source) = 0;
+        void destroy();
 
     protected:
-        String mErrors;
-        Map<Shader::Type, String> mShadersSources;
+        u8* mData = nullptr;
+        Format mFormat;
+        u32 mWidth = 0;
+        u32 mHeight = 0;
     };
 }
 
-#endif // __SHADER_H__
+#endif // __IMAGE_H__

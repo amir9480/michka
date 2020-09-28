@@ -73,6 +73,7 @@ if(PACKAGE_TESTS)
     # Build Google Test if library file does not exists
     if(EXISTS "${CMAKE_CURRENT_BINARY_DIR}/lib/${MICHKA_BUILD_TYPE}/gtest${MICHKA_LIBRARY_POSTFIX}.lib")
         include_directories("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/googletest/googletest/include")
+        include_directories("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/stb")
         link_directories("${CMAKE_CURRENT_BINARY_DIR}/lib/${MICHKA_BUILD_TYPE}")
     else()
         set(gtest_force_shared_crt On)

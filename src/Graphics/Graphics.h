@@ -25,7 +25,9 @@
 // ------------------------------------------------------------------------------- //
 
 #include "Device.h"
+#include "Image.h"
 #include "IndexBuffer.h"
 #include "Shader.h"
+#include "Texture.h"
 #include "VertexBuffer.h"
 #include "VertexDeclaration.h"
