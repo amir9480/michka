@@ -30,7 +30,7 @@ namespace Michka
 {
     OpenGLTexture::OpenGLTexture()
     {
-
+        //
     }
 
     OpenGLTexture::~OpenGLTexture()
@@ -40,6 +40,6 @@ namespace Michka
 
     void OpenGLTexture::destroy()
     {
-
+        //
     }
 }

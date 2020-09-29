@@ -77,4 +77,24 @@ namespace Michka
         mWidth = mHeight = 0;
         mFormat = Format::unknown;
     }
+
+    u8* Image::getData() const
+    {
+        return mData;
+    }
+
+    Image::Format Image::getFormat() const
+    {
+        return mFormat;
+    }
+
+    u32 Image::getHeight() const
+    {
+        return mHeight;
+    }
+
+    u32 Image::getWidth() const
+    {
+        return mWidth;
+    }
 }

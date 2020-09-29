@@ -37,8 +37,8 @@ namespace Michka
         enum class Format
         {
             unknown,
-            rgb8,
-            rgba8,
+            r8g8b8,
+            r8g8b8a8,
             float32,
         };
     public:
@@ -50,6 +50,26 @@ namespace Michka
          * @brief Destroy image data.
          */
         void destroy();
+
+        /**
+         * @brief Get access to raw data.
+         */
+        u8* getData() const;
+
+        /**
+         * @brief Get image format.
+         */
+        Format getFormat() const;
+
+        /**
+         * @brief Get image height.
+         */
+        u32 getHeight() const;
+
+        /**
+         * @brief Get image width.
+         */
+        u32 getWidth() const;
 
     protected:
         u8* mData = nullptr;

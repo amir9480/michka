@@ -29,6 +29,7 @@
 #include "Core/Thread/Mutex.h"
 #include "OpenGLIndexBuffer.h"
 #include "OpenGLShader.h"
+#include "OpenGLTexture.h"
 #include "OpenGLVertexBuffer.h"
 
 namespace Michka
@@ -217,6 +218,30 @@ namespace Michka
             out->setPixelShader(_pixelShader);
         }
         return out;
+    }
+
+    Texture* OpenGLDevice::createTexture(const u32& _width, const u32& _height, const Image::Format& _format)
+    {
+        OpenGLTexture* output = nullptr;
+        i32 format = 0;
+        switch (_format)
+        {
+        case Image::Format::r8g8b8:
+            format = GL_RGB;
+            break;
+        case Image::Format::r8g8b8a8:
+            format = GL_RGB;
+            break;
+        case Image::Format::float32:
+            format = GL_DEPTH_COMPONENT32F;
+            break;
+        default:
+            return output;
+        }
+        output = new OpenGLTexture();
+        output->mDevice = this;
+
+        return output;
     }
 
     VertexBuffer* OpenGLDevice::createVertexBuffer(VertexDeclaration* _vertexDeclaration, const bool& _static)

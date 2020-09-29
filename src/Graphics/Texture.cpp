@@ -32,6 +32,4 @@ namespace Michka
     {
         //
     }
-
-    //
 }

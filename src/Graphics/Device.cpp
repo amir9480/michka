@@ -41,6 +41,13 @@ namespace Michka
         //
     }
 
+    Texture* Device::createTexture(const Image& _image)
+    {
+        Texture* output = createTexture(_image.getWidth(), _image.getHeight(), _image.getFormat());
+        //! TODO: fill data
+        return output;
+    }
+
     Window* Device::getWindow() const
     {
         return mWindow;

@@ -30,6 +30,7 @@
 #include "Core/Defines.h"
 #include "Core/Math/Vector4.h"
 #include "Platform/Window.h"
+#include "Image.h"
 
 namespace Michka
 {
@@ -77,6 +78,22 @@ namespace Michka
          * @param _pixelShader
          */
         virtual Shader* createShader(const String& _vertexShader = "", const String& _pixelShader = "") = 0;
+
+        /**
+         * @brief Create a texture.
+         *
+         * @param _width
+         * @param _height
+         * @param _format
+         */
+        virtual Texture* createTexture(const u32& _width, const u32& _height, const Image::Format& _format) = 0;
+
+        /**
+         * @brief Create a texture from image.
+         *
+         * @param _image
+         */
+        virtual Texture* createTexture(const Image& _image);
 
         /**
          * @brief Create a Vertex Buffer.
