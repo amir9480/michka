@@ -54,6 +54,7 @@ namespace Michka
         static const f32 degreePerRadian  = 57.29577951308232087684f;
         static const f32 epsilon          = 0.0001f;
         static const f32 infinity         = INFINITY;
+        static const f32 nan              = NAN;
 
         /**
          * @brief Absolute number

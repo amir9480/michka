@@ -68,7 +68,8 @@ namespace Michka
     {
         if (mEventHandlers.hasKey(_name))
         {
-            mEventHandlers[_name].filter([_handlerId] (const EventHandler& _handler) {
+            mEventHandlers[_name].filter([_handlerId] (const EventHandler& _handler)
+            {
                 return _handler.mId != _handlerId;
             });
         }

@@ -45,7 +45,8 @@ namespace Michka
                 {
                     eventHandler.mCallback(&event);
                 }
-                mEventHandlers[event.getName()].filter([] (const EventHandler& _handler) {
+                mEventHandlers[event.getName()].filter([] (const EventHandler& _handler)
+                {
                     return _handler.mOnce == false;
                 });
             }
@@ -70,7 +71,8 @@ namespace Michka
             {
                 eventHandler.mCallback(&event);
             }
-            mEventHandlers[_name].filter([] (const EventHandler& _handler) {
+            mEventHandlers[_name].filter([] (const EventHandler& _handler)
+            {
                 return _handler.mOnce == false;
             });
         }

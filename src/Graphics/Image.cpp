@@ -34,7 +34,6 @@ namespace Michka
 {
     Image::Image(const String& _path)
     {
-        stbi_set_flip_vertically_on_load(true);
         int channels = 0;
         mData = stbi_load(_path.toUtf8().cstr(), (int*)&mWidth, (int*)&mHeight, &channels, 0);
         switch (channels)
@@ -46,11 +45,11 @@ namespace Michka
             mFormat = Format::r8g8b8a8;
             break;
         default:
-            MICHKA_ERROR("Unknown format.");
+            MICHKA_WARNING("Unknown format.");
         }
         if (mData == nullptr)
         {
-            MICHKA_ERROR(("Image file \"" + _path + "\" does not exists.").toUtf8().cstr());
+            MICHKA_WARNING(("Image file \"" + _path + "\" does not exists.").toUtf8().cstr());
         }
     }
 
@@ -68,6 +67,20 @@ namespace Michka
         destroy();
     }
 
+    u8 Image::bytesPerPixel(const Image::Format& _format)
+    {
+        switch (_format)
+        {
+        case Image::Format::r8g8b8:
+            return 3;
+        case Image::Format::r8g8b8a8:
+        case Image::Format::float32:
+            return 4;
+        }
+
+        return 0;
+    }
+
     void Image::destroy()
     {
         if (mData)
@@ -76,6 +89,11 @@ namespace Michka
         }
         mWidth = mHeight = 0;
         mFormat = Format::unknown;
+    }
+
+    u8 Image::getBytesPerPixel() const
+    {
+        return bytesPerPixel(mFormat);
     }
 
     u8* Image::getData() const
@@ -91,6 +109,29 @@ namespace Michka
     u32 Image::getHeight() const
     {
         return mHeight;
+    }
+
+    Vector4 Image::getPixel(const u32& _x, const u32& _y) const
+    {
+        if (mData == nullptr || _x >= mWidth || _y >= mHeight)
+        {
+            return Vector4::nan;
+        }
+
+        u8 bpp = getBytesPerPixel();
+        u8* dataAtPosition = &mData[(_y*mHeight + _x) * bpp];
+
+        switch (mFormat)
+        {
+        case Image::Format::r8g8b8:
+            return Vector4(dataAtPosition[0], dataAtPosition[1], dataAtPosition[2], 255);
+        case Image::Format::r8g8b8a8:
+            return Vector4(dataAtPosition[0], dataAtPosition[1], dataAtPosition[2], dataAtPosition[3]);
+        case Image::Format::float32:
+            return Vector4(dataAtPosition[0], dataAtPosition[0], dataAtPosition[0], 255);
+        }
+
+        return Vector4::nan;
     }
 
     u32 Image::getWidth() const

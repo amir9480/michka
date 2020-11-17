@@ -41,6 +41,7 @@ namespace Michka
     const Vector3 Vector3::zero     = Vector3( 0.0f,  0.0f,  0.0f);
     const Vector3 Vector3::one      = Vector3(+1.0f, +1.0f, +1.0f);
     const Vector3 Vector3::infinity = Vector3(Math::infinity, Math::infinity, Math::infinity);
+    const Vector3 Vector3::nan      = Vector3(Math::nan, Math::nan, Math::nan);
 
     String Vector3::toString() const
     {

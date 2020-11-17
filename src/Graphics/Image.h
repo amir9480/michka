@@ -28,6 +28,8 @@
 #define __IMAGE_H__
 
 #include "Core/Defines.h"
+#include "Core/Math/Vector3.h"
+#include "Core/Math/Vector4.h"
 
 namespace Michka
 {
@@ -47,9 +49,23 @@ namespace Michka
         virtual ~Image();
 
         /**
+         * @brief Memory used per pixel based on format.
+         *
+         * @param _format
+         */
+        static u8 bytesPerPixel(const Format& _format);
+
+        /**
          * @brief Destroy image data.
          */
         void destroy();
+
+        /**
+         * @brief Memory used per pixel based on format.
+         *
+         * @param _format
+         */
+        u8 getBytesPerPixel() const;
 
         /**
          * @brief Get access to raw data.
@@ -65,6 +81,14 @@ namespace Michka
          * @brief Get image height.
          */
         u32 getHeight() const;
+
+        /**
+         * @brief Get the pixel value at specific position.
+         *
+         * @param _x
+         * @param _y
+         */
+        Vector4 getPixel(const u32& _x, const u32& _y) const;
 
         /**
          * @brief Get image width.

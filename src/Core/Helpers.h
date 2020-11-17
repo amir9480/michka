@@ -34,8 +34,12 @@
 
 #define MICHKA_ERROR(_MESSAGE) \
     { \
-        printf("%s (%d): %s", __FILE__, __LINE__, (_MESSAGE)); \
+        printf("Error: %s (%d): %s", __FILE__, __LINE__, (_MESSAGE)); \
         std::exit(1); \
+    }
+#define MICHKA_WARNING(_MESSAGE) \
+    { \
+        printf("Warning: %s (%d): %s\n", __FILE__, __LINE__, (_MESSAGE)); \
     }
 #define MICHKA_ASSERT(_CONDITION, _MESSAGE) \
     if (!(_CONDITION)) \

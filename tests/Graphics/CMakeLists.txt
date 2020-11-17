@@ -30,6 +30,7 @@ set(
 
     # -------------------------------------------------------------------------- #
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/ImageTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/VertexDeclarationTest.cpp
 
     # -------------------------------------------------------------------------- #

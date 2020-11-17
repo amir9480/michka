@@ -38,6 +38,7 @@ namespace Michka
     const Vector2 Vector2::zero     = Vector2( 0.0f,  0.0f);
     const Vector2 Vector2::one      = Vector2(+1.0f, +1.0f);
     const Vector2 Vector2::infinity = Vector2(Math::infinity, Math::infinity);
+    const Vector2 Vector2::nan      = Vector2(Math::nan, Math::nan);
 
     Vector2::operator Vector3 () const
     {

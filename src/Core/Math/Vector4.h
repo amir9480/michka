@@ -163,6 +163,7 @@ namespace Michka
         static const Vector4 zero;
         static const Vector4 one;
         static const Vector4 infinity;
+        static const Vector4 nan;
 
     public:
         union
