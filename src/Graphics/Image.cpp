@@ -40,10 +40,10 @@ namespace Michka
         switch (channels)
         {
         case 3:
-            mFormat = Format::rgb8;
+            mFormat = Format::r8g8b8;
             break;
         case 4:
-            mFormat = Format::rgba8;
+            mFormat = Format::r8g8b8a8;
             break;
         default:
             MICHKA_ERROR("Unknown format.");

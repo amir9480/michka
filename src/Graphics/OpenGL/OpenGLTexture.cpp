@@ -40,6 +40,55 @@ namespace Michka
 
     void OpenGLTexture::destroy()
     {
-        //
+        if (mTexture)
+        {
+	        glDeleteTextures(1, &mTexture);
+            mTexture = 0;
+        }
+    }
+
+    Image::Format OpenGLTexture::getFormat() const
+    {
+        return mFormat;
+    }
+
+    u32 OpenGLTexture::getHeight() const
+    {
+        return mHeight;
+    }
+
+    u32 OpenGLTexture::getWidth() const
+    {
+        return mWidth;
+    }
+
+    void OpenGLTexture::set(const void* _data, const u32& _size)
+    {
+        if (mTexture)
+        {
+            i32 format = 0;
+            switch (mFormat)
+            {
+            case Image::Format::r8g8b8:
+                format = GL_RGB;
+                break;
+            case Image::Format::r8g8b8a8:
+                format = GL_RGBA;
+                break;
+            case Image::Format::float32:
+                format = GL_DEPTH_COMPONENT32F;
+                break;
+            default:
+                return;
+            }
+            GLint currentTextureId;
+            glGetIntegerv(GL_TEXTURE_2D, &currentTextureId);
+
+            glBindTexture(GL_TEXTURE_2D, mTexture);
+            glTexImage2D(GL_TEXTURE_2D, 0, format, mWidth, mHeight, 0, format, GL_UNSIGNED_BYTE, _data);
+            glGenerateMipmap(GL_TEXTURE_2D);
+
+            glBindTexture(GL_TEXTURE_2D, currentTextureId);
+        }
     }
 }

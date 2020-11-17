@@ -62,8 +62,7 @@ namespace Michka
             );
             HDC tempDC = GetDC(tempHwnd);
 
-            PIXELFORMATDESCRIPTOR fakePFD;
-            ZeroMemory(&fakePFD, sizeof(fakePFD));
+            PIXELFORMATDESCRIPTOR fakePFD = {};
             fakePFD.nSize = sizeof(fakePFD);
             fakePFD.nVersion = 1;
             fakePFD.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER;
@@ -111,17 +110,17 @@ namespace Michka
 
             const int pixelAttribs[] =
             {
-                WGL_DRAW_TO_WINDOW_ARB, GL_TRUE,
-                WGL_SUPPORT_OPENGL_ARB, GL_TRUE,
-                WGL_DOUBLE_BUFFER_ARB, GL_TRUE,
-                WGL_PIXEL_TYPE_ARB, WGL_TYPE_RGBA_ARB,
-                WGL_ACCELERATION_ARB, WGL_FULL_ACCELERATION_ARB,
-                WGL_COLOR_BITS_ARB, 32,
-                WGL_ALPHA_BITS_ARB, 8,
-                WGL_DEPTH_BITS_ARB, 24,
-                WGL_STENCIL_BITS_ARB, 8,
-                WGL_SAMPLE_BUFFERS_ARB, GL_TRUE,
-                WGL_SAMPLES_ARB, 4,
+                WGL_DRAW_TO_WINDOW_ARB,     GL_TRUE,
+                WGL_SUPPORT_OPENGL_ARB,     GL_TRUE,
+                WGL_DOUBLE_BUFFER_ARB,      GL_TRUE,
+                WGL_PIXEL_TYPE_ARB,         WGL_TYPE_RGBA_ARB,
+                WGL_ACCELERATION_ARB,       WGL_FULL_ACCELERATION_ARB,
+                WGL_COLOR_BITS_ARB,         32,
+                WGL_ALPHA_BITS_ARB,         8,
+                WGL_DEPTH_BITS_ARB,         24,
+                WGL_STENCIL_BITS_ARB,       8,
+                WGL_SAMPLE_BUFFERS_ARB,     GL_TRUE,
+                WGL_SAMPLES_ARB,            4,
                 0
             };
 
@@ -222,24 +221,9 @@ namespace Michka
 
     Texture* OpenGLDevice::createTexture(const u32& _width, const u32& _height, const Image::Format& _format)
     {
-        OpenGLTexture* output = nullptr;
-        i32 format = 0;
-        switch (_format)
-        {
-        case Image::Format::r8g8b8:
-            format = GL_RGB;
-            break;
-        case Image::Format::r8g8b8a8:
-            format = GL_RGB;
-            break;
-        case Image::Format::float32:
-            format = GL_DEPTH_COMPONENT32F;
-            break;
-        default:
-            return output;
-        }
-        output = new OpenGLTexture();
+        OpenGLTexture* output = new OpenGLTexture();
         output->mDevice = this;
+        glGenTextures(1, &output->mTexture);
 
         return output;
     }

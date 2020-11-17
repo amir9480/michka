@@ -42,9 +42,20 @@ namespace Michka
 
         virtual void destroy() override;
 
+        virtual Image::Format getFormat() const override;
+
+        virtual u32 getHeight() const override;
+
+        virtual u32 getWidth() const override;
+
+        virtual void set(const void* _data, const u32& _size);
+
     protected:
         OpenGLDevice* mDevice = nullptr;
+        Image::Format mFormat = Image::Format::unknown;
         u32           mTexture = 0;
+        u32           mWidth = 0;
+        u32           mHeight = 0;
     };
 }
 

@@ -41,7 +41,7 @@ namespace Michka
             readOnly   = 1 << 0,
             writeOnly  = 1 << 1,
             append     = 1 << 2,
-            Binary     = 1 << 3,
+            binary     = 1 << 3,
             readAppend = readOnly | append,
             readWrite  = readOnly | writeOnly,
         };

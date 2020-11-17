@@ -183,7 +183,7 @@ namespace Michka
                 openmode += "r+";
                 break;
         }
-        if ((_openmode & OpenMode::Binary) == OpenMode::Binary)
+        if ((_openmode & OpenMode::binary) == OpenMode::binary)
         {
             openmode += "b";
         }

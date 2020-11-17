@@ -270,7 +270,7 @@ namespace Michka
     FORCE_INLINE T max(const T& _a);
 
     /**
-     * @brief Get minimum between multiple number.
+     * @brief Get maximum between multiple number.
      *
      * @tparam T
      * @tparam T2

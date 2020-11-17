@@ -28,6 +28,7 @@
 #define __TEXTURE_H__
 
 #include "Core/Defines.h"
+#include "Image.h"
 
 namespace Michka
 {
@@ -40,6 +41,29 @@ namespace Michka
          * @brief Destroy texture.
          */
         virtual void destroy() = 0;
+
+        /**
+         * @brief Get texture format.
+         */
+        virtual Image::Format getFormat() const = 0;
+
+        /**
+         * @brief Get texture height.
+         */
+        virtual u32 getHeight() const = 0;
+
+        /**
+         * @brief Get texture width.
+         */
+        virtual u32 getWidth() const = 0;
+
+        /**
+         * @brief Set texture buffer.
+         *
+         * @param _data
+         * @param _size
+         */
+        virtual void set(const void* _data, const u32& _size) = 0;
     };
 }
 
