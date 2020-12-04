@@ -236,7 +236,7 @@ TEST(MapTest, KeyValue)
         {
             int testNumber = a["undefined"];
         }
-        catch (Michka::Exception exception)
+        catch (const Michka::Exception& exception)
         {
             ASSERT_STREQ("Map::operator[] : Key not found.", exception.getMessage());
             throw;
@@ -248,7 +248,7 @@ TEST(MapTest, KeyValue)
         {
             Person testPerson = b["undefined"];
         }
-        catch (Michka::Exception exception)
+        catch (const Michka::Exception& exception)
         {
             ASSERT_STREQ("Map::operator[] : Your type is not assaignable.", exception.getMessage());
             throw;
@@ -257,6 +257,8 @@ TEST(MapTest, KeyValue)
 
     EXPECT_NO_THROW({
         int testInt = c["undefined"];
+
+        ASSERT_EQ(testInt, 0);
     });
 }
 
@@ -265,10 +267,6 @@ TEST(MapTest, Remove)
     Michka::Map<Michka::String, int> a = {
         {"a", 1},
         {"b", 2},
-        {"c", 3}
-    };
-    Michka::Map<Michka::String, int> b = {
-        {"a", 1},
         {"c", 3}
     };
 

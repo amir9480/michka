@@ -93,7 +93,7 @@ namespace Michka
     {
         friend class Window;
     public:
-        WindowLoopThread(Window* _window): mWindow(_window)
+        explicit WindowLoopThread(Window* _window): mWindow(_window)
         {
             //
         }

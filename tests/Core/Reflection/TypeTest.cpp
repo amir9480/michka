@@ -146,6 +146,7 @@ TEST(TypeTest, RemovePointerAndReference)
 TEST(TypeTest, Signed)
 {
     int a = 100;
+    ASSERT_TRUE(Michka::Type<decltype(a)>::isSigned);
     ASSERT_TRUE(Michka::Type<int>::isSigned);
     ASSERT_TRUE(Michka::Type<unsigned int>::isUnsigned);
     ASSERT_TRUE(Michka::Type<float>::isSigned);

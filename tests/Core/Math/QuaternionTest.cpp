@@ -224,7 +224,6 @@ TEST(QuaternionTest, Slerp)
 {
     Michka::Quaternion a(0.0f, 0.0f, 0.0f);
     Michka::Quaternion b(0.0f, 60.0f, 0.0f);
-    Michka::Vector3 test = Michka::Quaternion::slerp(a, b, 1.0f).toEulerAngels();
     ASSERT_EQ(Michka::Quaternion::slerp(a, b, 0.0f), a);
     ASSERT_EQ(Michka::Quaternion::slerp(a, b, 1.0f), b);
     ASSERT_EQ(Michka::Quaternion::slerp(a, b, 0.5f), Michka::Quaternion(0.0f, 30.0f, 0.0f));

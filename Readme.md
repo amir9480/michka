@@ -17,11 +17,11 @@
 </div>
 
 ## Credits
-* [Glad](https://glad.dav1d.de)
-* [Google Test](https://github.com/google/googletest)
-* [OpenGL](https://www.opengl.org)
-* [stb](https://github.com/nothings/stb)
+  * [Glad](https://glad.dav1d.de)
+  * [Google Test](https://github.com/google/googletest)
+  * [OpenGL](https://www.opengl.org)
+  * [stb](https://github.com/nothings/stb)
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The MIT License (MIT). Please see [License File](License.md) for more information.

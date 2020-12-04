@@ -79,6 +79,7 @@ TEST(VariantTest, Compare)
         Michka::Variant a = Student("test");
         ASSERT_EQ(a, Student("test"));
         Student test = a.to<Student>();
+        ASSERT_EQ(test, Student("test"));
         ASSERT_NE(a, Student("test2"));
         ASSERT_NE(a, "test");
     }
@@ -442,9 +443,9 @@ TEST(VariantTest, Create)
         ASSERT_EQ(a.to<Student>(), Student());
 
         Michka::Variant b = a;
-        ASSERT_EQ(a.getType(), Michka::Variant::Type::typeArray);
-        ASSERT_TRUE(a.isConvertibleTo<Michka::List<Michka::Variant>>());
-        ASSERT_EQ(a.to<Michka::List<Michka::Variant>>(), Michka::List({1, 2, 4}));
+        ASSERT_EQ(b.getType(), Michka::Variant::Type::typeArray);
+        ASSERT_TRUE(b.isConvertibleTo<Michka::List<Michka::Variant>>());
+        ASSERT_EQ(b.to<Michka::List<Michka::Variant>>(), Michka::List({1, 2, 4}));
     }
     {
         Michka::Variant a = Student("test");

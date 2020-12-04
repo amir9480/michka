@@ -52,7 +52,6 @@ TEST(PlaneTest, GetProjected)
     Michka::Plane a(Michka::Vector3::down * 3.0f, Michka::Vector3::up);
 
     ASSERT_EQ(a.getProjected(Michka::Vector3::zero), Michka::Vector3(Michka::Vector3::down * 3.0f));
-    Michka::Vector3 test = a.getProjected(Michka::Vector3(5.0f, 5.0f, 5.0f));
     ASSERT_EQ(a.getProjected(Michka::Vector3(5.0f, 5.0f, 5.0f)), Michka::Vector3(5.0f, -3.0f, 5.0f));
 }
 
@@ -68,7 +67,6 @@ TEST(PlaneTest, GetReflectionMatrix)
 {
     Michka::Plane a(Michka::Vector3::down * 3.0f, Michka::Vector3::up);
 
-    Michka::Vector3 test = Michka::Vector3::zero * a.getReflectionMatrix();
     ASSERT_EQ(Michka::Vector3::zero * a.getReflectionMatrix(), Michka::Vector3(Michka::Vector3::down * 6.0f));
     ASSERT_EQ(Michka::Vector3(5.0f, 5.0f, 5.0f) * a.getReflectionMatrix(), Michka::Vector3(5.0f, -11.0f, 5.0f));
 }

@@ -72,7 +72,6 @@ namespace Michka
     {
         // Adapted from: http://viclw17.github.io/2018/07/16/raytracing-ray-sphere-intersection/
         Vector3 diff = position - _sphere.position;
-        Vector3 _direction = direction;
         if (position.getDistanceFrom(_sphere.position) < _sphere.radius)
         {
             diff = -diff;

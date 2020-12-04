@@ -245,7 +245,6 @@ namespace Michka
         }
 
         char line[2048];
-        u32 size = 0;
         if (fgets(line, 2048, mFile))
         {
             return line;

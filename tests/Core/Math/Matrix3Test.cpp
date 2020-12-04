@@ -109,7 +109,6 @@ TEST(Matrix3Test, Inverse)
         -13.0f/67.0f, -17.0f/134.0f,  19.0f/67.0f,
         10.0f/67.0f,  -23.0f/134.0f,  6.0f/67.0f
     );
-    Michka::Matrix3 test = b.getInversed();
 
     ASSERT_FALSE(a.isInversable());
     ASSERT_TRUE(b.isInversable());

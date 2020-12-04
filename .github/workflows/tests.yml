@@ -1,4 +1,4 @@
-name: Michka On Windows
+name: tests
 
 on:
   push:
