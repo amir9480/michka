@@ -1,0 +1,34 @@
+name: Michka On Windows
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+
+    - name: Configure
+      run: cmake -Bbuild -T host=x64 -A x64
+
+    - name: Build
+      run: cmake --build build --config Debug -j4
+
+    - name: Install OpenCppCoverage
+      run: choco install opencppcoverage
+
+    - name: Install CodeCov
+      run: choco install codecov
+
+    - name: Run tests
+      shell: cmd
+      run: call "C:/Program Files/OpenCppCoverage/OpenCppCoverage.exe" --sources "src\*" --excluded_sources "thirdparty\*" --excluded_sources "d:\agent" --export_type "cobertura:coverage.xml" --excluded_line_regex ".*@NOCOVERAGE.*" --excluded_line_regex "\s*else.*" --excluded_line_regex "\s*\}.*" "build\tests\Debug\MichkaTests.exe"
+
+    - name: Upload coverage report
+      run: codecov -f coverage.xml --root .

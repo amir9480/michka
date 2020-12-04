@@ -27,8 +27,6 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(MichkaTests)
 
-enable_testing()
-
 set(TEST_SOURCES "")
 add_subdirectory("Classes")
 add_subdirectory("Core")
@@ -36,6 +34,7 @@ add_subdirectory("Graphics")
 add_subdirectory("Platform")
 
 add_executable(MichkaTests ${SOURCES} ${TEST_SOURCES})
+set_property(TARGET MichkaTests PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 target_link_libraries(MichkaTests ${LIBS})
 
 if(MICHKA_BUILD_TYPE STREQUAL "Debug")
@@ -43,5 +42,3 @@ if(MICHKA_BUILD_TYPE STREQUAL "Debug")
 else()
     target_link_libraries(MichkaTests gtest gtest_main)
 endif()
-
-add_test(MichkaTest MichkaTests)
