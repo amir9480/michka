@@ -113,6 +113,18 @@ namespace Michka
     }
 
     template<typename T>
+    FORCE_INLINE T& Vector<T>::first()
+    {
+        return *begin();
+    }
+
+    template<typename T>
+    FORCE_INLINE T Vector<T>::first() const
+    {
+        return *begin();
+    }
+
+    template<typename T>
     FORCE_INLINE u32 Vector<T>::getSize() const
     {
         return mSize;
@@ -346,6 +358,18 @@ namespace Michka
     FORCE_INLINE bool Vector<T>::isNotEmpty() const
     {
         return mSize != 0;
+    }
+
+    template<typename T>
+    FORCE_INLINE T& Vector<T>::last()
+    {
+        return *(end() - 1);
+    }
+
+    template<typename T>
+    FORCE_INLINE T Vector<T>::last() const
+    {
+        return *(end() - 1);
     }
 
     template<typename T>

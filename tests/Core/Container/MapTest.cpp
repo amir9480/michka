@@ -225,11 +225,19 @@ TEST(MapTest, KeyValue)
     ASSERT_EQ(a["a"], 1);
     ASSERT_EQ(a["b"], 2);
     ASSERT_EQ(a["c"], 3);
+    ASSERT_EQ(a.first().key(), "a");
+    ASSERT_EQ(a.last().key(), "c");
+    ASSERT_EQ(a.first().value(), 1);
+    ASSERT_EQ(a.last().value(), 3);
 
     ASSERT_EQ(b["w"], Person("person w"));
     ASSERT_EQ(b["y"], Person("person y"));
     ASSERT_EQ(b["z"], Person("person z"));
     ASSERT_EQ(b["v"], Person("Inserted"));
+    ASSERT_EQ(b.first().key(), "y");
+    ASSERT_EQ(b.last().key(), "v");
+    ASSERT_EQ(b.first().value(), Person("person y"));
+    ASSERT_EQ(b.last().value(), Person("Inserted"));
 
     EXPECT_THROW({
         try

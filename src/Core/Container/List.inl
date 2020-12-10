@@ -282,6 +282,18 @@ namespace Michka
     }
 
     template<typename T>
+    FORCE_INLINE T& List<T>::first()
+    {
+        return mFirst->value;
+    }
+
+    template<typename T>
+    FORCE_INLINE T List<T>::first() const
+    {
+        return mFirst->value;
+    }
+
+    template<typename T>
     FORCE_INLINE u32 List<T>::getSize() const
     {
         return mSize;
@@ -526,6 +538,18 @@ namespace Michka
     FORCE_INLINE bool List<T>::isNotEmpty() const
     {
         return mSize != 0;
+    }
+
+    template<typename T>
+    FORCE_INLINE T& List<T>::last()
+    {
+        return mLast->value;
+    }
+
+    template<typename T>
+    FORCE_INLINE T List<T>::last() const
+    {
+        return mLast->value;
     }
 
     template<typename T>

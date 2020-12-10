@@ -184,6 +184,18 @@ namespace Michka
     }
 
     template<typename TKey, typename TValue>
+    FORCE_INLINE typename Map<TKey, TValue>::Element& Map<TKey, TValue>::first()
+    {
+        return mData.first();
+    }
+
+    template<typename TKey, typename TValue>
+    FORCE_INLINE typename Map<TKey, TValue>::Element Map<TKey, TValue>::first() const
+    {
+        return mData.first();
+    }
+
+    template<typename TKey, typename TValue>
     FORCE_INLINE u32 Map<TKey, TValue>::getSize() const
     {
         return mData.getSize();
@@ -268,6 +280,18 @@ namespace Michka
     FORCE_INLINE bool Map<TKey, TValue>::isNotEmpty() const
     {
         return mData.isNotEmpty();
+    }
+
+    template<typename TKey, typename TValue>
+    FORCE_INLINE typename Map<TKey, TValue>::Element& Map<TKey, TValue>::last()
+    {
+        return mData.last();
+    }
+
+    template<typename TKey, typename TValue>
+    FORCE_INLINE typename Map<TKey, TValue>::Element Map<TKey, TValue>::last() const
+    {
+        return mData.last();
     }
 
     template<typename TKey, typename TValue>

@@ -111,6 +111,12 @@ namespace Michka
         FORCE_INLINE Map<TKey, TValue>& filter(const std::function<bool(const Element&)>& _callback);
 
         /**
+         * @brief Get first item.
+         */
+        FORCE_INLINE Element& first();
+        FORCE_INLINE Element first() const;
+
+        /**
          * @brief Get capacity of map.
          */
         FORCE_INLINE u32 getCapacity() const;
@@ -189,6 +195,12 @@ namespace Michka
          * @brief Check map is not empty.
          */
         FORCE_INLINE bool isNotEmpty() const;
+
+        /**
+         * @brief Get last item.
+         */
+        FORCE_INLINE Element& last();
+        FORCE_INLINE Element last() const;
 
         /**
          * @brief Remove specific key.

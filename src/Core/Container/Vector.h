@@ -84,6 +84,12 @@ namespace Michka
         Vector<T>& filter(const std::function<bool(const T&)>& _callback);
 
         /**
+         * @brief Get first item.
+         */
+        FORCE_INLINE T& first();
+        FORCE_INLINE T first() const;
+
+        /**
          * @brief Get capacity of vector.
          */
         FORCE_INLINE u32 getCapacity() const;
@@ -191,6 +197,12 @@ namespace Michka
          * @brief Check vector is not empty.
          */
         FORCE_INLINE bool isNotEmpty() const;
+
+        /**
+         * @brief Get last item.
+         */
+        FORCE_INLINE T& last();
+        FORCE_INLINE T last() const;
 
         /**
          * @brief Find index of a value with offset of from but in reversed order.

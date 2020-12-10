@@ -60,6 +60,8 @@ TEST(VectorTest, ConstantVector)
     ASSERT_EQ(a.getCapacity(), 8);
     ASSERT_EQ(a[0], 1);
     ASSERT_EQ(a[1], 2);
+    ASSERT_EQ(a.first(), 1);
+    ASSERT_EQ(a.last(), 2);
 }
 
 TEST(VectorTest, Empty)
@@ -369,6 +371,10 @@ TEST(VectorTest, Set)
     ASSERT_EQ(b.getSize(), 1);
     ASSERT_TRUE(a[0] == 1);
     ASSERT_TRUE(b[0] == Person("A"));
+    ASSERT_TRUE(a.first() == 1);
+    ASSERT_TRUE(b.first() == Person("A"));
+    ASSERT_TRUE(a.last() == 1);
+    ASSERT_TRUE(b.last() == Person("A"));
 
     a = {10, 20, 30};
     b = {Person("AA"), Person("BB"), Person("CC")};
@@ -380,6 +386,10 @@ TEST(VectorTest, Set)
     ASSERT_TRUE(b[1] == Person("BB"));
     ASSERT_TRUE(a[2] == 30);
     ASSERT_TRUE(b[2] == Person("CC"));
+    ASSERT_TRUE(a.first() == 10);
+    ASSERT_TRUE(b.first() == Person("AA"));
+    ASSERT_TRUE(a.last() == 30);
+    ASSERT_TRUE(b.last() == Person("CC"));
 
     a = Michka::Vector<int>({1, 2, 3});
     b = Michka::Vector<Person>({Person("A"), Person("B"), Person("C")});
@@ -391,13 +401,18 @@ TEST(VectorTest, Set)
     ASSERT_TRUE(b[1] == Person("B"));
     ASSERT_TRUE(a[2] == 3);
     ASSERT_TRUE(b[2] == Person("C"));
+    ASSERT_TRUE(a.first() == 1);
+    ASSERT_TRUE(b.first() == Person("A"));
+    ASSERT_TRUE(a.last() == 3);
+    ASSERT_TRUE(b.last() == Person("C"));
 
     c = a;
     ASSERT_EQ(c.getSize(), 3);
     ASSERT_TRUE(c[0] == 1);
     ASSERT_TRUE(c[1] == 2);
     ASSERT_TRUE(c[2] == 3);
-
+    ASSERT_TRUE(c.first() == 1);
+    ASSERT_TRUE(c.last() == 3);
 }
 
 TEST(VectorTest, Sort)
