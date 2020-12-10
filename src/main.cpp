@@ -214,34 +214,35 @@ int main()
 {
     std::cout << "Welcome to engine!\n-------------------------------------\n\n";
 
-    Image image("build/wall.jpg");
+    Image image("test-assets/grass.jpg");
 
-    // Device* device = Device::instance(Device::Driver::openGL);
-    // IndexBuffer* ib = device->createIndexBuffer();
-    // ib->set(indices2, sizeof(indices2) / sizeof(indices2[0]));
-    // VertexBuffer* vb = device->createVertexBuffer(&Vertex::decl());
-    // vb->set(vertices2, sizeof(vertices2));
-    // Shader* shader = device->createShader(File::getContents("shaders/test.vert"), File::getContents("shaders/test.frag"));
-    // if (! shader->compile())
-    // {
-    //     MessageBoxW(0, shader->getErrors().cstr(), L"ERROR", MB_OK);
-    //     exit(-1);
-    // }
+    Device* device = Device::instance(Device::Driver::openGL);
+    IndexBuffer* ib = device->createIndexBuffer();
+    ib->set(indices2, sizeof(indices2) / sizeof(indices2[0]));
+    VertexBuffer* vb = device->createVertexBuffer(&Vertex::decl());
+    vb->set(vertices2, sizeof(vertices2));
+    Shader* shader = device->createShader(File::getContents("shaders/test.vert"), File::getContents("shaders/test.frag"));
+    if (! shader->compile())
+    {
+        MessageBoxW(0, shader->getErrors().cstr(), L"ERROR", MB_OK);
+        exit(-1);
+    }
 
-    // while (device->getWindow()->isDestroyed() == false)
-    // {
-    //     device->clear(true, true, true, Vector4(0.2f, 0.7f, 1.0f, 1.0f));
-    //     device->setIndexBuffer(ib);
-    //     device->setVertexBuffer(vb);
-    //     device->setShader(shader);
-    //     device->draw();
+    while (device->getWindow()->isDestroyed() == false)
+    {
+        device->clear(true, true, true, Vector4(0.2f, 0.7f, 1.0f, 1.0f));
+        device->setIndexBuffer(ib);
+        device->setVertexBuffer(vb);
+        device->setShader(shader);
+        shader->set("test", ((clock()/1000)%3) + 1);
+        device->draw();
 
-    //     device->drawOnScreen();
-    // }
+        device->drawOnScreen();
+    }
 
-    // delete vb;
-    // delete ib;
-    // delete shader;
+    delete vb;
+    delete ib;
+    delete shader;
 
     std::cout << "\nBYE\n";
     system("PAUSE");

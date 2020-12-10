@@ -64,6 +64,13 @@ namespace Michka
          * @param _size
          */
         virtual void set(const void* _data, const u32& _size) = 0;
+
+        /**
+         * @brief Set texture buffer.
+         *
+         * @param _image
+         */
+        virtual void set(const Image& _image) = 0;
     };
 }
 

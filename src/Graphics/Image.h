@@ -91,6 +91,11 @@ namespace Michka
         Vector4 getPixel(const u32& _x, const u32& _y) const;
 
         /**
+         * @brief Get the buffer size in bytes.
+         */
+        u32 getSize() const;
+
+        /**
          * @brief Get image width.
          */
         u32 getWidth() const;

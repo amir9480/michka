@@ -91,4 +91,9 @@ namespace Michka
             glBindTexture(GL_TEXTURE_2D, currentTextureId);
         }
     }
+
+    void OpenGLTexture::set(const Image& _image)
+    {
+        set(_image.getData(), _image.getSize());
+    }
 }

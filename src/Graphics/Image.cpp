@@ -134,6 +134,11 @@ namespace Michka
         return Vector4::nan;
     }
 
+    u32 Image::getSize() const
+    {
+        return mWidth * mHeight * getBytesPerPixel();
+    }
+
     u32 Image::getWidth() const
     {
         return mWidth;

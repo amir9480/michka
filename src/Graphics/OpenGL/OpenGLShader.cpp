@@ -25,6 +25,11 @@
 // ------------------------------------------------------------------------------- //
 
 #include "OpenGLShader.h"
+#include "Core/Math/Vector2.h"
+#include "Core/Math/Vector3.h"
+#include "Core/Math/Vector4.h"
+#include "Core/Math/Matrix3.h"
+#include "Core/Math/Matrix.h"
 
 namespace Michka
 {
@@ -122,6 +127,129 @@ namespace Michka
         }
     }
 
+    bool OpenGLShader::set(const String& _name, const bool& _value)
+    {
+        return set(_name, int(_value));
+    }
+
+    bool OpenGLShader::set(const String& _name, const int& _value)
+    {
+        int location = getUniformLocation(_name);
+        if (location != -1)
+        {
+            glProgramUniform1i(mProgram, location, _value);
+            return true;
+        }
+
+        return false;
+    }
+
+    bool OpenGLShader::set(const String& _name, const f32& _value)
+    {
+        int location = getUniformLocation(_name);
+        if (location != -1)
+        {
+            glProgramUniform1f(mProgram, location, _value);
+            return true;
+        }
+
+        return false;
+    }
+
+    bool OpenGLShader::set(const String& _name, const f32& _valueX, const f32& _valueY)
+    {
+        int location = getUniformLocation(_name);
+        if (location != -1)
+        {
+            glProgramUniform2f(mProgram, location, _valueX, _valueY);
+            return true;
+        }
+
+        return false;
+    }
+
+    bool OpenGLShader::set(const String& _name, const Vector2& _value)
+    {
+        return set(_name, _value.x, _value.y);
+    }
+
+    bool OpenGLShader::set(const String& _name, const f32& _valueX, const f32& _valueY, const f32& _valueZ)
+    {
+        int location = getUniformLocation(_name);
+        if (location != -1)
+        {
+            glProgramUniform3f(mProgram, location, _valueX, _valueY, _valueZ);
+            return true;
+        }
+
+        return false;
+    }
+
+    bool OpenGLShader::set(const String& _name, const Vector3& _value)
+    {
+        return set(_name, _value.x, _value.y, _value.z);
+    }
+
+    bool OpenGLShader::set(const String& _name, const f32& _valueX, const f32& _valueY, const f32& _valueZ, const f32& _valueW)
+    {
+        int location = getUniformLocation(_name);
+        if (location != -1)
+        {
+            glProgramUniform4f(mProgram, location, _valueX, _valueY, _valueZ, _valueW);
+            return true;
+        }
+
+        return false;
+    }
+
+    bool OpenGLShader::set(const String& _name, const Vector4& _value)
+    {
+        return set(_name, _value.x, _value.y, _value.z, _value.w);
+    }
+
+    bool OpenGLShader::set(const String& _name, const Matrix3& _value)
+    {
+        int location = getUniformLocation(_name);
+        if (location != -1)
+        {
+            glProgramUniformMatrix3fv(mProgram, location, 1, false, (float*)&_value);
+            return true;
+        }
+
+        return false;
+    }
+
+    bool OpenGLShader::set(const String& _name, const Matrix& _value)
+    {
+        int location = getUniformLocation(_name);
+        if (location != -1)
+        {
+            glProgramUniformMatrix4fv(mProgram, location, 1, false, (float*)&_value);
+            return true;
+        }
+
+        return false;
+    }
+
+    bool OpenGLShader::set(const String& _name, const Texture*& _value)
+    {
+        int location = getUniformLocation(_name);
+        if (location != -1)
+        {
+            if (_value != nullptr)
+            {
+                mTextures[_name] = _value;
+                return true;
+            }
+            else
+            {
+                return set(_name, 0);
+            }
+        }
+
+        return false;
+    }
+
     void OpenGLShader::setPixelShader(const String& _source)
     {
         mShadersSources[Shader::Type::pixel] = _source;
@@ -130,5 +258,15 @@ namespace Michka
     void OpenGLShader::setVertexShader(const String& _source)
     {
         mShadersSources[Shader::Type::vertex] = _source;
+    }
+
+    FORCE_INLINE int OpenGLShader::getUniformLocation(const String& _name) const
+    {
+        if (mProgram)
+        {
+            return glGetUniformLocation(mProgram, _name.toUtf8().cstr());
+        }
+
+        return -1;
     }
 }

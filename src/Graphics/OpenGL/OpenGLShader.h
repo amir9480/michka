@@ -45,13 +45,29 @@ namespace Michka
 
         virtual void destroy() override;
 
+        virtual bool set(const String& _name, const bool& _value) override;
+        virtual bool set(const String& _name, const int& _value) override;
+        virtual bool set(const String& _name, const f32& _value) override;
+        virtual bool set(const String& _name, const f32& _valueX, const f32& _valueY) override;
+        virtual bool set(const String& _name, const Vector2& _value) override;
+        virtual bool set(const String& _name, const f32& _valueX, const f32& _valueY, const f32& _valueZ) override;
+        virtual bool set(const String& _name, const Vector3& _value) override;
+        virtual bool set(const String& _name, const f32& _valueX, const f32& _valueY, const f32& _valueZ, const f32& _valueW) override;
+        virtual bool set(const String& _name, const Vector4& _value) override;
+        virtual bool set(const String& _name, const Matrix3& _value) override;
+        virtual bool set(const String& _name, const Matrix& _value) override;
+        virtual bool set(const String& _name, const Texture*& _value) override;
+
         virtual void setPixelShader(const String& _source) override;
 
         virtual void setVertexShader(const String& _source) override;
+    private:
+        FORCE_INLINE int getUniformLocation(const String& _name) const;
 
     protected:
-        OpenGLDevice* mDevice = nullptr;
-        u32           mProgram = 0;
+        OpenGLDevice*               mDevice = nullptr;
+        u32                         mProgram = 0;
+        Map<String, const Texture*> mTextures;
     };
 }
 

@@ -50,6 +50,8 @@ namespace Michka
 
         virtual void set(const void* _data, const u32& _size);
 
+        virtual void set(const Image& _image);
+
     protected:
         OpenGLDevice* mDevice = nullptr;
         Image::Format mFormat = Image::Format::unknown;

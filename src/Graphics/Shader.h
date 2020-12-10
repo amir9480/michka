@@ -33,6 +33,13 @@
 
 namespace Michka
 {
+    class Vector2;
+    class Vector3;
+    class Vector4;
+    class Matrix3;
+    class Matrix;
+    class Texture;
+
     class MICHKA_API Shader
     {
     public:
@@ -60,6 +67,114 @@ namespace Michka
          * @brief Destroy vertex buffer.
          */
         virtual void destroy() = 0;
+
+        /**
+         * @brief Set boolean uniform parameter value.
+         *
+         * @param _name
+         * @param _value
+         * @return false if uniform doesn't exists
+         */
+        virtual bool set(const String& _name, const bool& _value) = 0;
+
+        /**
+         * @brief Set int uniform parameter value.
+         *
+         * @param _name
+         * @param _value
+         * @return false if uniform doesn't exists
+         */
+        virtual bool set(const String& _name, const int& _value) = 0;
+
+        /**
+         * @brief Set float uniform parameter value.
+         *
+         * @param _name
+         * @param _value
+         * @return false if uniform doesn't exists
+         */
+        virtual bool set(const String& _name, const f32& _value) = 0;
+
+        /**
+         * @brief Set float 2D uniform parameter value.
+         *
+         * @param _name
+         * @param _value
+         * @return false if uniform doesn't exists
+         */
+        virtual bool set(const String& _name, const f32& _valueX, const f32& _valueY) = 0;
+
+        /**
+         * @brief Set vector2D uniform parameter value.
+         *
+         * @param _name
+         * @param _value
+         * @return false if uniform doesn't exists
+         */
+        virtual bool set(const String& _name, const Vector2& _value) = 0;
+
+        /**
+         * @brief Set float 3D uniform parameter value.
+         *
+         * @param _name
+         * @param _value
+         * @return false if uniform doesn't exists
+         */
+        virtual bool set(const String& _name, const f32& _valueX, const f32& _valueY, const f32& _valueZ) = 0;
+
+        /**
+         * @brief Set vector3D uniform parameter value.
+         *
+         * @param _name
+         * @param _value
+         * @return false if uniform doesn't exists
+         */
+        virtual bool set(const String& _name, const Vector3& _value) = 0;
+
+        /**
+         * @brief Set float 4D uniform parameter value.
+         *
+         * @param _name
+         * @param _value
+         * @return false if uniform doesn't exists
+         */
+        virtual bool set(const String& _name, const f32& _valueX, const f32& _valueY, const f32& _valueZ, const f32& _valueW) = 0;
+
+        /**
+         * @brief Set vector4D uniform parameter value.
+         *
+         * @param _name
+         * @param _value
+         * @return false if uniform doesn't exists
+         */
+        virtual bool set(const String& _name, const Vector4& _value) = 0;
+
+        /**
+         * @brief Set Matrix 3x3 uniform parameter value.
+         *
+         * @param _name
+         * @param _value
+         * @return false if uniform doesn't exists
+         */
+        virtual bool set(const String& _name, const Matrix3& _value) = 0;
+
+        /**
+         * @brief Set Matrix 4x4 uniform parameter value.
+         *
+         * @param _name
+         * @param _value
+         * @return false if uniform doesn't exists
+         */
+        virtual bool set(const String& _name, const Matrix& _value) = 0;
+
+        /**
+         * @brief Set Texture uniform parameter value.
+         *
+         * @param _name
+         * @param _value
+         * @return false if uniform doesn't exists
+         */
+        virtual bool set(const String& _name, const Texture*& _value) = 0;
 
         /**
          * @brief Set the Pixel Shader source.

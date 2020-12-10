@@ -265,6 +265,12 @@ namespace Michka
                 f32 g;
                 f32 b;
             };
+            struct
+            {
+                f32 red;
+                f32 green;
+                f32 blue;
+            };
             f32 asArray[3];
         };
     };
