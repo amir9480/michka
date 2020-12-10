@@ -54,6 +54,11 @@ namespace Michka
         }
     }
 
+    bool File::createDirectory(const String& _path)
+    {
+        return std::filesystem::create_directory(_path.toUtf8().cstr());
+    }
+
     String File::directory(const String& _path)
     {
         String path = realpath(_path);
@@ -144,6 +149,11 @@ namespace Michka
         return size;
     }
 
+    bool File::isDirectory(const String& _path)
+    {
+        return std::filesystem::is_directory(_path.toUtf8().cstr());
+    }
+
     bool File::isEndOfFile() const
     {
         if (mFile == nullptr)
@@ -152,6 +162,11 @@ namespace Michka
         }
 
         return feof(mFile);
+    }
+
+    bool File::isFile(const String& _path)
+    {
+        return std::filesystem::is_regular_file(_path.toUtf8().cstr());
     }
 
     bool File::isOpen() const
@@ -260,7 +275,7 @@ namespace Michka
 
     bool File::remove(const String& _path)
     {
-        return exists(_path) && std::filesystem::remove(_path.toUtf8().cstr());
+        return exists(_path) && std::filesystem::remove_all(_path.toUtf8().cstr());
     }
 
     bool File::seek(const i32& _pos)

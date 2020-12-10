@@ -34,6 +34,7 @@ namespace Michka
 {
     class BoundingSphere;
     class BoundingBox;
+    class Color;
     class Matrix;
     class Matrix3;
     class Plane;
@@ -56,6 +57,7 @@ namespace Michka
     std::ostream& operator << (std::ostream& _out, const Vector2& _value);
     std::ostream& operator << (std::ostream& _out, const Vector3& _value);
     std::ostream& operator << (std::ostream& _out, const Vector4& _value);
+    std::ostream& operator << (std::ostream& _out, const Color& _value);
     std::ostream& operator << (std::ostream& _out, const Quaternion& _value);
     std::ostream& operator << (std::ostream& _out, const Matrix3& _value);
     std::ostream& operator << (std::ostream& _out, const Matrix& _value);

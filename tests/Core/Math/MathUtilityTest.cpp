@@ -66,6 +66,16 @@ TEST(MathUtilityTest, DegreesAndRadiansConversion)
     ASSERT_NEAR(Michka::Math::radiansToDegrees(-0.5235987755f), -30.0f, Michka::Math::epsilon);
 }
 
+TEST(MathUtilityTest, Diff)
+{
+    ASSERT_EQ(Michka::Math::diff(5, 15), 10);
+    ASSERT_EQ(Michka::Math::diff(15, 5), 10);
+    ASSERT_EQ(Michka::Math::diff(-5, -15), 10);
+    ASSERT_EQ(Michka::Math::diff(-15, -5), 10);
+    ASSERT_EQ(Michka::Math::diff(5, -15), 20);
+    ASSERT_EQ(Michka::Math::diff(15, -5), 20);
+}
+
 TEST(MathUtilityTest, FloatEqual)
 {
     ASSERT_TRUE(Michka::Math::equals(5, 5));

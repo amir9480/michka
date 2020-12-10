@@ -24,38 +24,87 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __CORE_H__
-#define __CORE_H__
+#ifndef __COLOR_H__
+#define __COLOR_H__
 
-#include "Container/Color.h"
-#include "Container/Hash.h"
-#include "Container/List.h"
-#include "Container/Map.h"
-#include "Container/Pair.h"
-#include "Container/String.h"
-#include "Container/Variant.h"
-#include "Container/Vector.h"
-#include "Foundation/Event.h"
-#include "Foundation/EventManager.h"
-#include "Foundation/File.h"
-#include "Foundation/Object.h"
-#include "Foundation/Types.h"
-#include "Defines.h"
-#include "Exception/Exception.h"
-#include "Math/BoundingBox.h"
-#include "Math/BoundingSphere.h"
-#include "Math/Matrix.h"
-#include "Math/Matrix3.h"
-#include "Math/Plane.h"
-#include "Math/Quaternion.h"
-#include "Math/Ray.h"
-#include "Math/Utility.h"
-#include "Math/Vector2.h"
-#include "Math/Vector3.h"
-#include "Math/Vector4.h"
-#include "Memory/Memory.h"
-#include "Reflection/Type.h"
-#include "Thread/Mutex.h"
-#include "Thread/Thread.h"
+#include "Core/Defines.h"
 
-#endif // __CORE_H__
+namespace Michka
+{
+    class Vector3;
+    class Vector4;
+
+    class MICHKA_API Color
+    {
+    public:
+        FORCE_INLINE Color();
+        FORCE_INLINE Color(const u8& _red, const u8& _green, const u8& _blue, const u8& _alpha = 255);
+        FORCE_INLINE Color(const u32& _hex);
+        FORCE_INLINE Color(const Color& _other);
+
+        /**
+         * @brief Set Color.
+         *
+         * @param _red
+         * @param _green
+         * @param _blue
+         * @param _alpha
+         * @return Self
+         */
+        FORCE_INLINE Color& set(const u8& _red, const u8& _green, const u8& _blue, const u8& _alpha = 255);
+
+        /**
+         * @brief Set color from hex.
+         *
+         * @param _hex
+         * @return Self
+         */
+        FORCE_INLINE Color& set(const u32& _hex);
+
+        /**
+         * @brief Get value as string.
+         */
+        String toString() const;
+
+        FORCE_INLINE Color& operator = (const Color& _other);
+        FORCE_INLINE Color& operator = (const u32& _hex);
+
+        FORCE_INLINE bool operator == (const Color& _other) const;
+        FORCE_INLINE bool operator != (const Color& _other) const;
+
+        FORCE_INLINE u8& operator [] (const u8& _d);
+        FORCE_INLINE u8 operator [] (const u8& _d) const;
+
+        operator Vector3 () const;
+        operator Vector4 () const;
+
+    public:
+        static const Color transparent;
+        static const Color black;
+        static const Color white;
+        static const Color red;
+        static const Color green;
+        static const Color blue;
+        static const Color yellow;
+        static const Color cyan;
+        static const Color magenta;
+
+    public:
+        union
+        {
+            struct
+            {
+                u8 r;
+                u8 g;
+                u8 b;
+                u8 a;
+            };
+            u8 asArray[4];
+            u32 hex;
+        };
+    };
+}
+
+#include "Color.inl"
+
+#endif // __COLOR_H__

@@ -28,8 +28,7 @@
 #define __IMAGE_H__
 
 #include "Core/Defines.h"
-#include "Core/Math/Vector3.h"
-#include "Core/Math/Vector4.h"
+#include "Core/Container/Color.h"
 
 namespace Michka
 {
@@ -88,7 +87,7 @@ namespace Michka
          * @param _x
          * @param _y
          */
-        Vector4 getPixel(const u32& _x, const u32& _y) const;
+        Color getPixel(const u32& _x, const u32& _y) const;
 
         /**
          * @brief Get the buffer size in bytes.
@@ -99,6 +98,15 @@ namespace Michka
          * @brief Get image width.
          */
         u32 getWidth() const;
+
+        /**
+         * @brief Save image as file. supported formats: jpg, png, bmp
+         * @param _path
+         * @param _quality a number between 1 and 100 to set quality of image for jpg only.
+         *
+         * @return false if was not successful.
+         */
+        bool save(const String& _path, const u8& _quality = 100) const;
 
     protected:
         u8* mData = nullptr;

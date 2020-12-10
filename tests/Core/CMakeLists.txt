@@ -30,6 +30,7 @@ set(
 
     # -------------------------------------------------------------------------- #
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/Container/ColorTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Container/HashTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Container/ListTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Container/MapTest.cpp

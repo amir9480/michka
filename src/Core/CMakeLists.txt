@@ -30,6 +30,7 @@ set(
 
     # -------------------------------------------------------------------------- #
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/Container/Color.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Container/String.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Container/Variant.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Foundation/Event.cpp

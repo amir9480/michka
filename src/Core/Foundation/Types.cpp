@@ -25,6 +25,7 @@
 // ------------------------------------------------------------------------------- //
 
 #include "Types.h"
+#include "Core/Container/Color.h"
 #include "Core/Container/String.h"
 #include "Core/Container/Variant.h"
 #include "Core/Math/BoundingBox.h"
@@ -67,6 +68,11 @@ namespace Michka
     }
 
     std::ostream& operator << (std::ostream& _out, const Vector4& _value)
+    {
+        return _out << _value.toString();
+    }
+
+    std::ostream& operator << (std::ostream& _out, const Color& _value)
     {
         return _out << _value.toString();
     }

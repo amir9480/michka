@@ -85,6 +85,12 @@ namespace Michka
         }
 
         template<typename T>
+        FORCE_INLINE T diff(const T& _a, const T& _b)
+        {
+            return (_a > _b) ? _a - _b : _b - _a;
+        }
+
+        template<typename T>
         FORCE_INLINE bool equals(const T& _a, const T& _b, const T& _epsilon)
         {
             if constexpr (Type<T>::isIntegral)

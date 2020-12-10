@@ -24,38 +24,91 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __CORE_H__
-#define __CORE_H__
+#include "Color.h"
+#include "Core/Math/Utility.h"
 
-#include "Container/Color.h"
-#include "Container/Hash.h"
-#include "Container/List.h"
-#include "Container/Map.h"
-#include "Container/Pair.h"
-#include "Container/String.h"
-#include "Container/Variant.h"
-#include "Container/Vector.h"
-#include "Foundation/Event.h"
-#include "Foundation/EventManager.h"
-#include "Foundation/File.h"
-#include "Foundation/Object.h"
-#include "Foundation/Types.h"
-#include "Defines.h"
-#include "Exception/Exception.h"
-#include "Math/BoundingBox.h"
-#include "Math/BoundingSphere.h"
-#include "Math/Matrix.h"
-#include "Math/Matrix3.h"
-#include "Math/Plane.h"
-#include "Math/Quaternion.h"
-#include "Math/Ray.h"
-#include "Math/Utility.h"
-#include "Math/Vector2.h"
-#include "Math/Vector3.h"
-#include "Math/Vector4.h"
-#include "Memory/Memory.h"
-#include "Reflection/Type.h"
-#include "Thread/Mutex.h"
-#include "Thread/Thread.h"
+namespace Michka
+{
+    FORCE_INLINE Color::Color() :
+        r(0),
+        g(0),
+        b(0),
+        a(255)
+    {
+        //
+    }
 
-#endif // __CORE_H__
+    FORCE_INLINE Color::Color(const u8& _red, const u8& _green, const u8& _blue, const u8& _alpha) :
+        r(_red),
+        g(_green),
+        b(_blue),
+        a(_alpha)
+    {
+        //
+    }
+
+    FORCE_INLINE Color::Color(const u32& _hex)
+    {
+        set(_hex);
+    }
+
+    FORCE_INLINE Color::Color(const Color& _other)
+    {
+        hex = _other.hex;
+    }
+
+    FORCE_INLINE Color& Color::set(const u8& _red, const u8& _green, const u8& _blue, const u8& _alpha)
+    {
+        r = _red;
+        g = _green;
+        b = _blue;
+        a = _alpha;
+
+        return *this;
+    }
+
+    FORCE_INLINE Color& Color::set(const u32& _hex)
+    {
+        r = (_hex & 0xff000000) >> 24;
+        g = (_hex & 0x00ff0000) >> 16;
+        b = (_hex & 0x0000ff00) >> 8;
+        a = (_hex & 0x000000ff);
+
+        return *this;
+    }
+
+    FORCE_INLINE Color& Color::operator = (const Color& _other)
+    {
+        hex = _other.hex;
+
+        return *this;
+    }
+
+    FORCE_INLINE Color& Color::operator = (const u32& _hex)
+    {
+        return set(_hex);
+    }
+
+    FORCE_INLINE bool Color::operator == (const Color& _other) const
+    {
+        return Math::diff(r, _other.r) < 5 &&
+               Math::diff(g, _other.g) < 5 &&
+               Math::diff(b, _other.b) < 5 &&
+               Math::diff(a, _other.a) < 5;
+    }
+
+    FORCE_INLINE bool Color::operator != (const Color& _other) const
+    {
+        return !(*this == _other);
+    }
+
+    FORCE_INLINE u8 Color::operator [] (const u8& _d) const
+    {
+        return asArray[_d];
+    }
+
+    FORCE_INLINE u8& Color::operator [] (const u8& _d)
+    {
+        return asArray[_d];
+    }
+}

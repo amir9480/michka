@@ -26,9 +26,12 @@
 
 #include "Image.h"
 #include "Core/Container/String.h"
+#include "Core/Foundation/File.h"
 #include "Core/Helpers.h"
  #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
+ #define STB_IMAGE_WRITE_IMPLEMENTATION
+#include <stb_image_write.h>
 
 namespace Michka
 {
@@ -45,11 +48,11 @@ namespace Michka
             mFormat = Format::r8g8b8a8;
             break;
         default:
-            MICHKA_WARNING("Unknown format.");
+            MICHKA_WARNING("Unknown format."); // @NOCOVERAGE
         }
         if (mData == nullptr)
         {
-            MICHKA_WARNING(("Image file \"" + _path + "\" does not exists.").toUtf8().cstr());
+            MICHKA_WARNING(("Image file \"" + _path + "\" does not exists.").toUtf8().cstr()); // @NOCOVERAGE
         }
     }
 
@@ -111,11 +114,11 @@ namespace Michka
         return mHeight;
     }
 
-    Vector4 Image::getPixel(const u32& _x, const u32& _y) const
+    Color Image::getPixel(const u32& _x, const u32& _y) const
     {
         if (mData == nullptr || _x >= mWidth || _y >= mHeight)
         {
-            return Vector4::nan;
+            return Color::black;
         }
 
         u8 bpp = getBytesPerPixel();
@@ -124,14 +127,12 @@ namespace Michka
         switch (mFormat)
         {
         case Image::Format::r8g8b8:
-            return Vector4(dataAtPosition[0], dataAtPosition[1], dataAtPosition[2], 255);
+            return Color(dataAtPosition[0], dataAtPosition[1], dataAtPosition[2], 255);
         case Image::Format::r8g8b8a8:
-            return Vector4(dataAtPosition[0], dataAtPosition[1], dataAtPosition[2], dataAtPosition[3]);
-        case Image::Format::float32:
-            return Vector4(dataAtPosition[0], dataAtPosition[0], dataAtPosition[0], 255);
+            return Color(dataAtPosition[0], dataAtPosition[1], dataAtPosition[2], dataAtPosition[3]);
         }
 
-        return Vector4::nan;
+        return Color::black;
     }
 
     u32 Image::getSize() const
@@ -142,5 +143,42 @@ namespace Michka
     u32 Image::getWidth() const
     {
         return mWidth;
+    }
+
+    bool Image::save(const String& _path, const u8& _quality) const
+    {
+        if (mData && mWidth > 0 && mHeight > 0 && _path.isNotEmpty())
+        {
+            String pathDirectory = File::directory(_path);
+            if (File::exists(pathDirectory) == false)
+            {
+                if (File::createDirectory(pathDirectory) == false)
+                {
+                    return false; // @NOCOVERAGE
+                }
+            }
+            if (File::exists(_path))
+            {
+                if (File::remove(_path) == false)
+                {
+                    return false; // @NOCOVERAGE
+                }
+            }
+            String extension = _path.split('.').last().toLower();
+            if (extension == "jpg" || extension == "jpeg")
+            {
+                return stbi_write_jpg(_path.toUtf8().cstr(), mWidth, mHeight, getBytesPerPixel(), mData, _quality) != 0;
+            }
+            else if (extension == "png")
+            {
+                return stbi_write_png(_path.toUtf8().cstr(), mWidth, mHeight, getBytesPerPixel(), mData, 0) != 0;
+            }
+            else if (extension == "bmp")
+            {
+                return stbi_write_bmp(_path.toUtf8().cstr(), mWidth, mHeight, getBytesPerPixel(), mData) != 0;
+            }
+        }
+
+        return false; // @NOCOVERAGE
     }
 }

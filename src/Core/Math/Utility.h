@@ -142,6 +142,16 @@ namespace Michka
         FORCE_INLINE f32 degreesToRadians(const f32& _degrees);
 
         /**
+         * @brief Diffrence between two numbers.
+         *
+         * @tparam T
+         * @param _a
+         * @param _b
+         */
+        template<typename T>
+        FORCE_INLINE T diff(const T& _a, const T& _b);
+
+        /**
          * @brief Check two float point number are equal or not.
          *
          * @tparam T

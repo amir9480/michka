@@ -25,11 +25,12 @@
 // ------------------------------------------------------------------------------- //
 
 #include <gtest/gtest.h>
+#include "MichkaTests.h"
 #include "Core/Foundation/File.h"
 
-TEST(FileTest, append)
+TEST(FileTest, Append)
 {
-    Michka::String testFilePath = Michka::File::realpath(Michka::String(__FILE__) + "/../../../Files/Core/file_test_append.txt");
+    Michka::String testFilePath = Michka::File::realpath(Michka::String(MICHKA_TESTS_PATH) + "/Files/Core/file_test_append.txt");
     Michka::String testFileContents = "Hello\nWorld";
     Michka::File file(testFilePath, Michka::File::OpenMode::writeOnly);
     file.write(testFileContents);
@@ -47,6 +48,16 @@ TEST(FileTest, append)
     file.close();
 
     ASSERT_TRUE(Michka::File::remove(testFilePath));
+}
+
+TEST(FileTest, CreateDirectory)
+{
+    Michka::String testDirectory = Michka::File::realpath(Michka::String(MICHKA_TESTS_PATH) + "/Files/Core/TestDirectory");
+    ASSERT_FALSE(Michka::File::isDirectory(testDirectory));
+    Michka::File::createDirectory(testDirectory);
+    ASSERT_TRUE(Michka::File::isDirectory(testDirectory));
+    Michka::File::remove(testDirectory);
+    ASSERT_FALSE(Michka::File::isDirectory(testDirectory));
 }
 
 TEST(FileTest, EmptyFile)
@@ -70,14 +81,28 @@ TEST(FileTest, EmptyFile)
 
 TEST(FileTest, Exists)
 {
-    Michka::String testFileDirectory = Michka::File::realpath(Michka::String(__FILE__) + "/../../../Files/Core");
+    Michka::String testFileDirectory = Michka::File::realpath(Michka::String(MICHKA_TESTS_PATH) + "/Files/Core");
     ASSERT_TRUE(Michka::File::exists(testFileDirectory + "/file_test_read.txt"));
     ASSERT_FALSE(Michka::File::exists(testFileDirectory + "/not_exists.txt"));
 }
 
+TEST(FileTest, IsDirectory)
+{
+    Michka::String testFileDirectory = Michka::File::realpath(Michka::String(MICHKA_TESTS_PATH) + "/Files/Core");
+    ASSERT_TRUE(Michka::File::isDirectory(testFileDirectory));
+    ASSERT_FALSE(Michka::File::isDirectory(testFileDirectory + "/file_test_read.txt"));
+}
+
+TEST(FileTest, IsFile)
+{
+    Michka::String testFileDirectory = Michka::File::realpath(Michka::String(MICHKA_TESTS_PATH) + "/Files/Core");
+    ASSERT_TRUE(Michka::File::isFile(testFileDirectory + "/file_test_read.txt"));
+    ASSERT_FALSE(Michka::File::isFile(testFileDirectory));
+}
+
 TEST(FileTest, Read)
 {
-    Michka::String testFilePath = Michka::File::realpath(Michka::String(__FILE__) + "/../../../Files/Core/file_test_read.txt");
+    Michka::String testFilePath = Michka::File::realpath(Michka::String(MICHKA_TESTS_PATH) + "/Files/Core/file_test_read.txt");
     Michka::String testFileContents = "Hello\nWorld\nMichka";
     Michka::File file(testFilePath, Michka::File::OpenMode::readOnly);
 
@@ -85,7 +110,7 @@ TEST(FileTest, Read)
     ASSERT_EQ(file.getSize(), 20);
     ASSERT_FALSE(file.isEndOfFile());
     ASSERT_EQ(file.getPath(), testFilePath);
-    ASSERT_EQ(file.getDirectory(), Michka::File::realpath(Michka::String(__FILE__) + "/../../../Files/Core"));
+    ASSERT_EQ(file.getDirectory(), Michka::File::realpath(Michka::String(MICHKA_TESTS_PATH) + "/Files/Core"));
     ASSERT_EQ(file.getFileName(), "file_test_read.txt");
     ASSERT_EQ(file.readAll(), testFileContents);
     ASSERT_TRUE(file.seek(0));
@@ -105,7 +130,7 @@ TEST(FileTest, Read)
 
 TEST(FileTest, Remove)
 {
-    Michka::String testFilePath = Michka::File::realpath(Michka::String(__FILE__) + "/../../../Files/Core/file_test_remove.txt");
+    Michka::String testFilePath = Michka::File::realpath(Michka::String(MICHKA_TESTS_PATH) + "/Files/Core/file_test_remove.txt");
     ASSERT_FALSE(Michka::File::exists(testFilePath));
     ASSERT_TRUE(Michka::File::putContents(testFilePath, "Hello"));
     ASSERT_TRUE(Michka::File::exists(testFilePath));
@@ -115,7 +140,7 @@ TEST(FileTest, Remove)
 
 TEST(FileTest, Write)
 {
-    Michka::String testFilePath = Michka::File::realpath(Michka::String(__FILE__) + "/../../../Files/Core/file_test_write.txt");
+    Michka::String testFilePath = Michka::File::realpath(Michka::String(MICHKA_TESTS_PATH) + "/Files/Core/file_test_write.txt");
     Michka::String testFileContents = "Hello\nWorld";
     Michka::File file(testFilePath, Michka::File::OpenMode::writeOnly);
     file.write(testFileContents);

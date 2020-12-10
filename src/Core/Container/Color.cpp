@@ -24,38 +24,35 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __CORE_H__
-#define __CORE_H__
+#include "Color.h"
+#include "Core/Math/Vector3.h"
+#include "Core/Math/Vector4.h"
+#include "Core/Container/String.h"
 
-#include "Container/Color.h"
-#include "Container/Hash.h"
-#include "Container/List.h"
-#include "Container/Map.h"
-#include "Container/Pair.h"
-#include "Container/String.h"
-#include "Container/Variant.h"
-#include "Container/Vector.h"
-#include "Foundation/Event.h"
-#include "Foundation/EventManager.h"
-#include "Foundation/File.h"
-#include "Foundation/Object.h"
-#include "Foundation/Types.h"
-#include "Defines.h"
-#include "Exception/Exception.h"
-#include "Math/BoundingBox.h"
-#include "Math/BoundingSphere.h"
-#include "Math/Matrix.h"
-#include "Math/Matrix3.h"
-#include "Math/Plane.h"
-#include "Math/Quaternion.h"
-#include "Math/Ray.h"
-#include "Math/Utility.h"
-#include "Math/Vector2.h"
-#include "Math/Vector3.h"
-#include "Math/Vector4.h"
-#include "Memory/Memory.h"
-#include "Reflection/Type.h"
-#include "Thread/Mutex.h"
-#include "Thread/Thread.h"
+namespace Michka
+{
+    const Color Color::transparent  = Color(  0,   0,   0,   0);
+    const Color Color::black        = Color(  0,   0,   0, 255);
+    const Color Color::white        = Color(255, 255, 255, 255);
+    const Color Color::red          = Color(255,   0,   0, 255);
+    const Color Color::green        = Color(  0, 255,   0, 255);
+    const Color Color::blue         = Color(  0,   0, 255, 255);
+    const Color Color::yellow       = Color(255, 255,   0, 255);
+    const Color Color::cyan         = Color(  0, 255, 255, 255);
+    const Color Color::magenta      = Color(255,   0, 255, 255);
 
-#endif // __CORE_H__
+    String Color::toString() const
+    {
+        return String("Color(") + String::number(r) + ", " + String::number(g) + ", " + String::number(b) + ", " + String::number(a) + ")";
+    }
+
+    Color::operator Vector3 () const
+    {
+        return Vector3(r, g, b);
+    }
+
+    Color::operator Vector4 () const
+    {
+        return Vector4(r, g, b, a);
+    }
+}

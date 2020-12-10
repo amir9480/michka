@@ -57,6 +57,10 @@ TEST(TypesTest, Ostream)
     ASSERT_EQ(s.str(), "Vector4(1.5, 2, 3, 1)");
     s.str("");
 
+    s << Michka::Color(255, 0, 0, 255);
+    ASSERT_EQ(s.str(), "Color(255, 0, 0, 255)");
+    s.str("");
+
     s << Michka::Quaternion(1.5f, 2.0f, 3.0f, 1.0f);
     ASSERT_EQ(s.str(), "Quaternion(1.5, 2, 3, 1)");
     s.str("");

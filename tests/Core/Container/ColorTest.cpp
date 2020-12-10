@@ -24,38 +24,57 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __CORE_H__
-#define __CORE_H__
+#include <gtest/gtest.h>
+#include "Core/Container/Color.h"
+#include "Core/Math/Vector4.h"
+#include "Core/Math/Vector3.h"
+#include "Core/Foundation/Types.h"
 
-#include "Container/Color.h"
-#include "Container/Hash.h"
-#include "Container/List.h"
-#include "Container/Map.h"
-#include "Container/Pair.h"
-#include "Container/String.h"
-#include "Container/Variant.h"
-#include "Container/Vector.h"
-#include "Foundation/Event.h"
-#include "Foundation/EventManager.h"
-#include "Foundation/File.h"
-#include "Foundation/Object.h"
-#include "Foundation/Types.h"
-#include "Defines.h"
-#include "Exception/Exception.h"
-#include "Math/BoundingBox.h"
-#include "Math/BoundingSphere.h"
-#include "Math/Matrix.h"
-#include "Math/Matrix3.h"
-#include "Math/Plane.h"
-#include "Math/Quaternion.h"
-#include "Math/Ray.h"
-#include "Math/Utility.h"
-#include "Math/Vector2.h"
-#include "Math/Vector3.h"
-#include "Math/Vector4.h"
-#include "Memory/Memory.h"
-#include "Reflection/Type.h"
-#include "Thread/Mutex.h"
-#include "Thread/Thread.h"
+TEST(ColorTest, Operators)
+{
+    Michka::Color a(5, 10, 15, 255);
+    const Michka::Color b(50, 100, 150, 255);
 
-#endif // __CORE_H__
+    ASSERT_EQ(a[0], 5);
+    ASSERT_EQ(a[1], 10);
+    ASSERT_EQ(a[2], 15);
+    ASSERT_EQ(b[0], 50);
+    ASSERT_EQ(b[1], 100);
+    ASSERT_EQ(b[2], 150);
+
+    a[0] *= 2;
+    ASSERT_EQ(a[0], 10);
+    a[0] /= 2;
+    ASSERT_EQ(a[0], 5);
+
+    ASSERT_EQ((Michka::Vector3)a, Michka::Vector3(5.0f, 10.0f, 15.0f));
+    ASSERT_EQ((Michka::Vector4)a, Michka::Vector4(5.0f, 10.0f, 15.0f, 255.0f));
+}
+
+TEST(ColorTest, Set)
+{
+    {
+        Michka::Color color;
+        ASSERT_EQ(color, Michka::Color::black);
+    }
+    {
+        Michka::Color color(Michka::Color::red);
+        ASSERT_EQ(color, Michka::Color::red);
+        color = Michka::Color::green;
+        ASSERT_NE(color, Michka::Color::red);
+        ASSERT_EQ(color, Michka::Color::green);
+
+        color.set(255, 255, 0, 255);
+        ASSERT_EQ(color, Michka::Color::yellow);
+
+        color.set(0x00ffffff);
+        ASSERT_EQ(color, Michka::Color::cyan);
+
+        color = 0xff00ffff;
+        ASSERT_EQ(color, Michka::Color::magenta);
+    }
+    {
+        Michka::Color color = 0x0000ffff;
+        ASSERT_EQ(color, Michka::Color::blue);
+    }
+}

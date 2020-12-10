@@ -57,6 +57,14 @@ namespace Michka
         void close();
 
         /**
+         * @brief Create a directory.
+         *
+         * @param _path
+         * @return true if created successfuly.
+         */
+        static bool createDirectory(const String& _path);
+
+        /**
          * @brief Extract directory from file path.
          *
          * @param _path
@@ -130,9 +138,23 @@ namespace Michka
         u32 getSize();
 
         /**
+         * @brief Check given path is directory or not.
+         *
+         * @param _path
+         */
+        static bool isDirectory(const String& _path);
+
+        /**
          * @brief Is pointer at end of file.
          */
         bool isEndOfFile() const;
+
+        /**
+         * @brief Check given path is regular file or not.
+         *
+         * @param _path
+         */
+        static bool isFile(const String& _path);
 
         /**
          * @brief Check file is open.
@@ -196,7 +218,7 @@ namespace Michka
         static String realpath(const String& _path);
 
         /**
-         * @brief Remove file.
+         * @brief Remove file or directory.
          *
          * @param _path
          * @return true if deleted successfully
