@@ -174,7 +174,7 @@ namespace Michka
          * @param _value
          * @return false if uniform doesn't exists
          */
-        virtual bool set(const String& _name, const Texture*& _value) = 0;
+        virtual bool set(const String& _name, const Texture* _value) = 0;
 
         /**
          * @brief Set the Pixel Shader source.

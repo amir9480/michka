@@ -94,6 +94,9 @@ namespace Michka
 
     void OpenGLTexture::set(const Image& _image)
     {
+        mWidth = _image.getWidth();
+        mHeight = _image.getHeight();
+        mFormat = _image.getFormat();
         set(_image.getData(), _image.getSize());
     }
 }

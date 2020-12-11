@@ -223,6 +223,9 @@ namespace Michka
     {
         OpenGLTexture* output = new OpenGLTexture();
         output->mDevice = this;
+        output->mWidth = _width;
+        output->mHeight = _height;
+        output->mFormat = _format;
         glGenTextures(1, &output->mTexture);
 
         return output;
@@ -239,9 +242,22 @@ namespace Michka
 
     void OpenGLDevice::draw()
     {
-        if (mCurrentIndexBuffer)
+        if (mCurrentIndexBuffer && mCurrentShader)
         {
+            OpenGLShader* shader = dynamic_cast<OpenGLShader*>(mCurrentShader);
             OpenGLIndexBuffer* indexBuffer = dynamic_cast<OpenGLIndexBuffer*>(mCurrentIndexBuffer);
+
+            for (u32 i = 0; i < shader->mTextures.getSize(); i++) {
+                const OpenGLTexture* texture = dynamic_cast<const OpenGLTexture*>(shader->mTextures.at(i).second);
+                glActiveTexture(GL_TEXTURE0 + i);
+                glBindTexture(GL_TEXTURE_2D, texture->mTexture);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+            }
+            glActiveTexture(GL_TEXTURE0);
+
             glDrawElements(GL_TRIANGLES, indexBuffer->mCount, GL_UNSIGNED_INT, 0);
         }
     }
@@ -296,6 +312,7 @@ namespace Michka
                 glVertexAttribPointer(i, vertexAttribute.elements, glTypes[(u32)vertexAttribute.type], GL_FALSE, vertexBuffer->mVertexDeclaration->getStride(), (void*)offset);
                 offset += vertexAttribute.getSize();
             }
+            glEnableVertexAttribArray(0);
         }
         else
         {

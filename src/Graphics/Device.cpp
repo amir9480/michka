@@ -26,6 +26,7 @@
 
 #include "Device.h"
 #include "OpenGL/OpenGLDevice.h"
+#include "Texture.h"
 
 extern "C"
 {
@@ -44,7 +45,7 @@ namespace Michka
     Texture* Device::createTexture(const Image& _image)
     {
         Texture* output = createTexture(_image.getWidth(), _image.getHeight(), _image.getFormat());
-        //! TODO: fill data
+        output->set(_image);
         return output;
     }
 

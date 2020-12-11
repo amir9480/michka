@@ -231,7 +231,7 @@ namespace Michka
         return false;
     }
 
-    bool OpenGLShader::set(const String& _name, const Texture*& _value)
+    bool OpenGLShader::set(const String& _name, const Texture* _value)
     {
         int location = getUniformLocation(_name);
         if (location != -1)
@@ -239,7 +239,7 @@ namespace Michka
             if (_value != nullptr)
             {
                 mTextures[_name] = _value;
-                return true;
+		        return set(_name, int(mTextures.indexOfKey(_name)));
             }
             else
             {
@@ -264,7 +264,8 @@ namespace Michka
     {
         if (mProgram)
         {
-            return glGetUniformLocation(mProgram, _name.toUtf8().cstr());
+            String8 name = _name.toUtf8();
+            return glGetUniformLocation(mProgram, name.cstr());
         }
 
         return -1;

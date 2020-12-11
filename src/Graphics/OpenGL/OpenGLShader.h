@@ -56,7 +56,7 @@ namespace Michka
         virtual bool set(const String& _name, const Vector4& _value) override;
         virtual bool set(const String& _name, const Matrix3& _value) override;
         virtual bool set(const String& _name, const Matrix& _value) override;
-        virtual bool set(const String& _name, const Texture*& _value) override;
+        virtual bool set(const String& _name, const Texture* _value) override;
 
         virtual void setPixelShader(const String& _source) override;
 

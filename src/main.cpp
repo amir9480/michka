@@ -202,8 +202,8 @@ u32 indices[] = {1, 0, 2, 0, 1, 3, 5, 4, 6, 6, 4, 7, 9, 8, 10, 10, 8, 11, 13, 12
 Vertex vertices2[] =
 {
     Vertex(-0.8f, -0.8f, 0.0f, 0.0f, 0.0f),
-    Vertex( 0.0f,  0.8f, 0.0f, 0.0f, 0.0f),
-    Vertex( 0.8f, -0.8f, 0.0f, 0.0f, 0.0f),
+    Vertex( 0.0f,  0.8f, 0.0f, 0.5f, 1.0f),
+    Vertex( 0.8f, -0.8f, 0.0f, 1.0f, 0.0f),
 };
 
 u32 indices2[] = {0, 1, 2};
@@ -221,6 +221,7 @@ int main()
     ib->set(indices2, sizeof(indices2) / sizeof(indices2[0]));
     VertexBuffer* vb = device->createVertexBuffer(&Vertex::decl());
     vb->set(vertices2, sizeof(vertices2));
+    Texture* texture = device->createTexture(image);
     Shader* shader = device->createShader(File::getContents("shaders/test.vert"), File::getContents("shaders/test.frag"));
     if (! shader->compile())
     {
@@ -235,6 +236,7 @@ int main()
         device->setVertexBuffer(vb);
         device->setShader(shader);
         shader->set("test", ((clock()/1000)%3) + 1);
+        shader->set("testTexture", texture);
         device->draw();
 
         device->drawOnScreen();
@@ -243,6 +245,7 @@ int main()
     delete vb;
     delete ib;
     delete shader;
+    delete texture;
 
     std::cout << "\nBYE\n";
     system("PAUSE");
