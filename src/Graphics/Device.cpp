@@ -44,7 +44,7 @@ namespace Michka
 
     Texture* Device::createTexture(const Image& _image)
     {
-        Texture* output = createTexture(_image.getWidth(), _image.getHeight(), _image.getFormat());
+        Texture* output = createTexture(_image.getWidth(), _image.getHeight(), (TextureFormat)_image.getFormat());
         output->set(_image);
         return output;
     }

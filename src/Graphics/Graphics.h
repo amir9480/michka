@@ -24,6 +24,7 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
+#include "GraphicDefines.h"
 #include "Device.h"
 #include "Image.h"
 #include "IndexBuffer.h"

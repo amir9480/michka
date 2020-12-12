@@ -45,7 +45,7 @@ namespace Michka
 
         virtual Shader* createShader(const String& _vertexShader = "", const String& _pixelShader = "") override;
 
-        virtual Texture* createTexture(const u32& _width, const u32& _height, const Image::Format& _format);
+        virtual Texture* createTexture(const u32& _width, const u32& _height, const TextureFormat& _format);
 
         virtual VertexBuffer* createVertexBuffer(VertexDeclaration* _vertexDeclaration, const bool& _static = true) override;
 

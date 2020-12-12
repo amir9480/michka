@@ -214,7 +214,7 @@ int main()
 {
     std::cout << "Welcome to engine!\n-------------------------------------\n\n";
 
-    Image image("test-assets/grass.jpg");
+    Image image("tests/Files/Graphics/Images/color_test.jpg");
 
     Device* device = Device::instance(Device::Driver::openGL);
     IndexBuffer* ib = device->createIndexBuffer();

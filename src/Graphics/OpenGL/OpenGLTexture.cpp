@@ -47,7 +47,7 @@ namespace Michka
         }
     }
 
-    Image::Format OpenGLTexture::getFormat() const
+    TextureFormat OpenGLTexture::getFormat() const
     {
         return mFormat;
     }
@@ -69,13 +69,13 @@ namespace Michka
             i32 format = 0;
             switch (mFormat)
             {
-            case Image::Format::r8g8b8:
+            case TextureFormat::r8g8b8:
                 format = GL_RGB;
                 break;
-            case Image::Format::r8g8b8a8:
+            case TextureFormat::r8g8b8a8:
                 format = GL_RGBA;
                 break;
-            case Image::Format::float32:
+            case TextureFormat::depth32:
                 format = GL_DEPTH_COMPONENT32F;
                 break;
             default:
@@ -96,7 +96,7 @@ namespace Michka
     {
         mWidth = _image.getWidth();
         mHeight = _image.getHeight();
-        mFormat = _image.getFormat();
-        set(_image.getData(), _image.getSize());
+        mFormat = (TextureFormat)_image.getFormat();
+        set(_image.getFlipped().getData(), _image.getSize());
     }
 }

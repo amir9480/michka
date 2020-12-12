@@ -29,11 +29,12 @@
 
 #include "Core/Defines.h"
 #include "Core/Math/Vector4.h"
+#include "GraphicDefines.h"
 #include "Platform/Window.h"
-#include "Image.h"
 
 namespace Michka
 {
+    class Image;
     class IndexBuffer;
     class Shader;
     class Texture;
@@ -86,7 +87,7 @@ namespace Michka
          * @param _height
          * @param _format
          */
-        virtual Texture* createTexture(const u32& _width, const u32& _height, const Image::Format& _format) = 0;
+        virtual Texture* createTexture(const u32& _width, const u32& _height, const TextureFormat& _format) = 0;
 
         /**
          * @brief Create a texture from image.

@@ -35,16 +35,18 @@ namespace Michka
     class MICHKA_API Image
     {
     public:
-        enum class Format
+        enum class Format : u32
         {
             unknown,
             r8g8b8,
             r8g8b8a8,
-            float32,
         };
     public:
+        Image();
         Image(const String& _path);
         Image(const u32& _width, const u32& _height, const Format& _format, u8* _data = nullptr);
+        Image(const Image& _other);
+        Image(Image&& _other);
         virtual ~Image();
 
         /**
@@ -60,6 +62,15 @@ namespace Michka
         void destroy();
 
         /**
+         * @brief Flip image.
+         *
+         * @param _horizontal
+         * @param _vertical
+         * @return false if was not successful.
+         */
+        bool flip(const bool& _horizontal = false, const bool& _vertical = true);
+
+        /**
          * @brief Memory used per pixel based on format.
          *
          * @param _format
@@ -70,6 +81,14 @@ namespace Michka
          * @brief Get access to raw data.
          */
         u8* getData() const;
+
+        /**
+         * @brief Get the flipped copy of this image.
+         *
+         * @param _horizontal
+         * @param _vertical
+         */
+        Image getFlipped(const bool& _horizontal = false, const bool& _vertical = true) const;
 
         /**
          * @brief Get image format.
@@ -107,6 +126,19 @@ namespace Michka
          * @return false if was not successful.
          */
         bool save(const String& _path, const u8& _quality = 100) const;
+
+        /**
+         * @brief Change a pixel color.
+         *
+         * @param _x
+         * @param _y
+         * @param _color
+         * @return false if was not successful.
+         */
+        bool setPixel(const u32& _x, const u32& _y, const Color& _color);
+
+        Image& operator = (const Image& _other);
+        Image& operator = (Image&& _other);
 
     protected:
         u8* mData = nullptr;

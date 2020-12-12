@@ -35,6 +35,11 @@
 
 namespace Michka
 {
+    Image::Image()
+    {
+        //
+    }
+
     Image::Image(const String& _path)
     {
         int channels = 0;
@@ -65,6 +70,16 @@ namespace Michka
         //
     }
 
+    Image::Image(const Image& _other)
+    {
+        *this = _other;
+    }
+
+    Image::Image(Image&& _other)
+    {
+        *this = std::move(_other);
+    }
+
     Image::~Image()
     {
         destroy();
@@ -77,7 +92,6 @@ namespace Michka
         case Image::Format::r8g8b8:
             return 3;
         case Image::Format::r8g8b8a8:
-        case Image::Format::float32:
             return 4;
         }
 
@@ -94,6 +108,59 @@ namespace Michka
         mFormat = Format::unknown;
     }
 
+    bool Image::flip(const bool& _horizontal, const bool& _vertical)
+    {
+        if (mData && (_horizontal || _vertical))
+        {
+            u8 temp[4096];
+            u32 imageBytesPerPixel = getBytesPerPixel();
+            u32 imageBytesPerRow = imageBytesPerPixel * mWidth;
+            u32 halfWidth = mWidth / 2;
+            u32 halfHeight = mHeight / 2;
+
+            if (_horizontal)
+            {
+                for (u32 i = 0; i < mHeight; i++)
+                {
+                    u8* pointer1 = mData + (i * imageBytesPerRow);
+                    u8* pointer2 = pointer1 + imageBytesPerRow - imageBytesPerPixel;
+                    for (u32 j = 0; j < halfWidth; j++)
+                    {
+                        memcpy(temp, pointer1, imageBytesPerPixel);
+                        memcpy(pointer1, pointer2, imageBytesPerPixel);
+                        memcpy(pointer2, temp, imageBytesPerPixel);
+                        pointer1 += imageBytesPerPixel;
+                        pointer2 -= imageBytesPerPixel;
+                    }
+                }
+            }
+
+            if (_vertical)
+            {
+                for (u32 i = 0; i < halfHeight; i++)
+                {
+                    u8* pointer1 = mData + (i * imageBytesPerRow);
+                    u8* pointer2 = mData + ((mHeight - i - 1) * imageBytesPerRow);
+                    u32 bytesToCopy = imageBytesPerRow;
+                    while (bytesToCopy > 0)
+                    {
+                        u32 copySize = Michka::min(u32(bytesToCopy), u32(sizeof(temp)));
+                        memcpy(temp, pointer1, copySize);
+                        memcpy(pointer1, pointer2, copySize);
+                        memcpy(pointer2, temp, copySize);
+                        bytesToCopy -= copySize;
+                        pointer1 += copySize;
+                        pointer2 += copySize;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
     u8 Image::getBytesPerPixel() const
     {
         return bytesPerPixel(mFormat);
@@ -102,6 +169,13 @@ namespace Michka
     u8* Image::getData() const
     {
         return mData;
+    }
+
+    Image Image::getFlipped(const bool& _horizontal, const bool& _vertical) const
+    {
+        Image temp = *this;
+        temp.flip(_horizontal, _vertical);
+        return temp;
     }
 
     Image::Format Image::getFormat() const
@@ -180,5 +254,54 @@ namespace Michka
         }
 
         return false; // @NOCOVERAGE
+    }
+
+    bool Image::setPixel(const u32& _x, const u32& _y, const Color& _color)
+    {
+        switch (mFormat)
+        {
+        case Format::r8g8b8: case Format::r8g8b8a8:
+            if (mData && _x < mWidth && _y < mHeight)
+            {
+                u32 imageBytesPerPixel = getBytesPerPixel();
+                u32 imageBytesPerRow = mWidth * imageBytesPerPixel;
+                u8* pointer = mData + (imageBytesPerRow * _y) + (imageBytesPerPixel * _x);
+                pointer[0] = _color.r;
+                pointer[1] = _color.g;
+                pointer[2] = _color.b;
+                if (mFormat == Format::r8g8b8a8)
+                {
+                    pointer[3] = _color.a;
+                }
+            }
+        }
+        return false;
+    }
+
+    Image& Image::operator = (const Image& _other)
+    {
+        destroy();
+        u32 size = _other.getSize();
+        mWidth = _other.mWidth;
+        mHeight = _other.mHeight;
+        mFormat = _other.mFormat;
+        if (_other.mData)
+        {
+            mData = new u8[size];
+            memcpy(mData, _other.mData, size);
+        }
+
+        return *this;
+    }
+
+    Image& Image::operator = (Image&& _other)
+    {
+        destroy();
+        swap(mData, _other.mData);
+        swap(mWidth, _other.mWidth);
+        swap(mHeight, _other.mHeight);
+        swap(mFormat, _other.mFormat);
+
+        return *this;
     }
 }

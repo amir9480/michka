@@ -219,7 +219,7 @@ namespace Michka
         return out;
     }
 
-    Texture* OpenGLDevice::createTexture(const u32& _width, const u32& _height, const Image::Format& _format)
+    Texture* OpenGLDevice::createTexture(const u32& _width, const u32& _height, const TextureFormat& _format)
     {
         OpenGLTexture* output = new OpenGLTexture();
         output->mDevice = this;
@@ -251,8 +251,8 @@ namespace Michka
                 const OpenGLTexture* texture = dynamic_cast<const OpenGLTexture*>(shader->mTextures.at(i).second);
                 glActiveTexture(GL_TEXTURE0 + i);
                 glBindTexture(GL_TEXTURE_2D, texture->mTexture);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
             }

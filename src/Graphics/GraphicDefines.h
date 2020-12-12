@@ -24,55 +24,20 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __TEXTURE_H__
-#define __TEXTURE_H__
-
-#include "Core/Defines.h"
-#include "GraphicDefines.h"
-#include "Image.h"
+#ifndef __GRAPHICDEFINES_H__
+#define __GRAPHICDEFINES_H__
 
 namespace Michka
 {
-    class MICHKA_API Texture
+    enum class TextureFormat : u32
     {
-    public:
-        virtual ~Texture();
+        unknown = 0,
+        r8g8b8,
+        r8g8b8a8,
 
-        /**
-         * @brief Destroy texture.
-         */
-        virtual void destroy() = 0;
-
-        /**
-         * @brief Get texture format.
-         */
-        virtual TextureFormat getFormat() const = 0;
-
-        /**
-         * @brief Get texture height.
-         */
-        virtual u32 getHeight() const = 0;
-
-        /**
-         * @brief Get texture width.
-         */
-        virtual u32 getWidth() const = 0;
-
-        /**
-         * @brief Set texture buffer.
-         *
-         * @param _data
-         * @param _size
-         */
-        virtual void set(const void* _data, const u32& _size) = 0;
-
-        /**
-         * @brief Set texture buffer.
-         *
-         * @param _image
-         */
-        virtual void set(const Image& _image) = 0;
+        // Texture only formats
+        depth32 = 1000,
     };
 }
 
-#endif // __TEXTURE_H__
+#endif // __GRAPHICDEFINES_H__

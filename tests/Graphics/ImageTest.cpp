@@ -30,6 +30,83 @@
 #include "Core/Foundation/File.h"
 #include "Graphics/Image.h"
 
+TEST(ImageTest, Flip)
+{
+    Michka::String testFilePath = Michka::String(MICHKA_TESTS_PATH) + "/Files/Graphics/Images";
+
+    {
+        Michka::Image image;
+        ASSERT_FALSE(image.flip());
+    }
+    // Horizontal
+    {
+        Michka::Image image(testFilePath + "/color_test.jpg");
+        ASSERT_EQ(image.getPixel(0, 0), Michka::Color::red);
+        ASSERT_EQ(image.getPixel(1, 0), Michka::Color::green);
+        ASSERT_EQ(image.getPixel(0, 1), Michka::Color::blue);
+        ASSERT_EQ(image.getPixel(1, 1), Michka::Color::white);
+
+        Michka::Image image2 = image.getFlipped(true, false);
+        ASSERT_EQ(image2.getPixel(1, 0), Michka::Color::red);
+        ASSERT_EQ(image2.getPixel(0, 0), Michka::Color::green);
+        ASSERT_EQ(image2.getPixel(1, 1), Michka::Color::blue);
+        ASSERT_EQ(image2.getPixel(0, 1), Michka::Color::white);
+    }
+    {
+        Michka::Image image(testFilePath + "/color_test2.jpg");
+        ASSERT_EQ(image.getPixel(0, 0), Michka::Color::white);
+        ASSERT_EQ(image.getPixel(1, 1), Michka::Color::red);
+        ASSERT_EQ(image.getPixel(3, 1), Michka::Color::green);
+        ASSERT_EQ(image.getPixel(2, 2), Michka::Color::black);
+        ASSERT_EQ(image.getPixel(1, 3), Michka::Color::blue);
+        ASSERT_EQ(image.getPixel(3, 3), Michka::Color::yellow);
+        ASSERT_EQ(image.getPixel(4, 4), Michka::Color::white);
+
+        ASSERT_TRUE(image.flip(true, false));
+        ASSERT_EQ(image.getPixel(4, 0), Michka::Color::white);
+        ASSERT_EQ(image.getPixel(3, 1), Michka::Color::red);
+        ASSERT_EQ(image.getPixel(1, 1), Michka::Color::green);
+        ASSERT_EQ(image.getPixel(2, 2), Michka::Color::black);
+        ASSERT_EQ(image.getPixel(3, 3), Michka::Color::blue);
+        ASSERT_EQ(image.getPixel(1, 3), Michka::Color::yellow);
+        ASSERT_EQ(image.getPixel(0, 4), Michka::Color::white);
+    }
+
+    // Vertical
+    {
+        Michka::Image image(testFilePath + "/color_test.jpg");
+        ASSERT_EQ(image.getPixel(0, 0), Michka::Color::red);
+        ASSERT_EQ(image.getPixel(1, 0), Michka::Color::green);
+        ASSERT_EQ(image.getPixel(0, 1), Michka::Color::blue);
+        ASSERT_EQ(image.getPixel(1, 1), Michka::Color::white);
+
+        ASSERT_TRUE(image.flip());
+        ASSERT_EQ(image.getPixel(0, 0), Michka::Color::blue);
+        ASSERT_EQ(image.getPixel(1, 0), Michka::Color::white);
+        ASSERT_EQ(image.getPixel(0, 1), Michka::Color::red);
+        ASSERT_EQ(image.getPixel(1, 1), Michka::Color::green);
+    }
+    {
+        Michka::Image image(testFilePath + "/color_test2.jpg");
+        ASSERT_EQ(image.getPixel(0, 0), Michka::Color::white);
+        ASSERT_EQ(image.getPixel(1, 1), Michka::Color::red);
+        ASSERT_EQ(image.getPixel(3, 1), Michka::Color::green);
+        ASSERT_EQ(image.getPixel(2, 2), Michka::Color::black);
+        ASSERT_EQ(image.getPixel(1, 3), Michka::Color::blue);
+        ASSERT_EQ(image.getPixel(3, 3), Michka::Color::yellow);
+        ASSERT_EQ(image.getPixel(4, 4), Michka::Color::white);
+
+        ASSERT_TRUE(image.flip());
+        ASSERT_EQ(image.getPixel(0, 4), Michka::Color::white);
+        ASSERT_EQ(image.getPixel(1, 3), Michka::Color::red);
+        ASSERT_EQ(image.getPixel(3, 3), Michka::Color::green);
+        ASSERT_EQ(image.getPixel(2, 2), Michka::Color::black);
+        ASSERT_EQ(image.getPixel(1, 1), Michka::Color::blue);
+        ASSERT_EQ(image.getPixel(3, 1), Michka::Color::yellow);
+        ASSERT_EQ(image.getPixel(4, 0), Michka::Color::white);
+    }
+}
+
 TEST(ImageTest, LoadFromFile)
 {
     Michka::String testFilePath = Michka::String(MICHKA_TESTS_PATH) + "/Files/Graphics/Images";
@@ -208,6 +285,51 @@ TEST(ImageTest, SaveToFile)
     ASSERT_TRUE(Michka::File::remove(testFilePath + "/Output/color_test.jpg"));
     ASSERT_TRUE(Michka::File::remove(testFilePath + "/Output/alpha_test.png"));
     ASSERT_TRUE(Michka::File::remove(testFilePath + "/Output/Test"));
+}
+
+TEST(ImageTest, SetPixel)
+{
+    Michka::String testFilePath = Michka::String(MICHKA_TESTS_PATH) + "/Files/Graphics/Images";
+    {
+        Michka::Image image(1, 1, Michka::Image::Format::unknown, new u8[1]);
+        ASSERT_FALSE(image.setPixel(0, 0, Michka::Color::cyan));
+    }
+    {
+        Michka::Image image(testFilePath + "/color_test.jpg");
+        ASSERT_EQ(image.getFormat(), Michka::Image::Format::r8g8b8);
+        ASSERT_EQ(image.getWidth(), 2);
+        ASSERT_EQ(image.getHeight(), 2);
+        ASSERT_EQ(image.getSize(), 12);
+        ASSERT_EQ(image.getPixel(0, 0), Michka::Color::red);
+        ASSERT_EQ(image.getPixel(1, 0), Michka::Color::green);
+        ASSERT_EQ(image.getPixel(0, 1), Michka::Color::blue);
+        ASSERT_EQ(image.getPixel(1, 1), Michka::Color::white);
+
+        image.setPixel(0, 1, Michka::Color::cyan);
+
+        ASSERT_EQ(image.getPixel(0, 0), Michka::Color::red);
+        ASSERT_EQ(image.getPixel(1, 0), Michka::Color::green);
+        ASSERT_EQ(image.getPixel(0, 1), Michka::Color::cyan);
+        ASSERT_EQ(image.getPixel(1, 1), Michka::Color::white);
+    }
+    {
+        Michka::Image image(testFilePath + "/alpha_test.png");
+        ASSERT_EQ(image.getFormat(), Michka::Image::Format::r8g8b8a8);
+        ASSERT_EQ(image.getWidth(), 2);
+        ASSERT_EQ(image.getHeight(), 2);
+        ASSERT_EQ(image.getSize(), 16);
+        ASSERT_EQ(image.getPixel(0, 0), Michka::Color::red);
+        ASSERT_EQ(image.getPixel(1, 0), Michka::Color::green);
+        ASSERT_EQ(image.getPixel(0, 1), Michka::Color::blue);
+        ASSERT_EQ(image.getPixel(1, 1), Michka::Color(255, 255, 255, 0));
+
+        image.setPixel(1, 1, Michka::Color::cyan);
+
+        ASSERT_EQ(image.getPixel(0, 0), Michka::Color::red);
+        ASSERT_EQ(image.getPixel(1, 0), Michka::Color::green);
+        ASSERT_EQ(image.getPixel(0, 1), Michka::Color::blue);
+        ASSERT_EQ(image.getPixel(1, 1), Michka::Color::cyan);
+    }
 }
 
 TEST(ImageTest, UnknownFormat)
