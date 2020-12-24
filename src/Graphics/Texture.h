@@ -59,6 +59,11 @@ namespace Michka
         virtual u32 getWidth() const = 0;
 
         /**
+         * @brief Is texture a render target or not.
+         */
+        virtual bool isRenderTarget() const = 0;
+
+        /**
          * @brief Set texture buffer.
          *
          * @param _data

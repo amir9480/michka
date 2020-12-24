@@ -27,6 +27,7 @@
 #include "OpenGLDevice.h"
 #include "Core/Thread/Thread.h"
 #include "Core/Thread/Mutex.h"
+#include "Core/Foundation/File.h"
 #include "OpenGLIndexBuffer.h"
 #include "OpenGLShader.h"
 #include "OpenGLTexture.h"
@@ -34,6 +35,26 @@
 
 namespace Michka
 {
+    const char quadVertexShader[] =
+        "#version 440 core\n"
+        "layout (location = 0) in vec3 aPos;\n"
+        "layout (location = 1) in vec2 aTexCoord;\n"
+        "out vec2 TexCoord;\n"
+        "void main()\n"
+        "{\n"
+        "    gl_Position = vec4(aPos, 1.0);\n"
+        "	 TexCoord = aTexCoord;\n"
+        "}";
+    const char quadPixelShader[] =
+        "#version 440 core\n"
+        "out vec4 FragColor;\n"
+        "in vec2 TexCoord;\n"
+        "uniform sampler2D image;\n"
+        "void main()\n"
+        "{\n"
+        "    FragColor = texture(image, TexCoord);\n"
+        "}";
+
 #   if (MICHKA_PLATFORM == MICHKA_PLATFORM_WIN32)
         extern Mutex windowMutex;
         extern Map<Window*, HWND> windowInstances;
@@ -168,13 +189,43 @@ namespace Michka
 
         glGenVertexArrays(1, &mVertexArray);
         glBindVertexArray(mVertexArray);
+        glGenFramebuffers(1, &mFrameBuffer);
+        glBindFramebuffer(GL_FRAMEBUFFER, mFrameBuffer);
+
+        static auto quadVertexDecl = VertexDeclaration::begin()
+            .float32(3, VertexAttribute::Name::position)
+            .float32(2, VertexAttribute::Name::texcoord0)
+        .end();
+
+        f32 quadVertices[] = {
+            -1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
+            -1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+             1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+             1.0f, -1.0f, 0.0f, 1.0f, 0.0f
+        };
+        u32 quadIndices[] = {0, 1, 2, 2, 1, 3};
+
+        mQuadVertexBuffer = this->createVertexBuffer(&quadVertexDecl);
+        mQuadVertexBuffer->set(quadVertices, sizeof(quadVertices));
+        mQuadIndexBuffer = this->createIndexBuffer();
+        mQuadIndexBuffer->set(quadIndices, sizeof(quadIndices) / sizeof(quadIndices[0]));
+        mQuadShader = this->createShader(quadVertexShader, quadPixelShader);
+        if (! mQuadShader->compile())
+        {
+            MICHKA_ERROR(mQuadShader->getErrors().toUtf8().cstr());
+            exit(-1);
+        }
 
         mWindow->show();
     }
 
     OpenGLDevice::~OpenGLDevice()
     {
+        delete mQuadShader;
+        delete mQuadVertexBuffer;
+        delete mQuadIndexBuffer;
         glDeleteVertexArrays(1, &mVertexArray);
+        glDeleteFramebuffers(1, &mFrameBuffer);
 #       if (MICHKA_PLATFORM == MICHKA_PLATFORM_WIN32)
             wglDeleteContext(mOGLRenderContext);
             ReleaseDC(mHwnd, mHdc);
@@ -219,14 +270,19 @@ namespace Michka
         return out;
     }
 
-    Texture* OpenGLDevice::createTexture(const u32& _width, const u32& _height, const TextureFormat& _format)
+    Texture* OpenGLDevice::createTexture(const u32& _width, const u32& _height, const TextureFormat& _format, const bool& _renderTarget)
     {
         OpenGLTexture* output = new OpenGLTexture();
         output->mDevice = this;
         output->mWidth = _width;
         output->mHeight = _height;
         output->mFormat = _format;
+        output->mRenderTarget = _renderTarget;
         glGenTextures(1, &output->mTexture);
+        if (_renderTarget)
+        {
+            output->set(nullptr, 0);
+        }
 
         return output;
     }
@@ -257,15 +313,105 @@ namespace Michka
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
             }
             glActiveTexture(GL_TEXTURE0);
+            u32 attachments[32];
+            u8 renderTargetCount = mRenderTargets.getSize() < 32 ? mRenderTargets.getSize() : 32;
+            for (u8 i = 0; i < renderTargetCount; i++)
+            {
+                attachments[i] = GL_COLOR_ATTACHMENT0 + i;
+            }
+            glDrawBuffers(renderTargetCount, attachments);
 
+            GLenum errorCode;
+            if ((errorCode = glCheckFramebufferStatus(GL_FRAMEBUFFER)) != GL_FRAMEBUFFER_COMPLETE)
+            {
+                static Map<GLenum, String> errorMessages =
+                {
+                    {GL_FRAMEBUFFER_UNDEFINED,                     "GL_FRAMEBUFFER_UNDEFINED"},
+                    {GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT,         "GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT"},
+                    {GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT, "GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT"},
+                    {GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER,        "GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER"},
+                    {GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER,        "GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER"},
+                    {GL_FRAMEBUFFER_UNSUPPORTED,                   "GL_FRAMEBUFFER_UNSUPPORTED"},
+                    {GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE,        "GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE"},
+                    {GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE,        "GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE"},
+                    {GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS,      "GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS"},
+                };
+                String errorMessage = "Framebuffer is not completed.";
+                if (errorMessages.hasKey(errorCode))
+                {
+                    errorMessage += errorMessages[errorCode];
+                }
+                MICHKA_ERROR(errorMessage.toUtf8().cstr());
+                return;
+            }
+
+            if (renderTargetCount > 0)
+            {
+	            glViewport(0, 0, mRenderTargets[0]->getWidth(), mRenderTargets[0]->getHeight());
+            }
             glDrawElements(GL_TRIANGLES, indexBuffer->mCount, GL_UNSIGNED_INT, 0);
         }
     }
 
-    void OpenGLDevice::drawOnScreen()
+    void OpenGLDevice::drawOnScreen(const Texture* _texture)
     {
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        mQuadShader->set("image", _texture);
+        setShader(mQuadShader);
+        setVertexBuffer(mQuadVertexBuffer);
+        setIndexBuffer(mQuadIndexBuffer);
+        OpenGLIndexBuffer* indexBuffer = dynamic_cast<OpenGLIndexBuffer*>(mCurrentIndexBuffer);
+        OpenGLShader* shader = dynamic_cast<OpenGLShader*>(mCurrentShader);
+        for (u32 i = 0; i < shader->mTextures.getSize(); i++) {
+            const OpenGLTexture* texture = dynamic_cast<const OpenGLTexture*>(shader->mTextures.at(i).second);
+            glActiveTexture(GL_TEXTURE0 + i);
+            glBindTexture(GL_TEXTURE_2D, texture->mTexture);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        }
+        glViewport(0, 0, mWindow->getWidth(), mWindow->getHeight());
+        clear(true, true, true, Vector4(0, 0, 0, 1));
+        glDrawElements(GL_TRIANGLES, indexBuffer->mCount, GL_UNSIGNED_INT, 0);
+        setShader(nullptr);
+        setVertexBuffer(nullptr);
+        setIndexBuffer(nullptr);
+        glBindFramebuffer(GL_FRAMEBUFFER, mFrameBuffer);
         SwapBuffers(mHdc);
         InvalidateRect(mHwnd, 0, 1);
+    }
+
+    bool OpenGLDevice::setDepthBuffer(const Texture* _depthBuffer)
+    {
+        if (_depthBuffer == nullptr)
+        {
+            mDepthBuffer = nullptr;
+        }
+        else
+        {
+            if (_depthBuffer->isRenderTarget() == false)
+            {
+                MICHKA_ERROR("Depth buffer texture is not a render target.");
+                return false;
+            }
+            if (_depthBuffer->getFormat() != TextureFormat::depth32)
+            {
+                MICHKA_ERROR("Depth buffer texture format is not a depth format.");
+                return false;
+            }
+            mDepthBuffer = _depthBuffer;
+            const OpenGLTexture* depthBuffer = dynamic_cast<const OpenGLTexture*>(_depthBuffer);
+            GLint currentTextureId;
+            glGetIntegerv(GL_TEXTURE_2D, &currentTextureId);
+
+			glBindTexture(GL_TEXTURE_2D, depthBuffer->mTexture);
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthBuffer->mTexture, 0);
+
+            glBindTexture(GL_TEXTURE_2D, currentTextureId);
+        }
+
+        return true;
     }
 
     void OpenGLDevice::setIndexBuffer(IndexBuffer* _indexBuffer)
@@ -280,6 +426,33 @@ namespace Michka
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         }
         mCurrentIndexBuffer = _indexBuffer;
+    }
+
+    bool OpenGLDevice::setRenderTarget(const u8& _index, const Texture* _renderTarget)
+    {
+        if (_renderTarget == nullptr && mRenderTargets.hasKey(_index))
+        {
+            mRenderTargets.remove(_index);
+        }
+        else
+        {
+            if (_renderTarget->isRenderTarget() == false)
+            {
+                MICHKA_ERROR("Texture is not a render target.");
+                return false;
+            }
+            const OpenGLTexture* renderTarget = dynamic_cast<const OpenGLTexture*>(_renderTarget);
+            mRenderTargets[_index] = _renderTarget;
+            GLint currentTextureId;
+            glGetIntegerv(GL_TEXTURE_2D, &currentTextureId);
+
+			glBindTexture(GL_TEXTURE_2D, renderTarget->mTexture);
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + _index, GL_TEXTURE_2D, renderTarget->mTexture, 0);
+
+            glBindTexture(GL_TEXTURE_2D, currentTextureId);
+        }
+
+        return true;
     }
 
     void OpenGLDevice::setShader(Shader* _shader)

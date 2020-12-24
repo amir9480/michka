@@ -38,7 +38,6 @@ namespace Michka
     {
         friend class OpenGLDevice;
     public:
-        OpenGLShader();
         virtual ~OpenGLShader();
 
         virtual bool compile() override;
@@ -61,7 +60,8 @@ namespace Michka
         virtual void setPixelShader(const String& _source) override;
 
         virtual void setVertexShader(const String& _source) override;
-    private:
+    protected:
+        OpenGLShader();
         FORCE_INLINE int getUniformLocation(const String& _name) const;
 
     protected:

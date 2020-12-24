@@ -86,8 +86,9 @@ namespace Michka
          * @param _width
          * @param _height
          * @param _format
+         * @param _renderTarget  texture is a render target or not.
          */
-        virtual Texture* createTexture(const u32& _width, const u32& _height, const TextureFormat& _format) = 0;
+        virtual Texture* createTexture(const u32& _width, const u32& _height, const TextureFormat& _format, const bool& _renderTarget = false) = 0;
 
         /**
          * @brief Create a texture from image.
@@ -110,9 +111,9 @@ namespace Michka
         virtual void draw() = 0;
 
         /**
-         * @brief Show current render target on screen.
+         * @brief Show a texture on the screen.
          */
-        virtual void drawOnScreen() = 0;
+        virtual void drawOnScreen(const Texture* _texture) = 0;
 
         /**
          * @brief Get the output window.
@@ -127,11 +128,27 @@ namespace Michka
         static Device* instance(const Driver& _driver);
 
         /**
+         * @brief Set the detph buffer.
+         *
+         * @param _renderTarget
+         */
+        virtual bool setDepthBuffer(const Texture* _depthBuffer = nullptr) = 0;
+
+        /**
          * @brief Set current index buffer.
          *
          * @param _indexBuffer
          */
         virtual void setIndexBuffer(IndexBuffer* _indexBuffer = nullptr) = 0;
+
+        /**
+         * @brief Set the Render target of device.
+         *
+         * @param _index index of render target
+         * @param _renderTarget should be a texture with render target attribute enabeld. pass nullptr to unset.
+         * @return false is was not successful.
+         */
+        virtual bool setRenderTarget(const u8& _index, const Texture* _renderTarget = nullptr) = 0;
 
         /**
          * @brief Set curren shader.

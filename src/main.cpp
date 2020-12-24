@@ -214,9 +214,12 @@ int main()
 {
     std::cout << "Welcome to engine!\n-------------------------------------\n\n";
 
-    Image image("tests/Files/Graphics/Images/color_test.jpg");
+    Image image("test-assets/grass.jpg");
 
     Device* device = Device::instance(Device::Driver::openGL);
+    Texture* rt1 = device->createTexture(320, 240, Michka::TextureFormat::r8g8b8, true);
+    Texture* rt2 = device->createTexture(320, 240, Michka::TextureFormat::r8g8b8, true);
+    Texture* db = device->createTexture(320, 240, Michka::TextureFormat::depth32, true);
     IndexBuffer* ib = device->createIndexBuffer();
     ib->set(indices2, sizeof(indices2) / sizeof(indices2[0]));
     VertexBuffer* vb = device->createVertexBuffer(&Vertex::decl());
@@ -231,7 +234,10 @@ int main()
 
     while (device->getWindow()->isDestroyed() == false)
     {
-        device->clear(true, true, true, Vector4(0.2f, 0.7f, 1.0f, 1.0f));
+        device->setRenderTarget(0, rt1);
+        device->setRenderTarget(1, rt2);
+        device->setDepthBuffer(db);
+        device->clear(true, true, true, Vector4(0.0f, 0.0f, 0.0f, 1.0f));
         device->setIndexBuffer(ib);
         device->setVertexBuffer(vb);
         device->setShader(shader);
@@ -239,7 +245,7 @@ int main()
         shader->set("testTexture", texture);
         device->draw();
 
-        device->drawOnScreen();
+        device->drawOnScreen(rt1);
     }
 
     delete vb;

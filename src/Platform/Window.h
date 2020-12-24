@@ -36,7 +36,7 @@ namespace Michka
     {
         MICHKA_NON_COPYABLE_CLASS(Window)
     public:
-        Window(const u32& _width = 800, const u32& _height = 600);
+        Window(const u32& _width = 1024, const u32& _height = 768);
         ~Window();
 
         /**
@@ -102,8 +102,8 @@ namespace Michka
         virtual bool onEvent(const Event* _event) override;
 
     protected:
-        u32 mWidth = 640;
-        u32 mHeight = 480;
+        u32 mWidth;
+        u32 mHeight;
         bool mDestroyed = false;
         bool mCallEventListenersManually = true;
     };

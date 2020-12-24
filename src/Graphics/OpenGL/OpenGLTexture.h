@@ -37,7 +37,6 @@ namespace Michka
     {
         friend class OpenGLDevice;
     public:
-        OpenGLTexture();
         virtual ~OpenGLTexture();
 
         virtual void destroy() override;
@@ -48,9 +47,14 @@ namespace Michka
 
         virtual u32 getWidth() const override;
 
+        virtual bool isRenderTarget() const;
+
         virtual void set(const void* _data, const u32& _size);
 
         virtual void set(const Image& _image);
+
+    protected:
+        OpenGLTexture();
 
     protected:
         OpenGLDevice* mDevice = nullptr;
@@ -58,6 +62,7 @@ namespace Michka
         u32           mTexture = 0;
         u32           mWidth = 0;
         u32           mHeight = 0;
+        bool          mRenderTarget = false;
     };
 }
 

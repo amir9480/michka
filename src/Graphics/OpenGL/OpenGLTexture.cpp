@@ -62,6 +62,11 @@ namespace Michka
         return mWidth;
     }
 
+    bool OpenGLTexture::isRenderTarget() const
+    {
+        return mRenderTarget;
+    }
+
     void OpenGLTexture::set(const void* _data, const u32& _size)
     {
         if (mTexture)
@@ -85,8 +90,16 @@ namespace Michka
             glGetIntegerv(GL_TEXTURE_2D, &currentTextureId);
 
             glBindTexture(GL_TEXTURE_2D, mTexture);
-            glTexImage2D(GL_TEXTURE_2D, 0, format, mWidth, mHeight, 0, format, GL_UNSIGNED_BYTE, _data);
-            glGenerateMipmap(GL_TEXTURE_2D);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+
+            glTexImage2D(GL_TEXTURE_2D, 0, format, mWidth, mHeight, 0, format == GL_DEPTH_COMPONENT32F ? GL_DEPTH_COMPONENT : format, GL_UNSIGNED_BYTE, _data);
+            if (_data != nullptr)
+            {
+                glGenerateMipmap(GL_TEXTURE_2D);
+            }
 
             glBindTexture(GL_TEXTURE_2D, currentTextureId);
         }

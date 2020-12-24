@@ -45,15 +45,19 @@ namespace Michka
 
         virtual Shader* createShader(const String& _vertexShader = "", const String& _pixelShader = "") override;
 
-        virtual Texture* createTexture(const u32& _width, const u32& _height, const TextureFormat& _format);
+        virtual Texture* createTexture(const u32& _width, const u32& _height, const TextureFormat& _format, const bool& _renderTarget = false);
 
         virtual VertexBuffer* createVertexBuffer(VertexDeclaration* _vertexDeclaration, const bool& _static = true) override;
 
         virtual void draw() override;
 
-        virtual void drawOnScreen() override;
+        virtual void drawOnScreen(const Texture* _texture) override;
+
+        virtual bool setDepthBuffer(const Texture* _depthBuffer = nullptr) override;
 
         virtual void setIndexBuffer(IndexBuffer* _indexBuffer = nullptr) override;
+
+        virtual bool setRenderTarget(const u8& _index, const Texture* _renderTarget = nullptr) override;
 
         virtual void setShader(Shader* _shader) override;
 
@@ -67,6 +71,12 @@ namespace Michka
 #       endif
 
 	    u32 mVertexArray = 0;
+        u32 mFrameBuffer = 0;
+        Map<u8, const Texture*> mRenderTargets;
+        const Texture* mDepthBuffer = nullptr;
+        Shader* mQuadShader = nullptr;
+        VertexBuffer* mQuadVertexBuffer = nullptr;
+        IndexBuffer* mQuadIndexBuffer = nullptr;
     };
 }
 

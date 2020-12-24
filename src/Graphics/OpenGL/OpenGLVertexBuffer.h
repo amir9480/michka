@@ -39,12 +39,14 @@ namespace Michka
     {
         friend class OpenGLDevice;
     public:
-        OpenGLVertexBuffer();
         virtual ~OpenGLVertexBuffer();
 
         virtual void destroy() override;
 
         virtual void set(const void* _vertices, const u32& _size) override;
+
+    protected:
+        OpenGLVertexBuffer();
 
     protected:
         OpenGLDevice*       mDevice = nullptr;

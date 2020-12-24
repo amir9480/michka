@@ -37,12 +37,13 @@ namespace Michka
     {
         friend class OpenGLDevice;
     public:
-        OpenGLIndexBuffer();
         virtual ~OpenGLIndexBuffer();
 
         virtual void destroy() override;
 
         virtual void set(const u32* _indices, const u32& _count) override;
+    protected:
+        OpenGLIndexBuffer();
 
     protected:
         OpenGLDevice*       mDevice = nullptr;
