@@ -41,6 +41,8 @@ namespace Michka
 
         virtual void destroy() override;
 
+        virtual Image get() const override;
+
         virtual TextureFormat getFormat() const override;
 
         virtual u32 getHeight() const override;
@@ -55,6 +57,8 @@ namespace Michka
 
     protected:
         OpenGLTexture();
+
+        static i32 textureFormatToGLFormat(const TextureFormat& _format);
 
     protected:
         OpenGLDevice* mDevice = nullptr;

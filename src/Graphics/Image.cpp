@@ -103,6 +103,7 @@ namespace Michka
         if (mData)
         {
             delete[] mData;
+            mData = nullptr;
         }
         mWidth = mHeight = 0;
         mFormat = Format::unknown;
@@ -254,6 +255,15 @@ namespace Michka
         }
 
         return false; // @NOCOVERAGE
+    }
+
+    void Image::set(const u32& _width, const u32& _height, const Format& _format, u8* _data)
+    {
+        destroy();
+        mWidth = _width;
+        mHeight = _height;
+        mFormat = _format;
+        mData = _data;
     }
 
     bool Image::setPixel(const u32& _x, const u32& _y, const Color& _color)

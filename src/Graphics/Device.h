@@ -116,6 +116,17 @@ namespace Michka
         virtual void drawOnScreen(const Texture* _texture) = 0;
 
         /**
+         * @brief Draw a simple texture.
+         *
+         * @param _texture
+         * @param _x
+         * @param _y
+         * @param _width
+         * @param _height
+         */
+        virtual void drawQuad(const Texture* _texture, const u32& _x = 0, const u32& _y = 0, const u32& _width = 0, const u32& _height = 0) = 0;
+
+        /**
          * @brief Get the output window.
          */
         virtual Window* getWindow() const;

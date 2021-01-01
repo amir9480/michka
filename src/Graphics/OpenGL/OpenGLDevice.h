@@ -53,6 +53,8 @@ namespace Michka
 
         virtual void drawOnScreen(const Texture* _texture) override;
 
+        virtual void drawQuad(const Texture* _texture, const u32& _x = 0, const u32& _y = 0, const u32& _width = 0, const u32& _height = 0) override;
+
         virtual bool setDepthBuffer(const Texture* _depthBuffer = nullptr) override;
 
         virtual void setIndexBuffer(IndexBuffer* _indexBuffer = nullptr) override;

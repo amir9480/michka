@@ -128,6 +128,16 @@ namespace Michka
         bool save(const String& _path, const u8& _quality = 100) const;
 
         /**
+         * @brief Set content of image directly.
+         *
+         * @param _width
+         * @param _height
+         * @param _format
+         * @param _data
+         */
+        void set(const u32& _width, const u32& _height, const Format& _format, u8* _data = nullptr);
+
+        /**
          * @brief Change a pixel color.
          *
          * @param _x

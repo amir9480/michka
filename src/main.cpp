@@ -232,6 +232,8 @@ int main()
         exit(-1);
     }
 
+    bool firstTime = true;
+
     while (device->getWindow()->isDestroyed() == false)
     {
         device->setRenderTarget(0, rt1);
@@ -246,6 +248,11 @@ int main()
         device->draw();
 
         device->drawOnScreen(rt1);
+
+        if (firstTime) {
+            rt1->get().save("test-assets/screenshot.jpg");
+            firstTime = false;
+        }
     }
 
     delete vb;

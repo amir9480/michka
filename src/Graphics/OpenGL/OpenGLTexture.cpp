@@ -47,6 +47,36 @@ namespace Michka
         }
     }
 
+    Image OpenGLTexture::get() const
+    {
+        Image out;
+        Image::Format imageFormat = Image::Format::unknown;
+
+        switch (mFormat)
+        {
+        case TextureFormat::r8g8b8:
+            imageFormat = Image::Format::r8g8b8;
+            break;
+        case TextureFormat::r8g8b8a8:
+            imageFormat = Image::Format::r8g8b8a8;
+            break;
+        }
+
+        if (imageFormat != Image::Format::unknown)
+        {
+            i32 glFormat = textureFormatToGLFormat(mFormat);
+            u8* data = new u8[mWidth * mHeight * Image::bytesPerPixel(imageFormat)];
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, mTexture);
+            glGetTexImage(GL_TEXTURE_2D, 0, glFormat, GL_UNSIGNED_BYTE, data);
+            glBindTexture(GL_TEXTURE_2D, 0);
+            out.set(mWidth, mHeight, imageFormat, data);
+            out.flip();
+        }
+
+        return out;
+    }
+
     TextureFormat OpenGLTexture::getFormat() const
     {
         return mFormat;
@@ -71,21 +101,7 @@ namespace Michka
     {
         if (mTexture)
         {
-            i32 format = 0;
-            switch (mFormat)
-            {
-            case TextureFormat::r8g8b8:
-                format = GL_RGB;
-                break;
-            case TextureFormat::r8g8b8a8:
-                format = GL_RGBA;
-                break;
-            case TextureFormat::depth32:
-                format = GL_DEPTH_COMPONENT32F;
-                break;
-            default:
-                return;
-            }
+            i32 format = textureFormatToGLFormat(mFormat);
             GLint currentTextureId;
             glGetIntegerv(GL_TEXTURE_2D, &currentTextureId);
 
@@ -111,5 +127,24 @@ namespace Michka
         mHeight = _image.getHeight();
         mFormat = (TextureFormat)_image.getFormat();
         set(_image.getFlipped().getData(), _image.getSize());
+    }
+
+    i32 OpenGLTexture::textureFormatToGLFormat(const TextureFormat& _format)
+    {
+        i32 format = 0;
+        switch (_format)
+        {
+        case TextureFormat::r8g8b8:
+            format = GL_RGB;
+            break;
+        case TextureFormat::r8g8b8a8:
+            format = GL_RGBA;
+            break;
+        case TextureFormat::depth32:
+            format = GL_DEPTH_COMPONENT32F;
+            break;
+        }
+
+        return format;
     }
 }

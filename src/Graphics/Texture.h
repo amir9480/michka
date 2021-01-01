@@ -44,6 +44,11 @@ namespace Michka
         virtual void destroy() = 0;
 
         /**
+         * @brief Get content of image.
+         */
+        virtual Image get() const = 0;
+
+        /**
          * @brief Get texture format.
          */
         virtual TextureFormat getFormat() const = 0;

@@ -356,6 +356,14 @@ namespace Michka
     void OpenGLDevice::drawOnScreen(const Texture* _texture)
     {
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        drawQuad(_texture, 0, 0, mWindow->getWidth(), mWindow->getHeight());
+        glBindFramebuffer(GL_FRAMEBUFFER, mFrameBuffer);
+        SwapBuffers(mHdc);
+        InvalidateRect(mHwnd, 0, 1);
+    }
+
+    void OpenGLDevice::drawQuad(const Texture* _texture, const u32& _x, const u32& _y, const u32& _width, const u32& _height)
+    {
         mQuadShader->set("image", _texture);
         setShader(mQuadShader);
         setVertexBuffer(mQuadVertexBuffer);
@@ -371,15 +379,14 @@ namespace Michka
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
         }
-        glViewport(0, 0, mWindow->getWidth(), mWindow->getHeight());
+        u32 width = _width > 0 ? _width : _texture->getWidth();
+        u32 height = _height > 0 ? _height : _texture->getHeight();
+        glViewport(_x, _y, width, height);
         clear(true, true, true, Vector4(0, 0, 0, 1));
         glDrawElements(GL_TRIANGLES, indexBuffer->mCount, GL_UNSIGNED_INT, 0);
         setShader(nullptr);
         setVertexBuffer(nullptr);
         setIndexBuffer(nullptr);
-        glBindFramebuffer(GL_FRAMEBUFFER, mFrameBuffer);
-        SwapBuffers(mHdc);
-        InvalidateRect(mHwnd, 0, 1);
     }
 
     bool OpenGLDevice::setDepthBuffer(const Texture* _depthBuffer)
