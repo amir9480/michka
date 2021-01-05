@@ -27,11 +27,6 @@
 #ifndef __OPENGL_HEADERS_H__
 #define __OPENGL_HEADERS_H__
 
-#if (MICHKA_PLATFORM == MICHKA_PLATFORM_WIN32)
-#   include <Windows.h>
-#endif
 #include <glad/glad.h>
-#include <glext.h>
-#include <wglext.h>
 
 #endif // __OPENGL_HEADERS_H__

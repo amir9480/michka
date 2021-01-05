@@ -34,6 +34,7 @@ set(
     # --------------------------------- Windows -------------------------------- #
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Windows/Thread/Mutex.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Windows/OpenGLSupport.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Windows/Window.cpp
 
     # -------------------------------------------------------------------------- #

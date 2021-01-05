@@ -24,58 +24,48 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __OPENGL_DEVICE_H__
-#define __OPENGL_DEVICE_H__
+#ifndef __WINDOWS_WINDOW_H__
+#define __WINDOWS_WINDOW_H__
 
-#include "Core/Defines.h"
-#include "Graphics/Device.h"
-#include "OpenGLHeaders.h"
+#include "Platform/Window.h"
+#include "Core/Container/Map.h"
+#include "Core/Container/String.h"
+#include "Core/Thread/Thread.h"
+#include <Windows.h>
 
 namespace Michka
 {
-    class MICHKA_API OpenGLDevice : public Device
+    class WindowLoopThread;
+
+    extern Mutex windowMutex;
+    extern Map<Window*, HWND> windowInstances;
+    extern Map<Window*, WindowLoopThread*> windowThreads;
+
+    class MICHKA_API WindowLoopThread : public Thread
     {
+        friend class Window;
     public:
-        OpenGLDevice();
-        virtual ~OpenGLDevice();
+        explicit WindowLoopThread(Window* _window);
 
-        virtual void clear(const bool& _backBuffer = true, const bool& _depthBuffer = true, const bool& _stencil = true, const Vector4& _backBufferValue = Vector4(0.0f, 0.0f, 0.0f, 0.0f), const f32& _depthValue = 0.0f, const u8& _stencilValue = 0) override;
+        virtual ~WindowLoopThread();
 
-        virtual IndexBuffer* createIndexBuffer(const bool& _static = true) override;
+        bool onEvent(const Event* _event);
 
-        virtual Shader* createShader(const String& _vertexShader = "", const String& _pixelShader = "") override;
+        static LRESULT CALLBACK windowProc(HWND _hwnd, u32 _msg, WPARAM _wParam, LPARAM _lParam);
 
-        virtual Texture* createTexture(const u32& _width, const u32& _height, const TextureFormat& _format, const bool& _renderTarget = false);
+    protected:
+        void draw();
 
-        virtual VertexBuffer* createVertexBuffer(VertexDeclaration* _vertexDeclaration, const bool& _static = true) override;
+        void run() override;
 
-        virtual void draw() override;
+        void setForOpenGL();
 
-        virtual void drawOnScreen(const Texture* _texture) override;
-
-        virtual void drawQuad(const Texture* _texture, const u32& _x = 0, const u32& _y = 0, const u32& _width = 0, const u32& _height = 0) override;
-
-        virtual bool setDepthBuffer(const Texture* _depthBuffer = nullptr) override;
-
-        virtual void setIndexBuffer(IndexBuffer* _indexBuffer = nullptr) override;
-
-        virtual bool setRenderTarget(const u8& _index, const Texture* _renderTarget = nullptr) override;
-
-        virtual void setShader(Shader* _shader) override;
-
-        virtual void setVertexBuffer(VertexBuffer* _vertexBuffer = nullptr) override;
-
-        virtual void setWindow(Window* _window) override;
-
-    private:
-	    u32 mVertexArray = 0;
-        u32 mFrameBuffer = 0;
-        Map<u8, const Texture*> mRenderTargets;
-        const Texture* mDepthBuffer = nullptr;
-        Shader* mQuadShader = nullptr;
-        VertexBuffer* mQuadVertexBuffer = nullptr;
-        IndexBuffer* mQuadIndexBuffer = nullptr;
+    protected:
+        Window* mWindow;
+        HWND    mHwnd = 0;
+        HDC     mHdc = 0;
+        HGLRC   mOGLRenderContext = 0;
     };
 }
 
-#endif // __OPENGL_DEVICE_H__
+#endif // __WINDOWS_WINDOW_H__

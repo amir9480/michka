@@ -216,7 +216,11 @@ int main()
 
     Image image("test-assets/grass.jpg");
 
+    Window* window = new Window();
+    Window* window2 = new Window();
     Device* device = Device::instance(Device::Driver::openGL);
+    window->show();
+    window2->show();
     Texture* rt1 = device->createTexture(320, 240, Michka::TextureFormat::r8g8b8, true);
     Texture* rt2 = device->createTexture(320, 240, Michka::TextureFormat::r8g8b8, true);
     Texture* db = device->createTexture(320, 240, Michka::TextureFormat::depth32, true);
@@ -233,13 +237,15 @@ int main()
     }
 
     bool firstTime = true;
+    int j = 0;
 
-    while (device->getWindow()->isDestroyed() == false)
+    while (window->isDestroyed() == false)
     {
+        std::cout << j++ << " : " << window->isDestroyed() << std::endl;
         device->setRenderTarget(0, rt1);
         device->setRenderTarget(1, rt2);
         device->setDepthBuffer(db);
-        device->clear(true, true, true, Vector4(0.0f, 0.0f, 0.0f, 1.0f));
+        device->clear(true, true, true, Vector4(0.4f, 0.8f, 1.0f, 1.0f));
         device->setIndexBuffer(ib);
         device->setVertexBuffer(vb);
         device->setShader(shader);
@@ -247,9 +253,13 @@ int main()
         shader->set("testTexture", texture);
         device->draw();
 
+        device->setWindow(window);
         device->drawOnScreen(rt1);
+        device->setWindow(window2);
+        device->drawOnScreen(rt2);
 
-        if (firstTime) {
+        if (firstTime)
+        {
             rt1->get().save("test-assets/screenshot.jpg");
             firstTime = false;
         }
@@ -259,6 +269,8 @@ int main()
     delete ib;
     delete shader;
     delete texture;
+    delete window;
+    delete window2;
 
     std::cout << "\nBYE\n";
     system("PAUSE");

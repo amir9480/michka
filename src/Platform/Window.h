@@ -32,6 +32,8 @@
 
 namespace Michka
 {
+    class Device;
+
     class MICHKA_API Window : public Object
     {
         MICHKA_NON_COPYABLE_CLASS(Window)
@@ -43,6 +45,11 @@ namespace Michka
          * @brief Destroy window.
          */
         void destroy();
+
+        /**
+         * @brief Draw buffer on window.
+         */
+        void draw();
 
         /**
          * @brief Get the Height of window
@@ -75,6 +82,13 @@ namespace Michka
         void setHeight(const u32& _height);
 
         /**
+         * @brief Set renderer for window.
+         *
+         * @param _device
+         */
+        void setRenderDevice(const Device* _device);
+
+        /**
          * @brief Set window title.
          *
          * @param _title
@@ -102,10 +116,11 @@ namespace Michka
         virtual bool onEvent(const Event* _event) override;
 
     protected:
-        u32 mWidth;
-        u32 mHeight;
-        bool mDestroyed = false;
-        bool mCallEventListenersManually = true;
+        u32   mWidth;
+        u32   mHeight;
+        void* mWindowData = nullptr;
+        bool  mDestroyed = false;
+        bool  mCallEventListenersManually = true;
     };
 }
 

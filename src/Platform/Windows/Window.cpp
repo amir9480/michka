@@ -24,17 +24,12 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Platform/Window.h"
-#include "Core/Container/Map.h"
-#include "Core/Container/String.h"
-#include "Core/Thread/Thread.h"
+#include "Window.h"
 #include "Core/Helpers.h"
-#include <Windows.h>
+#include "OpenGLSupport.h"
 
 namespace Michka
 {
-    class WindowLoopThread;
-
     Mutex windowMutex;
     Map<Window*, HWND> windowInstances;
     Map<Window*, WindowLoopThread*> windowThreads;
@@ -45,20 +40,140 @@ namespace Michka
     {
         WNDCLASSW michkaWndClass{};
         michkaWndClass.hbrBackground = (HBRUSH) COLOR_WINDOW;
-        michkaWndClass.hCursor = LoadCursor(0, IDC_ARROW);
-        michkaWndClass.hInstance = GetModuleHandleW(0);
-        michkaWndClass.lpfnWndProc = michkaMainWindowProc;
+        michkaWndClass.hCursor       = LoadCursor(0, IDC_ARROW);
+        michkaWndClass.hInstance     = GetModuleHandleW(0);
+        michkaWndClass.lpfnWndProc   = &WindowLoopThread::windowProc;
         michkaWndClass.lpszClassName = L"MichkaMainWindow";
-        michkaWndClass.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
+        michkaWndClass.style         = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
         RegisterClassW(&michkaWndClass);
+
+        loadOpenGLWindowsExtensions();
     }
 
     void michkaCallOnEnd()
     {
-        UnregisterClassW(L"MichkaMainWindow",GetModuleHandleW(0));
+        unloadOpenGLWindowsExtensions();
+
+        UnregisterClassW(L"MichkaMainWindow", GetModuleHandleW(0));
     }
 
-    LRESULT CALLBACK michkaMainWindowProc(HWND _hwnd, u32 _msg, WPARAM _wParam, LPARAM _lParam)
+    /* --------------------------- Window Loop Thread --------------------------- */
+
+    WindowLoopThread::WindowLoopThread(Window* _window): mWindow(_window)
+    {
+        //
+    }
+
+    WindowLoopThread::~WindowLoopThread()
+    {
+        //
+    }
+
+    bool WindowLoopThread::onEvent(const Event* _event)
+    {
+        if (mHwnd)
+        {
+            MutexLock lock(windowMutex);
+            if (_event->getName() == "show")
+            {
+                ShowWindow(mHwnd, SW_SHOW);
+                UpdateWindow(mHwnd);
+                return true;
+            }
+            else if (_event->getName() == "changeTitle" && _event->getParameter("title").isString())
+            {
+                SetWindowTextW(mHwnd, _event->getParameter("title").toString().cstr());
+                return true;
+            }
+            else if (_event->getName() == "changeSize")
+            {
+                RECT windowRect;
+                GetWindowRect(mHwnd, &windowRect);
+                windowRect.right = windowRect.left + mWindow->getWidth();
+                windowRect.bottom = windowRect.top + mWindow->getHeight();
+                i32 windowStyle = GetWindowLongW(mHwnd, GWL_STYLE);
+                AdjustWindowRect(&windowRect, windowStyle, 0);
+                SetWindowPos(mHwnd, 0, windowRect.left, windowRect.top, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, 0);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    void WindowLoopThread::draw()
+    {
+        if (mHdc && mOGLRenderContext)
+        {
+            SwapBuffers(mHdc);
+            InvalidateRect(mHwnd, 0, 1);
+        }
+    }
+
+    void WindowLoopThread::run()
+    {
+        i32 windowStyle = WS_CAPTION|WS_OVERLAPPED|WS_SYSMENU|WS_MINIMIZEBOX;
+        RECT windowRect = {0, 0, i32(mWindow->getWidth()), i32(mWindow->getHeight())};
+        AdjustWindowRect(&windowRect, windowStyle, 0);
+        mHwnd = CreateWindowExW(
+            (DWORD)0,
+            L"MichkaMainWindow",
+            (Michka::String(MICHKA_NAME) + " " + MICHKA_VERSION).cstr(),
+            windowStyle,
+            0,
+            0,
+            windowRect.right - windowRect.left,
+            windowRect.bottom - windowRect.top,
+            nullptr,
+            nullptr,
+            GetModuleHandleA(0),
+            nullptr
+        );
+        windowMutex.lock();
+        windowInstances[mWindow] = mHwnd;
+        windowMutex.unlock();
+
+        MSG msg;
+        do
+        {
+            //! TODO: add sleep to use less CPU
+            if (PeekMessageW(&msg, 0, 0, 0, PM_REMOVE))
+            {
+                TranslateMessage(&msg);
+                DispatchMessageW(&msg);
+            }
+            else
+            {
+                mWindow->callQueueListeners();
+                Thread::sleep(10);
+            }
+        } while(mWindow->isDestroyed() == false);
+
+        destroyOpenGLRenderContext(mHwnd, mHdc, mOGLRenderContext);
+        DestroyWindow(mHwnd);
+        mHwnd = 0;
+    }
+
+    void WindowLoopThread::setForOpenGL()
+    {
+        if (mWindow->isDestroyed())
+        {
+            return;
+        }
+
+        if (mHdc == NULL || mOGLRenderContext == NULL)
+        {
+            initOpenGLRenderContext(mHwnd, mHdc, mOGLRenderContext);
+        }
+
+        wglMakeCurrent(NULL, NULL);
+        if (!wglMakeCurrent(mHdc, mOGLRenderContext))
+        {
+            MICHKA_ERROR("wglMakeCurrent() failed.");
+        }
+    }
+
+    LRESULT CALLBACK WindowLoopThread::windowProc(HWND _hwnd, u32 _msg, WPARAM _wParam, LPARAM _lParam)
     {
         u32 removeIndex = 0;
         switch(_msg)
@@ -66,6 +181,7 @@ namespace Michka
         case WM_ERASEBKGND:
             return 0;
         case WM_DESTROY:
+        case WM_CLOSE:
             windowMutex.lock();
             if ((removeIndex = windowInstances.indexOfValue(_hwnd)) != windowInstances.notFound)
             {
@@ -74,12 +190,9 @@ namespace Michka
             }
             windowMutex.unlock();
             break;
-        case WM_CLOSE:
-            DestroyWindow(_hwnd);
-            break;
         case WM_GETMINMAXINFO:
             {
-                LPMINMAXINFO m = (LPMINMAXINFO) _lParam;
+                LPMINMAXINFO m = (LPMINMAXINFO)_lParam;
                 m->ptMinTrackSize.x = 640;
                 m->ptMinTrackSize.y = 480;
             }
@@ -89,95 +202,7 @@ namespace Michka
         return DefWindowProcW(_hwnd, _msg, _wParam, _lParam);
     }
 
-    class MICHKA_API WindowLoopThread : public Thread
-    {
-        friend class Window;
-    public:
-        explicit WindowLoopThread(Window* _window): mWindow(_window)
-        {
-            //
-        }
-        virtual ~WindowLoopThread()
-        {
-            //
-        }
-        bool onEvent(const Event* _event)
-        {
-            if (windowInstances.hasKey(mWindow))
-            {
-                HWND hwnd = windowInstances[mWindow];
-                MutexLock lock(windowMutex);
-                if (_event->getName() == "show")
-                {
-                    ShowWindow(hwnd, SW_SHOW);
-                    UpdateWindow(hwnd);
-                }
-                else if (_event->getName() == "changeTitle" && _event->getParameter("title").isString())
-                {
-                    SetWindowTextW(hwnd, _event->getParameter("title").toString().cstr());
-                    return true;
-                }
-                else if (_event->getName() == "changeSize")
-                {
-                    RECT windowRect;
-                    GetWindowRect(hwnd, &windowRect);
-                    windowRect.right = windowRect.left + mWindow->getWidth();
-                    windowRect.bottom = windowRect.top + mWindow->getHeight();
-                    i32 windowStyle = GetWindowLongW(hwnd, GWL_STYLE);
-                    AdjustWindowRect(&windowRect, windowStyle, 0);
-                    SetWindowPos(hwnd, 0, windowRect.left, windowRect.top, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, 0);
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-    protected:
-        virtual void run()
-        {
-            i32 windowStyle = WS_CAPTION|WS_OVERLAPPED|WS_SYSMENU|WS_MINIMIZEBOX;
-            RECT windowRect = {0, 0, i32(mWindow->getWidth()), i32(mWindow->getHeight())};
-            AdjustWindowRect(&windowRect, windowStyle, 0);
-            HWND hwnd = CreateWindowExW(
-                (DWORD)0,
-                L"MichkaMainWindow",
-                (Michka::String(MICHKA_NAME) + " " + MICHKA_VERSION).cstr(),
-                windowStyle,
-                0,
-                0,
-                windowRect.right - windowRect.left,
-                windowRect.bottom - windowRect.top,
-                nullptr,
-                nullptr,
-                GetModuleHandleA(0),
-                nullptr
-            );
-            windowMutex.lock();
-            windowInstances[mWindow] = hwnd;
-            windowMutex.unlock();
-
-            MSG msg;
-            do
-            {
-                //! TODO: add sleep to use less CPU
-                if (PeekMessageW(&msg, 0, 0, 0, PM_REMOVE))
-                {
-                    TranslateMessage(&msg);
-                    DispatchMessageW(&msg);
-                }
-                else
-                {
-                    mWindow->callQueueListeners();
-                    Thread::sleep(10);
-                }
-            } while(mWindow->isDestroyed() == false);
-
-            DestroyWindow(hwnd);
-        }
-    protected:
-        Window* mWindow;
-    };
+    /* --------------------------------- Window --------------------------------- */
 
     Window::Window(const u32& _width, const u32& _height) :
         mWidth(_width),
@@ -187,6 +212,7 @@ namespace Michka
         WindowLoopThread* windowThread = new WindowLoopThread(this);
         windowThreads.insert(this, windowThread);
         windowThread->start();
+        mWindowData = (void*)windowThread;
     }
 
     Window::~Window()
@@ -201,6 +227,15 @@ namespace Michka
     void Window::destroy()
     {
         mDestroyed = true;
+    }
+
+    void Window::draw()
+    {
+        if (mDestroyed == false)
+        {
+            WindowLoopThread* windowThread = (WindowLoopThread*)mWindowData;
+            windowThread->draw();
+        }
     }
 
     u32 Window::getHeight() const
@@ -229,6 +264,26 @@ namespace Michka
     {
         mHeight = _height;
         emit("changeSize");
+    }
+
+    void Window::setRenderDevice(const Device* _device)
+    {
+        if (mDestroyed)
+        {
+            return;
+        }
+
+        while (1)
+        {
+            //! TODO: Improve sleep time
+            Thread::sleep(100);
+            MutexLock lock(windowMutex);
+            if (windowThreads.hasKey(this))
+            {
+                break;
+            }
+        }
+        windowThreads[this]->setForOpenGL();
     }
 
     void Window::setTitle(const String& _title)

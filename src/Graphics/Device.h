@@ -175,6 +175,13 @@ namespace Michka
          */
         virtual void setVertexBuffer(VertexBuffer* _vertexBuffer = nullptr) = 0;
 
+        /**
+         * @brief Set the main window.
+         *
+         * @param _window
+         */
+        virtual void setWindow(Window* _window) = 0;
+
     protected:
         Window*         mWindow = nullptr;
         IndexBuffer*    mCurrentIndexBuffer = nullptr;
