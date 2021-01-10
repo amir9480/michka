@@ -19,6 +19,8 @@
 ## Credits
 * [Glad](https://glad.dav1d.de)
 * [Google Test](https://github.com/google/googletest)
+* [Mesa3D](https://mesa3d.org/)
+* [Mesa Dist](https://github.com/pal1000/mesa-dist-win)
 * [OpenGL](https://www.opengl.org)
 * [stb](https://github.com/nothings/stb)
 
