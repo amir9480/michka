@@ -29,7 +29,11 @@
 
 #include "Core/Defines.h"
 #include "Core/Helpers.h"
+#define HAVE_STRUCT_TIMESPEC
 #include <Windows.h>
+#ifdef APIENTRY
+#undef APIENTRY
+#endif
 #include <glad/glad.h>
 #include <glext.h>
 #include <wglext.h>

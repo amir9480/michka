@@ -44,8 +44,9 @@ set(
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glad/src/glad.c
 )
 
-add_executable(Michka ${SOURCES} "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
 add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
+add_compile_definitions(MICHKA_SRC_PATH="${CMAKE_CURRENT_SOURCE_DIR}")
+add_executable(Michka ${SOURCES} "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
 set_property(TARGET Michka PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 set(
     LIBS

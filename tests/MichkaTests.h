@@ -27,9 +27,7 @@
 #ifndef __MICHKATESTS_H__
 #define __MICHKATESTS_H__
 
-#ifdef _MICHKA_TESTS_PATH
-#   define MICHKA_TESTS_PATH _MICHKA_TESTS_PATH
-#else
+#ifndef MICHKA_TESTS_PATH
 #   define MICHKA_TESTS_PATH ""
 #endif
 

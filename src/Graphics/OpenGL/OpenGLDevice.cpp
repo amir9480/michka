@@ -28,6 +28,7 @@
 #include "Core/Thread/Thread.h"
 #include "Core/Thread/Mutex.h"
 #include "Core/Foundation/File.h"
+#include "Core/Foundation/Log.h"
 #include "OpenGLIndexBuffer.h"
 #include "OpenGLShader.h"
 #include "OpenGLTexture.h"
@@ -59,8 +60,9 @@ namespace Michka
     {
         if (!gladLoadGL())
         {
-            MICHKA_ERROR("Failed to load GLAD.");
+            MICHKA_ABORT("Failed to load GLAD.");
         }
+
         glGenVertexArrays(1, &mVertexArray);
         glBindVertexArray(mVertexArray);
         glGenFramebuffers(1, &mFrameBuffer);
@@ -86,8 +88,7 @@ namespace Michka
         mQuadShader = this->createShader(quadVertexShader, quadPixelShader);
         if (! mQuadShader->compile())
         {
-            MICHKA_ERROR(mQuadShader->getErrors().toUtf8().cstr());
-            exit(-1);
+            MICHKA_ABORT(mQuadShader->getErrors().toUtf8().cstr());
         }
     }
 

@@ -28,5 +28,6 @@
 #define __PLATFORM_H__
 
 #include "Window.h"
+#include "Utility.h"
 
 #endif // __PLATFORM_H__

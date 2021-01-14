@@ -27,6 +27,7 @@
 #include "Image.h"
 #include "Core/Container/String.h"
 #include "Core/Foundation/File.h"
+#include "Core/Foundation/Log.h"
 #include "Core/Helpers.h"
  #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>

@@ -38,6 +38,7 @@
 #include "Foundation/Event.h"
 #include "Foundation/EventManager.h"
 #include "Foundation/File.h"
+#include "Foundation/Log.h"
 #include "Foundation/Object.h"
 #include "Foundation/Types.h"
 #include "Defines.h"

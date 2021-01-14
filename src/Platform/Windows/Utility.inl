@@ -24,49 +24,82 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __WINDOWS_WINDOW_H__
-#define __WINDOWS_WINDOW_H__
-
-#include "Platform/Window.h"
-#include "Core/Container/Map.h"
 #include "Core/Container/String.h"
-#include "Core/Thread/Thread.h"
+#include "Platform/Utility.h"
 #define HAVE_STRUCT_TIMESPEC
 #include <Windows.h>
 
 namespace Michka
 {
-    class WindowLoopThread;
-
-    extern Mutex windowMutex;
-    extern Map<Window*, HWND> windowInstances;
-    extern Map<Window*, WindowLoopThread*> windowThreads;
-
-    class MICHKA_API WindowLoopThread : public Thread
+    namespace Platform
     {
-        friend class Window;
-    public:
-        explicit WindowLoopThread(Window* _window);
+        void FORCE_INLINE messageBox(const String& _text, const String& _title)
+        {
+            MessageBoxW(0, _text.cstr(), _title.cstr(), MB_OK);
+        }
 
-        virtual ~WindowLoopThread();
+        void FORCE_INLINE setConsoleColor(const ConsoleColor& _textColor, const ConsoleColor& _backgroundColor)
+        {
+            int textColor = 0;
+            int backgroundColor = 0;
 
-        bool onEvent(const Event* _event);
+            switch (_textColor)
+            {
+            case ConsoleColor::black:
+                textColor = 0;
+                break;
+            case ConsoleColor::blue:
+                textColor = 9;
+                break;
+            case ConsoleColor::yellow:
+                textColor = 14;
+                break;
+            case ConsoleColor::cyan:
+                textColor = 11;
+                break;
+            case ConsoleColor::green:
+                textColor = 10;
+                break;
+            case ConsoleColor::magenta:
+                textColor = 13;
+                break;
+            case ConsoleColor::red:
+                textColor = 12;
+                break;
+            case ConsoleColor::white:
+                textColor = 15;
+                break;
+            }
 
-        static LRESULT CALLBACK windowProc(HWND _hwnd, u32 _msg, WPARAM _wParam, LPARAM _lParam);
+            switch (_backgroundColor)
+            {
+            case ConsoleColor::black:
+                backgroundColor = 0;
+                break;
+            case ConsoleColor::blue:
+                backgroundColor = 1;
+                break;
+            case ConsoleColor::yellow:
+                backgroundColor = 6;
+                break;
+            case ConsoleColor::cyan:
+                backgroundColor = 3;
+                break;
+            case ConsoleColor::green:
+                backgroundColor = 2;
+                break;
+            case ConsoleColor::magenta:
+                backgroundColor = 5;
+                break;
+            case ConsoleColor::red:
+                backgroundColor = 4;
+                break;
+            case ConsoleColor::white:
+                backgroundColor = 7;
+                break;
+            }
 
-    protected:
-        void draw();
-
-        void run() override;
-
-        void setForOpenGL();
-
-    protected:
-        Window* mWindow;
-        HWND    mHwnd = 0;
-        HDC     mHdc = 0;
-        HGLRC   mOGLRenderContext = 0;
-    };
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (backgroundColor * 16) + textColor) ;
+        }
+    }
 }
-
-#endif // __WINDOWS_WINDOW_H__

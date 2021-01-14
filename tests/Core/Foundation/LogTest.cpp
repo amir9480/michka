@@ -24,83 +24,22 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __DEFINES_H__
-#define __DEFINES_H__
+#include <gtest/gtest.h>
+#include "MichkaTests.h"
+#include "Core/Foundation/Log.h"
 
-/* ---------------------------------- Info ---------------------------------- */
-
-#define MICHKA_NAME "Michka"
-#define MICHKA_VERSION "0.0.1"
-#define MICHKA_VERSION_NUMBER 1
-#define MICHKA_DEBUG _DEBUG
-
-#define MICHKA_OPEN_GL_SUPPORT 1
-
-#ifndef MICHKA_SRC_PATH
-#   define MICHKA_SRC_PATH ""
-#endif
-
-/* -------------------------------- Compiler -------------------------------- */
-
-#define MICHKA_COMPILER_MSVC 1
-
-#ifdef _MSC_VER
-#   define MICHKA_COMPILER MICHKA_COMPILER_MSVC
-#   define MICHKA_COMPILER_NAME "Microsoft Visual Studio"
-
-#   define FORCE_INLINE __forceinline
-#   pragma warning(disable:5033)
-#endif
-
-/* -------------------------------- Platform -------------------------------- */
-
-#define MICHKA_PLATFORM_WIN32 1
-
-#if defined(WIN32) || defined(_WIN32)
-#   define MICHKA_PLATFORM MICHKA_PLATFORM_WIN32
-#   define MICHKA_PLATFORM_NAME "Windows"
-#   define MICHKA_API __declspec(dllexport)
-#   define NOMINMAX
-#endif
-
-/* ---------------------------------- Types --------------------------------- */
-
-typedef char                   i8;
-typedef short int              i16;
-typedef int                    i32;
-typedef long long int          i64;
-typedef unsigned char          u8;
-typedef unsigned short int     u16;
-typedef unsigned int           u32;
-typedef unsigned long long int u64;
-typedef float                  f32;
-typedef double                 f64;
-typedef long double            f96;
-
-/* --------------------- Custom new and delete operators -------------------- */
-
-#if MICHKA_DEBUG
-#   define MICHKA_NEW new(__FILE__, __LINE__)
-#else
-#   define MICHKA_NEW new
-#endif // MICHKA_DEBUG
-
-#define new MICHKA_NEW
-
-/* --------------------------- Forward declartions -------------------------- */
-
-namespace Michka
+TEST(LogTest, Log)
 {
-    template<typename T>
-    class MICHKA_API StringTemplate;
+    MICHKA_LOG("This is debug.");
+    MICHKA_INFO("This is info.");
+    MICHKA_WARNING("This is warning.");
+    MICHKA_ERROR("This is error.");
+    MICHKA_CRITICAL("This is critical.");
 
-    typedef StringTemplate<char> String8;
-    typedef StringTemplate<wchar_t> String;
-    typedef StringTemplate<char32_t> String32;
+    Michka::String logContent = Michka::File::getContents("michka.log");
+    ASSERT_TRUE(logContent.find("This is debug.") != logContent.notFound);
+    ASSERT_TRUE(logContent.find("This is info.") != logContent.notFound);
+    ASSERT_TRUE(logContent.find("This is warning.") != logContent.notFound);
+    ASSERT_TRUE(logContent.find("This is error.") != logContent.notFound);
+    ASSERT_TRUE(logContent.find("This is critical.") != logContent.notFound);
 }
-
-/* ----------------------------- Memory Manager ----------------------------- */
-
-#include "Memory/Memory.h"
-
-#endif // __DEFINES_H__

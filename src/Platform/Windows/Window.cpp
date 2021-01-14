@@ -25,6 +25,7 @@
 // ------------------------------------------------------------------------------- //
 
 #include "Window.h"
+#include "Core/Foundation/Log.h"
 #include "Core/Helpers.h"
 #include "OpenGLSupport.h"
 
@@ -169,7 +170,7 @@ namespace Michka
         wglMakeCurrent(NULL, NULL);
         if (!wglMakeCurrent(mHdc, mOGLRenderContext))
         {
-            MICHKA_ERROR("wglMakeCurrent() failed.");
+            MICHKA_ABORT("wglMakeCurrent() failed.");
         }
     }
 

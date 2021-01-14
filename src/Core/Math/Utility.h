@@ -24,8 +24,8 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __UTILITY_H__
-#define __UTILITY_H__
+#ifndef __MATH_UTILITY_H__
+#define __MATH_UTILITY_H__
 
 #include "Core/Defines.h"
 
@@ -252,4 +252,4 @@ namespace Michka
 
 #include "Utility.inl"
 
-#endif // __UTILITY_H__
+#endif // __MATH_UTILITY_H__

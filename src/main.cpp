@@ -3,7 +3,6 @@
 #include <fstream>
 #include <chrono>
 #include "Michka.h"
-#include <Windows.h>
 using namespace Michka;
 
 template<typename T>
@@ -27,90 +26,6 @@ std::ostream& operator << (std::ostream& _ostream, List<T> _array)
     _ostream << "\n";
     return _ostream;
 }
-
-class Person
-{
-public:
-    Person()
-    {
-        //
-    }
-
-    Person(const Michka::String& _name)
-    {
-        mName = _name;
-    }
-
-    Person(const Person& _other)
-    {
-        mName = _other.mName;
-    }
-
-    Person(Person&& _other)
-    {
-        mName = std::move(_other.mName);
-    }
-
-    Michka::String getName() const
-    {
-        return mName;
-    }
-
-    void runSomething(int i)
-    {
-        printf("Very long started %d %llu (%llu)\n", i, Thread::getCurrent()->getId(), Thread::getCurrentId());
-        for (int j = 0; j < 300; j++)
-        {
-            Sleep(10);
-        }
-        printf("Very long ended %d %llu (%llu)\n", i, Thread::getCurrent()->getId(), Thread::getCurrentId());
-    }
-
-    void runSomething2()
-    {
-        printf("Very long started %llu (%llu)\n", Thread::getCurrent()->getId(), Thread::getCurrentId());
-        for (int j = 0; j < 300; j++)
-        {
-            Sleep(10);
-        }
-        printf("Very long ended %llu (%llu)\n", Thread::getCurrent()->getId(), Thread::getCurrentId());
-    }
-
-    static void runSomethingStatic(Person* p)
-    {
-        (p->runSomething)(14);
-    }
-protected:
-    Michka::String mName;
-};
-
-
-void sayHello(int i)
-{
-    printf("Very long started %d - %llu (%llu)\n", i, Thread::getCurrent()->getId(), Thread::getCurrentId());
-    for (int i = 0; i < 300; i++)
-    {
-        Sleep(10);
-    }
-    printf("Very long ended %d - %llu (%llu)\n", i, Thread::getCurrent()->getId(), Thread::getCurrentId());
-}
-
-Mutex mutex;
-
-class CustomThread : public Thread
-{
-protected:
-    void run() override
-    {
-        printf("Very long started %llu (%llu)\n", Thread::getCurrent()->getId(), Thread::getCurrentId());
-        for (int i = 0; i < 50; i++)
-        {
-            MutexLock ml(mutex);
-            Sleep(10);
-        }
-        printf("Very long ended %llu (%llu)\n", Thread::getCurrent()->getId(), Thread::getCurrentId());
-    }
-};
 
 struct Vertex
 {
@@ -214,6 +129,15 @@ int main()
 {
     std::cout << "Welcome to engine!\n-------------------------------------\n\n";
 
+    MICHKA_LOG("This is debug!");
+    MICHKA_INFO("This is info!");
+    MICHKA_WARNING("This is warning!");
+    MICHKA_ERROR("This is error!");
+    MICHKA_CRITICAL("This is critical!");
+    MICHKA_ABORT("Hello World");
+    Log::instance().info(MICHKA_SRC_PATH, __FILE__, __LINE__);
+    system("PAUSE");
+    return 0;
     Image image("test-assets/grass.jpg");
 
     Window* window = new Window();

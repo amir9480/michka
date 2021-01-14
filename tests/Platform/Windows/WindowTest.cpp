@@ -29,6 +29,7 @@
 #include "Platform/Window.h"
 #include "Core/Thread/Mutex.h"
 #include "Core/Thread/Thread.h"
+#define HAVE_STRUCT_TIMESPEC
 #include <Windows.h>
 
 namespace Michka
