@@ -287,6 +287,19 @@ TEST(ImageTest, SaveToFile)
     ASSERT_TRUE(Michka::File::remove(testFilePath + "/Output/Test"));
 }
 
+TEST(ImageTest, Set)
+{
+    u8* imageData = new u8[3]();
+    imageData[1] = 255;
+    Michka::Image image;
+    image.set(1, 1, Michka::Image::Format::r8g8b8, imageData);
+
+    ASSERT_EQ(image.getFormat(), Michka::Image::Format::r8g8b8);
+    ASSERT_EQ(image.getWidth(), 1);
+    ASSERT_EQ(image.getHeight(), 1);
+    ASSERT_EQ(image.getPixel(0, 0), Michka::Color::green);
+}
+
 TEST(ImageTest, SetPixel)
 {
     Michka::String testFilePath = Michka::String(MICHKA_TESTS_PATH) + "/Files/Graphics/Images";

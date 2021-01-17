@@ -30,6 +30,7 @@ set(
 
     # -------------------------------------------------------------------------- #
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/Windows/WindowsUtilityTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Windows/WindowTest.cpp
 
     # -------------------------------------------------------------------------- #

@@ -28,43 +28,44 @@
 #define __LOG_H__
 
 #include "Core/Defines.h"
+#include "Core/Exception/Exception.h"
 #include "Core/Foundation/File.h"
 #include "Core/Thread/Mutex.h"
 
 #define MICHKA_ABORT(_MESSAGE) \
 { \
-    Michka::Log::instance().abort(_MESSAGE, __FILE__, __LINE__); \
+    Michka::Log::abort(_MESSAGE, __FILE__, __LINE__); \
 }
 
 #define MICHKA_ASSERT(_CONDITION, _MESSAGE) \
 if (! (_CONDITION)) \
 { \
-    Michka::Log::instance().abort(_MESSAGE, __FILE__, __LINE__); \
+    Michka::Log::abort(_MESSAGE, __FILE__, __LINE__); \
 }
 
 #define MICHKA_LOG(_MESSAGE) \
 { \
-    Michka::Log::instance().debug(_MESSAGE, __FILE__, __LINE__); \
+    Michka::Log::debug(_MESSAGE, __FILE__, __LINE__); \
 }
 
 #define MICHKA_INFO(_MESSAGE) \
 { \
-    Michka::Log::instance().info(_MESSAGE, __FILE__, __LINE__); \
+    Michka::Log::info(_MESSAGE, __FILE__, __LINE__); \
 }
 
 #define MICHKA_WARNING(_MESSAGE) \
 { \
-    Michka::Log::instance().warning(_MESSAGE, __FILE__, __LINE__); \
+    Michka::Log::warning(_MESSAGE, __FILE__, __LINE__); \
 }
 
 #define MICHKA_ERROR(_MESSAGE) \
 { \
-    Michka::Log::instance().error(_MESSAGE, __FILE__, __LINE__); \
+    Michka::Log::error(_MESSAGE, __FILE__, __LINE__); \
 }
 
 #define MICHKA_CRITICAL(_MESSAGE) \
 { \
-    Michka::Log::instance().critical(_MESSAGE, __FILE__, __LINE__); \
+    Michka::Log::critical(_MESSAGE, __FILE__, __LINE__); \
 }
 
 namespace Michka
@@ -92,7 +93,7 @@ namespace Michka
          * @param _file
          * @param _line
          */
-        FORCE_INLINE void abort(const char* _message, const char* _file = nullptr, const u32& _line = 0);
+        FORCE_INLINE static void abort(const char* _message, const char* _file = nullptr, const u32& _line = 0);
 
         /**
          * @brief Add record to log.
@@ -112,7 +113,7 @@ namespace Michka
          * @param _file
          * @param _line
          */
-        FORCE_INLINE void critical(const char* _message, const char* _file = nullptr, const u32& _line = 0);
+        FORCE_INLINE static void critical(const char* _message, const char* _file = nullptr, const u32& _line = 0);
 
         /**
          * @brief Add debug message to log.
@@ -122,7 +123,7 @@ namespace Michka
          * @param _file
          * @param _line
          */
-        FORCE_INLINE void debug(const char* _message, const char* _file = nullptr, const u32& _line = 0);
+        FORCE_INLINE static void debug(const char* _message, const char* _file = nullptr, const u32& _line = 0);
 
         /**
          * @brief Add error message to log.
@@ -132,7 +133,7 @@ namespace Michka
          * @param _file
          * @param _line
          */
-        FORCE_INLINE void error(const char* _message, const char* _file = nullptr, const u32& _line = 0);
+        FORCE_INLINE static void error(const char* _message, const char* _file = nullptr, const u32& _line = 0);
 
         /**
          * @brief Add info message to log.
@@ -142,7 +143,7 @@ namespace Michka
          * @param _file
          * @param _line
          */
-        FORCE_INLINE void info(const char* _message, const char* _file = nullptr, const u32& _line = 0);
+        FORCE_INLINE static void info(const char* _message, const char* _file = nullptr, const u32& _line = 0);
 
         /**
          * @brief Add a raw message to log without extra informations.
@@ -160,7 +161,7 @@ namespace Michka
          * @param _file
          * @param _line
          */
-        FORCE_INLINE void warning(const char* _message, const char* _file = nullptr, const u32& _line = 0);
+        FORCE_INLINE static void warning(const char* _message, const char* _file = nullptr, const u32& _line = 0);
 
     protected:
         Mutex mMutex;

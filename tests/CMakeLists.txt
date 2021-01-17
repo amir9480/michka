@@ -27,7 +27,7 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(MichkaTests)
 
-set(TEST_SOURCES "")
+set(TEST_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/MichkaTests.cpp")
 
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}")
 

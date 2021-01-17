@@ -135,7 +135,7 @@ int main()
     MICHKA_ERROR("This is error!");
     MICHKA_CRITICAL("This is critical!");
     MICHKA_ABORT("Hello World");
-    Log::instance().info(MICHKA_SRC_PATH, __FILE__, __LINE__);
+    Log::info(MICHKA_SRC_PATH, __FILE__, __LINE__);
     system("PAUSE");
     return 0;
     Image image("test-assets/grass.jpg");

@@ -99,7 +99,7 @@ namespace Michka
             }
         }
 
-        return false;
+        return false; // @NOCOVERAGE
     }
 
     void WindowLoopThread::draw()

@@ -133,7 +133,7 @@ namespace Michka
          * @param _width
          * @param _height
          * @param _format
-         * @param _data
+         * @param _data   should be in heap not stack and will be free automatically.
          */
         void set(const u32& _width, const u32& _height, const Format& _format, u8* _data = nullptr);
 

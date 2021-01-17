@@ -25,32 +25,20 @@
 // ------------------------------------------------------------------------------- //
 
 #include <gtest/gtest.h>
-#include "MichkaTests.h"
-#include "Core/Foundation/Log.h"
+#include "Platform/Utility.h"
+#define HAVE_STRUCT_TIMESPEC
+#include <Windows.h>
 
-TEST(LogTest, Abort)
+TEST(WindowsUtilityTest, SetConsoleColor)
 {
-    ASSERT_ANY_THROW({MICHKA_ABORT("This is abort.");});
-    ASSERT_ANY_THROW({MICHKA_ASSERT(false, "This is assert.");});
-    MICHKA_ASSERT(true, "This is not assert.");
-}
-
-TEST(LogTest, Log)
-{
-    MICHKA_LOG("This is debug.");
-    MICHKA_INFO("This is info.");
-    MICHKA_WARNING("This is warning.");
-    MICHKA_ERROR("This is error.");
-    MICHKA_CRITICAL("This is critical.");
-    Michka::Log::debug("Log without file and line.");
-    Michka::Log::instance().raw("Raw message.");
-
-    Michka::String logContent = Michka::File::getContents("michka.log");
-    ASSERT_TRUE(logContent.find("This is debug.") != logContent.notFound);
-    ASSERT_TRUE(logContent.find("This is info.") != logContent.notFound);
-    ASSERT_TRUE(logContent.find("This is warning.") != logContent.notFound);
-    ASSERT_TRUE(logContent.find("This is error.") != logContent.notFound);
-    ASSERT_TRUE(logContent.find("This is critical.") != logContent.notFound);
-    ASSERT_TRUE(logContent.find("Log without file and line.") != logContent.notFound);
-    ASSERT_TRUE(logContent.find("Raw message.") != logContent.notFound);
+    Michka::Platform::setConsoleColor(Michka::Platform::ConsoleColor::black, Michka::Platform::ConsoleColor::black);
+    Michka::Platform::setConsoleColor(Michka::Platform::ConsoleColor::blue, Michka::Platform::ConsoleColor::blue);
+    Michka::Platform::setConsoleColor(Michka::Platform::ConsoleColor::cyan, Michka::Platform::ConsoleColor::cyan);
+    Michka::Platform::setConsoleColor(Michka::Platform::ConsoleColor::green, Michka::Platform::ConsoleColor::green);
+    Michka::Platform::setConsoleColor(Michka::Platform::ConsoleColor::magenta, Michka::Platform::ConsoleColor::magenta);
+    Michka::Platform::setConsoleColor(Michka::Platform::ConsoleColor::red, Michka::Platform::ConsoleColor::red);
+    Michka::Platform::setConsoleColor(Michka::Platform::ConsoleColor::white, Michka::Platform::ConsoleColor::white);
+    Michka::Platform::setConsoleColor(Michka::Platform::ConsoleColor::yellow, Michka::Platform::ConsoleColor::yellow);
+    Michka::Platform::setConsoleColor(Michka::Platform::ConsoleColor::white);
+    ASSERT_TRUE(true);
 }

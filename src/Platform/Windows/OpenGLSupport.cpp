@@ -72,38 +72,38 @@ namespace Michka
         const int fakePFDID = ChoosePixelFormat(tempDC, &fakePFD);
         if (fakePFDID == 0)
         {
-            MICHKA_ABORT("OpenGL - ChoosePixelFormat() failed.");
+            MICHKA_ABORT("OpenGL - ChoosePixelFormat() failed."); // @NOCOVERAGE
         }
 
         if (SetPixelFormat(tempDC, fakePFDID, &fakePFD) == false)
         {
-            MICHKA_ABORT("OpenGL - SetPixelFormat() failed.");
+            MICHKA_ABORT("OpenGL - SetPixelFormat() failed."); // @NOCOVERAGE
         }
 
         HGLRC fakeRC = wglCreateContext(tempDC);
 
         if (fakeRC == 0)
         {
-            MICHKA_ABORT("OpenGL - wglCreateContext() failed.");
+            MICHKA_ABORT("OpenGL - wglCreateContext() failed."); // @NOCOVERAGE
         }
 
         if (wglMakeCurrent(tempDC, fakeRC) == false)
         {
-            MICHKA_ABORT("OpenGL - wglMakeCurrent() failed.");
+            MICHKA_ABORT("OpenGL - wglMakeCurrent() failed."); // @NOCOVERAGE
         }
 
         wglChoosePixelFormatARB = nullptr;
         wglChoosePixelFormatARB = reinterpret_cast<PFNWGLCHOOSEPIXELFORMATARBPROC>(wglGetProcAddress("wglChoosePixelFormatARB"));
         if (wglChoosePixelFormatARB == nullptr)
         {
-            MICHKA_ABORT("OpenGL - wglGetProcAddress() failed.");
+            MICHKA_ABORT("OpenGL - wglGetProcAddress() failed."); // @NOCOVERAGE
         }
 
         wglCreateContextAttribsARB = nullptr;
         wglCreateContextAttribsARB = reinterpret_cast<PFNWGLCREATECONTEXTATTRIBSARBPROC>(wglGetProcAddress("wglCreateContextAttribsARB"));
         if (wglCreateContextAttribsARB == nullptr)
         {
-            MICHKA_ABORT("OpenGL - wglGetProcAddress() failed.");
+            MICHKA_ABORT("OpenGL - wglGetProcAddress() failed."); // @NOCOVERAGE
         }
 
         wglDeleteContext(fakeRC);
@@ -114,7 +114,7 @@ namespace Michka
 
         if (!wglMakeCurrent(michkaDefaultHdc, michkaDefaultOGLRenderContext))
         {
-            MICHKA_ABORT("OpenGL - wglMakeCurrent() failed.");
+            MICHKA_ABORT("OpenGL - wglMakeCurrent() failed."); // @NOCOVERAGE
         }
     }
 
@@ -154,7 +154,7 @@ namespace Michka
 
         if (status == false || numFormats == 0)
         {
-            MICHKA_ABORT("OpenGL - wglChoosePixelFormatARB() failed.");
+            MICHKA_ABORT("OpenGL - wglChoosePixelFormatARB() failed."); // @NOCOVERAGE
         }
 
         PIXELFORMATDESCRIPTOR PFD;
@@ -175,7 +175,7 @@ namespace Michka
 
             if (michkaDefaultOGLRenderContext == NULL)
             {
-                MICHKA_ABORT("OpenGL - wglCreateContextAttribsARB() failed.");
+                MICHKA_ABORT("OpenGL - wglCreateContextAttribsARB() failed."); // @NOCOVERAGE
             }
         }
         _renderContext = michkaDefaultOGLRenderContext;

@@ -35,7 +35,14 @@ namespace Michka
     {
         void FORCE_INLINE messageBox(const String& _text, const String& _title)
         {
-            MessageBoxW(0, _text.cstr(), _title.cstr(), MB_OK);
+#           if (MICHKA_DEBUG)
+                if (strcmp(getenv("MICHKA_TESTING"), "true"))
+                {
+                    MessageBoxW(0, _text.cstr(), _title.cstr(), MB_OK); // @NOCOVERAGE
+                }
+#           else
+                MessageBoxW(0, _text.cstr(), _title.cstr(), MB_OK);
+#           endif
         }
 
         void FORCE_INLINE setConsoleColor(const ConsoleColor& _textColor, const ConsoleColor& _backgroundColor)
@@ -99,7 +106,7 @@ namespace Michka
                 break;
             }
 
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (backgroundColor * 16) + textColor) ;
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (backgroundColor * 16) + textColor);
         }
     }
 }

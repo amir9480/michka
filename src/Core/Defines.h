@@ -101,6 +101,6 @@ namespace Michka
 
 /* ----------------------------- Memory Manager ----------------------------- */
 
-#include "Memory/Memory.h"
+#include "Core/Memory/Memory.h"
 
 #endif // __DEFINES_H__

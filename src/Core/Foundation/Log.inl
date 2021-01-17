@@ -52,9 +52,9 @@ namespace Michka
 
     FORCE_INLINE void Log::abort(const char* _message, const char* _file, const u32& _line)
     {
-        add(Log::Level::critical, _message, _file, _line);
+        instance().add(Log::Level::critical, _message, _file, _line);
         Platform::messageBox(_message, "Error");
-        std::exit(1);
+        throw Exception(_message);
     }
 
     FORCE_INLINE void Log::add(const Log::Level& _level, const char* _message, const char* _file, const u32& _line)
@@ -101,7 +101,7 @@ namespace Michka
 
             if (MICHKA_DEBUG == false && strstr(fileName, MICHKA_SRC_PATH) != 0)
             {
-                strncpy(fileName, fileName + strlen(MICHKA_SRC_PATH) + 1, strlen(fileName) - strlen(MICHKA_SRC_PATH));
+                strncpy(fileName, fileName + strlen(MICHKA_SRC_PATH) + 1, strlen(fileName) - strlen(MICHKA_SRC_PATH)); // @NOCOVERAGE
             }
 
             sprintf(
@@ -146,22 +146,22 @@ namespace Michka
 
     FORCE_INLINE void Log::critical(const char* _message, const char* _file, const u32& _line)
     {
-        add(Log::Level::critical, _message, _file, _line);
+        instance().add(Log::Level::critical, _message, _file, _line);
     }
 
     FORCE_INLINE void Log::debug(const char* _message, const char* _file, const u32& _line)
     {
-        add(Log::Level::debug, _message, _file, _line);
+        instance().add(Log::Level::debug, _message, _file, _line);
     }
 
     FORCE_INLINE void Log::error(const char* _message, const char* _file, const u32& _line)
     {
-        add(Log::Level::error, _message, _file, _line);
+        instance().add(Log::Level::error, _message, _file, _line);
     }
 
     FORCE_INLINE void Log::info(const char* _message, const char* _file, const u32& _line)
     {
-        add(Log::Level::info, _message, _file, _line);
+        instance().add(Log::Level::info, _message, _file, _line);
     }
 
     FORCE_INLINE void Log::raw(const char* _message, const bool& _display)
@@ -180,6 +180,6 @@ namespace Michka
 
     FORCE_INLINE void Log::warning(const char* _message, const char* _file, const u32& _line)
     {
-        add(Log::Level::warning, _message, _file, _line);
+        instance().add(Log::Level::warning, _message, _file, _line);
     }
 }
