@@ -1,4 +1,21 @@
-#version 440 core
+#if COMPILING_VERTEX_SHADER
+
+layout (location = 0) in vec3 aPos;
+layout (location = 1) in vec3 aNormal;
+layout (location = 2) in vec3 aTangent;
+layout (location = 3) in vec2 aTexCoord;
+
+out vec2 TexCoord;
+
+void main()
+{
+    gl_Position = vec4(aPos, 1.0);
+	TexCoord = aTexCoord;
+}
+
+#endif // COMPILING_VERTEX_SHADER
+
+#if COMPILING_FRAGMENT_SHADER
 
 in vec2 TexCoord;
 
@@ -24,3 +41,5 @@ void main()
     }
     GAlbedo = texture(testTexture, TexCoord);
 }
+
+#endif // COMPILING_FRAGMENT_SHADER

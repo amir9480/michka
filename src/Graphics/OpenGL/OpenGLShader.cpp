@@ -43,61 +43,56 @@ namespace Michka
         destroy();
     }
 
-    bool OpenGLShader::compile()
+    bool OpenGLShader::compile(const String& _source)
     {
         char* tempStr = nullptr;
         int success = 0;
         char errorsBuffer[2048];
-        Map<Shader::Type, u32> shaders;
-        Map<Shader::Type, String8> shaderSources;
-        for (auto shaderSource : mShadersSources)
-        {
-            shaderSources[shaderSource.key()] = shaderSource.value().toUtf8();
-        }
+        Vector<u32> shaders;
+        String8 shaderSource;
 
-        if (shaderSources.hasKey(Shader::Type::vertex))
-        {
-            u32 vertexShader = glCreateShader(GL_VERTEX_SHADER);
-            tempStr = (char *)(shaderSources[Shader::Type::vertex].cstr());
-            glShaderSource(vertexShader, 1, &tempStr, 0);
-            glCompileShader(vertexShader);
-            glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-            if (! success)
-            {
-                glGetShaderInfoLog(vertexShader, 2048, 0, errorsBuffer);
-                mErrors += String("Vertex shader error: ") + errorsBuffer + "\n";
-            }
-            shaders[Shader::Type::vertex] = vertexShader;
-        }
+        mSource = _source;
 
-        if (shaderSources.hasKey(Shader::Type::pixel))
+        u32 vertexShader = glCreateShader(GL_VERTEX_SHADER);
+        shaderSource = ("#version 440 core\n#define COMPILING_VERTEX_SHADER 1\n#define COMPILING_FRAGMENT_SHADER 0\n" + mSource).toUtf8();
+        tempStr = (char *)(shaderSource.cstr());
+        glShaderSource(vertexShader, 1, &tempStr, 0);
+        glCompileShader(vertexShader);
+        glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+        if (! success)
         {
-            u32 pixelShader = glCreateShader(GL_FRAGMENT_SHADER);
-            tempStr = (char *)shaderSources[Shader::Type::pixel].cstr();
-            glShaderSource(pixelShader, 1, &tempStr, 0);
-            glCompileShader(pixelShader);
-            glGetShaderiv(pixelShader, GL_COMPILE_STATUS, &success);
-            if (! success)
-            {
-                glGetShaderInfoLog(pixelShader, 2048, 0, errorsBuffer);
-                mErrors += String("Pixel shader error: ") + errorsBuffer + "\n";
-            }
-            shaders[Shader::Type::pixel] = pixelShader;
+            glGetShaderInfoLog(vertexShader, 2048, 0, errorsBuffer);
+            mErrors += String("Vertex shader error: ") + errorsBuffer + "\n";
         }
+        shaders.pushBack(vertexShader);
+
+        u32 pixelShader = glCreateShader(GL_FRAGMENT_SHADER);
+        shaderSource = ("#version 440 core\n#define COMPILING_VERTEX_SHADER 0\n#define COMPILING_FRAGMENT_SHADER 1\n" + mSource).toUtf8();
+        tempStr = (char *)(shaderSource.cstr());
+        glShaderSource(pixelShader, 1, &tempStr, 0);
+        glCompileShader(pixelShader);
+        glGetShaderiv(pixelShader, GL_COMPILE_STATUS, &success);
+        if (! success)
+        {
+            glGetShaderInfoLog(pixelShader, 2048, 0, errorsBuffer);
+            mErrors += String("Pixel shader error: ") + errorsBuffer + "\n";
+        }
+        shaders.pushBack(pixelShader);
 
         if (mErrors.isNotEmpty())
         {
             for (auto shader : shaders)
             {
-                glDeleteShader(shader.value());
+                glDeleteShader(shader);
             }
+
             return false;
         }
 
         mProgram = glCreateProgram();
         for (auto shader : shaders)
         {
-            glAttachShader(mProgram, shader.value());
+            glAttachShader(mProgram, shader);
         }
         glLinkProgram(mProgram);
 
@@ -112,7 +107,7 @@ namespace Michka
 
         for (auto shader : shaders)
         {
-            glDeleteShader(shader.value());
+            glDeleteShader(shader);
         }
 
         return mErrors.isEmpty();
@@ -248,16 +243,6 @@ namespace Michka
         }
 
         return false;
-    }
-
-    void OpenGLShader::setPixelShader(const String& _source)
-    {
-        mShadersSources[Shader::Type::pixel] = _source;
-    }
-
-    void OpenGLShader::setVertexShader(const String& _source)
-    {
-        mShadersSources[Shader::Type::vertex] = _source;
     }
 
     FORCE_INLINE int OpenGLShader::getUniformLocation(const String& _name) const

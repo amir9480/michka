@@ -40,7 +40,7 @@ namespace Michka
     public:
         virtual ~OpenGLShader();
 
-        virtual bool compile() override;
+        virtual bool compile(const String& _source) override;
 
         virtual void destroy() override;
 
@@ -57,9 +57,6 @@ namespace Michka
         virtual bool set(const String& _name, const Matrix& _value) override;
         virtual bool set(const String& _name, const Texture* _value) override;
 
-        virtual void setPixelShader(const String& _source) override;
-
-        virtual void setVertexShader(const String& _source) override;
     protected:
         OpenGLShader();
         FORCE_INLINE int getUniformLocation(const String& _name) const;

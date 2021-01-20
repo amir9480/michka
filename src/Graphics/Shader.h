@@ -43,25 +43,25 @@ namespace Michka
     class MICHKA_API Shader
     {
     public:
-        enum class Type : u8
-        {
-            vertex,
-            pixel
-        };
-    public:
         virtual ~Shader();
 
         /**
-         * @brief Compile shader.
+         * @brief Compile shader from source code.
          *
+         * @param _source
          * @return true if compiled and linked successfully.
          */
-        virtual bool compile() = 0;
+        virtual bool compile(const String& _source) = 0;
 
         /**
          * @brief Get the Compile/Link Errors if \fn compile failed.
          */
         virtual String getErrors() const;
+
+        /**
+         * @brief Check if the Compile/Link has any errors.
+         */
+        virtual bool hasErrors() const;
 
         /**
          * @brief Destroy vertex buffer.
@@ -176,23 +176,9 @@ namespace Michka
          */
         virtual bool set(const String& _name, const Texture* _value) = 0;
 
-        /**
-         * @brief Set the Pixel Shader source.
-         *
-         * @param _source
-         */
-        virtual void setPixelShader(const String& _source) = 0;
-
-        /**
-         * @brief Set the Vertex Shader source.
-         *
-         * @param _source
-         */
-        virtual void setVertexShader(const String& _source) = 0;
-
     protected:
         String mErrors;
-        Map<Shader::Type, String> mShadersSources;
+        String mSource;
     };
 }
 

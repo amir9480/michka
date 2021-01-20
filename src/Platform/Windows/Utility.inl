@@ -36,7 +36,7 @@ namespace Michka
         void FORCE_INLINE messageBox(const String& _text, const String& _title)
         {
 #           if (MICHKA_DEBUG)
-                if (strcmp(getenv("MICHKA_TESTING"), "true"))
+                if (getenv("MICHKA_TESTING") && strcmp(getenv("MICHKA_TESTING"), "true"))
                 {
                     MessageBoxW(0, _text.cstr(), _title.cstr(), MB_OK); // @NOCOVERAGE
                 }

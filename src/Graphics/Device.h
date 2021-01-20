@@ -73,12 +73,11 @@ namespace Michka
         virtual IndexBuffer* createIndexBuffer(const bool& _static = true) = 0;
 
         /**
-         * @brief Create a Shader.
+         * @brief Create a Shader from source code.
          *
-         * @param _vertexShader
-         * @param _pixelShader
+         * @param _source
          */
-        virtual Shader* createShader(const String& _vertexShader = "", const String& _pixelShader = "") = 0;
+        virtual Shader* createShader(const String& _source = "") = 0;
 
         /**
          * @brief Create a texture.

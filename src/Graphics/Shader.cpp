@@ -37,4 +37,9 @@ namespace Michka
     {
         return mErrors;
     }
+
+    bool Shader::hasErrors() const
+    {
+        return mErrors.getLength() > 0;
+    }
 }

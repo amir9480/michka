@@ -43,7 +43,7 @@ namespace Michka
 
         virtual IndexBuffer* createIndexBuffer(const bool& _static = true) override;
 
-        virtual Shader* createShader(const String& _vertexShader = "", const String& _pixelShader = "") override;
+        virtual Shader* createShader(const String& _source = "") override;
 
         virtual Texture* createTexture(const u32& _width, const u32& _height, const TextureFormat& _format, const bool& _renderTarget = false);
 

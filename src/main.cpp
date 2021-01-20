@@ -129,32 +129,20 @@ int main()
 {
     std::cout << "Welcome to engine!\n-------------------------------------\n\n";
 
-    MICHKA_LOG("This is debug!");
-    MICHKA_INFO("This is info!");
-    MICHKA_WARNING("This is warning!");
-    MICHKA_ERROR("This is error!");
-    MICHKA_CRITICAL("This is critical!");
-    MICHKA_ABORT("Hello World");
-    Log::info(MICHKA_SRC_PATH, __FILE__, __LINE__);
-    system("PAUSE");
-    return 0;
     Image image("test-assets/grass.jpg");
 
     Window* window = new Window();
-    Window* window2 = new Window();
     Device* device = Device::instance(Device::Driver::openGL);
     window->show();
-    window2->show();
-    Texture* rt1 = device->createTexture(320, 240, Michka::TextureFormat::r8g8b8, true);
-    Texture* rt2 = device->createTexture(320, 240, Michka::TextureFormat::r8g8b8, true);
+    Texture* rt = device->createTexture(320, 240, Michka::TextureFormat::r8g8b8, true);
     Texture* db = device->createTexture(320, 240, Michka::TextureFormat::depth32, true);
     IndexBuffer* ib = device->createIndexBuffer();
     ib->set(indices2, sizeof(indices2) / sizeof(indices2[0]));
     VertexBuffer* vb = device->createVertexBuffer(&Vertex::decl());
     vb->set(vertices2, sizeof(vertices2));
     Texture* texture = device->createTexture(image);
-    Shader* shader = device->createShader(File::getContents("shaders/test.vert"), File::getContents("shaders/test.frag"));
-    if (! shader->compile())
+    Shader* shader = device->createShader(File::getContents("shaders/test.glsl"));
+    if (shader->hasErrors())
     {
         MessageBoxW(0, shader->getErrors().cstr(), L"ERROR", MB_OK);
         exit(-1);
@@ -166,8 +154,7 @@ int main()
     while (window->isDestroyed() == false)
     {
         std::cout << j++ << " : " << window->isDestroyed() << std::endl;
-        device->setRenderTarget(0, rt1);
-        device->setRenderTarget(1, rt2);
+        device->setRenderTarget(0, rt);
         device->setDepthBuffer(db);
         device->clear(true, true, true, Vector4(0.4f, 0.8f, 1.0f, 1.0f));
         device->setIndexBuffer(ib);
@@ -178,13 +165,11 @@ int main()
         device->draw();
 
         device->setWindow(window);
-        device->drawOnScreen(rt1);
-        device->setWindow(window2);
-        device->drawOnScreen(rt2);
+        device->drawOnScreen(rt);
 
         if (firstTime)
         {
-            rt1->get().save("test-assets/screenshot.jpg");
+            rt->get().save("test-assets/screenshot.jpg");
             firstTime = false;
         }
     }
@@ -194,7 +179,6 @@ int main()
     delete shader;
     delete texture;
     delete window;
-    delete window2;
 
     std::cout << "\nBYE\n";
     system("PAUSE");

@@ -36,8 +36,8 @@
 
 namespace Michka
 {
-    const char quadVertexShader[] =
-        "#version 440 core\n"
+    const char quadShaderSource[] =
+        "#if COMPILING_VERTEX_SHADER\n"
         "layout (location = 0) in vec3 aPos;\n"
         "layout (location = 1) in vec2 aTexCoord;\n"
         "out vec2 TexCoord;\n"
@@ -45,16 +45,18 @@ namespace Michka
         "{\n"
         "    gl_Position = vec4(aPos, 1.0);\n"
         "	 TexCoord = aTexCoord;\n"
-        "}";
-    const char quadPixelShader[] =
-        "#version 440 core\n"
+        "}\n"
+        "#endif // COMPILING_VERTEX_SHADER\n"
+        "\n"
+        "#if COMPILING_FRAGMENT_SHADER\n"
         "out vec4 FragColor;\n"
         "in vec2 TexCoord;\n"
         "uniform sampler2D image;\n"
         "void main()\n"
         "{\n"
         "    FragColor = texture(image, TexCoord);\n"
-        "}";
+        "}\n"
+        "#endif // COMPILING_FRAGMENT_SHADER\n";
 
     OpenGLDevice::OpenGLDevice()
     {
@@ -85,8 +87,8 @@ namespace Michka
         mQuadVertexBuffer->set(quadVertices, sizeof(quadVertices));
         mQuadIndexBuffer = this->createIndexBuffer();
         mQuadIndexBuffer->set(quadIndices, sizeof(quadIndices) / sizeof(quadIndices[0]));
-        mQuadShader = this->createShader(quadVertexShader, quadPixelShader);
-        if (! mQuadShader->compile())
+        mQuadShader = this->createShader(quadShaderSource);
+        if (mQuadShader->hasErrors())
         {
             MICHKA_ABORT(mQuadShader->getErrors().toUtf8().cstr());
         }
@@ -103,8 +105,6 @@ namespace Michka
 
     void OpenGLDevice::clear(const bool& _backBuffer, const bool& _depthBuffer, const bool& _stencil, const Vector4& _backBufferValue, const f32& _depthValue, const u8& _stencilValue)
     {
-        u32 flags = 0;
-
         glClearColor(_backBufferValue.r, _backBufferValue.g, _backBufferValue.b, _backBufferValue.a);
         glClearDepth(_depthValue);
         glClearStencil(_stencilValue);
@@ -123,18 +123,15 @@ namespace Michka
         return out;
     }
 
-    Shader* OpenGLDevice::createShader(const String& _vertexShader, const String& _pixelShader)
+    Shader* OpenGLDevice::createShader(const String& _source)
     {
         OpenGLShader* out = new OpenGLShader;
         out->mDevice = this;
-        if (_vertexShader.isNotEmpty())
+        if (_source.isNotEmpty())
         {
-            out->setVertexShader(_vertexShader);
+            out->compile(_source);
         }
-        if (_pixelShader.isNotEmpty())
-        {
-            out->setPixelShader(_pixelShader);
-        }
+
         return out;
     }
 

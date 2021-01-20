@@ -234,7 +234,7 @@ namespace Michka
     {
         if (mDestroyed == false)
         {
-            WindowLoopThread* windowThread = (WindowLoopThread*)mWindowData;
+            WindowLoopThread* windowThread = static_cast<WindowLoopThread*>(mWindowData);
             windowThread->draw();
         }
     }
