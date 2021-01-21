@@ -31,6 +31,7 @@
 TEST(LogTest, Abort)
 {
     ASSERT_ANY_THROW({MICHKA_ABORT("This is abort.");});
+    ASSERT_ANY_THROW({MICHKA_ABORT(Michka::String("This is abort."));});
     ASSERT_ANY_THROW({MICHKA_ASSERT(false, "This is assert.");});
     MICHKA_ASSERT(true, "This is not assert.");
 }
@@ -45,7 +46,16 @@ TEST(LogTest, Log)
     Michka::Log::debug("Log without file and line.");
     Michka::Log::instance().raw("Raw message.");
 
+    MICHKA_LOG(Michka::String("This is debug [String Class]."));
+    MICHKA_INFO(Michka::String("This is info [String Class]."));
+    MICHKA_WARNING(Michka::String("This is warning [String Class]."));
+    MICHKA_ERROR(Michka::String("This is error [String Class]."));
+    MICHKA_CRITICAL(Michka::String("This is critical [String Class]."));
+    Michka::Log::debug(Michka::String("Log without file and line [String Class]."));
+    Michka::Log::instance().raw(Michka::String("Raw message [String Class]."));
+
     Michka::String logContent = Michka::File::getContents("michka.log");
+
     ASSERT_TRUE(logContent.find("This is debug.") != logContent.notFound);
     ASSERT_TRUE(logContent.find("This is info.") != logContent.notFound);
     ASSERT_TRUE(logContent.find("This is warning.") != logContent.notFound);
@@ -53,4 +63,12 @@ TEST(LogTest, Log)
     ASSERT_TRUE(logContent.find("This is critical.") != logContent.notFound);
     ASSERT_TRUE(logContent.find("Log without file and line.") != logContent.notFound);
     ASSERT_TRUE(logContent.find("Raw message.") != logContent.notFound);
+
+    ASSERT_TRUE(logContent.find("This is debug [String Class].") != logContent.notFound);
+    ASSERT_TRUE(logContent.find("This is info [String Class].") != logContent.notFound);
+    ASSERT_TRUE(logContent.find("This is warning [String Class].") != logContent.notFound);
+    ASSERT_TRUE(logContent.find("This is error [String Class].") != logContent.notFound);
+    ASSERT_TRUE(logContent.find("This is critical [String Class].") != logContent.notFound);
+    ASSERT_TRUE(logContent.find("Log without file and line [String Class].") != logContent.notFound);
+    ASSERT_TRUE(logContent.find("Raw message [String Class].") != logContent.notFound);
 }

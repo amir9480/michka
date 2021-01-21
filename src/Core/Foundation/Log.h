@@ -94,6 +94,7 @@ namespace Michka
          * @param _line
          */
         FORCE_INLINE static void abort(const char* _message, const char* _file = nullptr, const u32& _line = 0);
+        FORCE_INLINE static void abort(const String& _message, const String& _file = String(), const u32& _line = 0);
 
         /**
          * @brief Add record to log.
@@ -104,6 +105,7 @@ namespace Michka
          * @param _line
          */
         FORCE_INLINE void add(const Level& _level, const char* _message, const char* _file = nullptr, const u32& _line = 0);
+        FORCE_INLINE void add(const Level& _level, const String& _message, const String& _file = String(), const u32& _line = 0);
 
         /**
          * @brief Add critical message to log.
@@ -114,6 +116,7 @@ namespace Michka
          * @param _line
          */
         FORCE_INLINE static void critical(const char* _message, const char* _file = nullptr, const u32& _line = 0);
+        FORCE_INLINE static void critical(const String& _message, const String& _file = String(), const u32& _line = 0);
 
         /**
          * @brief Add debug message to log.
@@ -124,6 +127,7 @@ namespace Michka
          * @param _line
          */
         FORCE_INLINE static void debug(const char* _message, const char* _file = nullptr, const u32& _line = 0);
+        FORCE_INLINE static void debug(const String& _message, const String& _file = String(), const u32& _line = 0);
 
         /**
          * @brief Add error message to log.
@@ -134,6 +138,7 @@ namespace Michka
          * @param _line
          */
         FORCE_INLINE static void error(const char* _message, const char* _file = nullptr, const u32& _line = 0);
+        FORCE_INLINE static void error(const String& _message, const String& _file = String(), const u32& _line = 0);
 
         /**
          * @brief Add info message to log.
@@ -144,6 +149,7 @@ namespace Michka
          * @param _line
          */
         FORCE_INLINE static void info(const char* _message, const char* _file = nullptr, const u32& _line = 0);
+        FORCE_INLINE static void info(const String& _message, const String& _file = String(), const u32& _line = 0);
 
         /**
          * @brief Add a raw message to log without extra informations.
@@ -152,6 +158,7 @@ namespace Michka
          * @param _display
          */
         FORCE_INLINE void raw(const char* _message, const bool& _display = true);
+        FORCE_INLINE void raw(const String& _message, const bool& _display = true);
 
         /**
          * @brief Add warning message to log.
@@ -162,6 +169,7 @@ namespace Michka
          * @param _line
          */
         FORCE_INLINE static void warning(const char* _message, const char* _file = nullptr, const u32& _line = 0);
+        FORCE_INLINE static void warning(const String& _message, const String& _file = String(), const u32& _line = 0);
 
     protected:
         Mutex mMutex;

@@ -57,6 +57,13 @@ namespace Michka
         throw Exception(_message);
     }
 
+    FORCE_INLINE void Log::abort(const String& _message, const String& _file, const u32& _line)
+    {
+        instance().add(Log::Level::critical, _message, _file, _line);
+        Platform::messageBox(_message, "Error");
+        throw Exception(_message.toUtf8().cstr());
+    }
+
     FORCE_INLINE void Log::add(const Log::Level& _level, const char* _message, const char* _file, const u32& _line)
     {
         static char* levels[] = {"Debug", "Info", "Warning", "Error", "Critical"};
@@ -144,7 +151,24 @@ namespace Michka
         mMutex.unlock();
     }
 
+    FORCE_INLINE void Log::add(const Level& _level, const String& _message, const String& _file, const u32& _line)
+    {
+        if (_file.isNotEmpty())
+        {
+            return add(_level, _message.toUtf8().cstr(), _file.toUtf8().cstr(), _line);
+        }
+        else
+        {
+            return add(_level, _message.toUtf8().cstr(), nullptr, _line);
+        }
+    }
+
     FORCE_INLINE void Log::critical(const char* _message, const char* _file, const u32& _line)
+    {
+        instance().add(Log::Level::critical, _message, _file, _line);
+    }
+
+    FORCE_INLINE void Log::critical(const String& _message, const String& _file, const u32& _line)
     {
         instance().add(Log::Level::critical, _message, _file, _line);
     }
@@ -154,12 +178,27 @@ namespace Michka
         instance().add(Log::Level::debug, _message, _file, _line);
     }
 
+    FORCE_INLINE void Log::debug(const String& _message, const String& _file, const u32& _line)
+    {
+        instance().add(Log::Level::debug, _message, _file, _line);
+    }
+
     FORCE_INLINE void Log::error(const char* _message, const char* _file, const u32& _line)
     {
         instance().add(Log::Level::error, _message, _file, _line);
     }
 
+    FORCE_INLINE void Log::error(const String& _message, const String& _file, const u32& _line)
+    {
+        instance().add(Log::Level::error, _message, _file, _line);
+    }
+
     FORCE_INLINE void Log::info(const char* _message, const char* _file, const u32& _line)
+    {
+        instance().add(Log::Level::info, _message, _file, _line);
+    }
+
+    FORCE_INLINE void Log::info(const String& _message, const String& _file, const u32& _line)
     {
         instance().add(Log::Level::info, _message, _file, _line);
     }
@@ -178,7 +217,17 @@ namespace Michka
         }
     }
 
+    FORCE_INLINE void Log::raw(const String& _message, const bool& _display)
+    {
+        raw(_message.toUtf8().cstr(), _display);
+    }
+
     FORCE_INLINE void Log::warning(const char* _message, const char* _file, const u32& _line)
+    {
+        instance().add(Log::Level::warning, _message, _file, _line);
+    }
+
+    FORCE_INLINE void Log::warning(const String& _message, const String& _file, const u32& _line)
     {
         instance().add(Log::Level::warning, _message, _file, _line);
     }

@@ -144,8 +144,7 @@ int main()
     Shader* shader = device->createShader(File::getContents("shaders/test.glsl"));
     if (shader->hasErrors())
     {
-        MessageBoxW(0, shader->getErrors().cstr(), L"ERROR", MB_OK);
-        exit(-1);
+        MICHKA_ABORT(shader->getErrors());
     }
 
     bool firstTime = true;
