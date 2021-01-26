@@ -127,6 +127,15 @@ u32 indices2[] = {0, 1, 2};
 
 int main()
 {
+    DEVMODE dm = { 0 };
+    dm.dmSize = sizeof(dm);
+    for (int iModeNum = 0; EnumDisplaySettings(NULL, iModeNum, &dm) != 0; iModeNum++)
+    {
+        std::cout << "Mode #" << iModeNum << " = " << dm.dmPelsWidth << "x" << dm.dmPelsHeight << std::endl;
+    }
+    std::cin.get();
+    return 0;
+
     std::cout << "Welcome to engine!\n-------------------------------------\n\n";
 
     Image image("test-assets/grass.jpg");

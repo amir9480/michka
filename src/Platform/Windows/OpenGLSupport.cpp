@@ -37,7 +37,7 @@ namespace Michka
 
     void loadOpenGLWindowsExtensions()
     {
-        RECT windowRect = {0, 0, 1920, 1080};
+        RECT windowRect = {0, 0, Platform::getWidth(), Platform::getHeight()};
         michkaDefaultHwnd = CreateWindowExW(
             (DWORD)0,
             L"MichkaMainWindow",

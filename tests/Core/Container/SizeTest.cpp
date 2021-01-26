@@ -24,58 +24,53 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __PLATFORM_UTILITY_H__
-#define __PLATFORM_UTILITY_H__
+#include <gtest/gtest.h>
+#include "Core/Container/Size.h"
 
-#include "Core/Defines.h"
-#include "Core/Container/String.h"
-
-namespace Michka
+TEST(SizeTest, Create)
 {
-    namespace Platform
     {
-        enum class ConsoleColor
-        {
-            black,
-            blue,
-            cyan,
-            green,
-            magenta,
-            red,
-            white,
-            yellow,
-        };
+        Michka::Size s;
+        ASSERT_EQ(s.width, 0);
+        ASSERT_EQ(s.height, 0);
+    }
+    {
+        Michka::Size s(1920, 1080);
+        ASSERT_EQ(s.width, 1920);
+        ASSERT_EQ(s.height, 1080);
 
-        /**
-         * @brief Get screen height.
-         */
-        FORCE_INLINE int getHeight();
-
-        /**
-         * @brief Get screen width.
-         */
-        FORCE_INLINE int getWidth();
-
-        /**
-         * @brief Show a message box.
-         *
-         * @param _text
-         * @param _title
-         */
-        FORCE_INLINE void messageBox(const String& _text, const String& _title = "Michka Game Engine");
-
-        /**
-         * @brief Set the Console text output color object.
-         *
-         * @param _textColor
-         * @param _backgroundColor
-         */
-        FORCE_INLINE void setConsoleColor(const ConsoleColor& _textColor, const ConsoleColor& _backgroundColor = ConsoleColor::black);
+        Michka::Size s2(s);
+        ASSERT_EQ(s2.width, 1920);
+        ASSERT_EQ(s2.height, 1080);
     }
 }
 
-#if (MICHKA_PLATFORM == MICHKA_PLATFORM_WIN32)
-#include "Platform/Windows/Utility.inl"
-#endif
+TEST(SizeTest, Operators)
+{
+    Michka::Size s1(640, 480);
+    Michka::Size s2(640, 480);
 
-#endif // __PLATFORM_UTILITY_H__
+    ASSERT_TRUE(s1 == s2);
+    ASSERT_FALSE(s1 != s2);
+
+    s2 = Michka::Size(1920, 1080);
+    ASSERT_FALSE(s1 == s2);
+    ASSERT_TRUE(s1 != s2);
+}
+
+TEST(SizeTest, Set)
+{
+    Michka::Size s(640, 480);
+
+    s.setWidth(1024);
+    ASSERT_EQ(s.width, 1024);
+    ASSERT_EQ(s.height, 480);
+
+    s.setHeight(768);
+    ASSERT_EQ(s.width, 1024);
+    ASSERT_EQ(s.height, 768);
+
+    s.set(1920, 1080);
+    ASSERT_EQ(s.width, 1920);
+    ASSERT_EQ(s.height, 1080);
+}

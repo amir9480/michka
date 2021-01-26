@@ -33,7 +33,17 @@ namespace Michka
 {
     namespace Platform
     {
-        void FORCE_INLINE messageBox(const String& _text, const String& _title)
+        FORCE_INLINE int getHeight()
+        {
+            return GetSystemMetrics(SM_CXSCREEN);
+        }
+
+        FORCE_INLINE int getWidth()
+        {
+            return GetSystemMetrics(SM_CYSCREEN);
+        }
+
+        FORCE_INLINE void messageBox(const String& _text, const String& _title)
         {
 #           if (MICHKA_DEBUG)
                 if (getenv("MICHKA_TESTING") && strcmp(getenv("MICHKA_TESTING"), "true"))
@@ -45,7 +55,7 @@ namespace Michka
 #           endif
         }
 
-        void FORCE_INLINE setConsoleColor(const ConsoleColor& _textColor, const ConsoleColor& _backgroundColor)
+        FORCE_INLINE void setConsoleColor(const ConsoleColor& _textColor, const ConsoleColor& _backgroundColor)
         {
             int textColor = 0;
             int backgroundColor = 0;

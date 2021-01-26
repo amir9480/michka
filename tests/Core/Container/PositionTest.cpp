@@ -24,58 +24,53 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __PLATFORM_UTILITY_H__
-#define __PLATFORM_UTILITY_H__
+#include <gtest/gtest.h>
+#include "Core/Container/Position.h"
 
-#include "Core/Defines.h"
-#include "Core/Container/String.h"
-
-namespace Michka
+TEST(PositionTest, Create)
 {
-    namespace Platform
     {
-        enum class ConsoleColor
-        {
-            black,
-            blue,
-            cyan,
-            green,
-            magenta,
-            red,
-            white,
-            yellow,
-        };
+        Michka::Position p;
+        ASSERT_EQ(p.x, 0);
+        ASSERT_EQ(p.y, 0);
+    }
+    {
+        Michka::Position p(1920, 1080);
+        ASSERT_EQ(p.x, 1920);
+        ASSERT_EQ(p.y, 1080);
 
-        /**
-         * @brief Get screen height.
-         */
-        FORCE_INLINE int getHeight();
-
-        /**
-         * @brief Get screen width.
-         */
-        FORCE_INLINE int getWidth();
-
-        /**
-         * @brief Show a message box.
-         *
-         * @param _text
-         * @param _title
-         */
-        FORCE_INLINE void messageBox(const String& _text, const String& _title = "Michka Game Engine");
-
-        /**
-         * @brief Set the Console text output color object.
-         *
-         * @param _textColor
-         * @param _backgroundColor
-         */
-        FORCE_INLINE void setConsoleColor(const ConsoleColor& _textColor, const ConsoleColor& _backgroundColor = ConsoleColor::black);
+        Michka::Position p2(p);
+        ASSERT_EQ(p2.x, 1920);
+        ASSERT_EQ(p2.y, 1080);
     }
 }
 
-#if (MICHKA_PLATFORM == MICHKA_PLATFORM_WIN32)
-#include "Platform/Windows/Utility.inl"
-#endif
+TEST(PositionTest, Operators)
+{
+    Michka::Position p1(640, 480);
+    Michka::Position p2(640, 480);
 
-#endif // __PLATFORM_UTILITY_H__
+    ASSERT_TRUE(p1 == p2);
+    ASSERT_FALSE(p1 != p2);
+
+    p2 = Michka::Position(1920, 1080);
+    ASSERT_FALSE(p1 == p2);
+    ASSERT_TRUE(p1 != p2);
+}
+
+TEST(PositionTest, Set)
+{
+    Michka::Position p(640, 480);
+
+    p.setX(1024);
+    ASSERT_EQ(p.x, 1024);
+    ASSERT_EQ(p.y, 480);
+
+    p.setY(768);
+    ASSERT_EQ(p.x, 1024);
+    ASSERT_EQ(p.y, 768);
+
+    p.set(1920, 1080);
+    ASSERT_EQ(p.x, 1920);
+    ASSERT_EQ(p.y, 1080);
+}

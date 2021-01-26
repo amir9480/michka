@@ -24,58 +24,73 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __PLATFORM_UTILITY_H__
-#define __PLATFORM_UTILITY_H__
-
-#include "Core/Defines.h"
-#include "Core/Container/String.h"
+#include "Position.h"
 
 namespace Michka
 {
-    namespace Platform
+    template<typename T>
+    FORCE_INLINE PositionTemplate<T>::PositionTemplate()
     {
-        enum class ConsoleColor
-        {
-            black,
-            blue,
-            cyan,
-            green,
-            magenta,
-            red,
-            white,
-            yellow,
-        };
+        //
+    }
 
-        /**
-         * @brief Get screen height.
-         */
-        FORCE_INLINE int getHeight();
+    template<typename T>
+    FORCE_INLINE PositionTemplate<T>::PositionTemplate(const T& _x, const T& _y) :
+        x(_x),
+        y(_y)
+    {
+        //
+    }
 
-        /**
-         * @brief Get screen width.
-         */
-        FORCE_INLINE int getWidth();
+    template<typename T>
+    FORCE_INLINE PositionTemplate<T>::PositionTemplate(const PositionTemplate<T>& _other) :
+        x(_other.x),
+        y(_other.y)
+    {
+        //
+    }
 
-        /**
-         * @brief Show a message box.
-         *
-         * @param _text
-         * @param _title
-         */
-        FORCE_INLINE void messageBox(const String& _text, const String& _title = "Michka Game Engine");
+    template<typename T>
+    FORCE_INLINE PositionTemplate<T>& PositionTemplate<T>::set(const T& _x, const T& _y)
+    {
+        x = _x;
+        y = _y;
 
-        /**
-         * @brief Set the Console text output color object.
-         *
-         * @param _textColor
-         * @param _backgroundColor
-         */
-        FORCE_INLINE void setConsoleColor(const ConsoleColor& _textColor, const ConsoleColor& _backgroundColor = ConsoleColor::black);
+        return *this;
+    }
+
+    template<typename T>
+    FORCE_INLINE PositionTemplate<T>& PositionTemplate<T>::setY(const T& _y)
+    {
+        y = _y;
+        return *this;
+    }
+
+    template<typename T>
+    FORCE_INLINE PositionTemplate<T>& PositionTemplate<T>::setX(const T& _x)
+    {
+        x = _x;
+        return *this;
+    }
+
+    template<typename T>
+    FORCE_INLINE PositionTemplate<T>& PositionTemplate<T>::operator = (const PositionTemplate<T>& _other)
+    {
+        x = _other.x;
+        y = _other.y;
+
+        return *this;
+    }
+
+    template<typename T>
+    FORCE_INLINE bool PositionTemplate<T>::operator == (const PositionTemplate<T>& _other) const
+    {
+        return x == _other.x && y == _other.y;
+    }
+
+    template<typename T>
+    FORCE_INLINE bool PositionTemplate<T>::operator != (const PositionTemplate<T>& _other) const
+    {
+        return !(*this == _other);
     }
 }
-
-#if (MICHKA_PLATFORM == MICHKA_PLATFORM_WIN32)
-#include "Platform/Windows/Utility.inl"
-#endif
-
-#endif // __PLATFORM_UTILITY_H__

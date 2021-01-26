@@ -24,58 +24,73 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __PLATFORM_UTILITY_H__
-#define __PLATFORM_UTILITY_H__
-
-#include "Core/Defines.h"
-#include "Core/Container/String.h"
+#include "Size.h"
 
 namespace Michka
 {
-    namespace Platform
+    template<typename T>
+    FORCE_INLINE SizeTemplate<T>::SizeTemplate()
     {
-        enum class ConsoleColor
-        {
-            black,
-            blue,
-            cyan,
-            green,
-            magenta,
-            red,
-            white,
-            yellow,
-        };
+        //
+    }
 
-        /**
-         * @brief Get screen height.
-         */
-        FORCE_INLINE int getHeight();
+    template<typename T>
+    FORCE_INLINE SizeTemplate<T>::SizeTemplate(const T& _width, const T& _height) :
+        width(_width),
+        height(_height)
+    {
+        //
+    }
 
-        /**
-         * @brief Get screen width.
-         */
-        FORCE_INLINE int getWidth();
+    template<typename T>
+    FORCE_INLINE SizeTemplate<T>::SizeTemplate(const SizeTemplate<T>& _other) :
+        width(_other.width),
+        height(_other.height)
+    {
+        //
+    }
 
-        /**
-         * @brief Show a message box.
-         *
-         * @param _text
-         * @param _title
-         */
-        FORCE_INLINE void messageBox(const String& _text, const String& _title = "Michka Game Engine");
+    template<typename T>
+    FORCE_INLINE SizeTemplate<T>& SizeTemplate<T>::set(const T& _width, const T& _height)
+    {
+        width = _width;
+        height = _height;
 
-        /**
-         * @brief Set the Console text output color object.
-         *
-         * @param _textColor
-         * @param _backgroundColor
-         */
-        FORCE_INLINE void setConsoleColor(const ConsoleColor& _textColor, const ConsoleColor& _backgroundColor = ConsoleColor::black);
+        return *this;
+    }
+
+    template<typename T>
+    FORCE_INLINE SizeTemplate<T>& SizeTemplate<T>::setHeight(const T& _height)
+    {
+        height = _height;
+        return *this;
+    }
+
+    template<typename T>
+    FORCE_INLINE SizeTemplate<T>& SizeTemplate<T>::setWidth(const T& _width)
+    {
+        width = _width;
+        return *this;
+    }
+
+    template<typename T>
+    FORCE_INLINE SizeTemplate<T>& SizeTemplate<T>::operator = (const SizeTemplate<T>& _other)
+    {
+        width = _other.width;
+        height = _other.height;
+
+        return *this;
+    }
+
+    template<typename T>
+    FORCE_INLINE bool SizeTemplate<T>::operator == (const SizeTemplate<T>& _other) const
+    {
+        return width == _other.width && height == _other.height;
+    }
+
+    template<typename T>
+    FORCE_INLINE bool SizeTemplate<T>::operator != (const SizeTemplate<T>& _other) const
+    {
+        return !(*this == _other);
     }
 }
-
-#if (MICHKA_PLATFORM == MICHKA_PLATFORM_WIN32)
-#include "Platform/Windows/Utility.inl"
-#endif
-
-#endif // __PLATFORM_UTILITY_H__

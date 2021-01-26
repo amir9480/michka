@@ -24,104 +24,110 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __WINDOW_H__
-#define __WINDOW_H__
+#ifndef __RECT_H__
+#define __RECT_H__
 
 #include "Core/Defines.h"
-#include "Core/Foundation/Object.h"
+#include "Position.h"
+#include "Size.h"
 
 namespace Michka
 {
-    class Device;
-
-    class MICHKA_API Window : public Object
+    /**
+     * @brief Rectangle class.
+     *
+     * Position
+     *          *------ width ------+
+     *          |                   |
+     *       height              height
+     *          |                   |
+     *          +------ width ------+
+     */
+    template<typename T>
+    class MICHKA_API RectTemplate
     {
-        MICHKA_NON_COPYABLE_CLASS(Window)
     public:
-        Window(const u32& _width = 640, const u32& _height = 480);
-        ~Window();
+        FORCE_INLINE RectTemplate();
+        FORCE_INLINE RectTemplate(const PositionTemplate<T>& _position, const SizeTemplate<T>& _size);
+        FORCE_INLINE RectTemplate(const T& _x, const T& _y, const T& _width, const T& _height);
+        FORCE_INLINE RectTemplate(const RectTemplate<T>& _other);
 
         /**
-         * @brief Destroy window.
-         */
-        void destroy();
-
-        /**
-         * @brief Draw buffer on window.
-         */
-        void draw();
-
-        /**
-         * @brief Get the Height of window
-         */
-        u32 getHeight() const;
-
-        /**
-         * @brief Get the Width of window
-         */
-        u32 getWidth() const;
-
-        /**
-         * @brief Check window destroyed or not.
-         */
-        bool isDestroyed() const;
-
-        /**
-         * @brief Resize window.
+         * @brief Set rect.
          *
-         * @param _width
-         * @param _height
+         * @return Self
          */
-        void resize(const u32& _width, const u32& _height);
+        FORCE_INLINE RectTemplate<T>& set(const T& _x, const T& _y, const T& _width, const T& _height);
 
         /**
-         * @brief Set the Height of window.
+         * @brief Set height.
          *
-         * @param _height
+         * @return Self
          */
-        void setHeight(const u32& _height);
+        FORCE_INLINE RectTemplate<T>& setHeight(const T& _height);
 
         /**
-         * @brief Set renderer for window.
+         * @brief Set position.
          *
-         * @param _device
+         * @return Self
          */
-        void setRenderDevice(const Device* _device);
+        FORCE_INLINE RectTemplate<T>& setPosition(const PositionTemplate<T>& _position);
 
         /**
-         * @brief Set window title.
+         * @brief Set size.
          *
-         * @param _title
+         * @return Self
          */
-        void setTitle(const String& _title);
+        FORCE_INLINE RectTemplate<T>& setSize(const SizeTemplate<T>& _size);
 
         /**
-         * @brief Set the Width of window
+         * @brief Set width.
          *
-         * @param _width
+         * @return Self
          */
-        void setWidth(const u32& _width);
+        FORCE_INLINE RectTemplate<T>& setWidth(const T& _width);
 
         /**
-         * @brief Show window
-         */
-        void show();
-
-    protected:
-        /**
-         * @brief callback to handle window event.
+         * @brief Set x.
          *
-         * @param _event
+         * @return Self
          */
-        virtual bool onEvent(const Event* _event) override;
+        FORCE_INLINE RectTemplate<T>& setX(const T& _x);
 
-    protected:
-        u32   mWidth;
-        u32   mHeight;
-        void* mWindowData = nullptr;
-        bool  mDestroyed = false;
-        bool  mCallEventListenersManually = true;
+        /**
+         * @brief Set y.
+         *
+         * @return Self
+         */
+        FORCE_INLINE RectTemplate<T>& setY(const T& _y);
+
+        FORCE_INLINE RectTemplate<T>& operator = (const RectTemplate<T>& _other);
+
+        FORCE_INLINE bool operator == (const RectTemplate<T>& _other) const;
+        FORCE_INLINE bool operator != (const RectTemplate<T>& _other) const;
+
+    public:
+        union
+        {
+            struct
+            {
+                PositionTemplate<T> position;
+                SizeTemplate<T> size;
+            };
+            struct
+            {
+                T x;
+                T y;
+                T width;
+                T height;
+            };
+        };
     };
+
+    typedef RectTemplate<u32> Rect;
+    typedef RectTemplate<f32> RectFloat;
 }
 
-#endif // __WINDOW_H__
+#include "Rect.inl"
+
+#endif // __RECT_H__
