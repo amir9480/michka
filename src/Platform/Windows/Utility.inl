@@ -38,6 +38,11 @@ namespace Michka
             return GetSystemMetrics(SM_CXSCREEN);
         }
 
+        FORCE_INLINE Vector<Size> getPossibleResolutions()
+        {
+            return Vector<Size>();
+        }
+
         FORCE_INLINE int getWidth()
         {
             return GetSystemMetrics(SM_CYSCREEN);

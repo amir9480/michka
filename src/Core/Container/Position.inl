@@ -25,6 +25,7 @@
 // ------------------------------------------------------------------------------- //
 
 #include "Position.h"
+#include "Core/Container/String.h"
 
 namespace Michka
 {
@@ -64,6 +65,12 @@ namespace Michka
     {
         y = _y;
         return *this;
+    }
+
+    template<typename T>
+    String PositionTemplate<T>::toString() const
+    {
+        return String("Position(") + String::number(x) + ", " + String::number(y) + ")";
     }
 
     template<typename T>

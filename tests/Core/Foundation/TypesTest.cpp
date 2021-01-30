@@ -113,6 +113,18 @@ TEST(TypesTest, Ostream)
     ASSERT_EQ(s.str(), "List{1,2,4}");
     s.str("");
 
+    s << Michka::Position(16, 32);
+    ASSERT_EQ(s.str(), "Position(16, 32)");
+    s.str("");
+
+    s << Michka::Size(640, 480);
+    ASSERT_EQ(s.str(), "Size(640, 480)");
+    s.str("");
+
+    s << Michka::Rect(16, 32, 640, 480);
+    ASSERT_EQ(s.str(), "Rect(position=Position(16, 32), size=Size(640, 480))");
+    s.str("");
+
     s << Michka::VertexAttribute({Michka::VertexAttribute::Name::normal, Michka::VertexAttribute::Type::float32, 3});
     ASSERT_EQ(s.str(), "VertexAttribute(name=normal,type=float32,elements=3)");
     s.str("");

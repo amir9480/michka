@@ -49,6 +49,12 @@ namespace Michka
     template<typename T>
     class List;
     template<typename T>
+    class PositionTemplate;
+    template<typename T>
+    class RectTemplate;
+    template<typename T>
+    class SizeTemplate;
+    template<typename T>
     class Vector;
 
     std::ostream& operator << (std::ostream& _out, const String8& _value);
@@ -70,6 +76,12 @@ namespace Michka
     std::ostream& operator << (std::ostream& _out, const VertexDeclaration& _value);
     template<typename T>
     std::ostream& operator << (std::ostream& _out, const List<T>& _value);
+    template<typename T>
+    std::ostream& operator << (std::ostream& _out, const PositionTemplate<T>& _value);
+    template<typename T>
+    std::ostream& operator << (std::ostream& _out, const RectTemplate<T>& _value);
+    template<typename T>
+    std::ostream& operator << (std::ostream& _out, const SizeTemplate<T>& _value);
     template<typename T>
     std::ostream& operator << (std::ostream& _out, const Vector<T>& _value);
 };

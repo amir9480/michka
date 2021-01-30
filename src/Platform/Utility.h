@@ -28,6 +28,7 @@
 #define __PLATFORM_UTILITY_H__
 
 #include "Core/Defines.h"
+#include "Core/Container/Size.h"
 #include "Core/Container/String.h"
 
 namespace Michka
@@ -50,6 +51,11 @@ namespace Michka
          * @brief Get screen height.
          */
         FORCE_INLINE int getHeight();
+
+        /**
+         * @brief Get the Possible resolutions for display.
+         */
+        FORCE_INLINE Vector<Size> getPossibleResolutions();
 
         /**
          * @brief Get screen width.

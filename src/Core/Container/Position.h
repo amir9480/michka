@@ -60,6 +60,11 @@ namespace Michka
          */
         FORCE_INLINE PositionTemplate<T>& setY(const T& _y);
 
+        /**
+         * @brief Get value as string.
+         */
+        String toString() const;
+
         FORCE_INLINE PositionTemplate<T>& operator = (const PositionTemplate<T>& _other);
 
         FORCE_INLINE bool operator == (const PositionTemplate<T>& _other) const;

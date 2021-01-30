@@ -60,6 +60,11 @@ namespace Michka
          */
         FORCE_INLINE SizeTemplate<T>& setWidth(const T& _width);
 
+        /**
+         * @brief Get value as string.
+         */
+        String toString() const;
+
         FORCE_INLINE SizeTemplate<T>& operator = (const SizeTemplate<T>& _other);
 
         FORCE_INLINE bool operator == (const SizeTemplate<T>& _other) const;

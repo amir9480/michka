@@ -101,6 +101,11 @@ namespace Michka
          */
         FORCE_INLINE RectTemplate<T>& setY(const T& _y);
 
+        /**
+         * @brief Get value as string.
+         */
+        String toString() const;
+
         FORCE_INLINE RectTemplate<T>& operator = (const RectTemplate<T>& _other);
 
         FORCE_INLINE bool operator == (const RectTemplate<T>& _other) const;

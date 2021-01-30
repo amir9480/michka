@@ -25,6 +25,7 @@
 // ------------------------------------------------------------------------------- //
 
 #include "Rect.h"
+#include "Core/Container/String.h"
 
 namespace Michka
 {
@@ -123,6 +124,12 @@ namespace Michka
     {
         y = _y;
         return *this;
+    }
+
+    template<typename T>
+    String RectTemplate<T>::toString() const
+    {
+        return String("Rect(position=") + position.toString() + ", size=" + size.toString() + ")";
     }
 
     template<typename T>

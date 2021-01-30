@@ -25,6 +25,7 @@
 // ------------------------------------------------------------------------------- //
 
 #include "Size.h"
+#include "Core/Container/String.h"
 
 namespace Michka
 {
@@ -71,6 +72,12 @@ namespace Michka
     {
         width = _width;
         return *this;
+    }
+
+    template<typename T>
+    String SizeTemplate<T>::toString() const
+    {
+        return String("Size(") + String::number(width) + ", " + String::number(height) + ")";
     }
 
     template<typename T>
