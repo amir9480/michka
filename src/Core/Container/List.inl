@@ -348,6 +348,24 @@ namespace Michka
     }
 
     template<typename T>
+    FORCE_INLINE List<T> List<T>::getUnique()
+    {
+        List<T> out = *this;
+        out.unique();
+
+        return out;
+    }
+
+    template<typename T>
+    FORCE_INLINE List<T> List<T>::getUnique(const std::function<bool(const T&, const T&)>& _callback)
+    {
+        List<T> out = *this;
+        out.unique(_callback);
+
+        return out;
+    }
+
+    template<typename T>
     String List<T>::implode(const String& _seperator) const
     {
         String out;
@@ -746,6 +764,36 @@ namespace Michka
             out = "List{" + out + "}";
         }
         return out;
+    }
+
+    template<typename T>
+    List<T>& List<T>::unique()
+    {
+        u32 index = notFound;
+        for (u32 i = 0; i < getSize(); i++)
+        {
+            while ((index = indexOf((*this)[i], i + 1)) != notFound)
+            {
+                remove(index);
+            }
+        }
+
+        return *this;
+    }
+
+    template<typename T>
+    List<T>& List<T>::unique(const std::function<bool(const T&, const T&)>& _callback)
+    {
+        u32 index = notFound;
+        for (u32 i = 0; i < getSize(); i++)
+        {
+            while ((index = indexOf(_callback, (*this)[i], i + 1)) != notFound)
+            {
+                remove(index);
+            }
+        }
+
+        return *this;
     }
 
     template<typename T>

@@ -186,6 +186,24 @@ namespace Michka
     }
 
     template<typename T>
+    FORCE_INLINE Vector<T> Vector<T>::getUnique()
+    {
+        Vector<T> out = *this;
+        out.unique();
+
+        return out;
+    }
+
+    template<typename T>
+    FORCE_INLINE Vector<T> Vector<T>::getUnique(const std::function<bool(const T&, const T&)>& _callback)
+    {
+        Vector<T> out = *this;
+        out.unique(_callback);
+
+        return out;
+    }
+
+    template<typename T>
     String Vector<T>::implode(const String& _seperator) const
     {
         String out;
@@ -561,6 +579,36 @@ namespace Michka
             out = "Vector{" + out + "}";
         }
         return out;
+    }
+
+    template<typename T>
+    Vector<T>& Vector<T>::unique()
+    {
+        u32 index = notFound;
+        for (u32 i = 0; i < getSize(); i++)
+        {
+            while ((index = indexOf(mData[i], i + 1)) != notFound)
+            {
+                remove(index);
+            }
+        }
+
+        return *this;
+    }
+
+    template<typename T>
+    Vector<T>& Vector<T>::unique(const std::function<bool(const T&, const T&)>& _callback)
+    {
+        u32 index = notFound;
+        for (u32 i = 0; i < getSize(); i++)
+        {
+            while ((index = indexOf(_callback, mData[i], i + 1)) != notFound)
+            {
+                remove(index);
+            }
+        }
+
+        return *this;
     }
 
     template<typename T>

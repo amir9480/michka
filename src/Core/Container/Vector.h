@@ -131,6 +131,22 @@ namespace Michka
         FORCE_INLINE Vector<T> getSorted(const std::function<bool(const T&, const T&)>& _callback) const;
 
         /**
+         * @brief Get unique copy of this vector.
+         *
+         * @param _what
+         * @return Self
+         */
+        FORCE_INLINE Vector<T> getUnique();
+
+        /**
+         * @brief Get unique copy of this vector.
+         *
+         * @param _callback
+         * @return Self
+         */
+        FORCE_INLINE Vector<T> getUnique(const std::function<bool(const T&, const T&)>& _callback);
+
+        /**
          * @brief Join vector elements as a string.
          *
          * @param _seperator
@@ -335,6 +351,23 @@ namespace Michka
          * @return String
          */
         String toString() const;
+
+        /**
+         * @brief Make each item unique and remove duplicates.
+         *
+         * @param _what
+         * @return Self
+         */
+        Vector<T>& unique();
+
+        /**
+         * @brief Make each item unique and remove duplicates.
+         *
+         * @param _callback
+         * @return Self
+         */
+        Vector<T>& unique(const std::function<bool(const T&, const T&)>& _callback);
+
 
         FORCE_INLINE Vector<T>& operator = (const std::initializer_list<T>& _array);
         FORCE_INLINE Vector<T>& operator = (const Vector<T>& _other);

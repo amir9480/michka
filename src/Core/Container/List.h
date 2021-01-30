@@ -174,6 +174,22 @@ namespace Michka
         FORCE_INLINE List<T> getSorted(const std::function<bool(const T&, const T&)>& _callback) const;
 
         /**
+         * @brief Get unique copy of this list.
+         *
+         * @param _what
+         * @return Self
+         */
+        FORCE_INLINE List<T> getUnique();
+
+        /**
+         * @brief Get unique copy of this list.
+         *
+         * @param _callback
+         * @return Self
+         */
+        FORCE_INLINE List<T> getUnique(const std::function<bool(const T&, const T&)>& _callback);
+
+        /**
          * @brief Join list elements as a string.
          *
          * @param _seperator
@@ -371,6 +387,22 @@ namespace Michka
          * @return String
          */
         String toString() const;
+
+        /**
+         * @brief Make each item unique and remove duplicates.
+         *
+         * @param _what
+         * @return Self
+         */
+        List<T>& unique();
+
+        /**
+         * @brief Make each item unique and remove duplicates.
+         *
+         * @param _callback
+         * @return Self
+         */
+        List<T>& unique(const std::function<bool(const T&, const T&)>& _callback);
 
         FORCE_INLINE List<T>& operator = (const std::initializer_list<T>& _array);
         FORCE_INLINE List<T>& operator = (const List<T>& _other);

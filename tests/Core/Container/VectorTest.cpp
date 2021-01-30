@@ -483,3 +483,24 @@ TEST(VectorTest, TakeAndPop)
     ASSERT_EQ(a.popFront(), 2);
     ASSERT_EQ(a.popBack(), 9);
 }
+
+TEST(VectorTest, Unique)
+{
+    Michka::Vector<int> a = {1, 1, 1, 2, 2, 3, 4, 4, 5, 5, 5};
+    ASSERT_EQ(a.getUnique(), Michka::Vector<int>({1, 2, 3, 4, 5}));
+
+
+    Michka::Vector<Person> b = {Person("a"), Person("a"), Person("a"), Person("b"), Person("b"), Person("c"), Person("d"), Person("d")};
+    Michka::Vector<Person> bUnique = {Person("a"), Person("b"), Person("c"), Person("d")};
+
+    auto compareCallback = [] (const Person& _a, const Person& _b)
+    {
+        return _a.getName() == _b.getName();
+    };
+    b = b.getUnique();
+    ASSERT_EQ(b.getSize(), 4);
+    ASSERT_EQ(b[0].getName(), bUnique[0].getName());
+    ASSERT_EQ(b[1].getName(), bUnique[1].getName());
+    ASSERT_EQ(b[2].getName(), bUnique[2].getName());
+    ASSERT_EQ(b[3].getName(), bUnique[3].getName());
+}
