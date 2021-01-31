@@ -33,13 +33,14 @@ namespace Michka
 {
     class MICHKA_API IndexBuffer
     {
+        friend class Device;
     public:
-        virtual ~IndexBuffer();
+        ~IndexBuffer();
 
         /**
          * @brief Destroy index buffer.
          */
-        virtual void destroy() = 0;
+        void destroy();
 
         /**
          * @brief Set index buffer.
@@ -48,7 +49,18 @@ namespace Michka
          * @param _count
          * @return Self
          */
-        virtual IndexBuffer* set(const u32* _indices, const u32& _count) = 0;
+        IndexBuffer* set(const u32* _indices, const u32& _count);
+
+    protected:
+        IndexBuffer();
+
+    protected:
+        u32     mCount = 0;
+        bool    mStatic = false;
+
+#       if MICHKA_GRAPHICS == MICHKA_OPENGL
+            u32	mIndexBuffer = 0;
+#       endif
     };
 }
 

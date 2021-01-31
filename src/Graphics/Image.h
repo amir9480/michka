@@ -47,7 +47,7 @@ namespace Michka
         Image(const u32& _width, const u32& _height, const Format& _format, u8* _data = nullptr);
         Image(const Image& _other);
         Image(Image&& _other);
-        virtual ~Image();
+        ~Image();
 
         /**
          * @brief Memory used per pixel based on format.

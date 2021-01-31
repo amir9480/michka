@@ -25,7 +25,6 @@
 // ------------------------------------------------------------------------------- //
 
 #include "Device.h"
-#include "OpenGL/OpenGLDevice.h"
 #include "Texture.h"
 
 extern "C"
@@ -37,11 +36,6 @@ extern "C"
 
 namespace Michka
 {
-    Device::~Device()
-    {
-        //
-    }
-
     Texture* Device::createTexture(const Image& _image)
     {
         Texture* output = createTexture(_image.getWidth(), _image.getHeight(), (TextureFormat)_image.getFormat());
@@ -54,19 +48,19 @@ namespace Michka
         return mWindow;
     }
 
-    Device* Device::instance(const Driver& _driver)
+    Device* Device::instance()
     {
-        static Device* device = nullptr;
-        if (device == nullptr)
-        {
-            switch (_driver)
-            {
-                case Driver::openGL:
-                    device = new OpenGLDevice();
-                    break;
-            }
-        }
+        static Device device;
 
-        return device;
+        return &device;
+    }
+
+    void Device::setWindow(Window* _window)
+    {
+        if (mWindow != _window)
+        {
+            mWindow = _window;
+            mWindow->setRenderDevice(this);
+        }
     }
 }

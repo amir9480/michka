@@ -21,7 +21,7 @@ namespace Michka
     {
         String vertexAttributeNames[] = {"position", "normal", "tangent", "binormal", "blendIndices", "blendWeight", "color0", "color1", "color2", "color3", "texcoord0", "texcoord1", "texcoord2", "texcoord3", "texcoord4", "texcoord5", "texcoord6", "texcoord7"};
         String vertexAttributeTypes[] = {"float32", "int16", "int32"};
-        return "VertexAttribute(name=" + vertexAttributeNames[(int)name] + ",type=" + vertexAttributeTypes[(int)type] + ",elements=" + String::number(elements) + ")";
+        return "VertexAttribute(name=" + vertexAttributeNames[(int)name] + ", type=" + vertexAttributeTypes[(int)type] + ", elements=" + String::number(elements) + ")";
     }
 
     VertexDeclaration VertexDeclaration::begin()

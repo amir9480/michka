@@ -34,13 +34,14 @@ namespace Michka
 {
     class MICHKA_API VertexBuffer
     {
+        friend class Device;
     public:
-        virtual ~VertexBuffer();
+        ~VertexBuffer();
 
         /**
          * @brief Destroy vertex buffer.
          */
-        virtual void destroy() = 0;
+        void destroy();
 
         /**
          * @brief Set vertex buffer.
@@ -49,7 +50,19 @@ namespace Michka
          * @param _size
          * @return Self
          */
-        virtual VertexBuffer* set(const void* _vertices, const u32& _size) = 0;
+        VertexBuffer* set(const void* _vertices, const u32& _size);
+
+    protected:
+        VertexBuffer();
+
+    protected:
+        VertexDeclaration*  mVertexDeclaration = nullptr;
+        u32                 mSize = 0;
+        bool                mStatic = false;
+
+#       if MICHKA_GRAPHICS == MICHKA_OPENGL
+            u32 mVertexBuffer = 0;
+#       endif
     };
 }
 

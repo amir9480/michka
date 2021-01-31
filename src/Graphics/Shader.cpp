@@ -28,9 +28,14 @@
 
 namespace Michka
 {
-    Shader::~Shader()
+    Shader::Shader()
     {
         //
+    }
+
+    Shader::~Shader()
+    {
+        destroy();
     }
 
     String Shader::getErrors() const

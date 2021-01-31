@@ -42,8 +42,9 @@ namespace Michka
 
     class MICHKA_API Shader
     {
+        friend class Device;
     public:
-        virtual ~Shader();
+        ~Shader();
 
         /**
          * @brief Compile shader from source code.
@@ -51,22 +52,22 @@ namespace Michka
          * @param _source
          * @return true if compiled and linked successfully.
          */
-        virtual bool compile(const String& _source) = 0;
+        bool compile(const String& _source);
 
         /**
          * @brief Get the Compile/Link Errors if \fn compile failed.
          */
-        virtual String getErrors() const;
+        String getErrors() const;
 
         /**
          * @brief Check if the Compile/Link has any errors.
          */
-        virtual bool hasErrors() const;
+        bool hasErrors() const;
 
         /**
          * @brief Destroy vertex buffer.
          */
-        virtual void destroy() = 0;
+        void destroy();
 
         /**
          * @brief Set boolean uniform parameter value.
@@ -75,7 +76,7 @@ namespace Michka
          * @param _value
          * @return false if uniform doesn't exists
          */
-        virtual bool set(const String& _name, const bool& _value) = 0;
+        bool set(const String& _name, const bool& _value);
 
         /**
          * @brief Set int uniform parameter value.
@@ -84,7 +85,7 @@ namespace Michka
          * @param _value
          * @return false if uniform doesn't exists
          */
-        virtual bool set(const String& _name, const int& _value) = 0;
+        bool set(const String& _name, const int& _value);
 
         /**
          * @brief Set float uniform parameter value.
@@ -93,7 +94,7 @@ namespace Michka
          * @param _value
          * @return false if uniform doesn't exists
          */
-        virtual bool set(const String& _name, const f32& _value) = 0;
+        bool set(const String& _name, const f32& _value);
 
         /**
          * @brief Set float 2D uniform parameter value.
@@ -102,7 +103,7 @@ namespace Michka
          * @param _value
          * @return false if uniform doesn't exists
          */
-        virtual bool set(const String& _name, const f32& _valueX, const f32& _valueY) = 0;
+        bool set(const String& _name, const f32& _valueX, const f32& _valueY);
 
         /**
          * @brief Set vector2D uniform parameter value.
@@ -111,7 +112,7 @@ namespace Michka
          * @param _value
          * @return false if uniform doesn't exists
          */
-        virtual bool set(const String& _name, const Vector2& _value) = 0;
+        bool set(const String& _name, const Vector2& _value);
 
         /**
          * @brief Set float 3D uniform parameter value.
@@ -120,7 +121,7 @@ namespace Michka
          * @param _value
          * @return false if uniform doesn't exists
          */
-        virtual bool set(const String& _name, const f32& _valueX, const f32& _valueY, const f32& _valueZ) = 0;
+        bool set(const String& _name, const f32& _valueX, const f32& _valueY, const f32& _valueZ);
 
         /**
          * @brief Set vector3D uniform parameter value.
@@ -129,7 +130,7 @@ namespace Michka
          * @param _value
          * @return false if uniform doesn't exists
          */
-        virtual bool set(const String& _name, const Vector3& _value) = 0;
+        bool set(const String& _name, const Vector3& _value);
 
         /**
          * @brief Set float 4D uniform parameter value.
@@ -138,7 +139,7 @@ namespace Michka
          * @param _value
          * @return false if uniform doesn't exists
          */
-        virtual bool set(const String& _name, const f32& _valueX, const f32& _valueY, const f32& _valueZ, const f32& _valueW) = 0;
+        bool set(const String& _name, const f32& _valueX, const f32& _valueY, const f32& _valueZ, const f32& _valueW);
 
         /**
          * @brief Set vector4D uniform parameter value.
@@ -147,7 +148,7 @@ namespace Michka
          * @param _value
          * @return false if uniform doesn't exists
          */
-        virtual bool set(const String& _name, const Vector4& _value) = 0;
+        bool set(const String& _name, const Vector4& _value);
 
         /**
          * @brief Set Matrix 3x3 uniform parameter value.
@@ -156,7 +157,7 @@ namespace Michka
          * @param _value
          * @return false if uniform doesn't exists
          */
-        virtual bool set(const String& _name, const Matrix3& _value) = 0;
+        bool set(const String& _name, const Matrix3& _value);
 
         /**
          * @brief Set Matrix 4x4 uniform parameter value.
@@ -165,7 +166,7 @@ namespace Michka
          * @param _value
          * @return false if uniform doesn't exists
          */
-        virtual bool set(const String& _name, const Matrix& _value) = 0;
+        bool set(const String& _name, const Matrix& _value);
 
         /**
          * @brief Set Texture uniform parameter value.
@@ -174,11 +175,23 @@ namespace Michka
          * @param _value
          * @return false if uniform doesn't exists
          */
-        virtual bool set(const String& _name, const Texture* _value) = 0;
+        bool set(const String& _name, const Texture* _value);
 
     protected:
-        String mErrors;
-        String mSource;
+        Shader();
+
+#       if MICHKA_GRAPHICS == MICHKA_OPENGL
+            FORCE_INLINE int getUniformLocation(const String& _name) const;
+#       endif
+
+    protected:
+        String                      mErrors;
+        String                      mSource;
+
+#       if MICHKA_GRAPHICS == MICHKA_OPENGL
+            u32                         mProgram = 0;
+            Map<String, const Texture*> mTextures;
+#       endif
     };
 }
 

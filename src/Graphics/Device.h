@@ -44,14 +44,7 @@ namespace Michka
     class MICHKA_API Device
     {
     public:
-        enum class Driver
-        {
-#           if MICHKA_OPEN_GL_SUPPORT
-                openGL,
-#           endif
-        };
-    public:
-        virtual ~Device();
+        ~Device();
 
         /**
          * @brief Clear render target.
@@ -63,21 +56,21 @@ namespace Michka
          * @param _depthValue
          * @param _stencilValue
          */
-        virtual void clear(const bool& _backBuffer = true, const bool& _depthBuffer = true, const bool& _stencil = true, const Color& _backBufferValue = Color(0, 0, 0, 0), const f32& _depthValue = 0.0f, const u8& _stencilValue = 0) = 0;
+        void clear(const bool& _backBuffer = true, const bool& _depthBuffer = true, const bool& _stencil = true, const Color& _backBufferValue = Color(0, 0, 0, 0), const f32& _depthValue = 0.0f, const u8& _stencilValue = 0);
 
         /**
          * @brief Create an Index Buffer.
          *
          * @param _static
          */
-        virtual IndexBuffer* createIndexBuffer(const bool& _static = true) = 0;
+        IndexBuffer* createIndexBuffer(const bool& _static = true);
 
         /**
          * @brief Create a Shader from source code.
          *
          * @param _source
          */
-        virtual Shader* createShader(const String& _source = "") = 0;
+        Shader* createShader(const String& _source = "");
 
         /**
          * @brief Create a texture.
@@ -87,14 +80,14 @@ namespace Michka
          * @param _format
          * @param _renderTarget  texture is a render target or not.
          */
-        virtual Texture* createTexture(const u32& _width, const u32& _height, const TextureFormat& _format, const bool& _renderTarget = false) = 0;
+        Texture* createTexture(const u32& _width, const u32& _height, const TextureFormat& _format, const bool& _renderTarget = false);
 
         /**
          * @brief Create a texture from image.
          *
          * @param _image
          */
-        virtual Texture* createTexture(const Image& _image);
+        Texture* createTexture(const Image& _image);
 
         /**
          * @brief Create a Vertex Buffer.
@@ -102,17 +95,17 @@ namespace Michka
          * @param _vertexDeclaration
          * @param _static
          */
-        virtual VertexBuffer* createVertexBuffer(VertexDeclaration* _vertexDeclaration, const bool& _static = true) = 0;
+        VertexBuffer* createVertexBuffer(VertexDeclaration* _vertexDeclaration, const bool& _static = true);
 
         /**
          * @brief Draw on render target.
          */
-        virtual void draw() = 0;
+        void draw();
 
         /**
          * @brief Show a texture on the screen.
          */
-        virtual void drawOnScreen(const Texture* _texture) = 0;
+        void drawOnScreen(const Texture* _texture);
 
         /**
          * @brief Draw a simple texture.
@@ -123,33 +116,33 @@ namespace Michka
          * @param _width
          * @param _height
          */
-        virtual void drawQuad(const Texture* _texture, const u32& _x = 0, const u32& _y = 0, const u32& _width = 0, const u32& _height = 0) = 0;
+        void drawQuad(const Texture* _texture, const u32& _x = 0, const u32& _y = 0, const u32& _width = 0, const u32& _height = 0);
 
         /**
          * @brief Get the output window.
          */
-        virtual Window* getWindow() const;
+        Window* getWindow() const;
 
         /**
          * @brief Singleton instance getter.
          *
          * @param _driver
          */
-        static Device* instance(const Driver& _driver);
+        static Device* instance();
 
         /**
          * @brief Set the detph buffer.
          *
          * @param _renderTarget
          */
-        virtual bool setDepthBuffer(const Texture* _depthBuffer = nullptr) = 0;
+        bool setDepthBuffer(const Texture* _depthBuffer = nullptr);
 
         /**
          * @brief Set current index buffer.
          *
          * @param _indexBuffer
          */
-        virtual void setIndexBuffer(IndexBuffer* _indexBuffer = nullptr) = 0;
+        void setIndexBuffer(IndexBuffer* _indexBuffer = nullptr);
 
         /**
          * @brief Set the Render target of device.
@@ -158,34 +151,47 @@ namespace Michka
          * @param _renderTarget should be a texture with render target attribute enabeld. pass nullptr to unset.
          * @return false is was not successful.
          */
-        virtual bool setRenderTarget(const u8& _index, const Texture* _renderTarget = nullptr) = 0;
+        bool setRenderTarget(const u8& _index, const Texture* _renderTarget = nullptr);
 
         /**
          * @brief Set curren shader.
          *
          * @param _shader
          */
-        virtual void setShader(Shader* _shader) = 0;
+        void setShader(Shader* _shader);
 
         /**
          * @brief Set current vertex buffer.
          *
          * @param _vertexBuffer
          */
-        virtual void setVertexBuffer(VertexBuffer* _vertexBuffer = nullptr) = 0;
+        void setVertexBuffer(VertexBuffer* _vertexBuffer = nullptr);
 
         /**
          * @brief Set the main window.
          *
          * @param _window
          */
-        virtual void setWindow(Window* _window) = 0;
+        void setWindow(Window* _window);
 
     protected:
-        Window*         mWindow = nullptr;
-        IndexBuffer*    mCurrentIndexBuffer = nullptr;
-        VertexBuffer*   mCurrentVertexBuffer = nullptr;
-        Shader*         mCurrentShader = nullptr;
+        Device();
+
+    protected:
+        Window*                 mWindow = nullptr;
+        IndexBuffer*            mCurrentIndexBuffer = nullptr;
+        VertexBuffer*           mCurrentVertexBuffer = nullptr;
+        Shader*                 mCurrentShader = nullptr;
+        Map<u8, const Texture*> mRenderTargets;
+        const Texture*          mDepthBuffer = nullptr;
+        VertexBuffer*           mQuadVertexBuffer = nullptr;
+        IndexBuffer*            mQuadIndexBuffer = nullptr;
+        Shader*                 mQuadShader = nullptr;
+
+#       if MICHKA_GRAPHICS == MICHKA_OPENGL
+            u32 mVertexArray = 0;
+            u32 mFrameBuffer = 0;
+#       endif
     };
 }
 

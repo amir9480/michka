@@ -24,50 +24,33 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __OPENGL_TEXTURE_H__
-#define __OPENGL_TEXTURE_H__
-
-#include "Core/Defines.h"
-#include "Graphics/Texture.h"
+#include "Graphics/VertexBuffer.h"
+#include "Graphics/VertexDeclaration.h"
 #include "OpenGLHeaders.h"
 
 namespace Michka
 {
-    class MICHKA_API OpenGLTexture : public Texture
+    void VertexBuffer::destroy()
     {
-        friend class OpenGLDevice;
-    public:
-        virtual ~OpenGLTexture();
+        if (mSize > 0)
+        {
+            glDeleteBuffers(1, &mVertexBuffer);
+            mSize = 0;
+            mVertexBuffer = 0;
+        }
+    }
 
-        virtual void destroy() override;
+    VertexBuffer* VertexBuffer::set(const void* _vertices, const u32& _size)
+    {
+        destroy();
+        mSize = _size;
 
-        virtual Image get() const override;
+        glGenBuffers(1, &mVertexBuffer);
 
-        virtual TextureFormat getFormat() const override;
+	    glBindBuffer(GL_ARRAY_BUFFER, mVertexBuffer);
+        glBufferData(GL_ARRAY_BUFFER, mSize, _vertices, mStatic ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-        virtual u32 getHeight() const override;
-
-        virtual u32 getWidth() const override;
-
-        virtual bool isRenderTarget() const;
-
-        virtual void set(const void* _data, const u32& _size);
-
-        virtual void set(const Image& _image);
-
-    protected:
-        OpenGLTexture();
-
-        static i32 textureFormatToGLFormat(const TextureFormat& _format);
-
-    protected:
-        OpenGLDevice* mDevice = nullptr;
-        TextureFormat mFormat = TextureFormat::unknown;
-        u32           mTexture = 0;
-        u32           mWidth = 0;
-        u32           mHeight = 0;
-        bool          mRenderTarget = false;
-    };
+        return this;
+    }
 }
-
-#endif // __OPENGL_TEXTURE_H__

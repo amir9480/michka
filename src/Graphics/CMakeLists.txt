@@ -40,11 +40,11 @@ set(
 
     # --------------------------------- OpenGL --------------------------------- #
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/OpenGL/OpenGLDevice.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/OpenGL/OpenGLIndexBuffer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/OpenGL/OpenGLShader.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/OpenGL/OpenGLTexture.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/OpenGL/OpenGLVertexBuffer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/OpenGL/Device.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/OpenGL/IndexBuffer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/OpenGL/Shader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/OpenGL/Texture.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/OpenGL/VertexBuffer.cpp
 
     # -------------------------------------------------------------------------- #
 

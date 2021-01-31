@@ -27,6 +27,8 @@
 #ifndef __GRAPHICDEFINES_H__
 #define __GRAPHICDEFINES_H__
 
+#include "Core/Defines.h"
+
 namespace Michka
 {
     enum class TextureFormat : u32

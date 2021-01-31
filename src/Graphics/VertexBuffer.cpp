@@ -28,8 +28,14 @@
 
 namespace Michka
 {
-    VertexBuffer::~VertexBuffer()
+    VertexBuffer::VertexBuffer()
     {
         //
     }
+
+    VertexBuffer::~VertexBuffer()
+    {
+        destroy();
+    }
+
 }

@@ -24,42 +24,11 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "OpenGLVertexBuffer.h"
-#include "Graphics/VertexDeclaration.h"
+#include <gtest/gtest.h>
+#include "MichkaTests.h"
+#include "Graphics/Graphics.h"
 
-namespace Michka
+TEST(GraphicsTest, LoadFromFile)
 {
-    OpenGLVertexBuffer::OpenGLVertexBuffer()
-    {
-        //
-    }
-
-    OpenGLVertexBuffer::~OpenGLVertexBuffer()
-    {
-        destroy();
-    }
-
-    void OpenGLVertexBuffer::destroy()
-    {
-        if (mSize > 0)
-        {
-            glDeleteBuffers(1, &mVertexBuffer);
-            mSize = 0;
-            mVertexBuffer = 0;
-        }
-    }
-
-    VertexBuffer* OpenGLVertexBuffer::set(const void* _vertices, const u32& _size)
-    {
-        destroy();
-        mSize = _size;
-
-        glGenBuffers(1, &mVertexBuffer);
-
-	    glBindBuffer(GL_ARRAY_BUFFER, mVertexBuffer);
-        glBufferData(GL_ARRAY_BUFFER, mSize, _vertices, mStatic ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-        return this;
-    }
+    // Michka::Device* device = Michka::Device::instance()
 }

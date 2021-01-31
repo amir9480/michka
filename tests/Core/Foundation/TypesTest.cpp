@@ -126,7 +126,7 @@ TEST(TypesTest, Ostream)
     s.str("");
 
     s << Michka::VertexAttribute({Michka::VertexAttribute::Name::normal, Michka::VertexAttribute::Type::float32, 3});
-    ASSERT_EQ(s.str(), "VertexAttribute(name=normal,type=float32,elements=3)");
+    ASSERT_EQ(s.str(), "VertexAttribute(name=normal, type=float32, elements=3)");
     s.str("");
 
     s << Michka::VertexDeclaration::begin()
@@ -140,11 +140,11 @@ TEST(TypesTest, Ostream)
     ASSERT_EQ(
         s.str(),
         "VertexDeclaration(\n"
-        "    VertexAttribute(name=position,type=float32,elements=3),\n"
-        "    VertexAttribute(name=normal,type=float32,elements=3),\n"
-        "    VertexAttribute(name=binormal,type=float32,elements=3),\n"
-        "    VertexAttribute(name=tangent,type=float32,elements=3),\n"
-        "    VertexAttribute(name=texcoord0,type=float32,elements=2)\n"
+        "    VertexAttribute(name=position, type=float32, elements=3),\n"
+        "    VertexAttribute(name=normal, type=float32, elements=3),\n"
+        "    VertexAttribute(name=binormal, type=float32, elements=3),\n"
+        "    VertexAttribute(name=tangent, type=float32, elements=3),\n"
+        "    VertexAttribute(name=texcoord0, type=float32, elements=2)\n"
         ")"
     );
 }

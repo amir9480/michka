@@ -24,21 +24,12 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "OpenGLTexture.h"
+#include "Graphics/Texture.h"
+#include "OpenGLHeaders.h"
 
 namespace Michka
 {
-    OpenGLTexture::OpenGLTexture()
-    {
-        //
-    }
-
-    OpenGLTexture::~OpenGLTexture()
-    {
-        destroy();
-    }
-
-    void OpenGLTexture::destroy()
+    void Texture::destroy()
     {
         if (mTexture)
         {
@@ -47,7 +38,7 @@ namespace Michka
         }
     }
 
-    Image OpenGLTexture::get() const
+    Image Texture::get() const
     {
         Image out;
         Image::Format imageFormat = Image::Format::unknown;
@@ -77,27 +68,7 @@ namespace Michka
         return out;
     }
 
-    TextureFormat OpenGLTexture::getFormat() const
-    {
-        return mFormat;
-    }
-
-    u32 OpenGLTexture::getHeight() const
-    {
-        return mHeight;
-    }
-
-    u32 OpenGLTexture::getWidth() const
-    {
-        return mWidth;
-    }
-
-    bool OpenGLTexture::isRenderTarget() const
-    {
-        return mRenderTarget;
-    }
-
-    void OpenGLTexture::set(const void* _data, const u32& _size)
+    void Texture::set(const void* _data, const u32& _size)
     {
         if (mTexture)
         {
@@ -121,7 +92,7 @@ namespace Michka
         }
     }
 
-    void OpenGLTexture::set(const Image& _image)
+    void Texture::set(const Image& _image)
     {
         mWidth = _image.getWidth();
         mHeight = _image.getHeight();
@@ -129,7 +100,7 @@ namespace Michka
         set(_image.getFlipped().getData(), _image.getSize());
     }
 
-    i32 OpenGLTexture::textureFormatToGLFormat(const TextureFormat& _format)
+    i32 Texture::textureFormatToGLFormat(const TextureFormat& _format)
     {
         i32 format = 0;
         switch (_format)

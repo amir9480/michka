@@ -24,15 +24,16 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "OpenGLDevice.h"
 #include "Core/Thread/Thread.h"
 #include "Core/Thread/Mutex.h"
 #include "Core/Foundation/File.h"
 #include "Core/Foundation/Log.h"
-#include "OpenGLIndexBuffer.h"
-#include "OpenGLShader.h"
-#include "OpenGLTexture.h"
-#include "OpenGLVertexBuffer.h"
+#include "Graphics/Device.h"
+#include "Graphics/IndexBuffer.h"
+#include "Graphics/Shader.h"
+#include "Graphics/Texture.h"
+#include "Graphics/VertexBuffer.h"
+#include "OpenGLHeaders.h"
 
 namespace Michka
 {
@@ -58,7 +59,7 @@ namespace Michka
         "}\n"
         "#endif // COMPILING_FRAGMENT_SHADER\n";
 
-    OpenGLDevice::OpenGLDevice()
+    Device::Device()
     {
         if (!gladLoadGL())
         {
@@ -94,7 +95,7 @@ namespace Michka
         }
     }
 
-    OpenGLDevice::~OpenGLDevice()
+    Device::~Device()
     {
         delete mQuadShader;
         delete mQuadVertexBuffer;
@@ -103,7 +104,7 @@ namespace Michka
         glDeleteFramebuffers(1, &mFrameBuffer);
     }
 
-    void OpenGLDevice::clear(const bool& _backBuffer, const bool& _depthBuffer, const bool& _stencil, const Color& _backBufferValue, const f32& _depthValue, const u8& _stencilValue)
+    void Device::clear(const bool& _backBuffer, const bool& _depthBuffer, const bool& _stencil, const Color& _backBufferValue, const f32& _depthValue, const u8& _stencilValue)
     {
         glClearColor(_backBufferValue.r/255.0f, _backBufferValue.g/255.0f, _backBufferValue.b/255.0f, _backBufferValue.a/255.0f);
         glClearDepth(_depthValue);
@@ -115,18 +116,16 @@ namespace Michka
         );
     }
 
-    IndexBuffer* OpenGLDevice::createIndexBuffer(const bool& _static)
+    IndexBuffer* Device::createIndexBuffer(const bool& _static)
     {
-        OpenGLIndexBuffer* out = new OpenGLIndexBuffer;
-        out->mDevice = this;
+        IndexBuffer* out = new IndexBuffer;
         out->mStatic = _static;
         return out;
     }
 
-    Shader* OpenGLDevice::createShader(const String& _source)
+    Shader* Device::createShader(const String& _source)
     {
-        OpenGLShader* out = new OpenGLShader;
-        out->mDevice = this;
+        Shader* out = new Shader;
         if (_source.isNotEmpty())
         {
             out->compile(_source);
@@ -135,10 +134,9 @@ namespace Michka
         return out;
     }
 
-    Texture* OpenGLDevice::createTexture(const u32& _width, const u32& _height, const TextureFormat& _format, const bool& _renderTarget)
+    Texture* Device::createTexture(const u32& _width, const u32& _height, const TextureFormat& _format, const bool& _renderTarget)
     {
-        OpenGLTexture* output = new OpenGLTexture();
-        output->mDevice = this;
+        Texture* output = new Texture();
         output->mWidth = _width;
         output->mHeight = _height;
         output->mFormat = _format;
@@ -152,25 +150,24 @@ namespace Michka
         return output;
     }
 
-    VertexBuffer* OpenGLDevice::createVertexBuffer(VertexDeclaration* _vertexDeclaration, const bool& _static)
+    VertexBuffer* Device::createVertexBuffer(VertexDeclaration* _vertexDeclaration, const bool& _static)
     {
-        OpenGLVertexBuffer* out = new OpenGLVertexBuffer;
-        out->mDevice = this;
+        VertexBuffer* out = new VertexBuffer;
         out->mStatic = _static;
         out->mVertexDeclaration = _vertexDeclaration;
         return out;
     }
 
-    void OpenGLDevice::draw()
+    void Device::draw()
     {
         if (mCurrentIndexBuffer && mCurrentShader)
         {
-            OpenGLShader* shader = dynamic_cast<OpenGLShader*>(mCurrentShader);
-            OpenGLIndexBuffer* indexBuffer = dynamic_cast<OpenGLIndexBuffer*>(mCurrentIndexBuffer);
+            Shader* shader = dynamic_cast<Shader*>(mCurrentShader);
+            IndexBuffer* indexBuffer = dynamic_cast<IndexBuffer*>(mCurrentIndexBuffer);
 
             for (u32 i = 0; i < shader->mTextures.getSize(); i++)
             {
-                const OpenGLTexture* texture = dynamic_cast<const OpenGLTexture*>(shader->mTextures.at(i).second);
+                const Texture* texture = dynamic_cast<const Texture*>(shader->mTextures.at(i).second);
                 glActiveTexture(GL_TEXTURE0 + i);
                 glBindTexture(GL_TEXTURE_2D, texture->mTexture);
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -219,7 +216,7 @@ namespace Michka
         }
     }
 
-    void OpenGLDevice::drawOnScreen(const Texture* _texture)
+    void Device::drawOnScreen(const Texture* _texture)
     {
         if (mWindow)
         {
@@ -230,17 +227,17 @@ namespace Michka
         }
     }
 
-    void OpenGLDevice::drawQuad(const Texture* _texture, const u32& _x, const u32& _y, const u32& _width, const u32& _height)
+    void Device::drawQuad(const Texture* _texture, const u32& _x, const u32& _y, const u32& _width, const u32& _height)
     {
         mQuadShader->set("image", _texture);
         setShader(mQuadShader);
         setVertexBuffer(mQuadVertexBuffer);
         setIndexBuffer(mQuadIndexBuffer);
-        OpenGLIndexBuffer* indexBuffer = dynamic_cast<OpenGLIndexBuffer*>(mCurrentIndexBuffer);
-        OpenGLShader* shader = dynamic_cast<OpenGLShader*>(mCurrentShader);
+        IndexBuffer* indexBuffer = dynamic_cast<IndexBuffer*>(mCurrentIndexBuffer);
+        Shader* shader = dynamic_cast<Shader*>(mCurrentShader);
         for (u32 i = 0; i < shader->mTextures.getSize(); i++)
         {
-            const OpenGLTexture* texture = dynamic_cast<const OpenGLTexture*>(shader->mTextures.at(i).second);
+            const Texture* texture = dynamic_cast<const Texture*>(shader->mTextures.at(i).second);
             glActiveTexture(GL_TEXTURE0 + i);
             glBindTexture(GL_TEXTURE_2D, texture->mTexture);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -258,7 +255,7 @@ namespace Michka
         setIndexBuffer(nullptr);
     }
 
-    bool OpenGLDevice::setDepthBuffer(const Texture* _depthBuffer)
+    bool Device::setDepthBuffer(const Texture* _depthBuffer)
     {
         if (_depthBuffer == nullptr)
         {
@@ -277,7 +274,7 @@ namespace Michka
                 return false;
             }
             mDepthBuffer = _depthBuffer;
-            const OpenGLTexture* depthBuffer = dynamic_cast<const OpenGLTexture*>(_depthBuffer);
+            const Texture* depthBuffer = dynamic_cast<const Texture*>(_depthBuffer);
             GLint currentTextureId;
             glGetIntegerv(GL_TEXTURE_2D, &currentTextureId);
 
@@ -290,11 +287,11 @@ namespace Michka
         return true;
     }
 
-    void OpenGLDevice::setIndexBuffer(IndexBuffer* _indexBuffer)
+    void Device::setIndexBuffer(IndexBuffer* _indexBuffer)
     {
         if (_indexBuffer)
         {
-            OpenGLIndexBuffer* indexBuffer = dynamic_cast<OpenGLIndexBuffer*>(_indexBuffer);
+            IndexBuffer* indexBuffer = dynamic_cast<IndexBuffer*>(_indexBuffer);
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer->mIndexBuffer);
         }
         else
@@ -304,7 +301,7 @@ namespace Michka
         mCurrentIndexBuffer = _indexBuffer;
     }
 
-    bool OpenGLDevice::setRenderTarget(const u8& _index, const Texture* _renderTarget)
+    bool Device::setRenderTarget(const u8& _index, const Texture* _renderTarget)
     {
         if (_renderTarget == nullptr && mRenderTargets.hasKey(_index))
         {
@@ -317,7 +314,7 @@ namespace Michka
                 MICHKA_ERROR("Texture is not a render target.");
                 return false;
             }
-            const OpenGLTexture* renderTarget = dynamic_cast<const OpenGLTexture*>(_renderTarget);
+            const Texture* renderTarget = dynamic_cast<const Texture*>(_renderTarget);
             mRenderTargets[_index] = _renderTarget;
             GLint currentTextureId;
             glGetIntegerv(GL_TEXTURE_2D, &currentTextureId);
@@ -331,11 +328,11 @@ namespace Michka
         return true;
     }
 
-    void OpenGLDevice::setShader(Shader* _shader)
+    void Device::setShader(Shader* _shader)
     {
         if (_shader)
         {
-            OpenGLShader* shader = dynamic_cast<OpenGLShader*>(_shader);
+            Shader* shader = dynamic_cast<Shader*>(_shader);
             glUseProgram(shader->mProgram);
         }
         else
@@ -345,11 +342,11 @@ namespace Michka
         mCurrentShader = _shader;
     }
 
-    void OpenGLDevice::setVertexBuffer(VertexBuffer* _vertexBuffer)
+    void Device::setVertexBuffer(VertexBuffer* _vertexBuffer)
     {
         if (_vertexBuffer)
         {
-            OpenGLVertexBuffer* vertexBuffer = dynamic_cast<OpenGLVertexBuffer*>(_vertexBuffer);
+            VertexBuffer* vertexBuffer = dynamic_cast<VertexBuffer*>(_vertexBuffer);
             glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer->mVertexBuffer);
             auto vertexAttributes = vertexBuffer->mVertexDeclaration->getAttributes();
             u64 offset = 0;
@@ -368,14 +365,5 @@ namespace Michka
             glBindBuffer(GL_ARRAY_BUFFER, 0);
         }
         mCurrentVertexBuffer = _vertexBuffer;
-    }
-
-    void OpenGLDevice::setWindow(Window* _window)
-    {
-        if (mWindow != _window)
-        {
-            mWindow = _window;
-            mWindow->setRenderDevice(this);
-        }
     }
 }

@@ -31,14 +31,17 @@
 
 #define MICHKA_NAME "Michka"
 #define MICHKA_VERSION "0.0.1"
-#define MICHKA_VERSION_NUMBER 1
+#define MICHKA_VERSION_NUMBER 1ULL
 #define MICHKA_DEBUG _DEBUG
-
-#define MICHKA_OPEN_GL_SUPPORT 1
 
 #ifndef MICHKA_SRC_PATH
 #   define MICHKA_SRC_PATH ""
 #endif
+
+/* -------------------------------- Graphics -------------------------------- */
+#define MICHKA_OPENGL 1
+
+#define MICHKA_GRAPHICS MICHKA_OPENGL
 
 /* -------------------------------- Compiler -------------------------------- */
 

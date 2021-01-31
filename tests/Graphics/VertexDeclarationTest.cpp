@@ -40,13 +40,13 @@ TEST(VertexDeclarationTest, Create)
     ASSERT_EQ(
         dec.toString(),
         "VertexDeclaration(\n"
-        "    VertexAttribute(name=position,type=float32,elements=3),\n"
-        "    VertexAttribute(name=normal,type=float32,elements=3),\n"
-        "    VertexAttribute(name=texcoord0,type=int16,elements=3),\n"
-        "    VertexAttribute(name=texcoord1,type=int32,elements=2)\n"
+        "    VertexAttribute(name=position, type=float32, elements=3),\n"
+        "    VertexAttribute(name=normal, type=float32, elements=3),\n"
+        "    VertexAttribute(name=texcoord0, type=int16, elements=3),\n"
+        "    VertexAttribute(name=texcoord1, type=int32, elements=2)\n"
         ")"
     );
-    ASSERT_EQ(dec.getHash(), 2634101685743308180);
+    ASSERT_EQ(dec.getHash(), 9876128095319316148);
     ASSERT_EQ(dec.getStride(), 38);
     ASSERT_EQ(dec.getAttributes()[0].name, Michka::VertexAttribute::Name::position);
     ASSERT_EQ(dec.getAttributes()[0].type, Michka::VertexAttribute::Type::float32);

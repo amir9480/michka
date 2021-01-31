@@ -35,38 +35,39 @@ namespace Michka
 {
     class MICHKA_API Texture
     {
+        friend class Device;
     public:
-        virtual ~Texture();
+        ~Texture();
 
         /**
          * @brief Destroy texture.
          */
-        virtual void destroy() = 0;
+        void destroy();
 
         /**
          * @brief Get content of image.
          */
-        virtual Image get() const = 0;
+        Image get() const;
 
         /**
          * @brief Get texture format.
          */
-        virtual TextureFormat getFormat() const = 0;
+        TextureFormat getFormat() const;
 
         /**
          * @brief Get texture height.
          */
-        virtual u32 getHeight() const = 0;
+        u32 getHeight() const;
 
         /**
          * @brief Get texture width.
          */
-        virtual u32 getWidth() const = 0;
+        u32 getWidth() const;
 
         /**
          * @brief Is texture a render target or not.
          */
-        virtual bool isRenderTarget() const = 0;
+        bool isRenderTarget() const;
 
         /**
          * @brief Set texture buffer.
@@ -74,14 +75,30 @@ namespace Michka
          * @param _data
          * @param _size
          */
-        virtual void set(const void* _data, const u32& _size) = 0;
+        void set(const void* _data, const u32& _size);
 
         /**
          * @brief Set texture buffer.
          *
          * @param _image
          */
-        virtual void set(const Image& _image) = 0;
+        void set(const Image& _image);
+
+    protected:
+        Texture();
+
+#       if MICHKA_GRAPHICS == MICHKA_OPENGL
+            static i32 textureFormatToGLFormat(const TextureFormat& _format);
+#       endif
+    protected:
+        TextureFormat mFormat = TextureFormat::unknown;
+        u32           mWidth = 0;
+        u32           mHeight = 0;
+        bool          mRenderTarget = false;
+
+#       if MICHKA_GRAPHICS == MICHKA_OPENGL
+            u32           mTexture = 0;
+#       endif
     };
 }
 

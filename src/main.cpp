@@ -132,7 +132,7 @@ int main()
     Image image("test-assets/grass.jpg");
 
     Window* window = new Window();
-    Device* device = Device::instance(Device::Driver::openGL);
+    Device* device = Device::instance();
     device->setWindow(window);
     window->show();
     Texture* texture = device->createTexture(image);

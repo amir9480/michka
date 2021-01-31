@@ -28,8 +28,13 @@
 
 namespace Michka
 {
-    IndexBuffer::~IndexBuffer()
+    IndexBuffer::IndexBuffer()
     {
         //
+    }
+
+    IndexBuffer::~IndexBuffer()
+    {
+        destroy();
     }
 }

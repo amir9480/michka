@@ -24,33 +24,34 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __OPENGL_INDEX_BUFFER_H__
-#define __OPENGL_INDEX_BUFFER_H__
-
-#include "Core/Defines.h"
 #include "Graphics/IndexBuffer.h"
+#include "Graphics/VertexDeclaration.h"
 #include "OpenGLHeaders.h"
 
 namespace Michka
 {
-    class MICHKA_API OpenGLIndexBuffer : public IndexBuffer
+    void IndexBuffer::destroy()
     {
-        friend class OpenGLDevice;
-    public:
-        virtual ~OpenGLIndexBuffer();
+        if (mCount > 0)
+        {
+	        glDeleteBuffers(1, &mIndexBuffer);
+            mCount = 0;
+            mIndexBuffer = 0;
+        }
+    }
 
-        virtual void destroy() override;
+    IndexBuffer* IndexBuffer::set(const u32* _indices, const u32& _count)
+    {
+        destroy();
+        mCount = _count;
 
-        virtual IndexBuffer* set(const u32* _indices, const u32& _count) override;
-    protected:
-        OpenGLIndexBuffer();
+        glGenBuffers(1, &mIndexBuffer);
 
-    protected:
-        OpenGLDevice*       mDevice = nullptr;
-        u32                 mCount = 0;
-	    u32	                mIndexBuffer = 0;
-        bool                mStatic = false;
-    };
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIndexBuffer);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, _count * sizeof(u32), (void*)_indices, mStatic ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW);
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+        return this;
+    }
 }
-
-#endif // __OPENGL_INDEX_BUFFER_H__

@@ -28,8 +28,33 @@
 
 namespace Michka
 {
-    Texture::~Texture()
+    Texture::Texture()
     {
         //
+    }
+
+    Texture::~Texture()
+    {
+        destroy();
+    }
+
+    TextureFormat Texture::getFormat() const
+    {
+        return mFormat;
+    }
+
+    u32 Texture::getHeight() const
+    {
+        return mHeight;
+    }
+
+    u32 Texture::getWidth() const
+    {
+        return mWidth;
+    }
+
+    bool Texture::isRenderTarget() const
+    {
+        return mRenderTarget;
     }
 }

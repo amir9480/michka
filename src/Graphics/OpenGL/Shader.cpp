@@ -24,26 +24,17 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "OpenGLShader.h"
 #include "Core/Math/Vector2.h"
 #include "Core/Math/Vector3.h"
 #include "Core/Math/Vector4.h"
 #include "Core/Math/Matrix3.h"
 #include "Core/Math/Matrix.h"
+#include "Graphics/Shader.h"
+#include "OpenGLHeaders.h"
 
 namespace Michka
 {
-    OpenGLShader::OpenGLShader()
-    {
-        //
-    }
-
-    OpenGLShader::~OpenGLShader()
-    {
-        destroy();
-    }
-
-    bool OpenGLShader::compile(const String& _source)
+    bool Shader::compile(const String& _source)
     {
         char* tempStr = nullptr;
         int success = 0;
@@ -113,7 +104,7 @@ namespace Michka
         return mErrors.isEmpty();
     }
 
-    void OpenGLShader::destroy()
+    void Shader::destroy()
     {
         if (mProgram)
         {
@@ -122,12 +113,12 @@ namespace Michka
         }
     }
 
-    bool OpenGLShader::set(const String& _name, const bool& _value)
+    bool Shader::set(const String& _name, const bool& _value)
     {
         return set(_name, int(_value));
     }
 
-    bool OpenGLShader::set(const String& _name, const int& _value)
+    bool Shader::set(const String& _name, const int& _value)
     {
         int location = getUniformLocation(_name);
         if (location != -1)
@@ -139,7 +130,7 @@ namespace Michka
         return false;
     }
 
-    bool OpenGLShader::set(const String& _name, const f32& _value)
+    bool Shader::set(const String& _name, const f32& _value)
     {
         int location = getUniformLocation(_name);
         if (location != -1)
@@ -151,7 +142,7 @@ namespace Michka
         return false;
     }
 
-    bool OpenGLShader::set(const String& _name, const f32& _valueX, const f32& _valueY)
+    bool Shader::set(const String& _name, const f32& _valueX, const f32& _valueY)
     {
         int location = getUniformLocation(_name);
         if (location != -1)
@@ -163,12 +154,12 @@ namespace Michka
         return false;
     }
 
-    bool OpenGLShader::set(const String& _name, const Vector2& _value)
+    bool Shader::set(const String& _name, const Vector2& _value)
     {
         return set(_name, _value.x, _value.y);
     }
 
-    bool OpenGLShader::set(const String& _name, const f32& _valueX, const f32& _valueY, const f32& _valueZ)
+    bool Shader::set(const String& _name, const f32& _valueX, const f32& _valueY, const f32& _valueZ)
     {
         int location = getUniformLocation(_name);
         if (location != -1)
@@ -180,12 +171,12 @@ namespace Michka
         return false;
     }
 
-    bool OpenGLShader::set(const String& _name, const Vector3& _value)
+    bool Shader::set(const String& _name, const Vector3& _value)
     {
         return set(_name, _value.x, _value.y, _value.z);
     }
 
-    bool OpenGLShader::set(const String& _name, const f32& _valueX, const f32& _valueY, const f32& _valueZ, const f32& _valueW)
+    bool Shader::set(const String& _name, const f32& _valueX, const f32& _valueY, const f32& _valueZ, const f32& _valueW)
     {
         int location = getUniformLocation(_name);
         if (location != -1)
@@ -197,12 +188,12 @@ namespace Michka
         return false;
     }
 
-    bool OpenGLShader::set(const String& _name, const Vector4& _value)
+    bool Shader::set(const String& _name, const Vector4& _value)
     {
         return set(_name, _value.x, _value.y, _value.z, _value.w);
     }
 
-    bool OpenGLShader::set(const String& _name, const Matrix3& _value)
+    bool Shader::set(const String& _name, const Matrix3& _value)
     {
         int location = getUniformLocation(_name);
         if (location != -1)
@@ -214,7 +205,7 @@ namespace Michka
         return false;
     }
 
-    bool OpenGLShader::set(const String& _name, const Matrix& _value)
+    bool Shader::set(const String& _name, const Matrix& _value)
     {
         int location = getUniformLocation(_name);
         if (location != -1)
@@ -226,7 +217,7 @@ namespace Michka
         return false;
     }
 
-    bool OpenGLShader::set(const String& _name, const Texture* _value)
+    bool Shader::set(const String& _name, const Texture* _value)
     {
         int location = getUniformLocation(_name);
         if (location != -1)
@@ -245,7 +236,7 @@ namespace Michka
         return false;
     }
 
-    FORCE_INLINE int OpenGLShader::getUniformLocation(const String& _name) const
+    FORCE_INLINE int Shader::getUniformLocation(const String& _name) const
     {
         if (mProgram)
         {
