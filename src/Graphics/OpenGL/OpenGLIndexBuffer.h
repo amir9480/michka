@@ -41,7 +41,7 @@ namespace Michka
 
         virtual void destroy() override;
 
-        virtual void set(const u32* _indices, const u32& _count) override;
+        virtual IndexBuffer* set(const u32* _indices, const u32& _count) override;
     protected:
         OpenGLIndexBuffer();
 

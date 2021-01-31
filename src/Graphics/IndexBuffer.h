@@ -46,8 +46,9 @@ namespace Michka
          *
          * @param _indices
          * @param _count
+         * @return Self
          */
-        virtual void set(const u32* _indices, const u32& _count) = 0;
+        virtual IndexBuffer* set(const u32* _indices, const u32& _count) = 0;
     };
 }
 

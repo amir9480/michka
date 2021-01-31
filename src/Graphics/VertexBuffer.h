@@ -47,8 +47,9 @@ namespace Michka
          *
          * @param _vertices
          * @param _size
+         * @return Self
          */
-        virtual void set(const void* _vertices, const u32& _size) = 0;
+        virtual VertexBuffer* set(const void* _vertices, const u32& _size) = 0;
     };
 }
 

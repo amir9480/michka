@@ -29,6 +29,12 @@
 #define HAVE_STRUCT_TIMESPEC
 #include <Windows.h>
 
+TEST(WindowsUtilityTest, PossibleResolutions)
+{
+    Michka::Vector<Michka::Size> resolutions = Michka::Platform::getPossibleResolutions();
+    ASSERT_TRUE(resolutions.getSize() > 0);
+}
+
 TEST(WindowsUtilityTest, SetConsoleColor)
 {
     Michka::Platform::setConsoleColor(Michka::Platform::ConsoleColor::black, Michka::Platform::ConsoleColor::black);

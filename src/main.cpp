@@ -127,29 +127,19 @@ u32 indices2[] = {0, 1, 2};
 
 int main()
 {
-    DEVMODE dm = { 0 };
-    dm.dmSize = sizeof(dm);
-    for (int iModeNum = 0; EnumDisplaySettings(NULL, iModeNum, &dm) != 0; iModeNum++)
-    {
-        std::cout << "Mode #" << iModeNum << " = " << dm.dmPelsWidth << "x" << dm.dmPelsHeight << std::endl;
-    }
-    std::cin.get();
-    return 0;
-
     std::cout << "Welcome to engine!\n-------------------------------------\n\n";
 
     Image image("test-assets/grass.jpg");
 
     Window* window = new Window();
     Device* device = Device::instance(Device::Driver::openGL);
+    device->setWindow(window);
     window->show();
+    Texture* texture = device->createTexture(image);
     Texture* rt = device->createTexture(320, 240, Michka::TextureFormat::r8g8b8, true);
     Texture* db = device->createTexture(320, 240, Michka::TextureFormat::depth32, true);
-    IndexBuffer* ib = device->createIndexBuffer();
-    ib->set(indices2, sizeof(indices2) / sizeof(indices2[0]));
-    VertexBuffer* vb = device->createVertexBuffer(&Vertex::decl());
-    vb->set(vertices2, sizeof(vertices2));
-    Texture* texture = device->createTexture(image);
+    IndexBuffer* ib = device->createIndexBuffer()->set(indices2, sizeof(indices2) / sizeof(indices2[0]));
+    VertexBuffer* vb = device->createVertexBuffer(&Vertex::decl())->set(vertices2, sizeof(vertices2));
     Shader* shader = device->createShader(File::getContents("shaders/test.glsl"));
     if (shader->hasErrors())
     {
@@ -161,10 +151,9 @@ int main()
 
     while (window->isDestroyed() == false)
     {
-        std::cout << j++ << " : " << window->isDestroyed() << std::endl;
         device->setRenderTarget(0, rt);
         device->setDepthBuffer(db);
-        device->clear(true, true, true, Vector4(0.4f, 0.8f, 1.0f, 1.0f));
+        device->clear(true, true, true, Color::cyan);
         device->setIndexBuffer(ib);
         device->setVertexBuffer(vb);
         device->setShader(shader);
@@ -172,7 +161,6 @@ int main()
         shader->set("testTexture", texture);
         device->draw();
 
-        device->setWindow(window);
         device->drawOnScreen(rt);
 
         if (firstTime)

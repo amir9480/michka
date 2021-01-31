@@ -43,7 +43,7 @@ namespace Michka
 
         virtual void destroy() override;
 
-        virtual void set(const void* _vertices, const u32& _size) override;
+        virtual VertexBuffer* set(const void* _vertices, const u32& _size) override;
 
     protected:
         OpenGLVertexBuffer();

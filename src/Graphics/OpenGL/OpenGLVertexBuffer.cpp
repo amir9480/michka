@@ -49,7 +49,7 @@ namespace Michka
         }
     }
 
-    void OpenGLVertexBuffer::set(const void* _vertices, const u32& _size)
+    VertexBuffer* OpenGLVertexBuffer::set(const void* _vertices, const u32& _size)
     {
         destroy();
         mSize = _size;
@@ -59,5 +59,7 @@ namespace Michka
 	    glBindBuffer(GL_ARRAY_BUFFER, mVertexBuffer);
         glBufferData(GL_ARRAY_BUFFER, mSize, _vertices, mStatic ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+        return this;
     }
 }

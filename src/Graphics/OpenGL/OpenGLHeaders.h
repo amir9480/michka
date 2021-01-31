@@ -27,9 +27,6 @@
 #ifndef __OPENGL_HEADERS_H__
 #define __OPENGL_HEADERS_H__
 
-#ifdef APIENTRY
-#undef APIENTRY
-#endif
 #include <glad/glad.h>
 
 #endif // __OPENGL_HEADERS_H__

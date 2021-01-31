@@ -49,7 +49,7 @@ namespace Michka
         }
     }
 
-    void OpenGLIndexBuffer::set(const u32* _indices, const u32& _count)
+    IndexBuffer* OpenGLIndexBuffer::set(const u32* _indices, const u32& _count)
     {
         destroy();
         mCount = _count;
@@ -60,5 +60,7 @@ namespace Michka
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, _count * sizeof(u32), (void*)_indices, mStatic ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+        return this;
     }
 }

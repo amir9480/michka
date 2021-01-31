@@ -39,7 +39,7 @@ namespace Michka
         OpenGLDevice();
         virtual ~OpenGLDevice();
 
-        virtual void clear(const bool& _backBuffer = true, const bool& _depthBuffer = true, const bool& _stencil = true, const Vector4& _backBufferValue = Vector4(0.0f, 0.0f, 0.0f, 0.0f), const f32& _depthValue = 0.0f, const u8& _stencilValue = 0) override;
+        virtual void clear(const bool& _backBuffer = true, const bool& _depthBuffer = true, const bool& _stencil = true, const Color& _backBufferValue = Color(0, 0, 0, 0), const f32& _depthValue = 0.0f, const u8& _stencilValue = 0) override;
 
         virtual IndexBuffer* createIndexBuffer(const bool& _static = true) override;
 

@@ -33,7 +33,8 @@ TEST(EventTest, Clear)
 {
     MichkaObject test;
     int testVar = 0;
-    auto eventCallback = [&testVar] (const Michka::Event* _event) {
+    auto eventCallback = [&testVar] (const Michka::Event* _event)
+    {
         testVar++;
     };
     for (u32 i = 0; i < 5; i++)
@@ -59,7 +60,8 @@ TEST(EventTest, On)
 {
     MichkaObject test;
     int testVar = 0;
-    test.on("testEvent", [&testVar] (const Michka::Event* _event) {
+    test.on("testEvent", [&testVar] (const Michka::Event* _event)
+    {
         ASSERT_EQ(_event->getName(), "testEvent");
         testVar++;
     });
@@ -68,10 +70,12 @@ TEST(EventTest, On)
     test.emit("testEvent");
     ASSERT_EQ(testVar, 1);
 
-    u64 handlerId = test.on("testEvent", [&testVar] (const Michka::Event* _event) {
+    u64 handlerId = test.on("testEvent", [&testVar] (const Michka::Event* _event)
+    {
         testVar += 10;
     });
-    test.on("testEvent2", [&testVar] (const Michka::Event* _event) {
+    test.on("testEvent2", [&testVar] (const Michka::Event* _event)
+    {
         testVar--;
     });
     test.emit("nonTestEvent");
@@ -91,7 +95,8 @@ TEST(EventTest, On)
     test.emit("testEvent2");
     ASSERT_EQ(testVar, 11);
 
-    test.on("testEvent", [&testVar] (const Michka::Event* _event) {
+    test.on("testEvent", [&testVar] (const Michka::Event* _event)
+    {
         ASSERT_EQ(_event->getParameter("test").getType(), Michka::Variant::Type::typeInt);
         ASSERT_EQ(_event->getParameter("non_exist").getType(), Michka::Variant::Type::typeNull);
         ASSERT_EQ(_event->getParameters().getSize(), 1);
@@ -107,7 +112,8 @@ TEST(EventTest, Once)
 {
     MichkaObject test;
     int testVar = 0;
-    auto eventCallback = [&testVar] (const Michka::Event* _event) {
+    auto eventCallback = [&testVar] (const Michka::Event* _event)
+    {
         testVar++;
     };
     test.on("testEvent", eventCallback);
@@ -130,10 +136,12 @@ TEST(EventTest, Queue)
     test.setCallEventListenersManually(true);
     ASSERT_TRUE(test.getCallEventListenersManually());
     int testVar = 0;
-    test.on("testEvent", [&testVar] (const Michka::Event* _event) {
+    test.on("testEvent", [&testVar] (const Michka::Event* _event)
+    {
         testVar++;
     });
-    test.on("testEvent2", [&testVar] (const Michka::Event* _event) {
+    test.on("testEvent2", [&testVar] (const Michka::Event* _event)
+    {
         testVar += 2;
     });
     test.emit("testEvent");

@@ -40,7 +40,18 @@ namespace Michka
 
         FORCE_INLINE Vector<Size> getPossibleResolutions()
         {
-            return Vector<Size>();
+            Vector<Size> out;
+            DEVMODE dm = { 0 };
+            dm.dmSize = sizeof(dm);
+            for (int iModeNum = 0; EnumDisplaySettings(NULL, iModeNum, &dm) != 0; iModeNum++)
+            {
+                if (dm.dmPelsWidth >= 640 && dm.dmPelsHeight >= 480)
+                {
+                    out.pushBack(Size(dm.dmPelsWidth, dm.dmPelsHeight));
+                }
+            }
+            out.unique();
+            return out;
         }
 
         FORCE_INLINE int getWidth()

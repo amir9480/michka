@@ -103,9 +103,9 @@ namespace Michka
         glDeleteFramebuffers(1, &mFrameBuffer);
     }
 
-    void OpenGLDevice::clear(const bool& _backBuffer, const bool& _depthBuffer, const bool& _stencil, const Vector4& _backBufferValue, const f32& _depthValue, const u8& _stencilValue)
+    void OpenGLDevice::clear(const bool& _backBuffer, const bool& _depthBuffer, const bool& _stencil, const Color& _backBufferValue, const f32& _depthValue, const u8& _stencilValue)
     {
-        glClearColor(_backBufferValue.r, _backBufferValue.g, _backBufferValue.b, _backBufferValue.a);
+        glClearColor(_backBufferValue.r/255.0f, _backBufferValue.g/255.0f, _backBufferValue.b/255.0f, _backBufferValue.a/255.0f);
         glClearDepth(_depthValue);
         glClearStencil(_stencilValue);
         glClear(
@@ -168,7 +168,8 @@ namespace Michka
             OpenGLShader* shader = dynamic_cast<OpenGLShader*>(mCurrentShader);
             OpenGLIndexBuffer* indexBuffer = dynamic_cast<OpenGLIndexBuffer*>(mCurrentIndexBuffer);
 
-            for (u32 i = 0; i < shader->mTextures.getSize(); i++) {
+            for (u32 i = 0; i < shader->mTextures.getSize(); i++)
+            {
                 const OpenGLTexture* texture = dynamic_cast<const OpenGLTexture*>(shader->mTextures.at(i).second);
                 glActiveTexture(GL_TEXTURE0 + i);
                 glBindTexture(GL_TEXTURE_2D, texture->mTexture);
@@ -237,7 +238,8 @@ namespace Michka
         setIndexBuffer(mQuadIndexBuffer);
         OpenGLIndexBuffer* indexBuffer = dynamic_cast<OpenGLIndexBuffer*>(mCurrentIndexBuffer);
         OpenGLShader* shader = dynamic_cast<OpenGLShader*>(mCurrentShader);
-        for (u32 i = 0; i < shader->mTextures.getSize(); i++) {
+        for (u32 i = 0; i < shader->mTextures.getSize(); i++)
+        {
             const OpenGLTexture* texture = dynamic_cast<const OpenGLTexture*>(shader->mTextures.at(i).second);
             glActiveTexture(GL_TEXTURE0 + i);
             glBindTexture(GL_TEXTURE_2D, texture->mTexture);
@@ -249,7 +251,7 @@ namespace Michka
         u32 width = _width > 0 ? _width : _texture->getWidth();
         u32 height = _height > 0 ? _height : _texture->getHeight();
         glViewport(_x, _y, width, height);
-        clear(true, true, true, Vector4(0, 0, 0, 1));
+        clear(true, true, true, Color(0, 0, 0, 255));
         glDrawElements(GL_TRIANGLES, indexBuffer->mCount, GL_UNSIGNED_INT, 0);
         setShader(nullptr);
         setVertexBuffer(nullptr);
