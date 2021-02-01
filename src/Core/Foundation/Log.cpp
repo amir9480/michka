@@ -32,6 +32,21 @@ namespace Michka
 {
     void michkaCallOnStart()
     {
-        Log::info("Michka started...");
+        std::time_t currentTime = std::time(0);
+        std::tm now = *std::localtime(&currentTime);
+        char message[8192];
+
+        sprintf(
+            message,
+            "Michka started (%d-%02d-%02d %02d:%02d:%02d)",
+            now.tm_year + 1900,
+            now.tm_mon + 1,
+            now.tm_mday,
+            now.tm_hour,
+            now.tm_min,
+            now.tm_sec
+        );
+
+        Log::info(message);
     }
 }

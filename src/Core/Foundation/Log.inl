@@ -89,8 +89,6 @@ namespace Michka
             break;
         }
 
-        std::time_t currentTime = std::time(0);
-        std::tm now = *std::localtime(&currentTime);
         char message[8192];
 
         if (_file && _line)
@@ -113,13 +111,11 @@ namespace Michka
 
             sprintf(
                 message,
-                "[%d-%02d-%02d %02d:%02d:%02d] %s: %s  (%s:%d) {%llu}\n",
-                now.tm_year + 1900,
-                now.tm_mon + 1,
-                now.tm_mday,
-                now.tm_hour,
-                now.tm_min,
-                now.tm_sec,
+                "[%02d:%02d:%02d.%03d] [%s]: %s  (%s:%d) {%llu}\n",
+                clock()/3600000,
+                (clock()/60000)%60,
+                (clock()/1000)%60,
+                clock()%1000,
                 levels[(int)_level],
                 _message,
                 fileName,
@@ -131,13 +127,11 @@ namespace Michka
         {
             sprintf(
                 message,
-                "[%d-%02d-%02d %02d:%02d:%02d] %s: %s  {%llu}\n",
-                now.tm_year + 1900,
-                now.tm_mon + 1,
-                now.tm_mday,
-                now.tm_hour,
-                now.tm_min,
-                now.tm_sec,
+                "[%02d:%02d:%02d.%03d] [%s]: %s  {%llu}\n",
+                clock()/3600000,
+                (clock()/60000)%60,
+                (clock()/1000)%60,
+                clock()%1000,
                 levels[(int)_level],
                 _message,
                 Thread::getCurrentId()
