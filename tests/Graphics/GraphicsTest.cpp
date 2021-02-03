@@ -25,10 +25,45 @@
 // ------------------------------------------------------------------------------- //
 
 #include <gtest/gtest.h>
+#include <memory>
 #include "MichkaTests.h"
+#include "Core/Foundation/File.h"
+#include "Core/Math/Vector3.h"
 #include "Graphics/Graphics.h"
 
-TEST(GraphicsTest, LoadFromFile)
+TEST(GraphicsTest, HelloTriangle)
 {
-    // Michka::Device* device = Michka::Device::instance()
+    Michka::String filesPath = Michka::String(MICHKA_TESTS_PATH) + "/Files/Graphics/";
+
+    std::shared_ptr<Michka::Window> window(new Michka::Window);
+    Michka::Device* device = Michka::Device::instance();
+    device->setWindow(window.get());
+    Michka::VertexDeclaration vbd = Michka::VertexDeclaration::begin()
+        .float32(3, Michka::VertexAttribute::Name::position)
+        .float32(3, Michka::VertexAttribute::Name::color0)
+    .end();
+    Michka::Vector3 vertices[] = {
+        Michka::Vector3(1.0f, -1.0f, 0.5f),  Michka::Vector3(1.0f, 0.0f, 0.0f),
+        Michka::Vector3(0.0f, 1.0f, 0.5f),   Michka::Vector3(0.0f, 1.0f, 0.0f),
+        Michka::Vector3(-1.0f, -1.0f, 0.5f), Michka::Vector3(0.0f, 0.0f, 1.0f)
+    };
+    u32 indices[] = {0, 1, 2};
+    std::shared_ptr<Michka::VertexBuffer> vb(device->createVertexBuffer(&vbd)->set(&vertices, sizeof(vertices)));
+    std::shared_ptr<Michka::IndexBuffer> ib(device->createIndexBuffer(&vbd)->set(indices, sizeof(indices)/sizeof(indices[0])));
+    std::shared_ptr<Michka::Texture> db(device->createTexture(640, 480, Michka::TextureFormat::depth32, true));
+    std::shared_ptr<Michka::Texture> rt(device->createTexture(640, 480, Michka::TextureFormat::r8g8b8, true));
+    std::shared_ptr<Michka::Shader> shader(device->createShader(Michka::File::getContents(filesPath + "Shaders/HelloTriangle.glsl")));
+
+    ASSERT_FALSE(shader->hasErrors()) << shader->getErrors().toUtf8().cstr();
+
+    device->setRenderTarget(0, rt.get());
+    device->setDepthBuffer(db.get());
+    device->clear(true, true, true, Michka::Color::black);
+    device->setIndexBuffer(ib.get());
+    device->setVertexBuffer(vb.get());
+    device->setShader(shader.get());
+    device->draw();
+
+    ASSERT_EQ(device->getWindow(), window.get());
+    ASSERT_EQ(rt->get(), Michka::Image(filesPath + "Images/hello_triangle.jpg"));
 }

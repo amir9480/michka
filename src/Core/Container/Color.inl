@@ -91,10 +91,10 @@ namespace Michka
 
     FORCE_INLINE bool Color::operator == (const Color& _other) const
     {
-        return Math::diff(r, _other.r) < 5 &&
-               Math::diff(g, _other.g) < 5 &&
-               Math::diff(b, _other.b) < 5 &&
-               Math::diff(a, _other.a) < 5;
+        return (Math::diff(r, _other.r) < 5) &&
+               (Math::diff(g, _other.g) < 5) &&
+               (Math::diff(b, _other.b) < 5) &&
+               (Math::diff(a, _other.a) < 5);
     }
 
     FORCE_INLINE bool Color::operator != (const Color& _other) const

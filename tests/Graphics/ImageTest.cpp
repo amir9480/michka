@@ -30,6 +30,32 @@
 #include "Core/Foundation/File.h"
 #include "Graphics/Image.h"
 
+TEST(ImageTest, Compare)
+{
+    Michka::String testFilePath = Michka::String(MICHKA_TESTS_PATH) + "/Files/Graphics/Images";
+
+    {
+        Michka::Image a;
+        Michka::Image b;
+        ASSERT_EQ(a, b);
+    }
+    {
+        Michka::Image a(testFilePath + "/color_test.jpg");
+        Michka::Image b;
+        ASSERT_NE(a, b);
+    }
+    {
+        Michka::Image a(testFilePath + "/color_test.jpg");
+        Michka::Image b(testFilePath + "/color_test.jpg");
+        ASSERT_EQ(a, b);
+    }
+    {
+        Michka::Image a(testFilePath + "/green2.jpg");
+        Michka::Image b(testFilePath + "/red2.jpg");
+        ASSERT_NE(a, b);
+    }
+}
+
 TEST(ImageTest, Flip)
 {
     Michka::String testFilePath = Michka::String(MICHKA_TESTS_PATH) + "/Files/Graphics/Images";

@@ -315,4 +315,34 @@ namespace Michka
 
         return *this;
     }
+
+    bool Image::operator == (const Image& _other) const
+    {
+        if (mData == nullptr && _other.mData == nullptr)
+        {
+            return true;
+        }
+        if (mWidth == _other.mWidth && mHeight == _other.mHeight && mData && _other.mData)
+        {
+            for (u32 i = 0; i < mWidth; i++)
+            {
+                for (u32 j = 0; j < mHeight; j++)
+                {
+                    if (getPixel(i, j) != _other.getPixel(i, j))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    bool Image::operator != (const Image& _other) const
+    {
+        return !(*this == _other);
+    }
 }

@@ -150,6 +150,9 @@ namespace Michka
         Image& operator = (const Image& _other);
         Image& operator = (Image&& _other);
 
+        bool operator == (const Image& _other) const;
+        bool operator != (const Image& _other) const;
+
     protected:
         u8* mData = nullptr;
         Format mFormat;
