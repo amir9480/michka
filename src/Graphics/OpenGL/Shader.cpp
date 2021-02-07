@@ -198,7 +198,7 @@ namespace Michka
         int location = getUniformLocation(_name);
         if (location != -1)
         {
-            glProgramUniformMatrix3fv(mProgram, location, 1, false, (float*)&_value);
+            glProgramUniformMatrix3fv(mProgram, location, 1, true, (float*)&_value);
             return true;
         }
 
@@ -210,7 +210,7 @@ namespace Michka
         int location = getUniformLocation(_name);
         if (location != -1)
         {
-            glProgramUniformMatrix4fv(mProgram, location, 1, false, (float*)&_value);
+            glProgramUniformMatrix4fv(mProgram, location, 1, true, (float*)&_value);
             return true;
         }
 

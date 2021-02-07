@@ -116,9 +116,9 @@ u32 indices[] = {1, 0, 2, 0, 1, 3, 5, 4, 6, 6, 4, 7, 9, 8, 10, 10, 8, 11, 13, 12
 
 Vertex vertices2[] =
 {
-    Vertex(-0.8f, -0.8f, 0.0f, 0.0f, 0.0f),
-    Vertex( 0.0f,  0.8f, 0.0f, 0.5f, 1.0f),
-    Vertex( 0.8f, -0.8f, 0.0f, 1.0f, 0.0f),
+    Vertex(-0.8f, -0.8f, 0.5f, 0.0f, 0.0f),
+    Vertex( 0.0f,  0.8f, 0.5f, 0.5f, 1.0f),
+    Vertex( 0.8f, -0.8f, 0.5f, 1.0f, 0.0f),
 };
 
 u32 indices2[] = {0, 1, 2};
@@ -134,8 +134,8 @@ int main()
     device->setWindow(window);
     window->show();
     Texture* texture = device->createTexture(image);
-    Texture* rt = device->createTexture(320, 240, Michka::TextureFormat::r8g8b8, true);
-    Texture* db = device->createTexture(320, 240, Michka::TextureFormat::depth32, true);
+    Texture* rt = device->createTexture(320, 240, TextureFormat::r8g8b8, true);
+    Texture* db = device->createTexture(320, 240, TextureFormat::depth32, true);
     IndexBuffer* ib = device->createIndexBuffer()->set(indices2, sizeof(indices2) / sizeof(indices2[0]));
     VertexBuffer* vb = device->createVertexBuffer(&Vertex::decl())->set(vertices2, sizeof(vertices2));
     Shader* shader = device->createShader(File::getContents("shaders/test.glsl"));
@@ -143,9 +143,6 @@ int main()
     {
         MICHKA_ABORT(shader->getErrors());
     }
-
-    bool firstTime = true;
-    int j = 0;
 
     while (window->isDestroyed() == false)
     {
@@ -155,17 +152,15 @@ int main()
         device->setIndexBuffer(ib);
         device->setVertexBuffer(vb);
         device->setShader(shader);
+        shader->set(
+            "wvp",
+            Matrix::createViewMatrix(Michka::Vector3(0.0f, 1.0f, -3.0f), Michka::Vector3::forward, Michka::Vector3::up) * Matrix::createPerspectiveProjection()
+        );
         shader->set("test", ((clock()/1000)%3) + 1);
         shader->set("testTexture", texture);
         device->draw();
 
         device->drawOnScreen(rt);
-
-        if (firstTime)
-        {
-            rt->get().save("test-assets/screenshot.jpg");
-            firstTime = false;
-        }
     }
 
     delete vb;

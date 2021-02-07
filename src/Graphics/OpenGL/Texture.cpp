@@ -68,7 +68,7 @@ namespace Michka
         return out;
     }
 
-    void Texture::set(const void* _data, const u32& _size)
+    Texture* Texture::set(const void* _data, const u32& _size)
     {
         if (mTexture)
         {
@@ -77,27 +77,91 @@ namespace Michka
             glGetIntegerv(GL_TEXTURE_2D, &currentTextureId);
 
             glBindTexture(GL_TEXTURE_2D, mTexture);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-
             glTexImage2D(GL_TEXTURE_2D, 0, format, mWidth, mHeight, 0, format == GL_DEPTH_COMPONENT32F ? GL_DEPTH_COMPONENT : format, GL_UNSIGNED_BYTE, _data);
+
             if (_data != nullptr)
             {
                 glGenerateMipmap(GL_TEXTURE_2D);
             }
 
+            setFilter(mFilter);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+
             glBindTexture(GL_TEXTURE_2D, currentTextureId);
         }
+
+        return this;
     }
 
-    void Texture::set(const Image& _image)
+    Texture* Texture::set(const Image& _image)
     {
         mWidth = _image.getWidth();
         mHeight = _image.getHeight();
         mFormat = (TextureFormat)_image.getFormat();
         set(_image.getFlipped().getData(), _image.getSize());
+
+        return this;
+    }
+
+    Texture* Texture::setFilter(const Texture::Filter& _filter)
+    {
+        mFilter = _filter;
+        if (mTexture != 0)
+        {
+            GLint currentTextureId;
+            glGetIntegerv(GL_TEXTURE_2D, &currentTextureId);
+            glBindTexture(GL_TEXTURE_2D, mTexture);
+
+            switch(_filter)
+            {
+            case Texture::Filter::default:
+                setFilter(defaultFilter);
+                mFilter = _filter; // Prevent change mFilter value from default
+                break;
+            case Texture::Filter::none:
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+                glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1.0f);
+                break;
+            case Texture::Filter::linear:
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+                glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1.0f);
+                break;
+            case Texture::Filter::trilinear:
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+                glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1.0f);
+                break;
+            case Texture::Filter::anisotropic2:
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+                glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 2.0f);
+                break;
+            case Texture::Filter::anisotropic4:
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+                glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 4.0f);
+                break;
+            case Texture::Filter::anisotropic8:
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+                glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 8.0f);
+                break;
+            case Texture::Filter::anisotropic16:
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+                glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 16.0f);
+                break;
+            };
+
+            if (_filter == Filter::none)
+            {
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            }
+            else if (_filter != Filter::default)
+            {
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            }
+
+            glBindTexture(GL_TEXTURE_2D, currentTextureId);
+        }
+
+        return this;
     }
 
     i32 Texture::textureFormatToGLFormat(const TextureFormat& _format)

@@ -159,7 +159,7 @@ namespace Michka
     {
         if (mWindow->isDestroyed())
         {
-            return;
+            return; // @NOCOVERAGE
         }
 
         if (mHdc == NULL || mOGLRenderContext == NULL)
@@ -170,7 +170,7 @@ namespace Michka
         wglMakeCurrent(NULL, NULL);
         if (!wglMakeCurrent(mHdc, mOGLRenderContext))
         {
-            MICHKA_ABORT("wglMakeCurrent() failed.");
+            MICHKA_ABORT("wglMakeCurrent() failed."); // @NOCOVERAGE
         }
     }
 
@@ -271,7 +271,7 @@ namespace Michka
     {
         if (mDestroyed)
         {
-            return;
+            return; // @NOCOVERAGE
         }
 
         while (1)

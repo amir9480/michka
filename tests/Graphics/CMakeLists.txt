@@ -32,6 +32,7 @@ set(
 
     ${CMAKE_CURRENT_SOURCE_DIR}/GraphicsTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ImageTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/TextureTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/VertexDeclarationTest.cpp
 
     # -------------------------------------------------------------------------- #

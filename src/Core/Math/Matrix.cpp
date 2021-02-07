@@ -217,7 +217,7 @@ namespace Michka
             axisX.x, axisY.x, axisZ.x, 0.0f,
             axisX.y, axisY.y, axisZ.y, 0.0f,
             axisX.z, axisY.z, axisZ.z, 0.0f,
-            Vector3::dotProduct(axisX,_position), Vector3::dotProduct(axisY,_position), Vector3::dotProduct(axisZ,_position), 1.0f
+            -Vector3::dotProduct(axisX,_position), -Vector3::dotProduct(axisY,_position), -Vector3::dotProduct(axisZ,_position), 1.0f
         );
     }
 

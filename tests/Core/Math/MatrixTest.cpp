@@ -152,7 +152,7 @@ TEST(MatrixTest, CreateViewMatrix)
     pos *= mat;
     pos /= pos.w;
 
-    ASSERT_EQ(pos, Michka::Vector4(0.0f, 1.0f, 1.0f));
+    ASSERT_EQ(pos, Michka::Vector4(0.0f, -1.0f, -1.0f));
 }
 
 TEST(MatrixTest, Determinant)

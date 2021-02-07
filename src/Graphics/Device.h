@@ -119,6 +119,11 @@ namespace Michka
         void drawQuad(const Texture* _texture, const u32& _x = 0, const u32& _y = 0, const u32& _width = 0, const u32& _height = 0);
 
         /**
+         * @brief Get the Max Anisotropy value.
+         */
+        u32 getMaxAnisotropy();
+
+        /**
          * @brief Get the output window.
          */
         Window* getWindow() const;
@@ -187,6 +192,7 @@ namespace Michka
         VertexBuffer*           mQuadVertexBuffer = nullptr;
         IndexBuffer*            mQuadIndexBuffer = nullptr;
         Shader*                 mQuadShader = nullptr;
+        u32                     mMaxAnisotropy = 0xffffffff;
 
 #       if MICHKA_GRAPHICS == MICHKA_OPENGL
             u32 mVertexArray = 0;

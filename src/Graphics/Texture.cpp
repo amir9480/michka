@@ -28,6 +28,8 @@
 
 namespace Michka
 {
+    Texture::Filter Texture::defaultFilter = Texture::Filter::linear;
+
     Texture::Texture()
     {
         //
@@ -36,6 +38,11 @@ namespace Michka
     Texture::~Texture()
     {
         destroy();
+    }
+
+    Texture::Filter Texture::getFilter() const
+    {
+        return mFilter;
     }
 
     TextureFormat Texture::getFormat() const

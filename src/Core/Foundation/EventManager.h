@@ -142,6 +142,7 @@ namespace Michka
 
     protected:
         bool mCallEventListenersManually = false;
+
     private:
         Map<String, List<EventHandler>> mEventHandlers;
         List<Event> mEventsQueue;

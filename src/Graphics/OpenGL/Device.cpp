@@ -63,7 +63,7 @@ namespace Michka
     {
         if (!gladLoadGL())
         {
-            MICHKA_ABORT("Failed to load GLAD.");
+            MICHKA_ABORT("Failed to load GLAD."); // @NOCOVERAGE
         }
 
         glGenVertexArrays(1, &mVertexArray);
@@ -91,7 +91,7 @@ namespace Michka
         mQuadShader = this->createShader(quadShaderSource);
         if (mQuadShader->hasErrors())
         {
-            MICHKA_ABORT(mQuadShader->getErrors().toUtf8().cstr());
+            MICHKA_ABORT(mQuadShader->getErrors().toUtf8().cstr()); // @NOCOVERAGE
         }
     }
 
@@ -144,6 +144,7 @@ namespace Michka
         glGenTextures(1, &output->mTexture);
         if (_renderTarget)
         {
+            output->setFilter(Texture::Filter::none);
             output->set(nullptr, 0);
         }
 
@@ -170,8 +171,6 @@ namespace Michka
                 const Texture* texture = dynamic_cast<const Texture*>(shader->mTextures.at(i).second);
                 glActiveTexture(GL_TEXTURE0 + i);
                 glBindTexture(GL_TEXTURE_2D, texture->mTexture);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
             }
@@ -187,25 +186,25 @@ namespace Michka
             GLenum errorCode;
             if ((errorCode = glCheckFramebufferStatus(GL_FRAMEBUFFER)) != GL_FRAMEBUFFER_COMPLETE)
             {
-                static Map<GLenum, String> errorMessages =
+                static Map<GLenum, String> errorMessages = // @NOCOVERAGE
                 {
-                    {GL_FRAMEBUFFER_UNDEFINED,                     "GL_FRAMEBUFFER_UNDEFINED"},
-                    {GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT,         "GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT"},
-                    {GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT, "GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT"},
-                    {GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER,        "GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER"},
-                    {GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER,        "GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER"},
-                    {GL_FRAMEBUFFER_UNSUPPORTED,                   "GL_FRAMEBUFFER_UNSUPPORTED"},
-                    {GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE,        "GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE"},
-                    {GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE,        "GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE"},
-                    {GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS,      "GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS"},
+                    {GL_FRAMEBUFFER_UNDEFINED,                     "GL_FRAMEBUFFER_UNDEFINED"}, // @NOCOVERAGE
+                    {GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT,         "GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT"}, // @NOCOVERAGE
+                    {GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT, "GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT"}, // @NOCOVERAGE
+                    {GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER,        "GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER"}, // @NOCOVERAGE
+                    {GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER,        "GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER"}, // @NOCOVERAGE
+                    {GL_FRAMEBUFFER_UNSUPPORTED,                   "GL_FRAMEBUFFER_UNSUPPORTED"}, // @NOCOVERAGE
+                    {GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE,        "GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE"}, // @NOCOVERAGE
+                    {GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE,        "GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE"}, // @NOCOVERAGE
+                    {GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS,      "GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS"}, // @NOCOVERAGE
                 };
-                String errorMessage = "Framebuffer is not completed.";
-                if (errorMessages.hasKey(errorCode))
-                {
-                    errorMessage += errorMessages[errorCode];
-                }
-                MICHKA_ERROR(errorMessage.toUtf8().cstr());
-                return;
+                String errorMessage = "Framebuffer is not completed."; // @NOCOVERAGE
+                if (errorMessages.hasKey(errorCode)) // @NOCOVERAGE
+                { // @NOCOVERAGE
+                    errorMessage += errorMessages[errorCode]; // @NOCOVERAGE
+                } // @NOCOVERAGE
+                MICHKA_ERROR(errorMessage.toUtf8().cstr()); // @NOCOVERAGE
+                return; // @NOCOVERAGE
             }
 
             if (renderTargetCount > 0)
@@ -240,8 +239,6 @@ namespace Michka
             const Texture* texture = dynamic_cast<const Texture*>(shader->mTextures.at(i).second);
             glActiveTexture(GL_TEXTURE0 + i);
             glBindTexture(GL_TEXTURE_2D, texture->mTexture);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
         }
@@ -253,6 +250,17 @@ namespace Michka
         setShader(nullptr);
         setVertexBuffer(nullptr);
         setIndexBuffer(nullptr);
+    }
+
+    u32 Device::getMaxAnisotropy()
+    {
+        if (mMaxAnisotropy == 0xffffffff)
+        {
+            f32 mMaxAnisotropyF;
+            glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &mMaxAnisotropyF);
+            mMaxAnisotropy = u32(mMaxAnisotropyF);
+        }
+        return mMaxAnisotropy;
     }
 
     bool Device::setDepthBuffer(const Texture* _depthBuffer)

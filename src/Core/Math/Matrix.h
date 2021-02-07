@@ -86,7 +86,7 @@ namespace Michka
          * @param _zNear
          * @param _zFar
          */
-        static Matrix createPerspectiveProjection(const f32& _fov = 45.0f, const f32& _aspectRatio = 4.0f/3.0f, const f32& _zNear = 0.1f, const f32& _zFar = 1000.0f);
+        static Matrix createPerspectiveProjection(const f32& _fov = 90.0f, const f32& _aspectRatio = 4.0f/3.0f, const f32& _zNear = 0.1f, const f32& _zFar = 1000.0f);
 
         /**
          * @brief Create a Rotation Matrix based on the axis and the angle.

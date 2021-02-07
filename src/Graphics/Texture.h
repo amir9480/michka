@@ -35,6 +35,19 @@ namespace Michka
 {
     class MICHKA_API Texture
     {
+    public:
+        enum class Filter: u8
+        {
+            default,
+            none,
+            linear,
+            trilinear,
+            anisotropic2,
+            anisotropic4,
+            anisotropic8,
+            anisotropic16,
+        };
+    private:
         friend class Device;
     public:
         ~Texture();
@@ -48,6 +61,11 @@ namespace Michka
          * @brief Get content of image.
          */
         Image get() const;
+
+        /**
+         * @brief Get texture current filter.
+         */
+        Filter getFilter() const;
 
         /**
          * @brief Get texture format.
@@ -74,15 +92,25 @@ namespace Michka
          *
          * @param _data
          * @param _size
+         * @return Self
          */
-        void set(const void* _data, const u32& _size);
+        Texture* set(const void* _data, const u32& _size);
 
         /**
          * @brief Set texture buffer.
          *
          * @param _image
+         * @return Self
          */
-        void set(const Image& _image);
+        Texture* set(const Image& _image);
+
+        /**
+         * @brief Set the texture filter.
+         *
+         * @param _filter
+         * @return Self
+         */
+        Texture* setFilter(const Filter& _filter = Filter::default);
 
     protected:
         Texture();
@@ -95,10 +123,13 @@ namespace Michka
         u32           mWidth = 0;
         u32           mHeight = 0;
         bool          mRenderTarget = false;
+        Filter        mFilter = Filter::default;
 
 #       if MICHKA_GRAPHICS == MICHKA_OPENGL
             u32           mTexture = 0;
 #       endif
+    public:
+        static Filter defaultFilter;
     };
 }
 
