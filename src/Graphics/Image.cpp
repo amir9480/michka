@@ -322,13 +322,33 @@ namespace Michka
         {
             return true;
         }
+        i32 diffrentsPixels = 0;
+        i32 maxDiffrents = min(i32(mWidth*mHeight/4), 8);
         if (mWidth == _other.mWidth && mHeight == _other.mHeight && mData && _other.mData)
         {
-            for (u32 i = 0; i < mWidth; i++)
+            for (u32 i = 0; i < mWidth; i+=2)
             {
-                for (u32 j = 0; j < mHeight; j++)
+                for (u32 j = 0; j < mHeight; j+=2)
                 {
-                    if (getPixel(i, j) != _other.getPixel(i, j))
+                    Color a[4] = {getPixel(i, j), getPixel(i+1, j), getPixel(i, j+1), getPixel(i+1, j+1)};
+                    Color b[4] = {_other.getPixel(i, j), _other.getPixel(i+1, j), _other.getPixel(i, j+1), _other.getPixel(i+1, j+1)};
+                    Color aAverage = Color(
+                        u8((int(a[0].r/16) + int(a[1].r/16) + int(a[2].r/16) + int(a[3].r/16))/4),
+                        u8((int(a[0].g/16) + int(a[1].g/16) + int(a[2].g/16) + int(a[3].g/16))/4),
+                        u8((int(a[0].b/16) + int(a[1].b/16) + int(a[2].b/16) + int(a[3].b/16))/4),
+                        u8((int(a[0].a/16) + int(a[1].a/16) + int(a[2].a/16) + int(a[3].a/16))/4)
+                    );
+                    Color bAverage = Color(
+                        u8((int(b[0].r/16) + int(b[1].r/16) + int(b[2].r/16) + int(b[3].r/16))/4),
+                        u8((int(b[0].g/16) + int(b[1].g/16) + int(b[2].g/16) + int(b[3].g/16))/4),
+                        u8((int(b[0].b/16) + int(b[1].b/16) + int(b[2].b/16) + int(b[3].b/16))/4),
+                        u8((int(b[0].a/16) + int(b[1].a/16) + int(b[2].a/16) + int(b[3].a/16))/4)
+                    );
+                    if (aAverage != bAverage)
+                    {
+                        diffrentsPixels++;
+                    }
+                    if (diffrentsPixels >= maxDiffrents)
                     {
                         return false;
                     }
