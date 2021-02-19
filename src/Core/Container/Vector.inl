@@ -84,7 +84,7 @@ namespace Michka
                     mData[i].~T();
                 }
             }
-            Memory.free(mData);
+            Memory::free(mData);
             mData = nullptr;
         }
         mSize = 0;
@@ -499,11 +499,11 @@ namespace Michka
             mCapacity = ((_newCapacity / capacityStep) + (_newCapacity % capacityStep > 0 ? 1 : 0)) * capacityStep;
             if (mData)
             {
-                mData = static_cast<T*>(Memory.realloc(mData, mCapacity * sizeof(T)));
+                mData = static_cast<T*>(Memory::realloc(mData, mCapacity * sizeof(T)));
             }
             else
             {
-                mData = static_cast<T*>(Memory.malloc(mCapacity * sizeof(T)));
+                mData = static_cast<T*>(Memory::malloc(mCapacity * sizeof(T)));
             }
             mSize = min(mSize, mCapacity);
         }

@@ -33,18 +33,14 @@
 
 namespace Michka
 {
-    class MICHKA_API MemoryManager
+    class MICHKA_API Memory
     {
-        MICHKA_SINGLETON_CLASS(MemoryManager)
-        FORCE_INLINE MemoryManager();
-        FORCE_INLINE ~MemoryManager();
+        FORCE_INLINE Memory();
     public:
-        FORCE_INLINE void* malloc(const std::size_t& _size);
-        FORCE_INLINE void* realloc(void* _ptr, const std::size_t& _size);
-        FORCE_INLINE void free(void* _ptr);
+        FORCE_INLINE static void* malloc(const std::size_t& _size);
+        FORCE_INLINE static void* realloc(void* _ptr, const std::size_t& _size);
+        FORCE_INLINE static void free(void* _ptr);
     };
-
-    static MemoryManager& Memory = MemoryManager::instance();
 }
 
 #undef new
