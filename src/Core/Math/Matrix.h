@@ -28,6 +28,7 @@
 #define __MATRIX_H__
 
 #include "Core/Defines.h"
+#include "Core/Reflection/ReflectionClass.h"
 
 namespace Michka
 {
@@ -44,6 +45,7 @@ namespace Michka
      */
     class MICHKA_API Matrix
     {
+        MICHKA_CLASS(Matrix);
     public:
         Matrix();
         Matrix(const f32 _array[16]);

@@ -30,6 +30,7 @@
 #include "Core/Defines.h"
 #include "Core/Container/Map.h"
 #include "Core/Container/String.h"
+#include "Core/Reflection/ReflectionClass.h"
 
 namespace Michka
 {
@@ -42,6 +43,8 @@ namespace Michka
 
     class MICHKA_API Shader
     {
+        MICHKA_CLASS(Shader);
+
         friend class Device;
     public:
         ~Shader();

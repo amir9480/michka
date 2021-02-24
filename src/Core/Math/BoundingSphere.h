@@ -29,6 +29,7 @@
 
 #include "Core/Defines.h"
 #include "Core/Math/Vector3.h"
+#include "Core/Reflection/ReflectionClass.h"
 
 namespace Michka
 {
@@ -39,6 +40,7 @@ namespace Michka
 
     class MICHKA_API BoundingSphere
     {
+        MICHKA_CLASS(BoundingSphere);
     public:
         FORCE_INLINE BoundingSphere();
         FORCE_INLINE BoundingSphere(const Vector3& _position, const f32& _radius);

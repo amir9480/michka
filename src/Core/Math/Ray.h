@@ -29,6 +29,7 @@
 
 #include "Core/Defines.h"
 #include "Vector3.h"
+#include "Core/Reflection/ReflectionClass.h"
 
 namespace Michka
 {
@@ -38,6 +39,7 @@ namespace Michka
 
     class MICHKA_API Ray
     {
+        MICHKA_CLASS(Ray);
     public:
         FORCE_INLINE Ray();
         FORCE_INLINE Ray(const Vector3& _position, const Vector3& _direction);

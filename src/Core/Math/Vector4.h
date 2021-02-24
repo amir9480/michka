@@ -28,6 +28,7 @@
 #define __VECTOR4_H__
 
 #include "Core/Defines.h"
+#include "Core/Reflection/ReflectionClass.h"
 
 namespace Michka
 {
@@ -36,6 +37,7 @@ namespace Michka
 
     class MICHKA_API Vector4
     {
+        MICHKA_CLASS(Vector4);
     public:
         FORCE_INLINE Vector4();
         FORCE_INLINE Vector4(const f32& _x, const f32& _y, const f32& _z, const f32& _w = 1.0f);

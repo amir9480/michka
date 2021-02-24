@@ -31,6 +31,7 @@
 #include "Core/Defines.h"
 #include "Core/Foundation/Event.h"
 #include "Core/Container/List.h"
+#include "Core/Reflection/ReflectionClass.h"
 
 namespace Michka
 {
@@ -39,6 +40,8 @@ namespace Michka
 
     class EventHandler
     {
+        MICHKA_CLASS(EventHandler);
+
         friend class EventManager;
     public:
         FORCE_INLINE EventHandler(const EventCallback& _callback, const bool& _once = false);
@@ -54,6 +57,7 @@ namespace Michka
 
     class MICHKA_API EventManager
     {
+        MICHKA_CLASS(EventManager);
     public:
         FORCE_INLINE EventManager();
         virtual ~EventManager();

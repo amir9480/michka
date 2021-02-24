@@ -28,6 +28,7 @@
 #define __COLOR_H__
 
 #include "Core/Defines.h"
+#include "Core/Reflection/ReflectionClass.h"
 
 namespace Michka
 {
@@ -36,6 +37,7 @@ namespace Michka
 
     class MICHKA_API Color
     {
+        MICHKA_CLASS(Color);
     public:
         FORCE_INLINE Color();
         FORCE_INLINE Color(const u8& _red, const u8& _green, const u8& _blue, const u8& _alpha = 255);

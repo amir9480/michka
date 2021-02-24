@@ -29,6 +29,7 @@
 
 #include "Core/Defines.h"
 #include "Core/Reflection/Type.h"
+#include "Core/Reflection/ReflectionClass.h"
 
 namespace Michka
 {
@@ -38,6 +39,7 @@ namespace Michka
     template<typename T>
     class MICHKA_API StringTemplate
     {
+        MICHKA_CLASS(StringTemplate<T>);
     public:
         typedef StringTemplate<char> String8;
         typedef StringTemplate<wchar_t> String;
@@ -273,7 +275,8 @@ namespace Michka
          *
          * @param _find
          * @param _replace
-         * @param _offset
+         * @param _start
+         * @param _end
          * @return Self
          */
         StringTemplate<T>& replace(const StringTemplate<T>& _find, const StringTemplate<T>& _replace = StringTemplate<T>::empty, const u32& _start = 0, const u32& _end = u32Info::max);

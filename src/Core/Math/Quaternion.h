@@ -28,6 +28,7 @@
 #define __QUATERNION_H__
 
 #include "Core/Defines.h"
+#include "Core/Reflection/ReflectionClass.h"
 
 #define QUATERNION_EPSILON 0.0002f
 
@@ -41,6 +42,7 @@ namespace Michka
      */
     class MICHKA_API Quaternion
     {
+        MICHKA_CLASS(Quaternion);
     public:
         FORCE_INLINE Quaternion();
         FORCE_INLINE Quaternion(const f32& _x, const f32& _y, const f32& _z, const f32& _w);

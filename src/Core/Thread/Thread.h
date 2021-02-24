@@ -29,6 +29,7 @@
 
 #include "Core/Defines.h"
 #include "Core/Container/Map.h"
+#include "Core/Reflection/ReflectionClass.h"
 #include "Mutex.h"
 #include <tuple>
 #include <functional>
@@ -37,6 +38,7 @@ namespace Michka
 {
     class MICHKA_API Thread
     {
+        MICHKA_CLASS(Thread);
     public:
         FORCE_INLINE Thread();
         Thread(const Thread& _other) = delete;

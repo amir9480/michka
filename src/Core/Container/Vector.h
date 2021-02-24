@@ -29,6 +29,7 @@
 
 #include "Core/Defines.h"
 #include "Core/Helpers.h"
+#include "Core/Reflection/ReflectionClass.h"
 #include <initializer_list>
 
 namespace Michka
@@ -36,6 +37,8 @@ namespace Michka
     template<typename T>
     class MICHKA_API Vector
     {
+        MICHKA_CLASS(Vector<T>);
+
         template<class U>
         friend class Vector;
     public:

@@ -28,11 +28,13 @@
 #define __MUTEX_H__
 
 #include "Core/Defines.h"
+#include "Core/Reflection/ReflectionClass.h"
 
 namespace Michka
 {
     class MICHKA_API Mutex
     {
+        MICHKA_CLASS(Mutex);
     public:
         Mutex();
         ~Mutex();

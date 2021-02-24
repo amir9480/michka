@@ -31,6 +31,7 @@
 #include "Core/Container/Color.h"
 #include "GraphicDefines.h"
 #include "Platform/Window.h"
+#include "Core/Reflection/ReflectionClass.h"
 
 namespace Michka
 {
@@ -43,6 +44,7 @@ namespace Michka
 
     class MICHKA_API Device
     {
+        MICHKA_CLASS(Device);
     public:
         ~Device();
 

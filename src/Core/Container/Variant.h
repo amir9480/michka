@@ -30,6 +30,7 @@
 #include "Core/Defines.h"
 #include "Core/Container/String.h"
 #include "Core/Container/List.h"
+#include "Core/Reflection/ReflectionClass.h"
 #include <initializer_list>
 
 namespace Michka
@@ -40,6 +41,7 @@ namespace Michka
     {
         class MICHKA_API CustomVariantBase
         {
+            MICHKA_CLASS(CustomVariantBase);
         public:
             FORCE_INLINE CustomVariantBase();
             virtual ~CustomVariantBase();
@@ -73,6 +75,8 @@ namespace Michka
         template<typename T>
         class MICHKA_API CustomVariant : public CustomVariantBase
         {
+            MICHKA_CLASS(CustomVariant, CustomVariantBase);
+
             friend class Variant;
         public:
             CustomVariant(const T& _value);
@@ -102,6 +106,8 @@ namespace Michka
         template<typename T>
         class MICHKA_API CustomVariantReference : public CustomVariantBase
         {
+            MICHKA_CLASS(CustomVariantReference, CustomVariantBase);
+
             friend class Variant;
         public:
             CustomVariantReference(T* _value);
@@ -131,6 +137,7 @@ namespace Michka
 
     class MICHKA_API Variant
     {
+        MICHKA_CLASS(Variant);
     public:
         enum class Type
         {

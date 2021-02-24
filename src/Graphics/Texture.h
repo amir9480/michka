@@ -28,6 +28,7 @@
 #define __TEXTURE_H__
 
 #include "Core/Defines.h"
+#include "Core/Reflection/ReflectionClass.h"
 #include "GraphicDefines.h"
 #include "Image.h"
 
@@ -35,6 +36,7 @@ namespace Michka
 {
     class MICHKA_API Texture
     {
+        MICHKA_CLASS(Texture);
     public:
         enum class Filter: u8
         {

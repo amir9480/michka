@@ -30,6 +30,7 @@
 #include "Core/Defines.h"
 #include "Utility.h"
 #include "Vector3.h"
+#include "Core/Reflection/ReflectionClass.h"
 
 namespace Michka
 {
@@ -40,6 +41,7 @@ namespace Michka
 
     class MICHKA_API BoundingBox
     {
+        MICHKA_CLASS(BoundingBox);
     public:
         enum Corner
         {

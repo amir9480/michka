@@ -29,12 +29,14 @@
 
 #include "Vector.h"
 #include "Pair.h"
+#include "Core/Reflection/ReflectionClass.h"
 
 namespace Michka
 {
     template<typename TKey, typename TValue>
     class MICHKA_API Map
     {
+        MICHKA_CLASS_WITH_NAME(MICHKA_ARGUMENT(Map<TKey, TValue>), "Map<TKey, TValue>");
     public:
         struct Element: public Pair<TKey, TValue>
         {

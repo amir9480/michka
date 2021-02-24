@@ -28,6 +28,7 @@
 #define __VECTOR2_H__
 
 #include "Core/Defines.h"
+#include "Core/Reflection/ReflectionClass.h"
 
 namespace Michka
 {
@@ -36,6 +37,7 @@ namespace Michka
 
     class MICHKA_API Vector2
     {
+        MICHKA_CLASS(Vector2);
     public:
         FORCE_INLINE Vector2();
         FORCE_INLINE Vector2(const f32& _x, const f32& _y);

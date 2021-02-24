@@ -30,11 +30,13 @@
 #include "Core/Defines.h"
 #include "Core/Helpers.h"
 #include "Core/Container/String.h"
+#include "Core/Reflection/ReflectionClass.h"
 
 namespace Michka
 {
     class MICHKA_API File
     {
+        MICHKA_CLASS(File);
     public:
         enum class OpenMode
         {

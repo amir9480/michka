@@ -28,9 +28,11 @@
 #define __LOG_H__
 
 #include "Core/Defines.h"
+#include "Core/Helpers.h"
 #include "Core/Exception/Exception.h"
 #include "Core/Foundation/File.h"
 #include "Core/Thread/Mutex.h"
+#include "Core/Reflection/ReflectionClass.h"
 
 #define MICHKA_ABORT(_MESSAGE) \
 { \
@@ -72,7 +74,8 @@ namespace Michka
 {
     class MICHKA_API Log
     {
-        MICHKA_SINGLETON_CLASS(Log)
+        MICHKA_CLASS(Log);
+        MICHKA_SINGLETON_CLASS(Log);
         FORCE_INLINE Log();
         FORCE_INLINE ~Log();
     public:

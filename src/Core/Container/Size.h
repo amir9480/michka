@@ -28,12 +28,14 @@
 #define __SIZE_H__
 
 #include "Core/Defines.h"
+#include "Core/Reflection/ReflectionClass.h"
 
 namespace Michka
 {
     template<typename T>
     class MICHKA_API SizeTemplate
     {
+        MICHKA_CLASS(SizeTemplate<T>);
     public:
         FORCE_INLINE SizeTemplate();
         FORCE_INLINE SizeTemplate(const T& _width, const T& _height);

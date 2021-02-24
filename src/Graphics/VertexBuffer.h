@@ -29,11 +29,13 @@
 
 #include "Core/Defines.h"
 #include "VertexDeclaration.h"
+#include "Core/Reflection/ReflectionClass.h"
 
 namespace Michka
 {
     class MICHKA_API VertexBuffer
     {
+        MICHKA_CLASS(VertexBuffer);
         friend class Device;
     public:
         ~VertexBuffer();

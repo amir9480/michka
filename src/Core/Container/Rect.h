@@ -30,6 +30,7 @@
 #include "Core/Defines.h"
 #include "Position.h"
 #include "Size.h"
+#include "Core/Reflection/ReflectionClass.h"
 
 namespace Michka
 {
@@ -46,6 +47,7 @@ namespace Michka
     template<typename T>
     class MICHKA_API RectTemplate
     {
+        MICHKA_CLASS(RectTemplate<T>);
     public:
         FORCE_INLINE RectTemplate();
         FORCE_INLINE RectTemplate(const PositionTemplate<T>& _position, const SizeTemplate<T>& _size);

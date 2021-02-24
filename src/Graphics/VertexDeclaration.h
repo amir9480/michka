@@ -29,11 +29,14 @@
 
 #include "Core/Defines.h"
 #include "Core/Container/Vector.h"
+#include "Core/Reflection/ReflectionClass.h"
 
 namespace Michka
 {
     struct VertexAttribute
     {
+        MICHKA_STRUCT(VertexAttribute);
+
         enum class Name
         {
             position,
@@ -77,6 +80,7 @@ namespace Michka
 
     class VertexDeclaration
     {
+        MICHKA_CLASS(VertexDeclaration);
     public:
         /**
          * @brief Begin declaration.

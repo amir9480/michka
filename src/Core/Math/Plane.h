@@ -28,6 +28,7 @@
 #define __PLANE_H__
 
 #include "Core/Defines.h"
+#include "Core/Reflection/ReflectionClass.h"
 #include "Vector3.h"
 #include "Utility.h"
 
@@ -39,6 +40,7 @@ namespace Michka
 
     class MICHKA_API Plane
     {
+        MICHKA_CLASS(Plane);
     public:
         FORCE_INLINE Plane();
         FORCE_INLINE Plane(const Vector3& _position, const Vector3& _normal);

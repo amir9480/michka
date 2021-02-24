@@ -29,11 +29,13 @@
 
 #include "Core/Defines.h"
 #include "Core/Container/Color.h"
+#include "Core/Reflection/ReflectionClass.h"
 
 namespace Michka
 {
     class MICHKA_API Image
     {
+        MICHKA_CLASS(Image);
     public:
         enum class Format : u32
         {

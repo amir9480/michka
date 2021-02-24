@@ -29,12 +29,15 @@
 
 #include "Core/Defines.h"
 #include <initializer_list>
+#include "Core/Reflection/ReflectionClass.h"
 
 namespace Michka
 {
     template<typename T>
     class MICHKA_API List
     {
+        MICHKA_CLASS(List<T>);
+
         template<class U>
         friend class List;
     public:

@@ -28,11 +28,13 @@
 #define __INDEX_BUFFER_H__
 
 #include "Core/Defines.h"
+#include "Core/Reflection/ReflectionClass.h"
 
 namespace Michka
 {
     class MICHKA_API IndexBuffer
     {
+        MICHKA_CLASS(IndexBuffer);
         friend class Device;
     public:
         ~IndexBuffer();

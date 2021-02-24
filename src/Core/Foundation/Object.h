@@ -29,11 +29,14 @@
 
 #include "Core/Defines.h"
 #include "Core/Foundation/EventManager.h"
+#include "Core/Reflection/ReflectionClass.h"
 
 namespace Michka
 {
     class MICHKA_API Object : public EventManager
     {
+        MICHKA_CLASS(Object, EventManager);
+
     public:
         FORCE_INLINE Object();
         FORCE_INLINE Object(const Object& _other);

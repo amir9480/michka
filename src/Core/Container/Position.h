@@ -28,12 +28,15 @@
 #define __POSITION_H__
 
 #include "Core/Defines.h"
+#include "Core/Reflection/ReflectionClass.h"
 
 namespace Michka
 {
     template<typename T>
     class MICHKA_API PositionTemplate
     {
+        MICHKA_CLASS(PositionTemplate<T>);
+
     public:
         FORCE_INLINE PositionTemplate();
         FORCE_INLINE PositionTemplate(const T& _x, const T& _y);

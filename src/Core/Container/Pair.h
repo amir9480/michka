@@ -28,12 +28,15 @@
 #define __PAIR_H__
 
 #include <utility>
+#include "Core/Reflection/ReflectionClass.h"
 
 namespace Michka
 {
     template<typename T1, typename T2>
     struct Pair
     {
+        MICHKA_STRUCT_WITH_NAME(MICHKA_ARGUMENT(Pair<T1, T2>), "Pair<T1, T2>");
+
         FORCE_INLINE Pair();
         FORCE_INLINE Pair(const T1& _first, const T2& _second);
         FORCE_INLINE Pair(T1&& _first, T2&& _second);

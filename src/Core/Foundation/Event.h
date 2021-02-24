@@ -31,11 +31,14 @@
 #include "Core/Container/String.h"
 #include "Core/Container/Map.h"
 #include "Core/Container/Variant.h"
+#include "Core/Reflection/ReflectionClass.h"
 
 namespace Michka
 {
     class MICHKA_API Event
     {
+        MICHKA_CLASS(Event);
+
         friend class EventManager;
     public:
         FORCE_INLINE Event();
