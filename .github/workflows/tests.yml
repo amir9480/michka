@@ -19,7 +19,9 @@ jobs:
       run: cmake --build build --config Debug -j4
 
     - name: Install Required Softwares
-      run: choco install opencppcoverage codecov 7zip.install
+      run: |
+        choco install opencppcoverage codecov 7zip.install
+        pip install -r scripts/requirements.txt
 
     - name: Install Mesa
       shell: cmd
