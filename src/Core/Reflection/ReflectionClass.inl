@@ -24,30 +24,35 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#ifndef __MICHKA_OBJECT_H__
-#define __MICHKA_OBJECT_H__
-
-#include "Core/Defines.h"
-#include "Core/Foundation/EventManager.h"
-#include "Core/Reflection/ReflectionClass.h"
-#include "MichkaGenerated/Core/Foundation/Object.generated.h"
+#include "ReflectionClass.h"
 
 namespace Michka
 {
-    class MICHKA_API Object : public EventManager
+    FORCE_INLINE ReflectionClass::ReflectionClass(const char* _name, const char* _typename, const u64& _typehash) :
+        mName(_name),
+        mTypeName(_typename),
+        mTypeHash(_typehash)
     {
-        MICHKA_CLASS(Object);
+        //
+    }
 
-    public:
-        FORCE_INLINE Object();
-        FORCE_INLINE Object(const Object& _other);
-        FORCE_INLINE Object(Object&& _other);
+    FORCE_INLINE ReflectionClass::~ReflectionClass()
+    {
 
-        FORCE_INLINE Object operator = (const Object& _other);
-        FORCE_INLINE Object operator = (Object&& _other);
-    };
+    }
+
+    const char* ReflectionClass::getName() const
+    {
+        return mName;
+    }
+
+    u64 ReflectionClass::getTypeHash() const
+    {
+        return mTypeHash;
+    }
+
+    const char* ReflectionClass::getTypeName() const
+    {
+        return mTypeName;
+    }
 }
-
-#include "Object.inl"
-
-#endif // __MICHKA_OBJECT_H__

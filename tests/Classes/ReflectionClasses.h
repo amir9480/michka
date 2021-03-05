@@ -28,6 +28,7 @@
 #define __TEST_REFLECTION_CLASSES_H__
 
 #include "Core/Reflection/Reflection.h"
+#include "MichkaGenerated/tests/Classes/ReflectionClasses.generated.h"
 
 class ParentClass1
 {
@@ -108,77 +109,77 @@ public:
 
 class ChildClass1: public ParentClass1
 {
-    MICHKA_CLASS(ChildClass1, ParentClass1);
+    MICHKA_CLASS(ChildClass1);
 public:
     int b1 = 0;
 };
 
 class ChildClass2: public ParentClass1, public ParentClass2
 {
-    MICHKA_CLASS(ChildClass2, ParentClass1, ParentClass2);
+    MICHKA_CLASS(ChildClass2);
 public:
     int b2 = 0;
 };
 
 class ChildClass3: public ParentClass1, public ParentClass2, public ParentClass3
 {
-    MICHKA_CLASS(ChildClass3, ParentClass1, ParentClass2, ParentClass3);
+    MICHKA_CLASS(ChildClass3);
 public:
     int b3 = 0;
 };
 
 class ChildClass4: public ParentClass1, public ParentClass2, public ParentClass3, public ParentClass4
 {
-    MICHKA_CLASS(ChildClass4, ParentClass1, ParentClass2, ParentClass3, ParentClass4);
+    MICHKA_CLASS(ChildClass4);
 public:
     int b4 = 0;
 };
 
 class ChildClass5: public ParentClass1, public ParentClass2, public ParentClass3, public ParentClass4, public ParentClass5
 {
-    MICHKA_CLASS(ChildClass5, ParentClass1, ParentClass2, ParentClass3, ParentClass4, ParentClass5);
+    MICHKA_CLASS(ChildClass5);
 public:
     int b5 = 0;
 };
 
 class ChildClass6: public ParentClass1, public ParentClass2, public ParentClass3, public ParentClass4, public ParentClass5, public ParentClass6
 {
-    MICHKA_CLASS(ChildClass6, ParentClass1, ParentClass2, ParentClass3, ParentClass4, ParentClass5, ParentClass6);
+    MICHKA_CLASS(ChildClass6);
 public:
     int b6 = 0;
 };
 
 class ChildClass7: public ParentClass1, public ParentClass2, public ParentClass3, public ParentClass4, public ParentClass5, public ParentClass6, public ParentClass7
 {
-    MICHKA_CLASS(ChildClass7, ParentClass1, ParentClass2, ParentClass3, ParentClass4, ParentClass5, ParentClass6, ParentClass7);
+    MICHKA_CLASS(ChildClass7);
 public:
     int b7 = 0;
 };
 
 class ChildClass8: public ParentClass1, public ParentClass2, public ParentClass3, public ParentClass4, public ParentClass5, public ParentClass6, public ParentClass7, public ParentClass8
 {
-    MICHKA_CLASS(ChildClass8, ParentClass1, ParentClass2, ParentClass3, ParentClass4, ParentClass5, ParentClass6, ParentClass7, ParentClass8);
+    MICHKA_CLASS(ChildClass8);
 public:
     int b8 = 0;
 };
 
 class ChildClass9: public ParentClass1, public ParentClass2, public ParentClass3, public ParentClass4, public ParentClass5, public ParentClass6, public ParentClass7, public ParentClass8, public ParentClass9
 {
-    MICHKA_CLASS(ChildClass9, ParentClass1, ParentClass2, ParentClass3, ParentClass4, ParentClass5, ParentClass6, ParentClass7, ParentClass8, ParentClass9);
+    MICHKA_CLASS(ChildClass9);
 public:
     int b9 = 0;
 };
 
 class ChildClass10: public ParentClass1, public ParentClass2, public ParentClass3, public ParentClass4, public ParentClass5, public ParentClass6, public ParentClass7, public ParentClass8, public ParentClass9, public ParentClass10
 {
-    MICHKA_CLASS(ChildClass10, ParentClass1, ParentClass2, ParentClass3, ParentClass4, ParentClass5, ParentClass6, ParentClass7, ParentClass8, ParentClass9, ParentClass10);
+    MICHKA_CLASS(ChildClass10);
 public:
     int b10 = 0;
 };
 
 class ChildClass10Nested: public ChildClass10
 {
-    MICHKA_CLASS(ChildClass10Nested, ChildClass10);
+    MICHKA_CLASS(ChildClass10Nested);
 public:
     int b100 = 0;
 };

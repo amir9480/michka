@@ -54,14 +54,15 @@ set(
     opengl32.lib
 )
 target_link_libraries(Michka ${LIBS})
-add_custom_target(
-    MichkaGenerated
+
+add_custom_command(TARGET Michka
+    PRE_BUILD
     COMMAND python scripts/generator.py ./src ./build/Generated/MichkaGenerated
+    COMMAND python scripts/generator.py ./tests ./build/Generated/MichkaGenerated/tests
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     COMMENT "Generating sources..."
     VERBATIM
 )
-add_dependencies(Michka MichkaGenerated)
 
 if(MICHKA_BUILD_TYPE STREQUAL "MinSizeRel")
     set(MICHKA_BUILD_TYPE "MinSizeRel")

@@ -76,7 +76,7 @@ namespace Michka
         template<typename T>
         class MICHKA_API CustomVariant : public CustomVariantBase
         {
-            MICHKA_CLASS(CustomVariant, CustomVariantBase);
+            MICHKA_CLASS(CustomVariant);
 
             friend class Variant;
         public:
@@ -107,7 +107,7 @@ namespace Michka
         template<typename T>
         class MICHKA_API CustomVariantReference : public CustomVariantBase
         {
-            MICHKA_CLASS(CustomVariantReference, CustomVariantBase);
+            MICHKA_CLASS(CustomVariantReference);
 
             friend class Variant;
         public:

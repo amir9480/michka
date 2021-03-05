@@ -2,12 +2,41 @@ import sys
 import os
 import re
 import json
+import pprint
+import CppHeaderParser
+
 
 generator_comment = '// Generated automatically by Michka (https://github.com/amir9480/michka).\n// Please DO NOT Modify this file.\n\n'
 
+def file_get_contents(path, flags):
+    if os.path.exists(path):
+        f = open(path, flags)
+        output = f.read()
+        f.close()
+        return output
+    return None
+
 
 def generate_source(source_file):
-    return '#ifdef __MICHKA_STRUCT_GENERATED_BODY\n#undef __MICHKA_STRUCT_GENERATED_BODY\n#endif\n#define __MICHKA_STRUCT_GENERATED_BODY static inline const char* sayHello() {return "Hello World!";};\n// A simple generated code.'
+    out = ''
+    source = file_get_contents(source_file, 'r')
+    michka_class_define_regex = r'((class|struct)[^{:;/]+(:\s*([^{;/]+))?{([\s\S]+?))MICHKA_(CLASS|STRUCT|CLASS_WITH_NAME|STRUCT_WITH_NAME)?\((.+)\)\;'
+
+    for match in re.finditer(michka_class_define_regex, source, re.MULTILINE):
+        line_number = len(source[:match.span()[0] + len(match[1])].splitlines())
+        class_parent_source = match[4]
+        out += '\n#ifndef __MICHKA_STRUCT_GENERATED_BODY_' + str(line_number) + '\n'
+        out += '#define __MICHKA_STRUCT_GENERATED_BODY_' + str(line_number) + '() \\\n'
+        if class_parent_source:
+            class_parent_source = re.sub(r'(^|[^\w])public([^\w])', '', class_parent_source, flags=re.MULTILINE)
+            class_parents = enumerate(re.finditer(r'[A-z0-9_]+(<([^<>]|(<([^<>]|<([^<>]|<([^<>])*>)*>)*>))*>)?', class_parent_source, re.MULTILINE))
+            for index, class_parent in class_parents:
+                out += 'typedef ' + class_parent[0] + ' Parent' + (str(index + 1) if index > 0 else '') + ';'
+        else:
+            out += 'typedef void Parent;'
+        out += '\n#endif\n'
+    out += '\n\n// A simple generated code.'
+    return out
 
 
 def generate(path):
@@ -22,7 +51,7 @@ def generate(path):
             generated_file = os.path.splitext(full_path)[0].replace('.', '_') + '.generated.h'
             generated_files.append(generated_file)
             generated_file = sys.argv[2] + '/' + generated_file
-            if not os.path.exists(generated_file) or os.path.getmtime(path + '/' + sub_path) > os.path.getmtime(generated_file) or True:
+            if not os.path.exists(generated_file) or os.path.getmtime(path + '/' + sub_path) > os.path.getmtime(generated_file) or False:
                 file = open(generated_file, 'w')
                 file.write(generator_comment)
                 header_guard = '__MICHKA_GENERATED_' + generated_file.replace('/', '_').replace('.', '_').upper() + '__'
@@ -58,3 +87,4 @@ def main():
 
 
 main()
+# print(generate_source(sys.argv[1] + '/Core/Container/Rect.h'))
