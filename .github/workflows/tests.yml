@@ -12,6 +12,9 @@ jobs:
       with:
         submodules: true
 
+    - name: Install Python Packages
+      run: pip install -r scripts/requirements.txt
+
     - name: Configure
       run: cmake -Bbuild -T host=x64 -A x64
 
@@ -19,9 +22,7 @@ jobs:
       run: cmake --build build --config Debug -j4
 
     - name: Install Required Softwares
-      run: |
-        choco install opencppcoverage codecov 7zip.install
-        pip install -r scripts/requirements.txt
+      run: choco install opencppcoverage codecov 7zip.install
 
     - name: Install Mesa
       shell: cmd
