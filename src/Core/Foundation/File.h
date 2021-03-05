@@ -31,6 +31,7 @@
 #include "Core/Helpers.h"
 #include "Core/Container/String.h"
 #include "Core/Reflection/ReflectionClass.h"
+#include "MichkaGenerated/Core/Foundation/File.generated.h"
 
 namespace Michka
 {

@@ -31,6 +31,7 @@
 #include "Position.h"
 #include "Size.h"
 #include "Core/Reflection/ReflectionClass.h"
+#include "MichkaGenerated/Core/Container/Rect.generated.h"
 
 namespace Michka
 {

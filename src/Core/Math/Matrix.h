@@ -29,6 +29,7 @@
 
 #include "Core/Defines.h"
 #include "Core/Reflection/ReflectionClass.h"
+#include "MichkaGenerated/Core/Math/Matrix.generated.h"
 
 namespace Michka
 {

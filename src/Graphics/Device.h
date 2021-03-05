@@ -32,6 +32,7 @@
 #include "GraphicDefines.h"
 #include "Platform/Window.h"
 #include "Core/Reflection/ReflectionClass.h"
+#include "MichkaGenerated/Graphics/Device.generated.h"
 
 namespace Michka
 {

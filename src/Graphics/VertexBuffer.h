@@ -30,6 +30,7 @@
 #include "Core/Defines.h"
 #include "VertexDeclaration.h"
 #include "Core/Reflection/ReflectionClass.h"
+#include "MichkaGenerated/Graphics/VertexBuffer.generated.h"
 
 namespace Michka
 {

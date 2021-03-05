@@ -30,6 +30,7 @@
 #include "Core/Defines.h"
 #include "Core/Reflection/Type.h"
 #include "Core/Reflection/ReflectionClass.h"
+#include "MichkaGenerated/Core/Container/String.generated.h"
 
 namespace Michka
 {

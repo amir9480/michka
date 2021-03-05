@@ -29,6 +29,7 @@
 
 #include "Core/Defines.h"
 #include "Core/Reflection/ReflectionClass.h"
+#include "MichkaGenerated/Core/Thread/Mutex.generated.h"
 
 namespace Michka
 {
@@ -59,7 +60,7 @@ namespace Michka
 
     class MICHKA_API MutexLock
     {
-        MICHKA_NON_COPYABLE_CLASS(MutexLock)
+        MICHKA_NON_COPYABLE_CLASS(MutexLock);
     public:
         explicit MutexLock(Mutex& _mutex);
         ~MutexLock();

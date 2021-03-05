@@ -31,6 +31,7 @@
 #include "Core/Container/Map.h"
 #include "Core/Container/String.h"
 #include "Core/Reflection/ReflectionClass.h"
+#include "MichkaGenerated/Graphics/Shader.generated.h"
 
 namespace Michka
 {

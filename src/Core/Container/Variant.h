@@ -32,6 +32,7 @@
 #include "Core/Container/List.h"
 #include "Core/Reflection/ReflectionClass.h"
 #include <initializer_list>
+#include "MichkaGenerated/Core/Container/Variant.generated.h"
 
 namespace Michka
 {

@@ -31,6 +31,7 @@
 #include "Utility.h"
 #include "Vector3.h"
 #include "Core/Reflection/ReflectionClass.h"
+#include "MichkaGenerated/Core/Math/BoundingBox.generated.h"
 
 namespace Michka
 {

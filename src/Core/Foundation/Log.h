@@ -33,6 +33,7 @@
 #include "Core/Foundation/File.h"
 #include "Core/Thread/Mutex.h"
 #include "Core/Reflection/ReflectionClass.h"
+#include "MichkaGenerated/Core/Foundation/Log.generated.h"
 
 #define MICHKA_ABORT(_MESSAGE) \
 { \

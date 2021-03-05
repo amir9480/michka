@@ -33,6 +33,7 @@
 #include "Mutex.h"
 #include <tuple>
 #include <functional>
+#include "MichkaGenerated/Core/Thread/Thread.generated.h"
 
 namespace Michka
 {
@@ -125,7 +126,7 @@ namespace Michka
         /**
          * Run function.
          */
-        virtual void run();
+        virtual void run() override;
 
         /**
          * @brief Call function in thread.

@@ -32,6 +32,7 @@
 #include "Core/Container/Map.h"
 #include "Core/Container/Variant.h"
 #include "Core/Reflection/ReflectionClass.h"
+#include "MichkaGenerated/Core/Foundation/Event.generated.h"
 
 namespace Michka
 {

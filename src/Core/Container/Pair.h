@@ -29,6 +29,7 @@
 
 #include <utility>
 #include "Core/Reflection/ReflectionClass.h"
+#include "MichkaGenerated/Core/Container/Pair.generated.h"
 
 namespace Michka
 {

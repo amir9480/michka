@@ -31,6 +31,7 @@
 #include "Core/Reflection/ReflectionClass.h"
 #include "GraphicDefines.h"
 #include "Image.h"
+#include "MichkaGenerated/Graphics/Texture.generated.h"
 
 namespace Michka
 {

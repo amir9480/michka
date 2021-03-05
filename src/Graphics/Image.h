@@ -30,6 +30,7 @@
 #include "Core/Defines.h"
 #include "Core/Container/Color.h"
 #include "Core/Reflection/ReflectionClass.h"
+#include "MichkaGenerated/Graphics/Image.generated.h"
 
 namespace Michka
 {

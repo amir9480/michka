@@ -127,8 +127,6 @@ u32 indices2[] = {0, 1, 2};
 
 int main()
 {
-    std::cout << List<int>::className() << std::endl;
-    exit(0);
     Image image("test-assets/grass.jpg");
 
     Window* window = new Window();

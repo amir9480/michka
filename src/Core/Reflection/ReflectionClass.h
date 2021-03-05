@@ -42,13 +42,16 @@
 #define ___MICHKA_PARENT_CLASSES9(_T1, _T2, _T3, _T4, _T5, _T6, _T7, _T8, _T9)        typedef _T1 Parent; typedef _T2 Parent2; typedef _T3 Parent3; typedef _T4 Parent4; typedef _T5 Parent5; typedef _T6 Parent6; typedef _T7 Parent7; typedef _T8 Parent8; typedef _T9 Parent9;
 #define ___MICHKA_PARENT_CLASSES10(_T1, _T2, _T3, _T4, _T5, _T6, _T7, _T8, _T9, _T10) typedef _T1 Parent; typedef _T2 Parent2; typedef _T3 Parent3; typedef _T4 Parent4; typedef _T5 Parent5; typedef _T6 Parent6; typedef _T7 Parent7; typedef _T8 Parent8; typedef _T9 Parent9; typedef _T10 Parent10;
 
+#define __MICHKA_STRUCT_GENERATED_BODY
+
 #define MICHKA_STRUCT_WITH_NAME(_TYPE, _NAME, ...) \
     __MICHKA_PARENT_CLASSES(__VA_ARGS__); \
     typedef _TYPE Self; \
     static inline const char* className() \
     { \
         return _NAME; \
-    }
+    } \
+    __MICHKA_STRUCT_GENERATED_BODY
 
 #define MICHKA_CLASS_WITH_NAME(_TYPE, _NAME, ...) \
     public: \
