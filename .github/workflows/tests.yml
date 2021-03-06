@@ -12,6 +12,16 @@ jobs:
       with:
         submodules: true
 
+    - name: Cache
+      uses: actions/cache@v2
+      with:
+        path: |
+          ./choco-cache
+          ~\AppData\Local\pip\Cache
+        key: michka-cache
+        restore-keys: |
+          michka-cache
+
     - name: Install Python Packages
       run: pip install -r scripts/requirements.txt
 
@@ -22,13 +32,22 @@ jobs:
       run: cmake --build build --config Debug -j4
 
     - name: Install Required Softwares
-      run: choco install opencppcoverage codecov 7zip.install
+      run: |
+        choco upgrade opencppcoverage codecov 7zip.install --no-progress
+
+    - name: Download Mesa
+      shell: cmd
+      if: hashFiles('build\tests\Debug\x64\opengl32.dll') == '' || hashFiles('build\tests\Debug\x64\libglapi.dll') == ''
+      run: |
+        curl.exe -L --output mesa.7z --url https://github.com/pal1000/mesa-dist-win/releases/download/20.3.2/mesa3d-20.3.2-release-msvc.7z
+        "C:\Program Files\7-Zip\7z.exe" x mesa.7z
+      working-directory: build\tests\Debug
 
     - name: Install Mesa
       shell: cmd
       run: |
-        curl.exe -L --output mesa.7z --url https://github.com/pal1000/mesa-dist-win/releases/download/20.3.2/mesa3d-20.3.2-release-msvc.7z
-        "C:\Program Files\7-Zip\7z.exe" x mesa.7z
+        del "opengl32.dll" >nul 2>&1
+        del "libglapi.dll" >nul 2>&1
         mklink opengl32.dll "x64\opengl32.dll"
         mklink libglapi.dll "x64\libglapi.dll"
       working-directory: build\tests\Debug
