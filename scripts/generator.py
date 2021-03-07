@@ -8,6 +8,8 @@ import CppHeaderParser
 
 generator_comment = '// Generated automatically by Michka (https://github.com/amir9480/michka).\n// Please DO NOT Modify this file.\n\n'
 
+
+# ---------------------------------------------------------------------------- #
 def file_get_contents(path, flags):
     if os.path.exists(path):
         f = open(path, flags)
@@ -17,6 +19,7 @@ def file_get_contents(path, flags):
     return None
 
 
+# ---------------------------------------------------------------------------- #
 def generate_source(source_file):
     out = ''
     source = file_get_contents(source_file, 'r')
@@ -34,11 +37,12 @@ def generate_source(source_file):
                 out += 'typedef ' + class_parent[0] + ' Parent' + (str(index + 1) if index > 0 else '') + ';'
         else:
             out += 'typedef void Parent;'
-        out += '\n#endif\n'
+        out += '\n\n#endif // __MICHKA_STRUCT_GENERATED_BODY_' + str(line_number) + '\n'
     out += '\n\n// A simple generated code.'
     return out
 
 
+# ---------------------------------------------------------------------------- #
 def generate(path):
     generated_files = []
     for sub_path in os.listdir(path):
@@ -67,6 +71,7 @@ def generate(path):
     return generated_files
 
 
+# ---------------------------------------------------------------------------- #
 def generate_files():
     generated_sources = generate(sys.argv[1])
     # cmake_file = open(sys.argv[2] + '/CMakeLists.txt', 'w')
@@ -78,6 +83,7 @@ def generate_files():
     # cmake_file.close()
 
 
+# ---------------------------------------------------------------------------- #
 def main():
     if len(sys.argv) != 3:
         raise Exception('Wrong arguments.')
@@ -87,4 +93,4 @@ def main():
 
 
 main()
-# print(generate_source(sys.argv[1] + '/Core/Container/Rect.h'))
+# print(generate_source(sys.argv[1] + '/Core/Container/Size.h'))

@@ -57,6 +57,7 @@ set(
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/Vector3Test.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/Vector4Test.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Reflection/ClassReflectionTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Reflection/MetaPropertiesTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Reflection/TypeTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Thread/ThreadTest.cpp
 

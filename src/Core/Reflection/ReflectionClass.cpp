@@ -28,7 +28,7 @@
 
 namespace Michka
 {
-    FORCE_INLINE ReflectionClass::ReflectionClass(const char* _name, const char* _typename, const u64& _typehash) :
+    ReflectionClass::ReflectionClass(const char* _name, const char* _typename, const u64& _typehash) :
         mName(_name),
         mTypeName(_typename),
         mTypeHash(_typehash)
@@ -36,9 +36,9 @@ namespace Michka
         //
     }
 
-    FORCE_INLINE ReflectionClass::~ReflectionClass()
+    ReflectionClass::~ReflectionClass()
     {
-
+        //
     }
 
     const char* ReflectionClass::getName() const
