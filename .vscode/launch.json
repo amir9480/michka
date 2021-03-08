@@ -12,8 +12,7 @@
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": true
+            "environment": []
         },
         {
             "name": "Run Tests",
@@ -23,19 +22,17 @@
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": false
+            "environment": []
         },
         {
             "name": "Run Tests Coverage",
             "type": "cppvsdbg",
             "request": "launch",
             "program": "OpenCppCoverage.exe",
-            "args": ["--sources", "src\\*", "--excluded_sources", "thirdparty\\*", "--excluded_sources", "d:\\agent", "--modules", "build\\*", "--export_type" , "html:build/coverage/html", "--export_type", "cobertura:build/coverage/coverage.xml", "--excluded_line_regex", ".*@NOCOVERAGE.*", "--excluded_line_regex", "\\s*else.*", "--excluded_line_regex", "\\s*\\}.*", ".\\build\\tests\\Debug\\MichkaTests.exe"],
+            "args": ["--sources", "src\\*", "--excluded_sources", "thirdparty\\*", "--excluded_sources", "d:\\agent", "--modules", "build\\*", "--export_type" , "html:build/coverage/html", "--export_type", "cobertura:build/coverage/coverage.xml", "--excluded_line_regex", ".*@NOCOVERAGE.*", "--excluded_line_regex", "\\s*else.*", "--excluded_line_regex", "\\s*\\}.*", "--excluded_line_regex", "\\s*MICHKA_CLASS\\(.*", ".\\build\\tests\\Debug\\MichkaTests.exe"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": false
+            "environment": []
         }
     ]
 }
