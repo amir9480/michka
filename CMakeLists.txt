@@ -26,12 +26,28 @@
 
 cmake_minimum_required(VERSION 3.0.0)
 project(Michka VERSION 0.0.1)
-set(CMAKE_CXX_STANDARD 17)
+
+
+if(MICHKA_BUILD_TYPE STREQUAL "MinSizeRel")
+    set(MICHKA_BUILD_TYPE "MinSizeRel")
+elseif(MICHKA_BUILD_TYPE STREQUAL "RelWithDebInfo")
+    set(MICHKA_BUILD_TYPE "RelWithDebInfo")
+elseif(MICHKA_BUILD_TYPE STREQUAL "Release")
+    set(MICHKA_BUILD_TYPE "Release")
+else()
+    set(MICHKA_BUILD_TYPE "Debug")
+endif()
+
+if(MICHKA_BUILD_TYPE STREQUAL "Debug")
+    set(MICHKA_LIBRARY_POSTFIX "d")
+else()
+    set(MICHKA_LIBRARY_POSTFIX "")
+endif()
 
 set(SOURCES "")
 
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/build/Generated")
+include_directories("${CMAKE_CURRENT_BINARY_DIR}/Generated")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glad/include")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/opengl")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/stb")
@@ -54,42 +70,20 @@ set(
     opengl32.lib
 )
 target_link_libraries(Michka ${LIBS})
+set_property(TARGET Michka PROPERTY CXX_STANDARD 17)
 
 add_custom_command(TARGET Michka
     PRE_BUILD
-    COMMAND python scripts/generator.py ./src ./build/Generated/MichkaGenerated
-    COMMAND python scripts/generator.py ./tests ./build/Generated/MichkaGenerated/tests
+    COMMAND python scripts/build.py ${MICHKA_BUILD_TYPE}
+    COMMAND python scripts/generator.py ./src ${CMAKE_CURRENT_BINARY_DIR}/Generated/MichkaGenerated
+    COMMAND python scripts/generator.py ./tests ${CMAKE_CURRENT_BINARY_DIR}/Generated/MichkaGenerated/tests
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    COMMENT "Generating sources..."
     VERBATIM
 )
-
-if(MICHKA_BUILD_TYPE STREQUAL "MinSizeRel")
-    set(MICHKA_BUILD_TYPE "MinSizeRel")
-elseif(MICHKA_BUILD_TYPE STREQUAL "RelWithDebInfo")
-    set(MICHKA_BUILD_TYPE "RelWithDebInfo")
-elseif(MICHKA_BUILD_TYPE STREQUAL "Release")
-    set(MICHKA_BUILD_TYPE "Release")
-else()
-    set(MICHKA_BUILD_TYPE "Debug")
-endif()
-
-if(MICHKA_BUILD_TYPE STREQUAL "Debug")
-    set(MICHKA_LIBRARY_POSTFIX "d")
-else()
-    set(MICHKA_LIBRARY_POSTFIX "")
-endif()
 
 option(PACKAGE_TESTS "Build the tests" ON)
 if(PACKAGE_TESTS)
     include_directories("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/googletest/googletest/include")
-    link_directories("${CMAKE_CURRENT_BINARY_DIR}/lib/${MICHKA_BUILD_TYPE}")
-    # Build Google Test if library file does not exists
-    if(NOT EXISTS "${CMAKE_CURRENT_BINARY_DIR}/lib/${MICHKA_BUILD_TYPE}/gtest${MICHKA_LIBRARY_POSTFIX}.lib")
-        set(gtest_force_shared_crt On CACHE BOOL "" FORCE)
-        add_subdirectory("thirdparty/googletest")
-    endif()
-    enable_testing()
+    link_directories("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/build/googletest/lib/${MICHKA_BUILD_TYPE}")
     add_subdirectory("tests")
-    add_test(MichkaTests build/tests/Debug/MichkaTests.exe)
 endif()

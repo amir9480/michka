@@ -1,6 +1,7 @@
 /.vs
 /.vscode
 /build
+/thirdparty/build
 /out
 /LastCoverageResults.log
 /test-assets

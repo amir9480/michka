@@ -22,6 +22,7 @@
 * [Mesa3D](https://mesa3d.org/)
 * [Mesa Dist](https://github.com/pal1000/mesa-dist-win)
 * [OpenGL](https://www.opengl.org)
+* [ShaderConductor](https://github.com/microsoft/ShaderConductor)
 * [stb](https://github.com/nothings/stb)
 
 ## License

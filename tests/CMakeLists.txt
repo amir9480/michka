@@ -39,6 +39,7 @@ add_subdirectory("Platform")
 add_compile_definitions(MICHKA_TESTS_PATH="${CMAKE_CURRENT_SOURCE_DIR}")
 add_executable(MichkaTests ${SOURCES} ${TEST_SOURCES})
 set_property(TARGET MichkaTests PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+set_property(TARGET MichkaTests PROPERTY CXX_STANDARD 17)
 target_link_libraries(MichkaTests ${LIBS})
 
 if(MICHKA_BUILD_TYPE STREQUAL "Debug")

@@ -16,7 +16,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: |
-          ./choco-cache
+          ./thirdparty/build/googletest/lib/Debug
           ~\AppData\Local\pip\Cache
         key: michka-cache
         restore-keys: |
