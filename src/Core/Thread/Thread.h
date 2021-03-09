@@ -27,9 +27,8 @@
 #ifndef __THREAD_H__
 #define __THREAD_H__
 
-#include "Core/Defines.h"
+#include "Core/Helpers.h"
 #include "Core/Container/Map.h"
-#include "Core/Reflection/ReflectionClass.h"
 #include "Mutex.h"
 #include <tuple>
 #include <functional>

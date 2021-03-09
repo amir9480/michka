@@ -27,8 +27,7 @@
 #ifndef __COLOR_H__
 #define __COLOR_H__
 
-#include "Core/Defines.h"
-#include "Core/Reflection/ReflectionClass.h"
+#include "Core/Helpers.h"
 #include "MichkaGenerated/Core/Container/Color.generated.h"
 
 namespace Michka

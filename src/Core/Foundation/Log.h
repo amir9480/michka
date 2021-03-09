@@ -27,12 +27,10 @@
 #ifndef __LOG_H__
 #define __LOG_H__
 
-#include "Core/Defines.h"
 #include "Core/Helpers.h"
 #include "Core/Exception/Exception.h"
 #include "Core/Foundation/File.h"
 #include "Core/Thread/Mutex.h"
-#include "Core/Reflection/ReflectionClass.h"
 #include "MichkaGenerated/Core/Foundation/Log.generated.h"
 
 #define MICHKA_ABORT(_MESSAGE) \

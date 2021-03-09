@@ -27,10 +27,9 @@
 #ifndef __RECT_H__
 #define __RECT_H__
 
-#include "Core/Defines.h"
+#include "Core/Helpers.h"
 #include "Position.h"
 #include "Size.h"
-#include "Core/Reflection/ReflectionClass.h"
 #include "MichkaGenerated/Core/Container/Rect.generated.h"
 
 namespace Michka

@@ -28,10 +28,10 @@
 #define __EVENT_H__
 
 #include <functional>
+#include "Core/Helpers.h"
 #include "Core/Container/String.h"
 #include "Core/Container/Map.h"
 #include "Core/Container/Variant.h"
-#include "Core/Reflection/ReflectionClass.h"
 #include "MichkaGenerated/Core/Foundation/Event.generated.h"
 
 namespace Michka

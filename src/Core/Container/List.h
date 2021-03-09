@@ -27,9 +27,8 @@
 #ifndef __LIST_H__
 #define __LIST_H__
 
-#include "Core/Defines.h"
+#include "Core/Helpers.h"
 #include <initializer_list>
-#include "Core/Reflection/ReflectionClass.h"
 #include "MichkaGenerated/Core/Container/List.generated.h"
 
 namespace Michka

@@ -27,9 +27,8 @@
 #ifndef __IMAGE_H__
 #define __IMAGE_H__
 
-#include "Core/Defines.h"
+#include "Core/Helpers.h"
 #include "Core/Container/Color.h"
-#include "Core/Reflection/ReflectionClass.h"
 #include "MichkaGenerated/Graphics/Image.generated.h"
 
 namespace Michka

@@ -27,8 +27,7 @@
 #ifndef __VECTOR2_H__
 #define __VECTOR2_H__
 
-#include "Core/Defines.h"
-#include "Core/Reflection/ReflectionClass.h"
+#include "Core/Helpers.h"
 #include "MichkaGenerated/Core/Math/Vector2.generated.h"
 
 namespace Michka

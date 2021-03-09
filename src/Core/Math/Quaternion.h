@@ -27,8 +27,7 @@
 #ifndef __QUATERNION_H__
 #define __QUATERNION_H__
 
-#include "Core/Defines.h"
-#include "Core/Reflection/ReflectionClass.h"
+#include "Core/Helpers.h"
 #include "MichkaGenerated/Core/Math/Quaternion.generated.h"
 
 #define QUATERNION_EPSILON 0.0002f

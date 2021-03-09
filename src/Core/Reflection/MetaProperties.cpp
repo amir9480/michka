@@ -25,6 +25,9 @@
 // ------------------------------------------------------------------------------- //
 
 #include "MetaProperties.h"
+#include "Core/Container/Map.h"
+#include "Core/Container/String.h"
+#include "Core/Container/Variant.h"
 
 namespace Michka
 {

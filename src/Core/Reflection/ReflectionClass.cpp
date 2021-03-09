@@ -28,10 +28,12 @@
 
 namespace Michka
 {
-    ReflectionClass::ReflectionClass(const char* _name, const char* _typename, const u64& _typehash) :
+    ReflectionClass::ReflectionClass(const char* _name, const char* _rawname, const char* _typename, const u64& _typehash, const char* _filename) :
         mName(_name),
+        mRawName(_rawname),
         mTypeName(_typename),
-        mTypeHash(_typehash)
+        mTypeHash(_typehash),
+        mFileName(_filename)
     {
         //
     }
@@ -41,9 +43,19 @@ namespace Michka
         //
     }
 
+    const char* ReflectionClass::getFileName() const
+    {
+        return mFileName;
+    }
+
     const char* ReflectionClass::getName() const
     {
         return mName;
+    }
+
+    const char* ReflectionClass::getRawName() const
+    {
+        return mRawName;
     }
 
     u64 ReflectionClass::getTypeHash() const
@@ -54,5 +66,11 @@ namespace Michka
     const char* ReflectionClass::getTypeName() const
     {
         return mTypeName;
+    }
+
+    ReflectionClass& ReflectionClass::setName(const char* _name)
+    {
+        mName = _name;
+        return *this;
     }
 }

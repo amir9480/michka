@@ -27,9 +27,8 @@
 #ifndef __WINDOW_H__
 #define __WINDOW_H__
 
-#include "Core/Defines.h"
+#include "Core/Helpers.h"
 #include "Core/Foundation/Object.h"
-#include "Core/Reflection/ReflectionClass.h"
 #include "MichkaGenerated/Platform/Window.generated.h"
 
 namespace Michka

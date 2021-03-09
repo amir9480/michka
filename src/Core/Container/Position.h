@@ -27,8 +27,7 @@
 #ifndef __POSITION_H__
 #define __POSITION_H__
 
-#include "Core/Defines.h"
-#include "Core/Reflection/ReflectionClass.h"
+#include "Core/Helpers.h"
 #include "MichkaGenerated/Core/Container/Position.generated.h"
 
 namespace Michka

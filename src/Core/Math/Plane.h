@@ -27,8 +27,7 @@
 #ifndef __PLANE_H__
 #define __PLANE_H__
 
-#include "Core/Defines.h"
-#include "Core/Reflection/ReflectionClass.h"
+#include "Core/Helpers.h"
 #include "Vector3.h"
 #include "Utility.h"
 #include "MichkaGenerated/Core/Math/Plane.generated.h"

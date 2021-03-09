@@ -27,8 +27,7 @@
 #ifndef __INDEX_BUFFER_H__
 #define __INDEX_BUFFER_H__
 
-#include "Core/Defines.h"
-#include "Core/Reflection/ReflectionClass.h"
+#include "Core/Helpers.h"
 #include "MichkaGenerated/Graphics/IndexBuffer.generated.h"
 
 namespace Michka

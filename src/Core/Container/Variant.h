@@ -27,10 +27,9 @@
 #ifndef __VARIANT_H__
 #define __VARIANT_H__
 
-#include "Core/Defines.h"
+#include "Core/Helpers.h"
 #include "Core/Container/String.h"
 #include "Core/Container/List.h"
-#include "Core/Reflection/ReflectionClass.h"
 #include <initializer_list>
 #include "MichkaGenerated/Core/Container/Variant.generated.h"
 

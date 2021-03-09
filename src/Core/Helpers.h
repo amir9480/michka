@@ -256,6 +256,69 @@ namespace \
 } \
 static void MICHKA_ATTACH(__michka_call, __LINE__)()
 
+/**
+ * @brief Define struct reflection with custom name.
+ *
+ * @param _TYPE  class
+ * @param _NAME  name
+ */
+#define MICHKA_STRUCT_WITH_NAME(_TYPE, _NAME, ...) \
+    typedef _TYPE Self; \
+    static inline const char* className() \
+    { \
+        return _NAME; \
+    } \
+    static inline const char* classTypeName() \
+    { \
+        return typeid(_TYPE).name(); \
+    } \
+    static inline const char* classRawName() \
+    { \
+        return typeid(_TYPE).raw_name(); \
+    } \
+    static inline const char* classFileName() \
+    { \
+        return __FILE__; \
+    } \
+    static inline u64 classTypeHash() \
+    { \
+        return typeid(_TYPE).hash_code(); \
+    } \
+    __VA_ARGS__ \
+    MICHKA_ATTACH(__MICHKA_STRUCT_GENERATED_BODY_, __LINE__)()
+
+/**
+ * @brief Define class reflection with custom name.
+ *
+ * @param _TYPE  class
+ * @param _NAME  name
+ */
+#define MICHKA_CLASS_WITH_NAME(_TYPE, _NAME, ...) \
+    public: \
+        MICHKA_STRUCT_WITH_NAME(_TYPE, _NAME, __VA_ARGS__) \
+    private:
+
+/**
+ * @brief Define struct reflection.
+ *
+ * @param _TYPE  class
+ */
+#define MICHKA_STRUCT(_TYPE, ...) \
+    MICHKA_STRUCT_WITH_NAME(_TYPE, #_TYPE, __VA_ARGS__)
+
+/**
+ * @brief Define class reflection.
+ *
+ * @param _TYPE  class
+ */
+#define MICHKA_CLASS(_TYPE, ...) \
+    MICHKA_CLASS_WITH_NAME(_TYPE, #_TYPE, __VA_ARGS__)
+
+/**
+ * @brief Define a member property reflection.
+ */
+#define MICHKA_PROPERTY(...)
+
 
 namespace Michka
 {

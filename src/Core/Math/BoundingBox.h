@@ -27,10 +27,9 @@
 #ifndef __BOUNDING_BOX_H__
 #define __BOUNDING_BOX_H__
 
-#include "Core/Defines.h"
+#include "Core/Helpers.h"
 #include "Utility.h"
 #include "Vector3.h"
-#include "Core/Reflection/ReflectionClass.h"
 #include "MichkaGenerated/Core/Math/BoundingBox.generated.h"
 
 namespace Michka

@@ -28,7 +28,7 @@
 #define __PAIR_H__
 
 #include <utility>
-#include "Core/Reflection/ReflectionClass.h"
+#include "Core/Helpers.h"
 #include "MichkaGenerated/Core/Container/Pair.generated.h"
 
 namespace Michka

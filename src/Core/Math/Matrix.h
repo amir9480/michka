@@ -27,8 +27,7 @@
 #ifndef __MATRIX_H__
 #define __MATRIX_H__
 
-#include "Core/Defines.h"
-#include "Core/Reflection/ReflectionClass.h"
+#include "Core/Helpers.h"
 #include "MichkaGenerated/Core/Math/Matrix.generated.h"
 
 namespace Michka

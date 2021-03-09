@@ -27,11 +27,10 @@
 #ifndef __DEVICE_H__
 #define __DEVICE_H__
 
-#include "Core/Defines.h"
+#include "Core/Helpers.h"
 #include "Core/Container/Color.h"
 #include "GraphicDefines.h"
 #include "Platform/Window.h"
-#include "Core/Reflection/ReflectionClass.h"
 #include "MichkaGenerated/Graphics/Device.generated.h"
 
 namespace Michka

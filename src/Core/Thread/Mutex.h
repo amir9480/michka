@@ -27,8 +27,7 @@
 #ifndef __MUTEX_H__
 #define __MUTEX_H__
 
-#include "Core/Defines.h"
-#include "Core/Reflection/ReflectionClass.h"
+#include "Core/Helpers.h"
 #include "MichkaGenerated/Core/Thread/Mutex.generated.h"
 
 namespace Michka

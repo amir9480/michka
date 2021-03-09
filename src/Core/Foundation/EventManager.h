@@ -28,10 +28,9 @@
 #define __EVENTMANAGER_H__
 
 #include <functional>
-#include "Core/Defines.h"
+#include "Core/Helpers.h"
 #include "Core/Foundation/Event.h"
 #include "Core/Container/List.h"
-#include "Core/Reflection/ReflectionClass.h"
 #include "MichkaGenerated/Core/Foundation/EventManager.generated.h"
 
 namespace Michka

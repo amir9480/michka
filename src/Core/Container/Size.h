@@ -27,8 +27,7 @@
 #ifndef __SIZE_H__
 #define __SIZE_H__
 
-#include "Core/Defines.h"
-#include "Core/Reflection/ReflectionClass.h"
+#include "Core/Helpers.h"
 #include "MichkaGenerated/Core/Container/Size.generated.h"
 
 namespace Michka

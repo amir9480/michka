@@ -27,9 +27,8 @@
 #ifndef __VERTEX_BUFFER_H__
 #define __VERTEX_BUFFER_H__
 
-#include "Core/Defines.h"
+#include "Core/Helpers.h"
 #include "VertexDeclaration.h"
-#include "Core/Reflection/ReflectionClass.h"
 #include "MichkaGenerated/Graphics/VertexBuffer.generated.h"
 
 namespace Michka

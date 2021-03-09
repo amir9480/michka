@@ -27,8 +27,7 @@
 #ifndef __VECTOR3_H__
 #define __VECTOR3_H__
 
-#include "Core/Defines.h"
-#include "Core/Reflection/ReflectionClass.h"
+#include "Core/Helpers.h"
 #include "MichkaGenerated/Core/Math/Vector3.generated.h"
 
 namespace Michka

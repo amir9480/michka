@@ -24,8 +24,6 @@
 # SOFTWARE.                                                                       #
 # ------------------------------------------------------------------------------- #
 
-
-
 import sys
 import os
 import re
@@ -56,7 +54,9 @@ def generate_source(source_file):
     for match in re.finditer(michka_class_define_regex, source, re.MULTILINE):
         line_number = len(source[:match.span()[0] + len(match[1])].splitlines())
         class_parent_source = match[4]
-        out += '\n#ifndef __MICHKA_STRUCT_GENERATED_BODY_' + str(line_number) + '\n'
+        out += '\n#ifdef __MICHKA_STRUCT_GENERATED_BODY_' + str(line_number) + '\n'
+        out += '#undef __MICHKA_STRUCT_GENERATED_BODY_' + str(line_number) + '\n'
+        out += '#endif // __MICHKA_STRUCT_GENERATED_BODY_' + str(line_number) + '\n\n'
         out += '#define __MICHKA_STRUCT_GENERATED_BODY_' + str(line_number) + '() \\\n'
         if class_parent_source:
             class_parent_source = re.sub(r'(^|[^\w])public([^\w])', '', class_parent_source, flags=re.MULTILINE)
@@ -65,8 +65,6 @@ def generate_source(source_file):
                 out += 'typedef ' + class_parent[0] + ' Parent' + (str(index + 1) if index > 0 else '') + ';'
         else:
             out += 'typedef void Parent;'
-        out += '\n\n#endif // __MICHKA_STRUCT_GENERATED_BODY_' + str(line_number) + '\n'
-    out += '\n\n// A simple generated code.'
     return out
 
 

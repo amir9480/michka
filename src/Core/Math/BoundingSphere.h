@@ -27,9 +27,8 @@
 #ifndef __BOUNDING_SPHERE_H__
 #define __BOUNDING_SPHERE_H__
 
-#include "Core/Defines.h"
+#include "Core/Helpers.h"
 #include "Core/Math/Vector3.h"
-#include "Core/Reflection/ReflectionClass.h"
 #include "MichkaGenerated/Core/Math/BoundingSphere.generated.h"
 
 namespace Michka

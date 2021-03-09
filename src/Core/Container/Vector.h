@@ -27,9 +27,7 @@
 #ifndef __VECTOR_H__
 #define __VECTOR_H__
 
-#include "Core/Defines.h"
 #include "Core/Helpers.h"
-#include "Core/Reflection/ReflectionClass.h"
 #include <initializer_list>
 #include "MichkaGenerated/Core/Container/Vector.generated.h"
 

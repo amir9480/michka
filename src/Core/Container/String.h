@@ -27,9 +27,8 @@
 #ifndef __STRING_H__
 #define __STRING_H__
 
-#include "Core/Defines.h"
+#include "Core/Helpers.h"
 #include "Core/Reflection/Type.h"
-#include "Core/Reflection/ReflectionClass.h"
 #include "MichkaGenerated/Core/Container/String.generated.h"
 
 namespace Michka

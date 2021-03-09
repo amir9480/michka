@@ -27,9 +27,8 @@
 #ifndef __VERTEX_DECLARATION_H__
 #define __VERTEX_DECLARATION_H__
 
-#include "Core/Defines.h"
+#include "Core/Helpers.h"
 #include "Core/Container/Vector.h"
-#include "Core/Reflection/ReflectionClass.h"
 #include "MichkaGenerated/Graphics/VertexDeclaration.generated.h"
 
 namespace Michka
