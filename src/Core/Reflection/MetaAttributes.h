@@ -41,38 +41,38 @@ namespace Michka
         ~MetaAttributes();
 
         /**
-         * @brief Get the Properties object.
+         * @brief Get the attributes object.
          *
          * @return const Map<String, Variant>&
          */
-        const Map<String, Variant>& getProperties();
+        const Map<String, Variant>& getAttributes();
 
         /**
-         * @brief Get a property value.
+         * @brief Get a attribute value.
          *
          * @param _name
          * @return Variant
          */
-        Variant getProperty(const String& _name) const;
+        Variant getAttribute(const String& _name) const;
 
         /**
-         * @brief Check if specific property exists.
+         * @brief Check if specific aAttribute exists.
          *
          * @param _name
          */
-        bool hasProperty(const String& _name) const;
+        bool hasAttribute(const String& _name) const;
 
         /**
-         * @brief Set a property value.
+         * @brief Set a attribute value.
          *
          * @param _name
          * @param _value
          * @return Self
          */
-        MetaAttributes& setProperty(const String& _name, const Variant& _value);
+        MetaAttributes& setAttribute(const String& _name, const Variant& _value);
 
     protected:
-        Map<String, Variant> mProperties;
+        Map<String, Variant> mAttributes;
     };
 }
 

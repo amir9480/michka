@@ -1,1 +1,1 @@
-CppHeaderParser==2.7.4
+clang==11.0

@@ -41,29 +41,29 @@ namespace Michka
         //
     }
 
-    const Map<String, Variant>& MetaAttributes::getProperties()
+    const Map<String, Variant>& MetaAttributes::getAttributes()
     {
-        return mProperties;
+        return mAttributes;
     }
 
-    Variant MetaAttributes::getProperty(const String& _name) const
+    Variant MetaAttributes::getAttribute(const String& _name) const
     {
-        if (mProperties.hasKey(_name))
+        if (mAttributes.hasKey(_name))
         {
-            return mProperties[_name];
+            return mAttributes[_name];
         }
 
         return Variant();
     }
 
-    bool MetaAttributes::hasProperty(const String& _name) const
+    bool MetaAttributes::hasAttribute(const String& _name) const
     {
-        return mProperties.hasKey(_name);
+        return mAttributes.hasKey(_name);
     }
 
-    MetaAttributes& MetaAttributes::setProperty(const String& _name, const Variant& _value)
+    MetaAttributes& MetaAttributes::setAttribute(const String& _name, const Variant& _value)
     {
-        mProperties[_name] = _value;
+        mAttributes[_name] = _value;
         return *this;
     }
 }

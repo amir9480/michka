@@ -179,8 +179,16 @@ public:
 
 class ChildClass10Nested: public ChildClass10
 {
-    MICHKA_CLASS(ChildClass10Nested);
+    MICHKA_CLASS(ChildClass10Nested, MICHKA_ATTR("attr1", false), MICHKA_ATTR("attr2", 5), MICHKA_ATTR("attr3", "Hello World"));
+
 public:
+    class Child: public ParentClass5
+    {
+        MICHKA_CLASS(Child);
+    public:
+        int childTest = 0;
+    };
+
     int b100 = 0;
 };
 

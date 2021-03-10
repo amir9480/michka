@@ -284,7 +284,6 @@ static void MICHKA_ATTACH(__michka_call, __LINE__)()
     { \
         return typeid(_TYPE).hash_code(); \
     } \
-    __VA_ARGS__ \
     MICHKA_ATTACH(__MICHKA_STRUCT_GENERATED_BODY_, __LINE__)()
 
 /**
@@ -318,6 +317,11 @@ static void MICHKA_ATTACH(__michka_call, __LINE__)()
  * @brief Define a member property reflection.
  */
 #define MICHKA_PROPERTY(...)
+
+/**
+ * @brief Add attribute to reflections.
+ */
+#define MICHKA_ATTR(_NAME, _VALUE) 0
 
 
 namespace Michka

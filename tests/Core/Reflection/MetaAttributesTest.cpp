@@ -33,15 +33,15 @@ TEST(MetaAttributesTest, Test)
 {
     Michka::MetaAttributes a;
 
-    ASSERT_EQ(a.getProperties().getSize(), 0);
+    ASSERT_EQ(a.getAttributes().getSize(), 0);
 
-    a.setProperty("test1", 123);
-    ASSERT_EQ(a.getProperties().getSize(), 1);
-    ASSERT_EQ(a.getProperty("test1"), 123);
-    ASSERT_EQ(a.getProperty("test2"), Michka::Variant());
+    a.setAttribute("test1", 123);
+    ASSERT_EQ(a.getAttributes().getSize(), 1);
+    ASSERT_EQ(a.getAttribute("test1"), 123);
+    ASSERT_EQ(a.getAttribute("test2"), Michka::Variant());
 
-    a.setProperty("test2", "Hello World");
-    ASSERT_EQ(a.getProperties().getSize(), 2);
-    ASSERT_EQ(a.getProperty("test1"), 123);
-    ASSERT_EQ(a.getProperty("test2"), "Hello World");
+    a.setAttribute("test2", "Hello World");
+    ASSERT_EQ(a.getAttributes().getSize(), 2);
+    ASSERT_EQ(a.getAttribute("test1"), 123);
+    ASSERT_EQ(a.getAttribute("test2"), "Hello World");
 }
