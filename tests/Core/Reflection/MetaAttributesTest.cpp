@@ -24,46 +24,24 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "MetaProperties.h"
-#include "Core/Container/Map.h"
-#include "Core/Container/String.h"
-#include "Core/Container/Variant.h"
+#include <gtest/gtest.h>
+#include <type_traits>
+#include "Core/Helpers.h"
+#include "Core/Reflection/MetaAttributes.h"
 
-namespace Michka
+TEST(MetaAttributesTest, Test)
 {
-    MetaProperties::MetaProperties()
-    {
-        //
-    }
+    Michka::MetaAttributes a;
 
-    MetaProperties::~MetaProperties()
-    {
-        //
-    }
+    ASSERT_EQ(a.getProperties().getSize(), 0);
 
-    const Map<String, Variant>& MetaProperties::getProperties()
-    {
-        return mProperties;
-    }
+    a.setProperty("test1", 123);
+    ASSERT_EQ(a.getProperties().getSize(), 1);
+    ASSERT_EQ(a.getProperty("test1"), 123);
+    ASSERT_EQ(a.getProperty("test2"), Michka::Variant());
 
-    Variant MetaProperties::getProperty(const String& _name) const
-    {
-        if (mProperties.hasKey(_name))
-        {
-            return mProperties[_name];
-        }
-
-        return Variant();
-    }
-
-    bool MetaProperties::hasProperty(const String& _name) const
-    {
-        return mProperties.hasKey(_name);
-    }
-
-    MetaProperties& MetaProperties::setProperty(const String& _name, const Variant& _value)
-    {
-        mProperties[_name] = _value;
-        return *this;
-    }
+    a.setProperty("test2", "Hello World");
+    ASSERT_EQ(a.getProperties().getSize(), 2);
+    ASSERT_EQ(a.getProperty("test1"), 123);
+    ASSERT_EQ(a.getProperty("test2"), "Hello World");
 }

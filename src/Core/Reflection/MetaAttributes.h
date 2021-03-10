@@ -34,11 +34,11 @@
 
 namespace Michka
 {
-    class MICHKA_API MetaProperties
+    class MICHKA_API MetaAttributes
     {
     public:
-        MetaProperties();
-        ~MetaProperties();
+        MetaAttributes();
+        ~MetaAttributes();
 
         /**
          * @brief Get the Properties object.
@@ -69,7 +69,7 @@ namespace Michka
          * @param _value
          * @return Self
          */
-        MetaProperties& setProperty(const String& _name, const Variant& _value);
+        MetaAttributes& setProperty(const String& _name, const Variant& _value);
 
     protected:
         Map<String, Variant> mProperties;

@@ -24,24 +24,46 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include <gtest/gtest.h>
-#include <type_traits>
-#include "Core/Helpers.h"
-#include "Core/Reflection/MetaProperties.h"
+#include "MetaAttributes.h"
+#include "Core/Container/Map.h"
+#include "Core/Container/String.h"
+#include "Core/Container/Variant.h"
 
-TEST(MetaPropertiesTest, Test)
+namespace Michka
 {
-    Michka::MetaProperties a;
+    MetaAttributes::MetaAttributes()
+    {
+        //
+    }
 
-    ASSERT_EQ(a.getProperties().getSize(), 0);
+    MetaAttributes::~MetaAttributes()
+    {
+        //
+    }
 
-    a.setProperty("test1", 123);
-    ASSERT_EQ(a.getProperties().getSize(), 1);
-    ASSERT_EQ(a.getProperty("test1"), 123);
-    ASSERT_EQ(a.getProperty("test2"), Michka::Variant());
+    const Map<String, Variant>& MetaAttributes::getProperties()
+    {
+        return mProperties;
+    }
 
-    a.setProperty("test2", "Hello World");
-    ASSERT_EQ(a.getProperties().getSize(), 2);
-    ASSERT_EQ(a.getProperty("test1"), 123);
-    ASSERT_EQ(a.getProperty("test2"), "Hello World");
+    Variant MetaAttributes::getProperty(const String& _name) const
+    {
+        if (mProperties.hasKey(_name))
+        {
+            return mProperties[_name];
+        }
+
+        return Variant();
+    }
+
+    bool MetaAttributes::hasProperty(const String& _name) const
+    {
+        return mProperties.hasKey(_name);
+    }
+
+    MetaAttributes& MetaAttributes::setProperty(const String& _name, const Variant& _value)
+    {
+        mProperties[_name] = _value;
+        return *this;
+    }
 }

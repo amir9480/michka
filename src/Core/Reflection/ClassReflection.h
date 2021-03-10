@@ -28,7 +28,7 @@
 #define __REFLECTION_CLASS_H__
 
 #include "Core/Helpers.h"
-#include "MetaProperties.h"
+#include "MetaAttributes.h"
 #include <type_traits>
 
 /**
