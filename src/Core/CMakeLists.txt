@@ -52,7 +52,7 @@ set(
     ${CMAKE_CURRENT_SOURCE_DIR}/Memory/Memory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Reflection/MetaProperties.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Reflection/Reflection.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Reflection/ReflectionClass.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Reflection/ClassReflection.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Thread/Thread.cpp
 
     # -------------------------------------------------------------------------- #

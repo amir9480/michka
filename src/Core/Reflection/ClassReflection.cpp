@@ -24,11 +24,11 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "ReflectionClass.h"
+#include "ClassReflection.h"
 
 namespace Michka
 {
-    ReflectionClass::ReflectionClass(const char* _name, const char* _rawname, const char* _typename, const u64& _typehash, const char* _filename) :
+    ClassReflection::ClassReflection(const char* _name, const char* _rawname, const char* _typename, const u64& _typehash, const char* _filename) :
         mName(_name),
         mRawName(_rawname),
         mTypeName(_typename),
@@ -38,37 +38,37 @@ namespace Michka
         //
     }
 
-    ReflectionClass::~ReflectionClass()
+    ClassReflection::~ClassReflection()
     {
         //
     }
 
-    const char* ReflectionClass::getFileName() const
+    const char* ClassReflection::getFileName() const
     {
         return mFileName;
     }
 
-    const char* ReflectionClass::getName() const
+    const char* ClassReflection::getName() const
     {
         return mName;
     }
 
-    const char* ReflectionClass::getRawName() const
+    const char* ClassReflection::getRawName() const
     {
         return mRawName;
     }
 
-    u64 ReflectionClass::getTypeHash() const
+    u64 ClassReflection::getTypeHash() const
     {
         return mTypeHash;
     }
 
-    const char* ReflectionClass::getTypeName() const
+    const char* ClassReflection::getTypeName() const
     {
         return mTypeName;
     }
 
-    ReflectionClass& ReflectionClass::setName(const char* _name)
+    ClassReflection& ClassReflection::setName(const char* _name)
     {
         mName = _name;
         return *this;

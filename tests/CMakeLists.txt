@@ -27,7 +27,7 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(MichkaTests)
 
-set(TEST_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/MichkaTests.cpp")
+set(TEST_SOURCES "")
 
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}")
 
@@ -36,8 +36,10 @@ add_subdirectory("Core")
 add_subdirectory("Graphics")
 add_subdirectory("Platform")
 
+set(TEST_SOURCES ${SOURCES} "${CMAKE_CURRENT_SOURCE_DIR}/MichkaTests.cpp")
+
 add_compile_definitions(MICHKA_TESTS_PATH="${CMAKE_CURRENT_SOURCE_DIR}")
-add_executable(MichkaTests ${SOURCES} ${TEST_SOURCES})
+add_executable(MichkaTests ${MAIN_SOURCES} ${TEST_SOURCES})
 set_property(TARGET MichkaTests PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 set_property(TARGET MichkaTests PROPERTY CXX_STANDARD 17)
 target_link_libraries(MichkaTests ${LIBS})

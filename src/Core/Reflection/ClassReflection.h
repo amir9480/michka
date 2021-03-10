@@ -52,11 +52,11 @@
 
 namespace Michka
 {
-    class MICHKA_API ReflectionClass
+    class MICHKA_API ClassReflection
     {
     public:
-        ReflectionClass(const char* _name, const char* _rawname, const char* _typename, const u64& _typehash, const char* _filename);
-        ~ReflectionClass();
+        ClassReflection(const char* _name, const char* _rawname, const char* _typename, const u64& _typehash, const char* _filename);
+        ~ClassReflection();
 
         /**
          * @brief Get source filename of class.
@@ -99,7 +99,7 @@ namespace Michka
          * @param _name
          * @return Self
          */
-        ReflectionClass& setName(const char* _name);
+        ClassReflection& setName(const char* _name);
 
     protected:
         const char* mName = nullptr;

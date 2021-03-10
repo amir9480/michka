@@ -47,77 +47,89 @@ def file_get_contents(path, flags):
 
 # ---------------------------------------------------------------------------- #
 def generate_source(source_file):
-    out = ''
     source = file_get_contents(source_file, 'r')
+    generated_header_code = ''
+    generated_source_code = ''
     michka_class_define_regex = r'((class|struct)[^{:;/]+(:\s*([^{;/]+))?{([\s\S]+?))MICHKA_(CLASS|STRUCT|CLASS_WITH_NAME|STRUCT_WITH_NAME)?\((.+)\)\;'
 
     for match in re.finditer(michka_class_define_regex, source, re.MULTILINE):
         line_number = len(source[:match.span()[0] + len(match[1])].splitlines())
         class_parent_source = match[4]
-        out += '\n#ifdef __MICHKA_STRUCT_GENERATED_BODY_' + str(line_number) + '\n'
-        out += '#undef __MICHKA_STRUCT_GENERATED_BODY_' + str(line_number) + '\n'
-        out += '#endif // __MICHKA_STRUCT_GENERATED_BODY_' + str(line_number) + '\n\n'
-        out += '#define __MICHKA_STRUCT_GENERATED_BODY_' + str(line_number) + '() \\\n'
+        generated_header_code += '\n\n#ifdef __MICHKA_STRUCT_GENERATED_BODY_' + str(line_number) + '\n'
+        generated_header_code += '#undef __MICHKA_STRUCT_GENERATED_BODY_' + str(line_number) + '\n'
+        generated_header_code += '#endif // __MICHKA_STRUCT_GENERATED_BODY_' + str(line_number) + '\n'
+        generated_header_code += '#define __MICHKA_STRUCT_GENERATED_BODY_' + str(line_number) + '() \\\n'
         if class_parent_source:
             class_parent_source = re.sub(r'(^|[^\w])public([^\w])', '', class_parent_source, flags=re.MULTILINE)
             class_parents = enumerate(re.finditer(r'[A-z0-9_]+(<([^<>]|(<([^<>]|<([^<>]|<([^<>])*>)*>)*>))*>)?', class_parent_source, re.MULTILINE))
             for index, class_parent in class_parents:
-                out += 'typedef ' + class_parent[0] + ' Parent' + (str(index + 1) if index > 0 else '') + ';'
+                generated_header_code += 'typedef ' + class_parent[0] + ' Parent' + (str(index + 1) if index > 0 else '') + ';'
         else:
-            out += 'typedef void Parent;'
-    return out
+            generated_header_code += 'typedef void Parent;'
+    return generated_header_code, generated_source_code
 
 
 # ---------------------------------------------------------------------------- #
-def generate(path):
-    generated_files = []
+def generate(path, base_path, generated_path):
+    generated_sources = []
     for sub_path in os.listdir(path):
-        full_path = (path + '/' + sub_path).replace(sys.argv[1] + '/', '', 1)
+        full_path = (path + '/' + sub_path).replace(base_path + '/', '', 1)
         if os.path.isdir(path + '/' + sub_path):
-            if not os.path.exists(sys.argv[2] + '/' + full_path):
-                os.makedirs(sys.argv[2] + '/' + full_path)
-            generated_files = generated_files + generate(path + '/' + sub_path)
+            if not os.path.exists(generated_path + '/' + full_path):
+                os.makedirs(generated_path + '/' + full_path)
+            generated_sources = generated_sources + generate(path + '/' + sub_path, base_path, generated_path)
         elif sub_path.endswith('.h'):
-            generated_file = os.path.splitext(full_path)[0].replace('.', '_') + '.generated.h'
-            generated_files.append(generated_file)
-            generated_file = sys.argv[2] + '/' + generated_file
-            if not os.path.exists(generated_file) or os.path.getmtime(path + '/' + sub_path) > os.path.getmtime(generated_file) or False:
-                file = open(generated_file, 'w')
+            generated_header = os.path.splitext(full_path)[0].replace('.', '_') + '.generated.h'
+            generated_header = generated_path + '/' + generated_header
+            generated_source = os.path.splitext(full_path)[0].replace('.', '_') + '.generated.cpp'
+            generated_source = generated_path + '/' + generated_source
+            generated_sources.append(generated_source.replace(generated_path + '/', ''))
+            if not os.path.exists(generated_header) or os.path.getmtime(path + '/' + sub_path) > os.path.getmtime(generated_header) or False:
+                generated_header_code, generated_source_code = generate_source(path + '/' + sub_path)
+                # Header part
+                file = open(generated_header, 'w')
                 file.write(generator_comment)
-                header_guard = '__MICHKA_GENERATED_' + generated_file.replace('/', '_').replace('.', '_').replace(':', '_').upper() + '__'
+                header_guard = '__MICHKA_GENERATED_' + generated_header.replace('/', '_').replace('.', '_').replace(':', '_').upper() + '__'
                 file.write('#ifndef ' + header_guard + '\n')
                 file.write('#define ' + header_guard + '\n\n')
-                if full_path.endswith('.h'):
-                    file.write('// #include "' + full_path + '"\n')
-                file.write(generate_source(path + '/' + sub_path))
+                file.write(generated_header_code)
                 file.write('\n\n#endif // ' + header_guard + '\n')
                 file.close()
+
+                # Source part
+                file = open(generated_source, 'w')
+                file.write(generator_comment)
+                file.write('// ' + header_guard + '\n')
+                file.write(generated_source_code)
+
                 print('Generated source for "' + path + '/' + sub_path + '"')
 
-    return generated_files
+    return generated_sources
 
 
 # ---------------------------------------------------------------------------- #
 def generate_files():
-    generated_sources = generate(sys.argv[1])
-    # cmake_file = open(sys.argv[2] + '/CMakeLists.txt', 'w')
-    # cmake_file.write(generator_comment.replace('//', '#'))
-    # cmake_file.write('set(\nSOURCES\n${SOURCES}\n')
-    # for generated_source in generated_sources:
-    #     cmake_file.write('${CMAKE_CURRENT_SOURCE_DIR}/' + generated_source + ')\n')
-    # cmake_file.write('\nPARENT_SCOPE\n)\n')
-    # cmake_file.close()
+    generated_path = None
+    for path_argument in sys.argv[1:]:
+        path_argument_splited = path_argument.split('=')
+        if len(path_argument_splited) == 2:
+            generated_sources = generate(path_argument_splited[0], path_argument_splited[0], path_argument_splited[1])
+            generated_path = path_argument_splited[1]
+            cmake_file = open(generated_path + '/CMakeLists.txt', 'w')
+            cmake_file.write(generator_comment.replace('//', '#'))
+            cmake_file.write('set(\nSOURCES\n${SOURCES}\n')
+            for generated_source in generated_sources:
+                cmake_file.write('${CMAKE_CURRENT_SOURCE_DIR}/' + generated_source.replace('./', '') + '\n')
+            cmake_file.write('\nPARENT_SCOPE\n)\n')
+            cmake_file.close()
 
 
 # ---------------------------------------------------------------------------- #
 def main():
-    if len(sys.argv) != 3:
+    if len(sys.argv) < 3:
         raise Exception('Wrong arguments.')
-    if not os.path.exists(sys.argv[2]):
-        os.makedirs(sys.argv[2])
     generate_files()
 
 
 # ---------------------------------------------------------------------------- #
 main()
-# print(generate_source(sys.argv[1] + '/Core/Container/Size.h'))

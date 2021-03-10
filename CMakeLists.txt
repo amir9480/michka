@@ -45,6 +45,13 @@ else()
 endif()
 
 set(SOURCES "")
+set(GENERATOR_COMMAND python scripts/generator.py ./src=./build/Generated/MichkaGenerated ./tests=./build/Generated/MichkaGenerated/tests)
+
+
+execute_process(
+    COMMAND ${GENERATOR_COMMAND}
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+)
 
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
 include_directories("${CMAKE_CURRENT_BINARY_DIR}/Generated")
@@ -54,16 +61,17 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/stb")
 add_subdirectory("src/Core")
 add_subdirectory("src/Graphics")
 add_subdirectory("src/Platform")
+add_subdirectory("${CMAKE_CURRENT_BINARY_DIR}/Generated/MichkaGenerated")
 
 set(
-    SOURCES
+    MAIN_SOURCES
     ${SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glad/src/glad.c
 )
 
 add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
 add_compile_definitions(MICHKA_SRC_PATH="${CMAKE_CURRENT_SOURCE_DIR}")
-add_executable(Michka ${SOURCES} "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
+add_executable(Michka ${MAIN_SOURCES} "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
 set_property(TARGET Michka PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 set(
     LIBS
@@ -75,8 +83,7 @@ set_property(TARGET Michka PROPERTY CXX_STANDARD 17)
 add_custom_command(TARGET Michka
     PRE_BUILD
     COMMAND python scripts/build.py ${MICHKA_BUILD_TYPE}
-    COMMAND python scripts/generator.py ./src ${CMAKE_CURRENT_BINARY_DIR}/Generated/MichkaGenerated
-    COMMAND python scripts/generator.py ./tests ${CMAKE_CURRENT_BINARY_DIR}/Generated/MichkaGenerated/tests
+    COMMAND ${GENERATOR_COMMAND}
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     VERBATIM
 )
@@ -85,5 +92,8 @@ option(PACKAGE_TESTS "Build the tests" ON)
 if(PACKAGE_TESTS)
     include_directories("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/googletest/googletest/include")
     link_directories("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/build/googletest/lib/${MICHKA_BUILD_TYPE}")
-    add_subdirectory("tests")
+
+    set(SOURCES "")
+    add_subdirectory("${CMAKE_CURRENT_BINARY_DIR}/Generated/MichkaGenerated/tests")
+    add_subdirectory("tests" ${CMAKE_CURRENT_BINARY_DIR}/tests)
 endif()

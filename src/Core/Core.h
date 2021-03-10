@@ -59,7 +59,7 @@
 #include "Math/Vector4.h"
 #include "Memory/Memory.h"
 #include "Reflection/Reflection.h"
-#include "Reflection/ReflectionClass.h"
+#include "Reflection/ClassReflection.h"
 #include "Reflection/Type.h"
 #include "Thread/Mutex.h"
 #include "Thread/Thread.h"

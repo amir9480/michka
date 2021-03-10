@@ -28,7 +28,7 @@
 #define __REFLECTION_H__
 
 #include "Core/Helpers.h"
-#include "ReflectionClass.h"
+#include "ClassReflection.h"
 #include "Type.h"
 
 namespace Michka
