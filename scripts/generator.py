@@ -158,6 +158,7 @@ def generate_files():
 def main():
     if len(sys.argv) < 2:
         raise Exception('Wrong arguments.')
+    clang.cindex.Config.set_library_path('C:/Program Files/LLVM/bin')
     generate_files()
 
 

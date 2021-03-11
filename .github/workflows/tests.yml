@@ -17,10 +17,18 @@ jobs:
       with:
         path: |
           ./thirdparty/build/googletest/lib/Debug
-          ~\AppData\Local\pip\Cache
+          ~/AppData/Local/pip/Cache
+          C:/Program Files/LLVM
+          C:/chocolate-cache
         key: michka-cache
         restore-keys: |
           michka-cache
+
+    - name: Install clang
+      run: |
+        choco config set cacheLocation "C:/chocolate-cache"
+        choco upgrade llvm --no-progress
+        refreshenv
 
     - name: Install Python Packages
       run: pip install -r scripts/requirements.txt
