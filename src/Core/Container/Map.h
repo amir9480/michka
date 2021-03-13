@@ -35,7 +35,7 @@
 namespace Michka
 {
     template<typename TKey, typename TValue>
-    class MICHKA_API Map
+    class Map
     {
         MICHKA_CLASS_WITH_NAME(MICHKA_ARGUMENT(Map<TKey, TValue>), "Map<TKey, TValue>");
     public:

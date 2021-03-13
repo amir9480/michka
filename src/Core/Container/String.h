@@ -37,7 +37,7 @@ namespace Michka
     class Vector;
 
     template<typename T>
-    class MICHKA_API StringTemplate
+    class StringTemplate
     {
         MICHKA_CLASS(StringTemplate<T>);
     public:

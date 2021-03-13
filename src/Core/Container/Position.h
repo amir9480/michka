@@ -33,7 +33,7 @@
 namespace Michka
 {
     template<typename T>
-    class MICHKA_API PositionTemplate
+    class PositionTemplate
     {
         MICHKA_CLASS(PositionTemplate<T>);
 

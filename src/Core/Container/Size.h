@@ -33,7 +33,7 @@
 namespace Michka
 {
     template<typename T>
-    class MICHKA_API SizeTemplate
+    class SizeTemplate
     {
         MICHKA_CLASS(SizeTemplate<T>);
     public:
