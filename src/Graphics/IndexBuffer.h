@@ -34,7 +34,7 @@ namespace Michka
 {
     class MICHKA_API IndexBuffer
     {
-        MICHKA_CLASS(IndexBuffer);
+        MICHKA_CLASS();
         friend class Device;
     public:
         ~IndexBuffer();

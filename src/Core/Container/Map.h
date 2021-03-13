@@ -35,9 +35,9 @@
 namespace Michka
 {
     template<typename TKey, typename TValue>
-    class Map
+    class MICHKA_API Map
     {
-        MICHKA_CLASS_WITH_NAME(MICHKA_ARGUMENT(Map<TKey, TValue>), "Map<TKey, TValue>");
+        MICHKA_CLASS();
     public:
         struct Element: public Pair<TKey, TValue>
         {

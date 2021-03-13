@@ -35,7 +35,7 @@ namespace Michka
 {
     class MICHKA_API File
     {
-        MICHKA_CLASS(File);
+        MICHKA_CLASS();
     public:
         enum class OpenMode
         {

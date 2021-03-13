@@ -33,9 +33,9 @@
 namespace Michka
 {
     template<typename T>
-    class PositionTemplate
+    class MICHKA_API PositionTemplate
     {
-        MICHKA_CLASS(PositionTemplate<T>);
+        MICHKA_CLASS();
 
     public:
         FORCE_INLINE PositionTemplate();

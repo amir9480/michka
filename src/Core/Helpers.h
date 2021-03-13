@@ -93,6 +93,14 @@
 #define _MICHKA_ATTACH4(_A, _B, _C, _D) _A##_B##_C##_D
 #define _MICHKA_ATTACH5(_A, _B, _C, _D, _E) _A##_B##_C##_D##_E
 
+/**
+ * @brief Codes that only should be included when parsing code.
+ */
+#define MICHKA_PRASER_ONLY(_ARGS)
+#ifdef MICHKA_PARSER
+#undef MICHKA_PRASER_ONLY
+#define MICHKA_PRASER_ONLY(_ARGS) _ARGS
+#endif
 
 /**
  * @brief this macro is using to detect a member function exists or not.
@@ -257,71 +265,41 @@ namespace \
 static void MICHKA_ATTACH(__michka_call, __LINE__)()
 
 /**
- * @brief Define struct reflection with custom name.
- *
- * @param _TYPE  class
- * @param _NAME  name
+ * @brief Define struct reflection.
  */
-#define MICHKA_STRUCT_WITH_NAME(_TYPE, _NAME, ...) \
-    typedef _TYPE Self; \
-    static inline const char* className() \
-    { \
-        return _NAME; \
-    } \
+#define MICHKA_STRUCT(...) \
+    MICHKA_PRASER_ONLY(__attribute__((annotate(#__VA_ARGS__)))) \
+    MICHKA_PRASER_ONLY(typedef bool MichkaReflectionEnabled;) \
     static inline const char* classTypeName() \
     { \
-        return typeid(_TYPE).name(); \
+        return typeid(Self).name(); \
     } \
     static inline const char* classRawName() \
     { \
-        return typeid(_TYPE).raw_name(); \
+        return typeid(Self).raw_name(); \
+    } \
+    static inline u64 classTypeHash() \
+    { \
+        return typeid(Self).hash_code(); \
     } \
     static inline const char* classFileName() \
     { \
         return __FILE__; \
     } \
-    static inline u64 classTypeHash() \
-    { \
-        return typeid(_TYPE).hash_code(); \
-    } \
     MICHKA_ATTACH(__MICHKA_STRUCT_GENERATED_BODY_, __LINE__)()
 
 /**
- * @brief Define class reflection with custom name.
- *
- * @param _TYPE  class
- * @param _NAME  name
- */
-#define MICHKA_CLASS_WITH_NAME(_TYPE, _NAME, ...) \
-    public: \
-        MICHKA_STRUCT_WITH_NAME(_TYPE, _NAME, __VA_ARGS__) \
-    private:
-
-/**
- * @brief Define struct reflection.
- *
- * @param _TYPE  class
- */
-#define MICHKA_STRUCT(_TYPE, ...) \
-    MICHKA_STRUCT_WITH_NAME(_TYPE, #_TYPE, __VA_ARGS__)
-
-/**
  * @brief Define class reflection.
- *
- * @param _TYPE  class
  */
-#define MICHKA_CLASS(_TYPE, ...) \
-    MICHKA_CLASS_WITH_NAME(_TYPE, #_TYPE, __VA_ARGS__)
+#define MICHKA_CLASS(...) \
+    public: \
+        MICHKA_STRUCT(__VA_ARGS__) \
+    private:
 
 /**
  * @brief Define a member property reflection.
  */
 #define MICHKA_PROPERTY(...)
-
-/**
- * @brief Add attribute to reflections.
- */
-#define MICHKA_ATTR(_NAME, _VALUE) 0
 
 
 namespace Michka

@@ -34,7 +34,7 @@ namespace Michka
 {
     class MICHKA_API Mutex
     {
-        MICHKA_CLASS(Mutex);
+        MICHKA_CLASS();
     public:
         Mutex();
         ~Mutex();

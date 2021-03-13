@@ -35,7 +35,7 @@ namespace Michka
 {
     class MICHKA_API VertexBuffer
     {
-        MICHKA_CLASS(VertexBuffer);
+        MICHKA_CLASS();
         friend class Device;
     public:
         ~VertexBuffer();

@@ -32,159 +32,159 @@
 
 class ParentClass1
 {
-    MICHKA_CLASS(ParentClass1);
+    MICHKA_CLASS();
 public:
     int a1 = 0;
 };
 
 class ParentClass2
 {
-    MICHKA_CLASS(ParentClass2);
+    MICHKA_CLASS();
 public:
     int a2 = 0;
 };
 
 class ParentClass3
 {
-    MICHKA_CLASS(ParentClass3);
+    MICHKA_CLASS();
 public:
     int a3 = 0;
 };
 
 class ParentClass4
 {
-    MICHKA_CLASS(ParentClass4);
+    MICHKA_CLASS();
 public:
     int a4 = 0;
 };
 
 class ParentClass5
 {
-    MICHKA_CLASS(ParentClass5);
+    MICHKA_CLASS();
 public:
     int a5 = 0;
 };
 
 class ParentClass6
 {
-    MICHKA_CLASS(ParentClass6);
+    MICHKA_CLASS();
 public:
     int a6 = 0;
 };
 
 class ParentClass7
 {
-    MICHKA_CLASS(ParentClass7);
+    MICHKA_CLASS();
 public:
     int a7 = 0;
 };
 
 class ParentClass8
 {
-    MICHKA_CLASS(ParentClass8);
+    MICHKA_CLASS();
 public:
     int a8 = 0;
 };
 
 class ParentClass9
 {
-    MICHKA_CLASS(ParentClass9);
+    MICHKA_CLASS();
 public:
     int a9 = 0;
 };
 
 class ParentClass10
 {
-    MICHKA_CLASS(ParentClass10);
+    MICHKA_CLASS();
 public:
     int a10 = 0;
 };
 
 class ChildClass0
 {
-    MICHKA_CLASS(ChildClass0);
+    MICHKA_CLASS();
 public:
     int b0;
 };
 
 class ChildClass1: public ParentClass1
 {
-    MICHKA_CLASS(ChildClass1);
+    MICHKA_CLASS();
 public:
     int b1 = 0;
 };
 
 class ChildClass2: public ParentClass1, public ParentClass2
 {
-    MICHKA_CLASS(ChildClass2);
+    MICHKA_CLASS();
 public:
     int b2 = 0;
 };
 
 class ChildClass3: public ParentClass1, public ParentClass2, public ParentClass3
 {
-    MICHKA_CLASS(ChildClass3);
+    MICHKA_CLASS();
 public:
     int b3 = 0;
 };
 
 class ChildClass4: public ParentClass1, public ParentClass2, public ParentClass3, public ParentClass4
 {
-    MICHKA_CLASS(ChildClass4);
+    MICHKA_CLASS();
 public:
     int b4 = 0;
 };
 
 class ChildClass5: public ParentClass1, public ParentClass2, public ParentClass3, public ParentClass4, public ParentClass5
 {
-    MICHKA_CLASS(ChildClass5);
+    MICHKA_CLASS();
 public:
     int b5 = 0;
 };
 
 class ChildClass6: public ParentClass1, public ParentClass2, public ParentClass3, public ParentClass4, public ParentClass5, public ParentClass6
 {
-    MICHKA_CLASS(ChildClass6);
+    MICHKA_CLASS();
 public:
     int b6 = 0;
 };
 
 class ChildClass7: public ParentClass1, public ParentClass2, public ParentClass3, public ParentClass4, public ParentClass5, public ParentClass6, public ParentClass7
 {
-    MICHKA_CLASS(ChildClass7);
+    MICHKA_CLASS();
 public:
     int b7 = 0;
 };
 
 class ChildClass8: public ParentClass1, public ParentClass2, public ParentClass3, public ParentClass4, public ParentClass5, public ParentClass6, public ParentClass7, public ParentClass8
 {
-    MICHKA_CLASS(ChildClass8);
+    MICHKA_CLASS();
 public:
     int b8 = 0;
 };
 
 class ChildClass9: public ParentClass1, public ParentClass2, public ParentClass3, public ParentClass4, public ParentClass5, public ParentClass6, public ParentClass7, public ParentClass8, public ParentClass9
 {
-    MICHKA_CLASS(ChildClass9);
+    MICHKA_CLASS();
 public:
     int b9 = 0;
 };
 
 class ChildClass10: public ParentClass1, public ParentClass2, public ParentClass3, public ParentClass4, public ParentClass5, public ParentClass6, public ParentClass7, public ParentClass8, public ParentClass9, public ParentClass10
 {
-    MICHKA_CLASS(ChildClass10);
+    MICHKA_CLASS();
 public:
     int b10 = 0;
 };
 
 class ChildClass10Nested: public ChildClass10
 {
-    MICHKA_CLASS(ChildClass10Nested, MICHKA_ATTR("attr1", false), MICHKA_ATTR("attr2", 5), MICHKA_ATTR("attr3", "Hello World"));
+    MICHKA_CLASS(CustomAttribute="Hello 222");
 
 public:
     class Child: public ParentClass5
     {
-        MICHKA_CLASS(Child);
+        MICHKA_CLASS();
     public:
         int childTest = 0;
     };

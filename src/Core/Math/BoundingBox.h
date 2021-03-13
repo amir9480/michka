@@ -41,7 +41,7 @@ namespace Michka
 
     class MICHKA_API BoundingBox
     {
-        MICHKA_CLASS(BoundingBox);
+        MICHKA_CLASS();
     public:
         enum Corner
         {

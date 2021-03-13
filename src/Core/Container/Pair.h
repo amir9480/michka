@@ -36,7 +36,7 @@ namespace Michka
     template<typename T1, typename T2>
     struct Pair
     {
-        MICHKA_STRUCT_WITH_NAME(MICHKA_ARGUMENT(Pair<T1, T2>), "Pair<T1, T2>");
+        MICHKA_STRUCT();
 
         FORCE_INLINE Pair();
         FORCE_INLINE Pair(const T1& _first, const T2& _second);

@@ -38,7 +38,7 @@ namespace Michka
 
     class MICHKA_API Vector3
     {
-        MICHKA_CLASS(Vector3);
+        MICHKA_CLASS();
     public:
         FORCE_INLINE Vector3();
         FORCE_INLINE Vector3(const f32& _x, const f32& _y, const f32& _z);

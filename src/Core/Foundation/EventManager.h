@@ -40,7 +40,7 @@ namespace Michka
 
     class EventHandler
     {
-        MICHKA_CLASS(EventHandler);
+        MICHKA_CLASS();
 
         friend class EventManager;
     public:
@@ -57,7 +57,7 @@ namespace Michka
 
     class MICHKA_API EventManager
     {
-        MICHKA_CLASS(EventManager);
+        MICHKA_CLASS();
     public:
         FORCE_INLINE EventManager();
         virtual ~EventManager();

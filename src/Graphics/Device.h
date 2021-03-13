@@ -44,7 +44,7 @@ namespace Michka
 
     class MICHKA_API Device
     {
-        MICHKA_CLASS(Device);
+        MICHKA_CLASS();
     public:
         ~Device();
 

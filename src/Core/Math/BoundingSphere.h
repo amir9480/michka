@@ -40,7 +40,7 @@ namespace Michka
 
     class MICHKA_API BoundingSphere
     {
-        MICHKA_CLASS(BoundingSphere);
+        MICHKA_CLASS();
     public:
         FORCE_INLINE BoundingSphere();
         FORCE_INLINE BoundingSphere(const Vector3& _position, const f32& _radius);

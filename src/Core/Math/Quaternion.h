@@ -42,7 +42,7 @@ namespace Michka
      */
     class MICHKA_API Quaternion
     {
-        MICHKA_CLASS(Quaternion);
+        MICHKA_CLASS();
     public:
         FORCE_INLINE Quaternion();
         FORCE_INLINE Quaternion(const f32& _x, const f32& _y, const f32& _z, const f32& _w);

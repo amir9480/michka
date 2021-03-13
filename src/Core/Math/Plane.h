@@ -40,7 +40,7 @@ namespace Michka
 
     class MICHKA_API Plane
     {
-        MICHKA_CLASS(Plane);
+        MICHKA_CLASS();
     public:
         FORCE_INLINE Plane();
         FORCE_INLINE Plane(const Vector3& _position, const Vector3& _normal);

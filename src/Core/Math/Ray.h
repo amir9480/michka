@@ -39,7 +39,7 @@ namespace Michka
 
     class MICHKA_API Ray
     {
-        MICHKA_CLASS(Ray);
+        MICHKA_CLASS();
     public:
         FORCE_INLINE Ray();
         FORCE_INLINE Ray(const Vector3& _position, const Vector3& _direction);

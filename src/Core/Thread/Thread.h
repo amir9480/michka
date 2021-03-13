@@ -38,7 +38,7 @@ namespace Michka
 {
     class MICHKA_API Thread
     {
-        MICHKA_CLASS(Thread);
+        MICHKA_CLASS();
     public:
         FORCE_INLINE Thread();
         Thread(const Thread& _other) = delete;

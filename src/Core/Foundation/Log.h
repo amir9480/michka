@@ -73,7 +73,7 @@ namespace Michka
 {
     class MICHKA_API Log
     {
-        MICHKA_CLASS(Log);
+        MICHKA_CLASS();
         MICHKA_SINGLETON_CLASS(Log);
         FORCE_INLINE Log();
         FORCE_INLINE ~Log();

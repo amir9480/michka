@@ -34,9 +34,9 @@
 namespace Michka
 {
     template<typename T>
-    class Vector
+    class MICHKA_API Vector
     {
-        MICHKA_CLASS(Vector<T>);
+        MICHKA_CLASS();
 
         template<class U>
         friend class Vector;

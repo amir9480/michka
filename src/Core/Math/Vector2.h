@@ -37,7 +37,7 @@ namespace Michka
 
     class MICHKA_API Vector2
     {
-        MICHKA_CLASS(Vector2);
+        MICHKA_CLASS();
     public:
         FORCE_INLINE Vector2();
         FORCE_INLINE Vector2(const f32& _x, const f32& _y);

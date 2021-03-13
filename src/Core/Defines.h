@@ -95,7 +95,7 @@ typedef long double            f96;
 namespace Michka
 {
     template<typename T>
-    class StringTemplate;
+    class MICHKA_API StringTemplate;
 
     typedef StringTemplate<char> String8;
     typedef StringTemplate<wchar_t> String;

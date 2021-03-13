@@ -37,7 +37,7 @@ namespace Michka
 
     class MICHKA_API Window : public Object
     {
-        MICHKA_CLASS(Window);
+        MICHKA_CLASS();
         MICHKA_NON_COPYABLE_CLASS(Window);
     public:
         Window(const u32& _width = 640, const u32& _height = 480);

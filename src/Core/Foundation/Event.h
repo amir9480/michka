@@ -38,7 +38,7 @@ namespace Michka
 {
     class MICHKA_API Event
     {
-        MICHKA_CLASS(Event);
+        MICHKA_CLASS();
 
         friend class EventManager;
     public:

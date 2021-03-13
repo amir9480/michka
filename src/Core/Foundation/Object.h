@@ -35,7 +35,7 @@ namespace Michka
 {
     class MICHKA_API Object : public EventManager
     {
-        MICHKA_CLASS(Object);
+        MICHKA_CLASS();
 
     public:
         FORCE_INLINE Object();

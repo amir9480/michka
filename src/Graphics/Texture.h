@@ -36,7 +36,7 @@ namespace Michka
 {
     class MICHKA_API Texture
     {
-        MICHKA_CLASS(Texture);
+        MICHKA_CLASS();
     public:
         enum class Filter: u8
         {

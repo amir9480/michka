@@ -33,9 +33,9 @@
 namespace Michka
 {
     template<typename T>
-    class SizeTemplate
+    class MICHKA_API SizeTemplate
     {
-        MICHKA_CLASS(SizeTemplate<T>);
+        MICHKA_CLASS();
     public:
         FORCE_INLINE SizeTemplate();
         FORCE_INLINE SizeTemplate(const T& _width, const T& _height);

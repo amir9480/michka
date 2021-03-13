@@ -35,7 +35,7 @@ namespace Michka
 {
     class MICHKA_API Image
     {
-        MICHKA_CLASS(Image);
+        MICHKA_CLASS();
     public:
         enum class Format : u32
         {

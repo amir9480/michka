@@ -34,12 +34,12 @@
 namespace Michka
 {
     template<typename T>
-    class Vector;
+    class MICHKA_API Vector;
 
     template<typename T>
-    class StringTemplate
+    class MICHKA_API StringTemplate
     {
-        MICHKA_CLASS(StringTemplate<T>);
+        MICHKA_CLASS();
     public:
         typedef StringTemplate<char> String8;
         typedef StringTemplate<wchar_t> String;

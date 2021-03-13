@@ -44,7 +44,7 @@ namespace Michka
      */
     class MICHKA_API Matrix3
     {
-        MICHKA_CLASS(Matrix3);
+        MICHKA_CLASS();
     public:
         Matrix3();
         Matrix3(const f32 _array[9]);

@@ -45,9 +45,9 @@ namespace Michka
      *          +------ width ------+
      */
     template<typename T>
-    class RectTemplate
+    class MICHKA_API RectTemplate
     {
-        MICHKA_CLASS(RectTemplate<T>);
+        MICHKA_CLASS();
     public:
         FORCE_INLINE RectTemplate();
         FORCE_INLINE RectTemplate(const PositionTemplate<T>& _position, const SizeTemplate<T>& _size);

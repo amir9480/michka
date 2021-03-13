@@ -43,7 +43,7 @@ namespace Michka
 
     class MICHKA_API Shader
     {
-        MICHKA_CLASS(Shader);
+        MICHKA_CLASS();
 
         friend class Device;
     public:

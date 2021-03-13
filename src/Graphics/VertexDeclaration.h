@@ -35,7 +35,7 @@ namespace Michka
 {
     struct VertexAttribute
     {
-        MICHKA_STRUCT(VertexAttribute);
+        MICHKA_STRUCT();
 
         enum class Name
         {
@@ -80,7 +80,7 @@ namespace Michka
 
     class VertexDeclaration
     {
-        MICHKA_CLASS(VertexDeclaration);
+        MICHKA_CLASS();
     public:
         /**
          * @brief Begin declaration.
