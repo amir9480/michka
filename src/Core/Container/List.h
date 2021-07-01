@@ -36,8 +36,6 @@ namespace Michka
     template<typename T>
     class MICHKA_API List
     {
-        MICHKA_CLASS();
-
         template<class U>
         friend class List;
     public:

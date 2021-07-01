@@ -28,15 +28,13 @@
 #include <type_traits>
 #include "Core/Helpers.h"
 #include "Core/Container/Map.h"
-#include "Core/Reflection/Reflection.h"
+#include "Core/Reflection/TypeInfo.h"
 #include "../../Classes/ReflectionClasses.h"
 
 TEST(ClassReflectionTest, Name)
 {
     ASSERT_STREQ(ChildClass0::className(), "ChildClass0");
     ASSERT_STREQ(ChildClass1::className(), "ChildClass1");
-    ASSERT_STREQ((Michka::Pair<int, int>::className()), "Pair<T1, T2>");
-    ASSERT_STREQ((Michka::Map<int, int>::className()), "Map<TKey, TValue>");
 }
 
 TEST(ClassReflectionTest, Parent)

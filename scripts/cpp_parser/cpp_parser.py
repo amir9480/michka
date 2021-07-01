@@ -57,8 +57,35 @@ def parse_attributes(annotate):
     attributes = {}
     attributes_regex = r"([^,=]+)(=([^,\(]+(\(([^()]|\(([^()])*\))*\))?))?"
     for match in re.findall(attributes_regex, annotate):
-        attributes[match[0]] = match[2] if match[2] else 'nullptr'
+        attributes[match[0].strip()] = match[2] if match[2] else 'nullptr'
     return attributes
+
+
+# ---------------------------------------------------------------------------- #
+def parse_class_members(c):
+    members = []
+    for cc in c.get_children():
+        if cc.kind == CursorKind.FIELD_DECL:
+            attributes = {}
+            for ccc in cc.get_children():
+                if ccc.kind == CursorKind.ANNOTATE_ATTR:
+                    attributes = parse_attributes(ccc.spelling)
+            members.append({
+                'name': cc.spelling,
+                'access': 'public' if str(cc.access_specifier) == 'AccessSpecifier.PUBLIC' else 'protected' if str(cc.access_specifier) == 'AccessSpecifier.PROTECTED' else 'private',
+                'attributes': attributes,
+            })
+        elif cc.kind in [CursorKind.STRUCT_DECL, CursorKind.CLASS_DECL, CursorKind.CLASS_TEMPLATE, CursorKind.UNION_DECL] and cc.spelling == '':
+            attributes = {}
+            for ccc in [cc.lexical_parent, cc.lexical_parent.lexical_parent, cc.lexical_parent.lexical_parent.lexical_parent]:
+                if ccc.kind == CursorKind.ANNOTATE_ATTR:
+                    attributes = parse_attributes(ccc.spelling)
+            member_nested = parse_class_members(cc)
+            for i, mn in enumerate(member_nested):
+                member_nested[i]['attributes'] = dict(list(attributes.items()) + list(mn['attributes'].items()))
+            members += member_nested
+
+    return members
 
 
 # ---------------------------------------------------------------------------- #
@@ -79,37 +106,39 @@ def parse_code(source_file):
         return out
 
     for c in tu.cursor.walk_preorder():
-        if str(c.location.file).replace('\\', '/') == source_file and c.kind in [CursorKind.STRUCT_DECL, CursorKind.CLASS_DECL, CursorKind.CLASS_TEMPLATE] and c.is_definition():
+        if str(c.location.file).replace('\\', '/') == source_file and c.kind in [CursorKind.STRUCT_DECL, CursorKind.CLASS_DECL, CursorKind.CLASS_TEMPLATE] and c.is_definition() and c.spelling != '':
             # print(str(c.kind) + ' = ' + c.spelling, c.is_definition())
             reflection_enabled = False
-            reflection_line = 1
+            reflection_line = 0
             parents = []
             template_arguments = []
             attributes = {}
             for cc in c.get_children():
-                if cc.kind == CursorKind.CXX_BASE_SPECIFIER:
+                if cc.spelling == 'MichkaReflectionEnabled':
+                    reflection_enabled = True
+                    reflection_line = cc.location.line
+                    for ccc in cc.get_children():
+                        if ccc.kind == CursorKind.ANNOTATE_ATTR:
+                            attributes = parse_attributes(ccc.spelling)
+                elif cc.kind == CursorKind.CXX_BASE_SPECIFIER:
                     parents.append(cc.get_definition().spelling)
                 elif cc.kind == CursorKind.TEMPLATE_TYPE_PARAMETER:
                     template_arguments.append(cc.spelling)
-                elif cc.spelling == 'MichkaReflectionEnabled':
-                    reflection_enabled = True
-                    for ccc in cc.get_children():
-                        if ccc.kind == CursorKind.ANNOTATE_ATTR:
-                            reflection_line = ccc.location.line
-                            attributes = parse_attributes(ccc.spelling)
 
+            members = parse_class_members(c)
             template_arguments_string = '<' + ', '.join(template_arguments) + '>' if len(template_arguments) > 0 else ''
             out['classes'][c.spelling + template_arguments_string] = {
-                'name': c.spelling + template_arguments_string,
-                'line': int(c.location.line),
-                'pure_name': c.spelling,
-                'qualified_name': qualified_name(c) + template_arguments_string,
-                'parents': parents,
-                'namespace': get_namespace(c),
+                'name'              : c.spelling + template_arguments_string,
+                'line'              : int(c.location.line),
+                'pure_name'         : c.spelling,
+                'qualified_name'    : qualified_name(c) + template_arguments_string,
+                'parents'           : parents,
+                'namespace'         : get_namespace(c),
                 'template_arguments': template_arguments,
                 'reflection_enabled': reflection_enabled,
-                'reflection_line': reflection_line,
-                'attributes': attributes
+                'reflection_line'   : reflection_line,
+                'attributes'        : attributes,
+                'members'           : members,
             }
 
         if c.kind == CursorKind.USING_DIRECTIVE:
@@ -117,5 +146,4 @@ def parse_code(source_file):
                 if cc.kind == CursorKind.NAMESPACE_REF:
                     out['using_namespaces'].append(cc.spelling)
 
-    # print(out)
     return out

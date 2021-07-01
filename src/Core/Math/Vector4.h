@@ -179,18 +179,27 @@ namespace Michka
             };
             struct
             {
+                MICHKA_ATTRIBUTES(Alias="x")
                 f32 r;
+                MICHKA_ATTRIBUTES(Alias="y")
                 f32 g;
+                MICHKA_ATTRIBUTES(Alias="z")
                 f32 b;
+                MICHKA_ATTRIBUTES(Alias="w")
                 f32 a;
             };
             struct
             {
+                MICHKA_ATTRIBUTES(Alias="x")
                 f32 red;
+                MICHKA_ATTRIBUTES(Alias="y")
                 f32 green;
+                MICHKA_ATTRIBUTES(Alias="z")
                 f32 blue;
+                MICHKA_ATTRIBUTES(Alias="w")
                 f32 alpha;
             };
+            MICHKA_ATTRIBUTES(Serializable=false)
             f32 asArray[4];
         };
     };

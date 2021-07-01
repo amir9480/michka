@@ -24,11 +24,13 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "ClassReflection.h"
+#include "TypeInfo.h"
 
 namespace Michka
 {
-    ClassReflection::ClassReflection(const char* _name, const char* _rawname, const char* _typename, const u64& _typehash, const char* _filename) :
+    List<TypeInfo*> TypeInfo::types;
+
+    TypeInfo::TypeInfo(const String& _name, const String& _rawname, const String& _typename, const u64& _typehash, const String& _filename) :
         mName(_name),
         mRawName(_rawname),
         mTypeName(_typename),
@@ -38,37 +40,37 @@ namespace Michka
         //
     }
 
-    ClassReflection::~ClassReflection()
+    TypeInfo::~TypeInfo()
     {
         //
     }
 
-    const char* ClassReflection::getFileName() const
+    String TypeInfo::getFileName() const
     {
         return mFileName;
     }
 
-    const char* ClassReflection::getName() const
+    String TypeInfo::getName() const
     {
         return mName;
     }
 
-    const char* ClassReflection::getRawName() const
+    String TypeInfo::getRawName() const
     {
         return mRawName;
     }
 
-    u64 ClassReflection::getTypeHash() const
+    u64 TypeInfo::getTypeHash() const
     {
         return mTypeHash;
     }
 
-    const char* ClassReflection::getTypeName() const
+    String TypeInfo::getTypeName() const
     {
         return mTypeName;
     }
 
-    ClassReflection& ClassReflection::setName(const char* _name)
+    TypeInfo& TypeInfo::setName(const String& _name)
     {
         mName = _name;
         return *this;

@@ -47,7 +47,6 @@ def file_get_contents(path, flags):
 
 # ---------------------------------------------------------------------------- #
 def generate_source(source_file):
-    source = file_get_contents(source_file, 'r')
     generated_header_code = ''
     generated_source_code = ''
 
@@ -66,26 +65,47 @@ def generate_source(source_file):
                     generated_header_code += 'typedef ' + parent + ' Parent' + (str(index + 1) if index > 0 else '') + '; \\\n'
             else:
                 generated_header_code += 'typedef void Parent; \\\n'
-
             generated_header_code += 'static inline const char* className() \\\n'
             generated_header_code += '{ \\\n'
             generated_header_code += '    return "'+ class_details['name'] +'"; \\\n'
-            generated_header_code += '} \n'
+            generated_header_code += '} \\\n'
 
+            generated_header_code += 'template<typename ReflectionType> \\\n'
+            generated_header_code += 'static inline ReflectionType& classReflection() \\\n'
+            generated_header_code += '{ \\\n'
+            generated_header_code += '    static ReflectionType clsReflection; \\\n'
+
+            for member in class_details['members']:
+                generated_header_code += f'    /* reflection code for {member["name"]}; */ \\\n'
+            generated_header_code += '    return clsReflection; \\\n'
+            generated_header_code += '} \n\n'
+
+
+            # if len(class_details['template_arguments']) == 0:
+            #     generated_source_code += "namespace\n{\n"
+            #     generated_source_code += "Michka::TypeInfo ti = Michka::TypeInfo::create<" + class_details['qualified_name'] + '>(' + class_details['qualified_name'] + '::classFileName())\n'
+            #     for attribute in class_details['attributes']:
+            #         generated_source_code += ".setAttribute(\"" + attribute + "\", " + class_details['attributes'][attribute] + ")\n"
+            #     generated_source_code += ";\n"
+            #     generated_source_code += "}\n\n"
     return generated_header_code, generated_source_code
 
 
 # ---------------------------------------------------------------------------- #
 def generate(path, base_path, generated_path):
+    generated_headers = []
     generated_sources = []
     for sub_path in os.listdir(path):
         full_path = (path + '/' + sub_path).replace(base_path + '/', '', 1)
         if os.path.isdir(path + '/' + sub_path):
             if not os.path.exists(generated_path + '/' + full_path):
                 os.makedirs(generated_path + '/' + full_path)
-            generated_sources = generated_sources + generate(path + '/' + sub_path, base_path, generated_path)
+            sub_directory_generated_headers, sub_directory_generated_sources = generate(path + '/' + sub_path, base_path, generated_path)
+            generated_headers += sub_directory_generated_headers
+            generated_sources += sub_directory_generated_sources
         elif sub_path.endswith('.h'):
             generated_header = os.path.splitext(full_path)[0].replace('.', '_') + '.generated.h'
+            generated_headers.append(generated_header)
             generated_header = generated_path + '/' + generated_header
             generated_source = os.path.splitext(full_path)[0].replace('.', '_') + '.generated.cpp'
             generated_source = generated_path + '/' + generated_source
@@ -98,19 +118,19 @@ def generate(path, base_path, generated_path):
                 header_guard = '__MICHKA_GENERATED_' + generated_header.replace('/', '_').replace('.', '_').replace(':', '_').upper() + '__'
                 file.write('#ifndef ' + header_guard + '\n')
                 file.write('#define ' + header_guard + '\n\n')
-                file.write(generated_header_code)
+                file.write('#include "' + full_path + '"')
                 file.write('\n\n#endif // ' + header_guard + '\n')
+                file.write(generated_header_code)
                 file.close()
 
                 # Source part
                 file = open(generated_source, 'w')
-                file.write(generator_comment)
-                file.write('// ' + header_guard + '\n')
+                file.write('// ' + path + '/' + sub_path + '\n')
                 file.write(generated_source_code)
 
                 print('Generated source for "' + path + '/' + sub_path + '"')
 
-    return generated_sources
+    return generated_headers, generated_sources
 
 
 # ---------------------------------------------------------------------------- #
@@ -119,15 +139,29 @@ def generate_files():
     for path_argument in sys.argv[1:]:
         path_argument_splited = path_argument.split('=')
         if len(path_argument_splited) == 2:
-            generated_sources = generate(path_argument_splited[0], path_argument_splited[0], path_argument_splited[1])
+            generated_headers, generated_sources = generate(path_argument_splited[0], path_argument_splited[0], path_argument_splited[1])
             generated_path = path_argument_splited[1]
-            cmake_file = open(generated_path + '/CMakeLists.txt', 'w')
-            cmake_file.write(generator_comment.replace('//', '#'))
-            cmake_file.write('set(\nSOURCES\n${SOURCES}\n')
+            generated_source_codes = generator_comment
+
+            for generated_header in generated_headers:
+                generated_source_codes += '#include "' + generated_header + '"\n'
+
+            generated_source_codes += "\n\n"
+
             for generated_source in generated_sources:
-                cmake_file.write('${CMAKE_CURRENT_SOURCE_DIR}/' + generated_source.replace('./', '') + '\n')
-            cmake_file.write('\nPARENT_SCOPE\n)\n')
-            cmake_file.close()
+                generated_source_codes += file_get_contents(generated_path + '/' + generated_source, 'r') + '\n'
+
+            file = open(generated_path + '/MichkaGenerator.generated.cpp', 'w')
+            file.write(generated_source_codes)
+            file.close()
+
+            if not os.path.exists(generated_path + '/CMakeLists.txt') or False:
+                cmake_file = open(generated_path + '/CMakeLists.txt', 'w')
+                cmake_file.write(generator_comment.replace('//', '#'))
+                cmake_file.write('set(\nSOURCES\n${SOURCES}\n')
+                cmake_file.write('${CMAKE_CURRENT_SOURCE_DIR}/MichkaGenerator.generated.cpp\n')
+                cmake_file.write('\nPARENT_SCOPE\n)\n')
+                cmake_file.close()
 
 
 # ---------------------------------------------------------------------------- #
@@ -140,5 +174,5 @@ def main():
 
 # ---------------------------------------------------------------------------- #
 main()
-# generate_source('./src/Core/Thread/Thread.h')
+# generate_source('./src/Core/Math/Vector4.h')
 # generate_source('./tests/Classes/ReflectionClasses.h')

@@ -265,11 +265,17 @@ namespace \
 static void MICHKA_ATTACH(__michka_call, __LINE__)()
 
 /**
+ * @brief Define reflection attributes
+ */
+#define MICHKA_ATTRIBUTES(...) \
+    MICHKA_PRASER_ONLY(__attribute__((annotate(#__VA_ARGS__))))
+
+/**
  * @brief Define struct reflection.
  */
 #define MICHKA_STRUCT(...) \
-    MICHKA_PRASER_ONLY(__attribute__((annotate(#__VA_ARGS__)))) \
     MICHKA_PRASER_ONLY(typedef bool MichkaReflectionEnabled;) \
+    MICHKA_ATTRIBUTES(__VA_ARGS__) \
     static inline const char* classTypeName() \
     { \
         return typeid(Self).name(); \
@@ -295,11 +301,6 @@ static void MICHKA_ATTACH(__michka_call, __LINE__)()
     public: \
         MICHKA_STRUCT(__VA_ARGS__) \
     private:
-
-/**
- * @brief Define a member property reflection.
- */
-#define MICHKA_PROPERTY(...)
 
 
 namespace Michka

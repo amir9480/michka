@@ -41,7 +41,6 @@ namespace Michka
     {
         class MICHKA_API CustomVariantBase
         {
-            MICHKA_CLASS();
         public:
             FORCE_INLINE CustomVariantBase();
             virtual ~CustomVariantBase();
@@ -75,8 +74,6 @@ namespace Michka
         template<typename T>
         class MICHKA_API CustomVariant : public CustomVariantBase
         {
-            MICHKA_CLASS();
-
             friend class Variant;
         public:
             CustomVariant(const T& _value);
@@ -106,8 +103,6 @@ namespace Michka
         template<typename T>
         class MICHKA_API CustomVariantReference : public CustomVariantBase
         {
-            MICHKA_CLASS();
-
             friend class Variant;
         public:
             CustomVariantReference(T* _value);
@@ -137,7 +132,6 @@ namespace Michka
 
     class MICHKA_API Variant
     {
-        MICHKA_CLASS();
     public:
         enum class Type
         {

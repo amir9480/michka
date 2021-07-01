@@ -39,7 +39,6 @@ namespace Michka
     template<typename T>
     class MICHKA_API StringTemplate
     {
-        MICHKA_CLASS();
     public:
         typedef StringTemplate<char> String8;
         typedef StringTemplate<wchar_t> String;

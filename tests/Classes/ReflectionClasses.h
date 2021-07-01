@@ -27,7 +27,7 @@
 #ifndef __TEST_REFLECTION_CLASSES_H__
 #define __TEST_REFLECTION_CLASSES_H__
 
-#include "Core/Reflection/Reflection.h"
+#include "Core/Reflection/TypeInfo.h"
 #include "MichkaGenerated/tests/Classes/ReflectionClasses.generated.h"
 
 class ParentClass1
@@ -179,7 +179,7 @@ public:
 
 class ChildClass10Nested: public ChildClass10
 {
-    MICHKA_CLASS(CustomAttribute="Hello 222");
+    MICHKA_CLASS(CustomAttribute="Hello 1", CustomAttribute2=666);
 
 public:
     class Child: public ParentClass5

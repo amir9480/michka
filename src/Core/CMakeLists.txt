@@ -51,8 +51,7 @@ set(
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/Vector4.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Memory/Memory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Reflection/MetaAttributes.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Reflection/Reflection.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Reflection/ClassReflection.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Reflection/TypeInfo.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Thread/Thread.cpp
 
     # -------------------------------------------------------------------------- #

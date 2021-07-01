@@ -24,3 +24,13 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
+#include "TypeInfo.h"
+
+namespace Michka
+{
+    template<typename T>
+    TypeInfo& TypeInfo::create(const String& _filename)
+    {
+        return TypeInfo("", "", "", 0, "");
+    }
+}

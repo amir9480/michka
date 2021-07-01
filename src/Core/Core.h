@@ -58,9 +58,8 @@
 #include "Math/Vector3.h"
 #include "Math/Vector4.h"
 #include "Memory/Memory.h"
-#include "Reflection/Reflection.h"
-#include "Reflection/ClassReflection.h"
 #include "Reflection/Type.h"
+#include "Reflection/TypeInfo.h"
 #include "Thread/Mutex.h"
 #include "Thread/Thread.h"
 
