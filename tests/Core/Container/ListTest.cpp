@@ -97,34 +97,6 @@ TEST(ListTest, Filter)
     ASSERT_EQ(a[4], 10);
 }
 
-TEST(ListTest, Implode)
-{
-    {
-        Michka::List<int> a = {1, 2, 4};
-        ASSERT_EQ(a.implode(), "1,2,4");
-        ASSERT_EQ(a.implode("|"), "1|2|4");
-    }
-    {
-        Michka::List<Michka::String> a = {"a", "b", "c"};
-        ASSERT_EQ(a.implode(), "a,b,c");
-        ASSERT_EQ(a.implode("|"), "a|b|c");
-    }
-    {
-        Michka::List<Person> a = {Person("a"), Person("b"), Person("c")};
-        ASSERT_EQ(a.implode(), "Person(a),Person(b),Person(c)");
-        ASSERT_EQ(a.implode("|"), "Person(a)|Person(b)|Person(c)");
-    }
-    {
-        Michka::List<Person*> a = {new Person("a"), new Person("b"), new Person("c")};
-        ASSERT_EQ(a.implode(), "Person(a),Person(b),Person(c)");
-        ASSERT_EQ(a.implode("|"), "Person(a)|Person(b)|Person(c)");
-        for (auto i : a)
-        {
-            delete i;
-        }
-    }
-}
-
 TEST(ListTest, Insert)
 {
     Michka::List<int> a = {1, 2};
@@ -203,6 +175,34 @@ TEST(ListTest, Iterator)
     }
     ASSERT_EQ(count, 4);
     ASSERT_EQ(sum, 28);
+}
+
+TEST(ListTest, Join)
+{
+    {
+        Michka::List<int> a = {1, 2, 4};
+        ASSERT_EQ(a.join(), "1,2,4");
+        ASSERT_EQ(a.join("|"), "1|2|4");
+    }
+    {
+        Michka::List<Michka::String> a = {"a", "b", "c"};
+        ASSERT_EQ(a.join(), "a,b,c");
+        ASSERT_EQ(a.join("|"), "a|b|c");
+    }
+    {
+        Michka::List<Person> a = {Person("a"), Person("b"), Person("c")};
+        ASSERT_EQ(a.join(), "Person(a),Person(b),Person(c)");
+        ASSERT_EQ(a.join("|"), "Person(a)|Person(b)|Person(c)");
+    }
+    {
+        Michka::List<Person*> a = {new Person("a"), new Person("b"), new Person("c")};
+        ASSERT_EQ(a.join(), "Person(a),Person(b),Person(c)");
+        ASSERT_EQ(a.join("|"), "Person(a)|Person(b)|Person(c)");
+        for (auto i : a)
+        {
+            delete i;
+        }
+    }
 }
 
 TEST(ListTest, OperatorAdd)

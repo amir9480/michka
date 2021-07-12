@@ -64,7 +64,7 @@ namespace Michka
         String path = realpath(_path);
         auto pathSplited = path.split('/');
         pathSplited.remove(pathSplited.getSize() - 1);
-        return pathSplited.implode("/");
+        return pathSplited.join("/");
     }
 
     bool File::exists(const String& _path)
@@ -81,7 +81,7 @@ namespace Michka
         {
             pathSplited.remove(0, pathSplited.getSize() - 1);
         }
-        return pathSplited.implode("/");
+        return pathSplited.join("/");
     }
 
     bool File::flush()

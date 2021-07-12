@@ -62,7 +62,7 @@ namespace Michka
             case Type::typeString:
                 return *mString;
             case Type::typeArray:
-                return "{" + mList->implode(",") + "}";
+                return "{" + mList->join(",") + "}";
             case Type::typeCustom:
             case Type::typeReference:
                 return mCustom->toString();

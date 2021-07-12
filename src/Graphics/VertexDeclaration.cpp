@@ -75,7 +75,7 @@ namespace Michka
 
     String VertexDeclaration::toString() const
     {
-        return "VertexDeclaration(\n    " + mAttributes.implode(",\n    ") + "\n)";
+        return "VertexDeclaration(\n    " + mAttributes.join(",\n    ") + "\n)";
     }
 
     VertexDeclaration::VertexDeclaration()

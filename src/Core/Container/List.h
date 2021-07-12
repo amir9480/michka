@@ -191,13 +191,6 @@ namespace Michka
         FORCE_INLINE List<T> getUnique(const std::function<bool(const T&, const T&)>& _callback);
 
         /**
-         * @brief Join list elements as a string.
-         *
-         * @param _seperator
-         */
-        String implode(const String& _seperator = ",") const;
-
-        /**
          * @brief Find index of a value with offset of from.
          *
          * @param _what
@@ -257,6 +250,13 @@ namespace Michka
          * @brief Check list is not empty.
          */
         FORCE_INLINE bool isNotEmpty() const;
+
+        /**
+         * @brief Join list elements as a string.
+         *
+         * @param _seperator
+         */
+        String join(const String& _seperator = ",") const;
 
         /**
          * @brief Get last item.

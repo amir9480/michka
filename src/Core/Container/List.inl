@@ -366,42 +366,6 @@ namespace Michka
     }
 
     template<typename T>
-    String List<T>::implode(const String& _seperator) const
-    {
-        String out;
-        if constexpr (HasToString<Type<T>::RemovedPointerType>::value)
-        {
-            for (auto element : *this)
-            {
-                if constexpr (Type<T>::isPointer)
-                {
-                    out += _seperator + element->toString();
-                }
-                else
-                {
-                    out += _seperator + element.toString();
-                }
-            }
-        }
-        else if constexpr (Type<T>::isNumeric)
-        {
-            for (auto element : *this)
-            {
-                out += _seperator + String::number(element);
-            }
-        }
-        else if constexpr (Type<T>::is<String>() || Type<T>::is<String8>() || Type<T>::is<String32>())
-        {
-            for (auto element : *this)
-            {
-                out += _seperator + element;
-            }
-        }
-
-        return out.getTrimed(_seperator);
-    }
-
-    template<typename T>
     u32 List<T>::indexOf(const T& _what, const u32 _from) const
     {
         static_assert(Type<T>::hasOperator<>::equal, "Your type does not have operator \'==\' to comparison");
@@ -556,6 +520,42 @@ namespace Michka
     FORCE_INLINE bool List<T>::isNotEmpty() const
     {
         return mSize != 0;
+    }
+
+    template<typename T>
+    String List<T>::join(const String& _seperator) const
+    {
+        String out;
+        if constexpr (HasToString<Type<T>::RemovedPointerType>::value)
+        {
+            for (auto element : *this)
+            {
+                if constexpr (Type<T>::isPointer)
+                {
+                    out += _seperator + element->toString();
+                }
+                else
+                {
+                    out += _seperator + element.toString();
+                }
+            }
+        }
+        else if constexpr (Type<T>::isNumeric)
+        {
+            for (auto element : *this)
+            {
+                out += _seperator + String::number(element);
+            }
+        }
+        else if constexpr (Type<T>::is<String>() || Type<T>::is<String8>() || Type<T>::is<String32>())
+        {
+            for (auto element : *this)
+            {
+                out += _seperator + element;
+            }
+        }
+
+        return out.getTrimed(_seperator);
     }
 
     template<typename T>
@@ -754,7 +754,7 @@ namespace Michka
     template<typename T>
     String List<T>::toString() const
     {
-        String out = implode();
+        String out = join();
         if (out.isEmpty())
         {
             out = "List(size=" + String::number(mSize) + ")";
