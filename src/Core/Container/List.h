@@ -39,15 +39,10 @@ namespace Michka
         template<class U>
         friend class List;
     public:
-        class Element
+        struct Element
         {
-            friend class List;
-            friend class Iterator;
-            friend class ConstIterator;
-
             FORCE_INLINE Element(const T& _val);
             FORCE_INLINE Element(T&& _val);
-            ~Element();
 
             T value;
             Element* next = nullptr;

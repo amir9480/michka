@@ -48,12 +48,6 @@ namespace Michka
         //
     }
 
-    template<typename T>
-    List<T>::Element::~Element()
-    {
-        //
-    }
-
     /* ----------------------------- Const Iterator ----------------------------- */
 
     template<typename T>

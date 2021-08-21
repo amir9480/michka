@@ -148,12 +148,12 @@ namespace Michka
         /**
          * @brief Is type integral for numeric types.
          */
-        static inline const bool isIntegral = false;
+        static inline const bool isIntegral = std::is_integral<T>::value;
 
         /**
          * @brief Is type real for numeric types.
          */
-        static inline const bool isFloat = false;
+        static inline const bool isFloat = std::is_floating_point<T>::value;
 
         /**
          * @brief Is type a numeric types.
@@ -242,7 +242,6 @@ namespace Michka
         static inline const char* name = "bool";
         static inline const bool max = true;
         static inline const bool min = false;
-        static inline const bool isIntegral = true;
     };
 
     /* ---------------------------- Signed Integrals ---------------------------- */
@@ -253,7 +252,6 @@ namespace Michka
         static inline const char* name = "char";
         static inline const char max =  0x7f;
         static inline const char min = -0x80;
-        static inline const bool isIntegral = true;
     };
 
     template<>
@@ -262,7 +260,6 @@ namespace Michka
         static inline const char* name = "signed char";
         static inline const char max =  0x7f;
         static inline const char min = -0x80;
-        static inline const bool isIntegral = true;
     };
 
     template<>
@@ -271,7 +268,6 @@ namespace Michka
         static inline const char* name = "short int";
         static inline const short int max =  0x7fff;
         static inline const short int min = -0x8000;
-        static inline const bool isIntegral = true;
     };
 
     template<>
@@ -280,7 +276,6 @@ namespace Michka
         static inline const char* name = "int";
         static inline const int max =  0x7fffffff;
         static inline const int min = -0x7fffffff - 1;
-        static inline const bool isIntegral = true;
     };
 
     template<>
@@ -289,7 +284,6 @@ namespace Michka
         static inline const char* name = "long int";
         static inline const int max =  0x7fffffff;
         static inline const int min = -0x7fffffff - 1;
-        static inline const bool isIntegral = true;
     };
 
     template<>
@@ -298,7 +292,6 @@ namespace Michka
         static inline const char* name = "long long int";
         static inline const long long int max =  0x7fffffffffffffff;
         static inline const long long int min = -0x7fffffffffffffff - 1;
-        static inline const bool isIntegral = true;
     };
 
     /* --------------------------- Unsinged Integrals --------------------------- */
@@ -309,7 +302,6 @@ namespace Michka
         static inline const char* name = "unsigned char";
         static inline const unsigned char min = 0;
         static inline const unsigned char max = 0xff;
-        static inline const bool isIntegral = true;
     };
 
     template<>
@@ -318,7 +310,6 @@ namespace Michka
         static inline const char* name = "unsigned short int";
         static inline const unsigned short int min = 0;
         static inline const unsigned short int max = 0xffff;
-        static inline const bool isIntegral = true;
     };
 
     template<>
@@ -327,7 +318,6 @@ namespace Michka
         static inline const char* name = "unsigned int";
         static inline const unsigned int min = 0;
         static inline const unsigned int max = 0xffffffff;
-        static inline const bool isIntegral = true;
     };
 
     template<>
@@ -336,7 +326,6 @@ namespace Michka
         static inline const char* name = "unsigned long int";
         static inline const unsigned int min = 0;
         static inline const unsigned int max = 0xffffffff;
-        static inline const bool isIntegral = true;
     };
 
     template<>
@@ -345,7 +334,6 @@ namespace Michka
         static inline const char* name = "unsigned long long int";
         static inline const unsigned long long int min = 0;
         static inline const unsigned long long int max = 0xffffffffffffffff;
-        static inline const bool isIntegral = true;
     };
 
     /* ----------------------------- Floating point ----------------------------- */
@@ -356,7 +344,6 @@ namespace Michka
         static inline const char* name = "float";
         static inline const float max = FLT_MAX;
         static inline const float min = FLT_MIN;
-        static inline const bool isFloat = true;
         static inline const float epsilon = 1.19209e-07f;
     };
 
@@ -366,7 +353,6 @@ namespace Michka
         static inline const char* name = "double";
         static inline const double max = DBL_MAX;
         static inline const double min = DBL_MIN;
-        static inline const bool isFloat = true;
         static inline const double epsilon = 2.22045e-16;
     };
 
@@ -376,7 +362,6 @@ namespace Michka
         static inline const char* name = "long double";
         static inline const long double max = LDBL_MAX;
         static inline const long double min = LDBL_MIN;
-        static inline const bool isFloat = true;
         static inline const long double epsilon = 1.0842e-19L;
     };
 
@@ -388,7 +373,6 @@ namespace Michka
         static inline const char* name = "wchar_t";
         static inline const wchar_t max = 0xffff;
         static inline const wchar_t min = 0;
-        static inline const bool isIntegral = true;
     };
 
     template<>
@@ -397,7 +381,6 @@ namespace Michka
         static inline const char* name = "char16_t";
         static inline const char16_t max = 0xffff;
         static inline const char16_t min = 0;
-        static inline const bool isIntegral = true;
     };
 
     template<>
@@ -406,7 +389,6 @@ namespace Michka
         static inline const char* name = "char32_t";
         static inline const char32_t max = 0xffffffff;
         static inline const char32_t min = 0;
-        static inline const bool isIntegral = true;
     };
 
     typedef Type<i8> i8Info;

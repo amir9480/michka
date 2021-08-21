@@ -28,9 +28,8 @@
 
 namespace Michka
 {
-    template<typename T>
-    TypeInfo& TypeInfo::create(const String& _filename)
+    void TypeInfo::addProperty(const Property& _property)
     {
-        return TypeInfo("", "", "", 0, "");
+        mProperties.pushBack(_property);
     }
 }

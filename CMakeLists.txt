@@ -47,10 +47,12 @@ endif()
 set(SOURCES "")
 set(GENERATOR_COMMAND python scripts/generator.py ./src=./build/Generated/MichkaGenerated ./tests=./build/Generated/MichkaGenerated/tests)
 
-execute_process(
-    COMMAND ${GENERATOR_COMMAND}
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-)
+if(NOT EXISTS ./build/Generated/MichkaGenerated/CMakeList.txt)
+    execute_process(
+        COMMAND ${GENERATOR_COMMAND}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    )
+endif()
 
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
 include_directories("${CMAKE_CURRENT_BINARY_DIR}/Generated")

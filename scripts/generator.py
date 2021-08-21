@@ -73,7 +73,7 @@ def generate_source(source_file):
             generated_header_code += 'template<typename ReflectionType> \\\n'
             generated_header_code += 'static inline ReflectionType& classReflection() \\\n'
             generated_header_code += '{ \\\n'
-            generated_header_code += '    static ReflectionType clsReflection; \\\n'
+            generated_header_code += '    static ReflectionType clsReflection(__FILE__).setName(className()); \\\n'
 
             for member in class_details['members']:
                 generated_header_code += f'    /* reflection code for {member["name"]}; */ \\\n'
@@ -95,40 +95,42 @@ def generate_source(source_file):
 def generate(path, base_path, generated_path):
     generated_headers = []
     generated_sources = []
-    for sub_path in os.listdir(path):
-        full_path = (path + '/' + sub_path).replace(base_path + '/', '', 1)
-        if os.path.isdir(path + '/' + sub_path):
-            if not os.path.exists(generated_path + '/' + full_path):
-                os.makedirs(generated_path + '/' + full_path)
-            sub_directory_generated_headers, sub_directory_generated_sources = generate(path + '/' + sub_path, base_path, generated_path)
+    for sub_path in os.listdir(path) if os.path.isdir(path) else [path]:
+        folder_path = path if os.path.isdir(path) else os.path.dirname(path)
+        absolute_path = folder_path + '/' + sub_path
+        path_relative_to_base = absolute_path.replace(base_path + '/', '', 1)
+        if os.path.isdir(absolute_path):
+            if not os.path.exists(generated_path + '/' + path_relative_to_base):
+                os.makedirs(generated_path + '/' + path_relative_to_base)
+            sub_directory_generated_headers, sub_directory_generated_sources = generate(absolute_path, base_path, generated_path)
             generated_headers += sub_directory_generated_headers
             generated_sources += sub_directory_generated_sources
         elif sub_path.endswith('.h'):
-            generated_header = os.path.splitext(full_path)[0].replace('.', '_') + '.generated.h'
+            generated_header = os.path.splitext(path_relative_to_base)[0].replace('.', '_') + '.generated.h'
             generated_headers.append(generated_header)
             generated_header = generated_path + '/' + generated_header
-            generated_source = os.path.splitext(full_path)[0].replace('.', '_') + '.generated.cpp'
+            generated_source = os.path.splitext(path_relative_to_base)[0].replace('.', '_') + '.generated.cpp'
             generated_source = generated_path + '/' + generated_source
             generated_sources.append(generated_source.replace(generated_path + '/', ''))
-            if not os.path.exists(generated_header) or os.path.getmtime(path + '/' + sub_path) > os.path.getmtime(generated_header) or not False:
-                generated_header_code, generated_source_code = generate_source(path + '/' + sub_path)
+            if not os.path.exists(generated_header) or os.path.getmtime(absolute_path) > os.path.getmtime(generated_header) or not False:
+                generated_header_code, generated_source_code = generate_source(absolute_path)
                 # Header part
                 file = open(generated_header, 'w')
                 file.write(generator_comment)
                 header_guard = '__MICHKA_GENERATED_' + generated_header.replace('/', '_').replace('.', '_').replace(':', '_').upper() + '__'
                 file.write('#ifndef ' + header_guard + '\n')
                 file.write('#define ' + header_guard + '\n\n')
-                file.write('#include "' + full_path + '"')
+                file.write('#include "' + path_relative_to_base + '"')
                 file.write('\n\n#endif // ' + header_guard + '\n')
                 file.write(generated_header_code)
                 file.close()
 
                 # Source part
                 file = open(generated_source, 'w')
-                file.write('// ' + path + '/' + sub_path + '\n')
+                file.write('// ' + absolute_path + '\n')
                 file.write(generated_source_code)
 
-                print('Generated source for "' + path + '/' + sub_path + '"')
+                print('Generated source for "' + absolute_path + '"')
 
     return generated_headers, generated_sources
 
@@ -174,5 +176,5 @@ def main():
 
 # ---------------------------------------------------------------------------- #
 main()
-# generate_source('./src/Core/Math/Vector4.h')
+# generate('src/Core/Math/Vector4.h', 'src', 'build/Generated/MichkaGenerated')
 # generate_source('./tests/Classes/ReflectionClasses.h')
