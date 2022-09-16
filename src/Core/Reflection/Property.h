@@ -35,7 +35,7 @@
 
 namespace Michka
 {
-    class MICHKA_API Property : public MetaAttributes
+    class Property : public MetaAttributes
     {
     public:
 

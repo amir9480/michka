@@ -28,8 +28,8 @@
 
 namespace Michka
 {
-    void TypeInfo::addProperty(const Property& _property)
-    {
-        mProperties.pushBack(_property);
-    }
+    // void TypeInfo::addProperty(const Property& _property)
+    // {
+    //     mProperties.pushBack(_property);
+    // }
 }

@@ -60,7 +60,7 @@ namespace Michka
          *
          * @param _property
          */
-        void addProperty(const Property& _property);
+        // void addProperty(const Property& _property);
 
         /**
          * @brief Get source filename of class.

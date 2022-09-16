@@ -112,7 +112,7 @@ def generate(path, base_path, generated_path):
             generated_source = os.path.splitext(path_relative_to_base)[0].replace('.', '_') + '.generated.cpp'
             generated_source = generated_path + '/' + generated_source
             generated_sources.append(generated_source.replace(generated_path + '/', ''))
-            if not os.path.exists(generated_header) or os.path.getmtime(absolute_path) > os.path.getmtime(generated_header) or not False:
+            if not os.path.exists(generated_header) or os.path.getmtime(absolute_path) > os.path.getmtime(generated_header) or False:
                 generated_header_code, generated_source_code = generate_source(absolute_path)
                 # Header part
                 file = open(generated_header, 'w')
