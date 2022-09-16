@@ -28,7 +28,6 @@
 #define __TEST_REFLECTION_CLASSES_H__
 
 #include "Core/Reflection/TypeInfo.h"
-#include "MichkaGenerated/tests/Classes/ReflectionClasses.generated.h"
 
 class ParentClass1
 {

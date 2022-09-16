@@ -17,10 +17,8 @@
 </div>
 
 ## Credits
-* [CLang](https://clang.llvm.org)
 * [Glad](https://glad.dav1d.de)
 * [Google Test](https://github.com/google/googletest)
-* [Lib Clang for pip](https://github.com/sighingnow/libclang)
 * [Mesa3D](https://mesa3d.org)
 * [Mesa Dist](https://github.com/pal1000/mesa-dist-win)
 * [OpenGL](https://www.opengl.org)

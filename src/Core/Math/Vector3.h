@@ -28,7 +28,6 @@
 #define __VECTOR3_H__
 
 #include "Core/Helpers.h"
-#include "MichkaGenerated/Core/Math/Vector3.generated.h"
 
 namespace Michka
 {

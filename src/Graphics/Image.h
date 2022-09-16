@@ -29,7 +29,6 @@
 
 #include "Core/Helpers.h"
 #include "Core/Container/Color.h"
-#include "MichkaGenerated/Graphics/Image.generated.h"
 
 namespace Michka
 {

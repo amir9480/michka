@@ -29,7 +29,6 @@
 
 #include "Core/Helpers.h"
 #include "Core/Foundation/Object.h"
-#include "MichkaGenerated/Platform/Window.generated.h"
 
 namespace Michka
 {

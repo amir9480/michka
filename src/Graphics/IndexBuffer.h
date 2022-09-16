@@ -28,7 +28,6 @@
 #define __INDEX_BUFFER_H__
 
 #include "Core/Helpers.h"
-#include "MichkaGenerated/Graphics/IndexBuffer.generated.h"
 
 namespace Michka
 {

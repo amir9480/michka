@@ -31,7 +31,6 @@
 #include "Core/Helpers.h"
 #include "Core/Foundation/Event.h"
 #include "Core/Container/List.h"
-#include "MichkaGenerated/Core/Foundation/EventManager.generated.h"
 
 namespace Michka
 {

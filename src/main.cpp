@@ -127,49 +127,48 @@ u32 indices2[] = {0, 1, 2};
 
 int main()
 {
-    // Image image("test-assets/grass.jpg");
+    Image image("test-assets/grass.jpg");
 
-    // Window* window = new Window();
-    // Device* device = Device::instance();
-    // device->setWindow(window);
-    // window->show();
-    // Texture* texture = device->createTexture(image);
-    // Texture* rt = device->createTexture(320, 240, TextureFormat::r8g8b8, true);
-    // Texture* db = device->createTexture(320, 240, TextureFormat::depth32, true);
-    // IndexBuffer* ib = device->createIndexBuffer()->set(indices2, sizeof(indices2) / sizeof(indices2[0]));
-    // VertexBuffer* vb = device->createVertexBuffer(&Vertex::decl())->set(vertices2, sizeof(vertices2));
-    // Shader* shader = device->createShader(File::getContents("shaders/test.glsl"));
-    // if (shader->hasErrors())
-    // {
-    //     MICHKA_ABORT(shader->getErrors());
-    // }
+    Window* window = new Window();
+    Device* device = Device::instance();
+    device->setWindow(window);
+    window->show();
+    Texture* texture = device->createTexture(image);
+    Texture* rt = device->createTexture(320, 240, TextureFormat::r8g8b8, true);
+    Texture* db = device->createTexture(320, 240, TextureFormat::depth32, true);
+    IndexBuffer* ib = device->createIndexBuffer()->set(indices2, sizeof(indices2) / sizeof(indices2[0]));
+    VertexBuffer* vb = device->createVertexBuffer(&Vertex::decl())->set(vertices2, sizeof(vertices2));
+    Shader* shader = device->createShader(File::getContents("shaders/test.glsl"));
+    if (shader->hasErrors())
+    {
+        MICHKA_ABORT(shader->getErrors());
+    }
 
-    // while (window->isDestroyed() == false)
-    // {
-    //     device->setRenderTarget(0, rt);
-    //     device->setDepthBuffer(db);
-    //     device->clear(true, true, true, Color::cyan);
-    //     device->setIndexBuffer(ib);
-    //     device->setVertexBuffer(vb);
-    //     device->setShader(shader);
-    //     shader->set(
-    //         "wvp",
-    //         Matrix::createViewMatrix(Michka::Vector3(0.0f, 1.0f, -3.0f), Michka::Vector3::forward, Michka::Vector3::up) * Matrix::createPerspectiveProjection()
-    //     );
-    //     shader->set("test", ((clock()/1000)%3) + 1);
-    //     shader->set("testTexture", texture);
-    //     device->draw();
+    while (window->isDestroyed() == false)
+    {
+        device->setRenderTarget(0, rt);
+        device->setDepthBuffer(db);
+        device->clear(true, true, true, Color::cyan);
+        device->setIndexBuffer(ib);
+        device->setVertexBuffer(vb);
+        device->setShader(shader);
+        shader->set(
+            "wvp",
+            Matrix::createViewMatrix(Michka::Vector3(0.0f, 1.0f, -3.0f), Michka::Vector3::forward, Michka::Vector3::up) * Matrix::createPerspectiveProjection()
+        );
+        shader->set("test", ((clock()/1000)%3) + 1);
+        shader->set("testTexture", texture);
+        device->draw();
 
-    //     device->drawOnScreen(rt);
-    // }
+        device->drawOnScreen(rt);
+    }
 
-    // delete vb;
-    // delete ib;
-    // delete shader;
-    // delete texture;
-    // delete window;
+    delete vb;
+    delete ib;
+    delete shader;
+    delete texture;
+    delete window;
 
-    std::cout << Vector4::className() << std::endl;
     std::cout << "\nBYE\n";
     system("PAUSE");
     return 0;

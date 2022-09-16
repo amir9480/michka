@@ -29,7 +29,6 @@
 
 #include "Core/Helpers.h"
 #include "Vector3.h"
-#include "MichkaGenerated/Core/Math/Ray.generated.h"
 
 namespace Michka
 {

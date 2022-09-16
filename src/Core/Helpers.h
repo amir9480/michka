@@ -94,15 +94,6 @@
 #define _MICHKA_ATTACH5(_A, _B, _C, _D, _E) _A##_B##_C##_D##_E
 
 /**
- * @brief Codes that only should be included when parsing code.
- */
-#define MICHKA_PRASER_ONLY(_ARGS)
-#ifdef MICHKA_PARSER
-#undef MICHKA_PRASER_ONLY
-#define MICHKA_PRASER_ONLY(_ARGS) _ARGS
-#endif
-
-/**
  * @brief this macro is using to detect a member function exists or not.
  *
  * @example
@@ -265,34 +256,9 @@ namespace \
 static void MICHKA_ATTACH(__michka_call, __LINE__)()
 
 /**
- * @brief Define reflection attributes
- */
-#define MICHKA_ATTRIBUTES(...) \
-    MICHKA_PRASER_ONLY(__attribute__((annotate(#__VA_ARGS__))))
-
-/**
  * @brief Define struct reflection.
  */
-#define MICHKA_STRUCT(...) \
-    MICHKA_PRASER_ONLY(typedef bool MichkaReflectionEnabled;) \
-    MICHKA_ATTRIBUTES(__VA_ARGS__) \
-    static inline const char* classTypeName() \
-    { \
-        return typeid(Self).name(); \
-    } \
-    static inline const char* classRawName() \
-    { \
-        return typeid(Self).raw_name(); \
-    } \
-    static inline u64 classTypeHash() \
-    { \
-        return typeid(Self).hash_code(); \
-    } \
-    static inline const char* classFileName() \
-    { \
-        return __FILE__; \
-    } \
-    MICHKA_ATTACH(__MICHKA_STRUCT_GENERATED_BODY_, __LINE__)()
+#define MICHKA_STRUCT(...)
 
 /**
  * @brief Define class reflection.
@@ -301,7 +267,6 @@ static void MICHKA_ATTACH(__michka_call, __LINE__)()
     public: \
         MICHKA_STRUCT(__VA_ARGS__) \
     private:
-
 
 namespace Michka
 {

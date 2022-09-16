@@ -29,6 +29,25 @@
 
 namespace Michka
 {
+    GLenum textureFormatToGLFormat(const TextureFormat& _format)
+    {
+        GLenum format = 0;
+        switch (_format)
+        {
+        case TextureFormat::r8g8b8:
+            format = GL_RGB;
+            break;
+        case TextureFormat::r8g8b8a8:
+            format = GL_RGBA;
+            break;
+        case TextureFormat::depth32:
+            format = GL_DEPTH_COMPONENT32F;
+            break;
+        }
+
+        return format;
+    }
+
     void Texture::destroy()
     {
         if (mTexture)
@@ -55,7 +74,7 @@ namespace Michka
 
         if (imageFormat != Image::Format::unknown)
         {
-            i32 glFormat = textureFormatToGLFormat(mFormat);
+            GLenum glFormat = textureFormatToGLFormat(mFormat);
             u8* data = new u8[mWidth * mHeight * Image::bytesPerPixel(imageFormat)];
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, mTexture);
@@ -162,24 +181,5 @@ namespace Michka
         }
 
         return this;
-    }
-
-    i32 Texture::textureFormatToGLFormat(const TextureFormat& _format)
-    {
-        i32 format = 0;
-        switch (_format)
-        {
-        case TextureFormat::r8g8b8:
-            format = GL_RGB;
-            break;
-        case TextureFormat::r8g8b8a8:
-            format = GL_RGBA;
-            break;
-        case TextureFormat::depth32:
-            format = GL_DEPTH_COMPONENT32F;
-            break;
-        }
-
-        return format;
     }
 }

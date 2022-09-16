@@ -28,7 +28,6 @@
 #define __VECTOR2_H__
 
 #include "Core/Helpers.h"
-#include "MichkaGenerated/Core/Math/Vector2.generated.h"
 
 namespace Michka
 {

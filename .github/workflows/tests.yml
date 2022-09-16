@@ -25,23 +25,6 @@ jobs:
         restore-keys: |
           michka-cache-3
 
-    - name: Cache LLVM and Clang
-      id: cache-llvm
-      uses: actions/cache@v2
-      with:
-        path: C:/Program Files/LLVM
-        key: "llvm-11.0.0"
-
-    - name: Install LLVM and Clang
-      uses: KyleMayes/install-llvm-action@v1
-      with:
-        version: "11.0.0"
-        directory: C:/Program Files/LLVM
-        cached: ${{ steps.cache-llvm.outputs.cache-hit }}
-
-    - name: Install Python Packages
-      run: pip install -r scripts/requirements.txt
-
     - name: Configure
       run: cmake -Bbuild -T host=x64 -A x64
 

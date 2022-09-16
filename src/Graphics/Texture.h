@@ -30,7 +30,6 @@
 #include "Core/Helpers.h"
 #include "GraphicDefines.h"
 #include "Image.h"
-#include "MichkaGenerated/Graphics/Texture.generated.h"
 
 namespace Michka
 {
@@ -117,9 +116,6 @@ namespace Michka
     protected:
         Texture();
 
-#       if MICHKA_GRAPHICS == MICHKA_OPENGL
-            static i32 textureFormatToGLFormat(const TextureFormat& _format);
-#       endif
     protected:
         TextureFormat mFormat = TextureFormat::unknown;
         u32           mWidth = 0;

@@ -29,7 +29,6 @@
 
 #include "Core/Helpers.h"
 #include "Core/Reflection/Type.h"
-#include "MichkaGenerated/Core/Container/String.generated.h"
 
 namespace Michka
 {

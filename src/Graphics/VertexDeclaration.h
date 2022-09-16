@@ -29,7 +29,6 @@
 
 #include "Core/Helpers.h"
 #include "Core/Container/Vector.h"
-#include "MichkaGenerated/Graphics/VertexDeclaration.generated.h"
 
 namespace Michka
 {

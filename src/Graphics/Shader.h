@@ -30,7 +30,6 @@
 #include "Core/Helpers.h"
 #include "Core/Container/Map.h"
 #include "Core/Container/String.h"
-#include "MichkaGenerated/Graphics/Shader.generated.h"
 
 namespace Michka
 {
@@ -182,10 +181,6 @@ namespace Michka
 
     protected:
         Shader();
-
-#       if MICHKA_GRAPHICS == MICHKA_OPENGL
-            FORCE_INLINE int getUniformLocation(const String& _name) const;
-#       endif
 
     protected:
         String                      mErrors;

@@ -29,7 +29,6 @@
 
 #include "Core/Helpers.h"
 #include "Core/Foundation/EventManager.h"
-#include "MichkaGenerated/Core/Foundation/Object.generated.h"
 
 namespace Michka
 {

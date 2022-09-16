@@ -32,7 +32,6 @@
 #include "Mutex.h"
 #include <tuple>
 #include <functional>
-#include "MichkaGenerated/Core/Thread/Thread.generated.h"
 
 namespace Michka
 {

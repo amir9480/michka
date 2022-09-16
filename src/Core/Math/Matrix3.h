@@ -28,7 +28,6 @@
 #define __MATRIX3_H__
 
 #include "Core/Helpers.h"
-#include "MichkaGenerated/Core/Math/Matrix3.generated.h"
 
 namespace Michka
 {

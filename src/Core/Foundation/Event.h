@@ -32,7 +32,6 @@
 #include "Core/Container/String.h"
 #include "Core/Container/Map.h"
 #include "Core/Container/Variant.h"
-#include "MichkaGenerated/Core/Foundation/Event.generated.h"
 
 namespace Michka
 {

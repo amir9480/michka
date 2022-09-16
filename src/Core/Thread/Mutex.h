@@ -28,7 +28,6 @@
 #define __MUTEX_H__
 
 #include "Core/Helpers.h"
-#include "MichkaGenerated/Core/Thread/Mutex.generated.h"
 
 namespace Michka
 {

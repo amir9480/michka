@@ -31,7 +31,6 @@
 #include "Core/Container/Color.h"
 #include "GraphicDefines.h"
 #include "Platform/Window.h"
-#include "MichkaGenerated/Graphics/Device.generated.h"
 
 namespace Michka
 {

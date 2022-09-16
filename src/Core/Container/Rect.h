@@ -30,7 +30,6 @@
 #include "Core/Helpers.h"
 #include "Position.h"
 #include "Size.h"
-#include "MichkaGenerated/Core/Container/Rect.generated.h"
 
 namespace Michka
 {

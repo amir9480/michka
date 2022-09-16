@@ -31,7 +31,6 @@
 #include "Core/Exception/Exception.h"
 #include "Core/Foundation/File.h"
 #include "Core/Thread/Mutex.h"
-#include "MichkaGenerated/Core/Foundation/Log.generated.h"
 
 #define MICHKA_ABORT(_MESSAGE) \
 { \

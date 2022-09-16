@@ -30,7 +30,6 @@
 #include "Vector.h"
 #include "Pair.h"
 #include "Core/Helpers.h"
-#include "MichkaGenerated/Core/Container/Map.generated.h"
 
 namespace Michka
 {

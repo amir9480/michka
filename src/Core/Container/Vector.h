@@ -29,7 +29,6 @@
 
 #include "Core/Helpers.h"
 #include <initializer_list>
-#include "MichkaGenerated/Core/Container/Vector.generated.h"
 
 namespace Michka
 {

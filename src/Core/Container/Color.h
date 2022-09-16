@@ -28,7 +28,6 @@
 #define __COLOR_H__
 
 #include "Core/Helpers.h"
-#include "MichkaGenerated/Core/Container/Color.generated.h"
 
 namespace Michka
 {

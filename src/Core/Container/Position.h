@@ -28,7 +28,6 @@
 #define __POSITION_H__
 
 #include "Core/Helpers.h"
-#include "MichkaGenerated/Core/Container/Position.generated.h"
 
 namespace Michka
 {

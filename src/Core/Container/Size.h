@@ -28,7 +28,6 @@
 #define __SIZE_H__
 
 #include "Core/Helpers.h"
-#include "MichkaGenerated/Core/Container/Size.generated.h"
 
 namespace Michka
 {

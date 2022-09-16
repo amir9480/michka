@@ -34,6 +34,17 @@
 
 namespace Michka
 {
+    FORCE_INLINE GLuint getUniformLocationByName(const u32& _program, const String& _name)
+    {
+        if (_program)
+        {
+            String8 name = _name.toUtf8();
+            return glGetUniformLocation(_program, name.cstr());
+        }
+
+        return -1;
+    }
+
     bool Shader::compile(const String& _source)
     {
         char* tempStr = nullptr;
@@ -120,7 +131,7 @@ namespace Michka
 
     bool Shader::set(const String& _name, const int& _value)
     {
-        int location = getUniformLocation(_name);
+        GLuint location = getUniformLocationByName(mProgram, _name);
         if (location != -1)
         {
             glProgramUniform1i(mProgram, location, _value);
@@ -132,7 +143,7 @@ namespace Michka
 
     bool Shader::set(const String& _name, const f32& _value)
     {
-        int location = getUniformLocation(_name);
+        GLuint location = getUniformLocationByName(mProgram, _name);
         if (location != -1)
         {
             glProgramUniform1f(mProgram, location, _value);
@@ -144,7 +155,7 @@ namespace Michka
 
     bool Shader::set(const String& _name, const f32& _valueX, const f32& _valueY)
     {
-        int location = getUniformLocation(_name);
+        GLuint location = getUniformLocationByName(mProgram, _name);
         if (location != -1)
         {
             glProgramUniform2f(mProgram, location, _valueX, _valueY);
@@ -161,7 +172,7 @@ namespace Michka
 
     bool Shader::set(const String& _name, const f32& _valueX, const f32& _valueY, const f32& _valueZ)
     {
-        int location = getUniformLocation(_name);
+        GLuint location = getUniformLocationByName(mProgram, _name);
         if (location != -1)
         {
             glProgramUniform3f(mProgram, location, _valueX, _valueY, _valueZ);
@@ -178,7 +189,7 @@ namespace Michka
 
     bool Shader::set(const String& _name, const f32& _valueX, const f32& _valueY, const f32& _valueZ, const f32& _valueW)
     {
-        int location = getUniformLocation(_name);
+        GLuint location = getUniformLocationByName(mProgram, _name);
         if (location != -1)
         {
             glProgramUniform4f(mProgram, location, _valueX, _valueY, _valueZ, _valueW);
@@ -195,7 +206,7 @@ namespace Michka
 
     bool Shader::set(const String& _name, const Matrix3& _value)
     {
-        int location = getUniformLocation(_name);
+        GLuint location = getUniformLocationByName(mProgram, _name);
         if (location != -1)
         {
             glProgramUniformMatrix3fv(mProgram, location, 1, true, (float*)&_value);
@@ -207,7 +218,7 @@ namespace Michka
 
     bool Shader::set(const String& _name, const Matrix& _value)
     {
-        int location = getUniformLocation(_name);
+        GLuint location = getUniformLocationByName(mProgram, _name);
         if (location != -1)
         {
             glProgramUniformMatrix4fv(mProgram, location, 1, true, (float*)&_value);
@@ -219,7 +230,7 @@ namespace Michka
 
     bool Shader::set(const String& _name, const Texture* _value)
     {
-        int location = getUniformLocation(_name);
+        GLuint location = getUniformLocationByName(mProgram, _name);
         if (location != -1)
         {
             if (_value != nullptr)
@@ -234,16 +245,5 @@ namespace Michka
         }
 
         return false;
-    }
-
-    FORCE_INLINE int Shader::getUniformLocation(const String& _name) const
-    {
-        if (mProgram)
-        {
-            String8 name = _name.toUtf8();
-            return glGetUniformLocation(mProgram, name.cstr());
-        }
-
-        return -1;
     }
 }

@@ -29,7 +29,6 @@
 
 #include "Core/Helpers.h"
 #include "VertexDeclaration.h"
-#include "MichkaGenerated/Graphics/VertexBuffer.generated.h"
 
 namespace Michka
 {

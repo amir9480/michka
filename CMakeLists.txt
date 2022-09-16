@@ -45,24 +45,14 @@ else()
 endif()
 
 set(SOURCES "")
-set(GENERATOR_COMMAND python scripts/generator.py ./src=./build/Generated/MichkaGenerated ./tests=./build/Generated/MichkaGenerated/tests)
-
-if(NOT EXISTS ./build/Generated/MichkaGenerated/CMakeList.txt)
-    execute_process(
-        COMMAND ${GENERATOR_COMMAND}
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    )
-endif()
 
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
-include_directories("${CMAKE_CURRENT_BINARY_DIR}/Generated")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glad/include")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/opengl")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/stb")
 add_subdirectory("src/Core")
 add_subdirectory("src/Graphics")
 add_subdirectory("src/Platform")
-add_subdirectory("${CMAKE_CURRENT_BINARY_DIR}/Generated/MichkaGenerated")
 
 set(
     MAIN_SOURCES
@@ -84,7 +74,6 @@ set_property(TARGET Michka PROPERTY CXX_STANDARD 17)
 add_custom_command(
     TARGET Michka
     PRE_BUILD
-    COMMAND python scripts/build.py ${MICHKA_BUILD_TYPE}
     COMMAND ${GENERATOR_COMMAND}
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     VERBATIM
@@ -96,6 +85,5 @@ if(PACKAGE_TESTS)
     link_directories("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/build/googletest/lib/${MICHKA_BUILD_TYPE}")
 
     set(SOURCES "")
-    add_subdirectory("${CMAKE_CURRENT_BINARY_DIR}/Generated/MichkaGenerated/tests")
     add_subdirectory("tests" ${CMAKE_CURRENT_BINARY_DIR}/tests)
 endif()

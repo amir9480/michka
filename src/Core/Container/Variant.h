@@ -31,7 +31,6 @@
 #include "Core/Container/String.h"
 #include "Core/Container/List.h"
 #include <initializer_list>
-#include "MichkaGenerated/Core/Container/Variant.generated.h"
 
 namespace Michka
 {

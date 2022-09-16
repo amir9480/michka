@@ -29,7 +29,6 @@
 
 #include "Core/Helpers.h"
 #include "Core/Math/Vector3.h"
-#include "MichkaGenerated/Core/Math/BoundingSphere.generated.h"
 
 namespace Michka
 {
