@@ -26,11 +26,11 @@
 
 #include <gtest/gtest.h>
 #include <utility>
-#include "Core/Container/String.h"
-#include "Core/Container/List.h"
-#include "Core/Foundation/Types.h"
-#include "Core/Helpers.h"
-#include "Core/Reflection/Type.h"
+#include "Michka/Core/Container/String.h"
+#include "Michka/Core/Container/List.h"
+#include "Michka/Core/Foundation/Types.h"
+#include "Michka/Core/Helpers.h"
+#include "Michka/Core/Reflection/Type.h"
 #include "../../Classes/Person.h"
 
 TEST(ListTest, ClearList)

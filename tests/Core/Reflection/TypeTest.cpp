@@ -28,9 +28,9 @@
 #include <limits>
 #include <cstring>
 #include <type_traits>
-#include "Core/Reflection/Type.h"
-#include "Core/Helpers.h"
-#include "Core/Foundation/Types.h"
+#include "Michka/Core/Reflection/Type.h"
+#include "Michka/Core/Helpers.h"
+#include "Michka/Core/Foundation/Types.h"
 #include "../../Classes/Person.h"
 
 #define TYPE_NAME_TEST(TYPE, TYPENAME) ASSERT_TRUE(strcmp(Michka::Type<TYPE>::name, TYPENAME) == 0)

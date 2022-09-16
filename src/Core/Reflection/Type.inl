@@ -24,7 +24,7 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Type.h"
+#include "Michka/Core/Reflection/Type.h"
 
 namespace Michka
 {

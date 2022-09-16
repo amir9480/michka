@@ -24,10 +24,10 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "List.h"
-#include "Core/Container/String.h"
-#include "Core/Memory/Memory.h"
-#include "Core/Helpers.h"
+#include "Michka/Core/Container/List.h"
+#include "Michka/Core/Container/String.h"
+#include "Michka/Core/Memory/Memory.h"
+#include "Michka/Core/Helpers.h"
 #include "Vector.h"
 
 namespace Michka

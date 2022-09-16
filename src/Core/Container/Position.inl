@@ -24,8 +24,8 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Position.h"
-#include "Core/Container/String.h"
+#include "Michka/Core/Container/Position.h"
+#include "Michka/Core/Container/String.h"
 
 namespace Michka
 {

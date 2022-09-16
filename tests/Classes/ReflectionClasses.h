@@ -27,7 +27,7 @@
 #ifndef __TEST_REFLECTION_CLASSES_H__
 #define __TEST_REFLECTION_CLASSES_H__
 
-#include "Core/Reflection/TypeInfo.h"
+#include "Michka/Core/Reflection/TypeInfo.h"
 
 class ParentClass1
 {

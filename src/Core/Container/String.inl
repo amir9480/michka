@@ -24,11 +24,11 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "String.h"
-#include "Core/Container/Vector.h"
-#include "Core/Helpers.h"
-#include "Core/Reflection/Type.h"
-#include "Core/Exception/Exception.h"
+#include "Michka/Core/Container/String.h"
+#include "Michka/Core/Container/Vector.h"
+#include "Michka/Core/Helpers.h"
+#include "Michka/Core/Reflection/Type.h"
+#include "Michka/Core/Exception/Exception.h"
 
 namespace Michka
 {

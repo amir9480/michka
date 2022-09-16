@@ -24,7 +24,7 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Texture.h"
+#include "Michka/Graphics/Texture.h"
 
 namespace Michka
 {

@@ -27,9 +27,9 @@
 
 #include <gtest/gtest.h>
 #include <utility>
-#include "Core/Container/Vector.h"
-#include "Core/Thread/Thread.h"
-#include "Core/Foundation/Types.h"
+#include "Michka/Core/Container/Vector.h"
+#include "Michka/Core/Thread/Thread.h"
+#include "Michka/Core/Foundation/Types.h"
 #include "../../Classes/TestThread.h"
 
 TEST(ThreadTest, CallbackThread)

@@ -24,16 +24,16 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Core/Thread/Thread.h"
-#include "Core/Thread/Mutex.h"
-#include "Core/Foundation/File.h"
-#include "Core/Foundation/Log.h"
-#include "Graphics/Device.h"
-#include "Graphics/IndexBuffer.h"
-#include "Graphics/Shader.h"
-#include "Graphics/Texture.h"
-#include "Graphics/VertexBuffer.h"
-#include "OpenGLHeaders.h"
+#include "Michka/Core/Thread/Thread.h"
+#include "Michka/Core/Thread/Mutex.h"
+#include "Michka/Core/Foundation/File.h"
+#include "Michka/Core/Foundation/Log.h"
+#include "Michka/Graphics/Device.h"
+#include "Michka/Graphics/IndexBuffer.h"
+#include "Michka/Graphics/Shader.h"
+#include "Michka/Graphics/Texture.h"
+#include "Michka/Graphics/VertexBuffer.h"
+#include "Michka/Graphics/OpenGL/OpenGLHeaders.h"
 
 namespace Michka
 {

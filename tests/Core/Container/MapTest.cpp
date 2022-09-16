@@ -27,9 +27,9 @@
 
 #include <gtest/gtest.h>
 #include <utility>
-#include "Core/Container/Map.h"
-#include "Core/Container/String.h"
-#include "Core/Foundation/Types.h"
+#include "Michka/Core/Container/Map.h"
+#include "Michka/Core/Container/String.h"
+#include "Michka/Core/Foundation/Types.h"
 #include "../../Classes/Person.h"
 
 TEST(MapTest, At)

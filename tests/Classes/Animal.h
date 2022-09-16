@@ -28,7 +28,7 @@
 #define __ANIMAL_H__
 
 #include <ostream>
-#include "Core/Container/String.h"
+#include "Michka/Core/Container/String.h"
 
 // A class just for testing
 class Animal

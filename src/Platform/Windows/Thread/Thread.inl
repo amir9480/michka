@@ -24,7 +24,7 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Core/Thread/Thread.h"
+#include "Michka/Core/Thread/Thread.h"
 #define HAVE_STRUCT_TIMESPEC
 #include <Windows.h>
 

@@ -26,8 +26,8 @@
 
 #include <stdlib.h>
 #include "MichkaTests.h"
-#include "Core/Defines.h"
-#include "Core/Helpers.h"
+#include "Michka/Core/Defines.h"
+#include "Michka/Core/Helpers.h"
 
 void michkaCallOnStart()
 {

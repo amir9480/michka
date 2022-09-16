@@ -1,6 +1,6 @@
-#include "VertexDeclaration.h"
-#include "Core/Container/String.h"
-#include "Core/Container/Hash.h"
+#include "Michka/Graphics/VertexDeclaration.h"
+#include "Michka/Core/Container/String.h"
+#include "Michka/Core/Container/Hash.h"
 
 namespace Michka
 {

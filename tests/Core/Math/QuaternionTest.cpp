@@ -25,11 +25,11 @@
 // ------------------------------------------------------------------------------- //
 
 #include <gtest/gtest.h>
-#include "Core/Math/Quaternion.h"
-#include "Core/Math/Matrix3.h"
-#include "Core/Math/Matrix.h"
-#include "Core/Math/Vector3.h"
-#include "Core/Foundation/Types.h"
+#include "Michka/Core/Math/Quaternion.h"
+#include "Michka/Core/Math/Matrix3.h"
+#include "Michka/Core/Math/Matrix.h"
+#include "Michka/Core/Math/Vector3.h"
+#include "Michka/Core/Foundation/Types.h"
 
 TEST(QuaternionTest, Conjugate)
 {

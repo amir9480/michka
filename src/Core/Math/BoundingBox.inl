@@ -24,8 +24,8 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "BoundingBox.h"
-#include "Core/Math/Utility.h"
+#include "Michka/Core/Math/BoundingBox.h"
+#include "Michka/Core/Math/Utility.h"
 
 namespace Michka
 {

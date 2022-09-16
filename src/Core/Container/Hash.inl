@@ -1,6 +1,6 @@
-#include "Hash.h"
-#include "Core/Container/String.h"
-#include "Core/Helpers.h"
+#include "Michka/Core/Container/Hash.h"
+#include "Michka/Core/Container/String.h"
+#include "Michka/Core/Helpers.h"
 #include <functional>
 
 namespace Michka

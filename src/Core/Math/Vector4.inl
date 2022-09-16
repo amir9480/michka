@@ -24,8 +24,8 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Vector4.h"
-#include "Core/Math/Utility.h"
+#include "Michka/Core/Math/Vector4.h"
+#include "Michka/Core/Math/Utility.h"
 
 namespace Michka
 {

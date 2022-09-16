@@ -24,8 +24,8 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Core/Container/String.h"
-#include "Platform/Utility.h"
+#include "Michka/Core/Container/String.h"
+#include "Michka/Platform/Utility.h"
 #define HAVE_STRUCT_TIMESPEC
 #include <Windows.h>
 

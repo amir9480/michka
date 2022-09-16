@@ -26,7 +26,7 @@
 
 #include <gtest/gtest.h>
 #include "MichkaTests.h"
-#include "Core/Foundation/File.h"
+#include "Michka/Core/Foundation/File.h"
 
 TEST(FileTest, Append)
 {

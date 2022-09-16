@@ -24,7 +24,7 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Core/Thread/Thread.h"
+#include "Michka/Core/Thread/Thread.h"
 
 class TestThread : public Michka::Thread
 {

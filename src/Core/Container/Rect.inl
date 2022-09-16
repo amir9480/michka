@@ -24,8 +24,8 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Rect.h"
-#include "Core/Container/String.h"
+#include "Michka/Core/Container/Rect.h"
+#include "Michka/Core/Container/String.h"
 
 namespace Michka
 {

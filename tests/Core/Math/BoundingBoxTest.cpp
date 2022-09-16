@@ -25,11 +25,11 @@
 // ------------------------------------------------------------------------------- //
 
 #include <gtest/gtest.h>
-#include "Core/Math/BoundingBox.h"
-#include "Core/Math/BoundingSphere.h"
-#include "Core/Math/Matrix3.h"
-#include "Core/Math/Matrix.h"
-#include "Core/Foundation/Types.h"
+#include "Michka/Core/Math/BoundingBox.h"
+#include "Michka/Core/Math/BoundingSphere.h"
+#include "Michka/Core/Math/Matrix3.h"
+#include "Michka/Core/Math/Matrix.h"
+#include "Michka/Core/Foundation/Types.h"
 
 TEST(BoundingBoxTest, Check)
 {

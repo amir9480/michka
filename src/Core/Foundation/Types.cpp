@@ -24,21 +24,21 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Types.h"
-#include "Core/Container/Color.h"
-#include "Core/Container/String.h"
-#include "Core/Container/Variant.h"
-#include "Core/Math/BoundingBox.h"
-#include "Core/Math/BoundingSphere.h"
-#include "Core/Math/Matrix3.h"
-#include "Core/Math/Matrix.h"
-#include "Core/Math/Plane.h"
-#include "Core/Math/Quaternion.h"
-#include "Core/Math/Ray.h"
-#include "Core/Math/Vector2.h"
-#include "Core/Math/Vector3.h"
-#include "Core/Math/Vector4.h"
-#include "Graphics/VertexDeclaration.h"
+#include "Michka/Core/Foundation/Types.h"
+#include "Michka/Core/Container/Color.h"
+#include "Michka/Core/Container/String.h"
+#include "Michka/Core/Container/Variant.h"
+#include "Michka/Core/Math/BoundingBox.h"
+#include "Michka/Core/Math/BoundingSphere.h"
+#include "Michka/Core/Math/Matrix3.h"
+#include "Michka/Core/Math/Matrix.h"
+#include "Michka/Core/Math/Plane.h"
+#include "Michka/Core/Math/Quaternion.h"
+#include "Michka/Core/Math/Ray.h"
+#include "Michka/Core/Math/Vector2.h"
+#include "Michka/Core/Math/Vector3.h"
+#include "Michka/Core/Math/Vector4.h"
+#include "Michka/Graphics/VertexDeclaration.h"
 
 namespace Michka
 {

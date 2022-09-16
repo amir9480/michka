@@ -24,9 +24,9 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Log.h"
-#include "Platform/Utility.h"
-#include "Core/Thread/Thread.h"
+#include "Michka/Core/Foundation/Log.h"
+#include "Michka/Platform/Utility.h"
+#include "Michka/Core/Thread/Thread.h"
 #include <ctime>
 
 namespace Michka

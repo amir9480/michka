@@ -24,10 +24,10 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "MetaAttributes.h"
-#include "Core/Container/Map.h"
-#include "Core/Container/String.h"
-#include "Core/Container/Variant.h"
+#include "Michka/Core/Reflection/MetaAttributes.h"
+#include "Michka/Core/Container/Map.h"
+#include "Michka/Core/Container/String.h"
+#include "Michka/Core/Container/Variant.h"
 
 namespace Michka
 {

@@ -24,10 +24,10 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Window.h"
-#include "Core/Foundation/Log.h"
-#include "Core/Helpers.h"
-#include "OpenGLSupport.h"
+#include "Michka/Platform/Windows/Window.h"
+#include "Michka/Core/Foundation/Log.h"
+#include "Michka/Core/Helpers.h"
+#include "Michka/Platform/Windows/OpenGLSupport.h"
 
 namespace Michka
 {

@@ -25,7 +25,7 @@
 // ------------------------------------------------------------------------------- //
 
 #include <gtest/gtest.h>
-#include "Core/Container/Size.h"
+#include "Michka/Core/Container/Size.h"
 
 TEST(SizeTest, Create)
 {

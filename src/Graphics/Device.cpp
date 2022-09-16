@@ -24,8 +24,8 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Device.h"
-#include "Texture.h"
+#include "Michka/Graphics/Device.h"
+#include "Michka/Graphics/Texture.h"
 
 extern "C"
 {

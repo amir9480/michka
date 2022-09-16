@@ -24,9 +24,9 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "String.h"
-#include "Core/Helpers.h"
-#include "Core/Memory/Memory.h"
+#include "Michka/Core/Container/String.h"
+#include "Michka/Core/Helpers.h"
+#include "Michka/Core/Memory/Memory.h"
 #include <utility>
 #include <memory>
 

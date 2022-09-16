@@ -24,7 +24,7 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "EventManager.h"
+#include "Michka/Core/Foundation/EventManager.h"
 
 namespace Michka
 {

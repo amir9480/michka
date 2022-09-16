@@ -24,8 +24,8 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "OpenGLSupport.h"
-#include "Core/Foundation/Log.h"
+#include "Michka/Platform/Windows/OpenGLSupport.h"
+#include "Michka/Core/Foundation/Log.h"
 
 namespace Michka
 {

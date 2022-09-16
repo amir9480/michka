@@ -25,8 +25,8 @@
 // ------------------------------------------------------------------------------- //
 
 #include <gtest/gtest.h>
-#include "Core/Container/String.h"
-#include "Graphics/VertexDeclaration.h"
+#include "Michka/Core/Container/String.h"
+#include "Michka/Graphics/VertexDeclaration.h"
 
 TEST(VertexDeclarationTest, Create)
 {

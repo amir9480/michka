@@ -24,7 +24,7 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Core/Defines.h"
+#include "Michka/Core/Defines.h"
 
 #if (MICHKA_PLATFORM == MICHKA_PLATFORM_WIN32)
 

@@ -24,11 +24,11 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Matrix.h"
-#include "Core/Container/String.h"
-#include "Core/Helpers.h"
-#include "Core/Math/Vector3.h"
-#include "Core/Math/Matrix3.h"
+#include "Michka/Core/Math/Matrix.h"
+#include "Michka/Core/Container/String.h"
+#include "Michka/Core/Helpers.h"
+#include "Michka/Core/Math/Vector3.h"
+#include "Michka/Core/Math/Matrix3.h"
 
 namespace Michka
 {

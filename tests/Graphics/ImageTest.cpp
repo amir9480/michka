@@ -26,9 +26,9 @@
 
 #include <gtest/gtest.h>
 #include "MichkaTests.h"
-#include "Core/Container/String.h"
-#include "Core/Foundation/File.h"
-#include "Graphics/Image.h"
+#include "Michka/Core/Container/String.h"
+#include "Michka/Core/Foundation/File.h"
+#include "Michka/Graphics/Image.h"
 
 TEST(ImageTest, Compare)
 {

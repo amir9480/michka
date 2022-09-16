@@ -26,8 +26,8 @@
 
 #include <gtest/gtest.h>
 #include <sstream>
-#include "Core/Core.h"
-#include "Graphics/Graphics.h"
+#include "Michka/Core/Core.h"
+#include "Michka/Graphics/Graphics.h"
 
 TEST(TypesTest, Ostream)
 {

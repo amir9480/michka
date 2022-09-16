@@ -24,8 +24,8 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Quaternion.h"
-#include "Core/Math/Utility.h"
+#include "Michka/Core/Math/Quaternion.h"
+#include "Michka/Core/Math/Utility.h"
 
 namespace Michka
 {

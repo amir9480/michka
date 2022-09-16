@@ -24,7 +24,7 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Thread.h"
+#include "Michka/Core/Thread/Thread.h"
 
 namespace Michka
 {

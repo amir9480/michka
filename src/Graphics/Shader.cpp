@@ -24,7 +24,7 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Shader.h"
+#include "Michka/Graphics/Shader.h"
 
 namespace Michka
 {

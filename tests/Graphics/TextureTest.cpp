@@ -27,11 +27,11 @@
 #include <gtest/gtest.h>
 #include <memory>
 #include "MichkaTests.h"
-#include "Core/Foundation/File.h"
-#include "Core/Math/Matrix.h"
-#include "Core/Math/Vector2.h"
-#include "Core/Math/Vector3.h"
-#include "Graphics/Graphics.h"
+#include "Michka/Core/Foundation/File.h"
+#include "Michka/Core/Math/Matrix.h"
+#include "Michka/Core/Math/Vector2.h"
+#include "Michka/Core/Math/Vector3.h"
+#include "Michka/Graphics/Graphics.h"
 
 TEST(TextureTest, Filter)
 {

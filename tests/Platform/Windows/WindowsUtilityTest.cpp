@@ -25,7 +25,7 @@
 // ------------------------------------------------------------------------------- //
 
 #include <gtest/gtest.h>
-#include "Platform/Utility.h"
+#include "Michka/Platform/Utility.h"
 #define HAVE_STRUCT_TIMESPEC
 #include <Windows.h>
 

@@ -24,8 +24,8 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Plane.h"
-#include "Core/Math/Utility.h"
+#include "Michka/Core/Math/Plane.h"
+#include "Michka/Core/Math/Utility.h"
 
 namespace Michka
 {

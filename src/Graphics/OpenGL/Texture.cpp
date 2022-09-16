@@ -24,8 +24,8 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Graphics/Texture.h"
-#include "OpenGLHeaders.h"
+#include "Michka/Graphics/Texture.h"
+#include "Michka/Graphics/OpenGL/OpenGLHeaders.h"
 
 namespace Michka
 {

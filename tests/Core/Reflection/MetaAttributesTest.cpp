@@ -26,8 +26,8 @@
 
 #include <gtest/gtest.h>
 #include <type_traits>
-#include "Core/Helpers.h"
-#include "Core/Reflection/MetaAttributes.h"
+#include "Michka/Core/Helpers.h"
+#include "Michka/Core/Reflection/MetaAttributes.h"
 
 TEST(MetaAttributesTest, Test)
 {

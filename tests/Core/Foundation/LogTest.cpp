@@ -26,7 +26,7 @@
 
 #include <gtest/gtest.h>
 #include "MichkaTests.h"
-#include "Core/Foundation/Log.h"
+#include "Michka/Core/Foundation/Log.h"
 
 TEST(LogTest, Abort)
 {

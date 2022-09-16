@@ -24,8 +24,8 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Utility.h"
-#include "Core/Helpers.h"
+#include "Michka/Platform/Utility.h"
+#include "Michka/Core/Helpers.h"
 
 namespace Michka
 {

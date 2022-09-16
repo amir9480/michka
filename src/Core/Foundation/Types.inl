@@ -1,9 +1,9 @@
-#include "Types.h"
-#include "Core/Container/List.h"
-#include "Core/Container/Position.h"
-#include "Core/Container/Rect.h"
-#include "Core/Container/Size.h"
-#include "Core/Container/Vector.h"
+#include "Michka/Core/Foundation/Types.h"
+#include "Michka/Core/Container/List.h"
+#include "Michka/Core/Container/Position.h"
+#include "Michka/Core/Container/Rect.h"
+#include "Michka/Core/Container/Size.h"
+#include "Michka/Core/Container/Vector.h"
 
 namespace Michka
 {

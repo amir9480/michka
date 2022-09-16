@@ -24,7 +24,7 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Object.h"
+#include "Michka/Core/Foundation/Object.h"
 
 
 namespace Michka

@@ -2,7 +2,7 @@
 #include <string>
 #include <fstream>
 #include <chrono>
-#include "Michka.h"
+#include "Michka/Michka.h"
 using namespace Michka;
 
 template<typename T>
@@ -123,7 +123,7 @@ Vertex vertices2[] =
 
 u32 indices2[] = {0, 1, 2};
 
-#include "Graphics/OpenGL/OpenGLHeaders.h"
+#include "Michka/Graphics/OpenGL/OpenGLHeaders.h"
 
 int main()
 {

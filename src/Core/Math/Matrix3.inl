@@ -24,8 +24,8 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Matrix.h"
-#include "Core/Math/Utility.h"
+#include "Michka/Core/Math/Matrix.h"
+#include "Michka/Core/Math/Utility.h"
 
 namespace Michka
 {

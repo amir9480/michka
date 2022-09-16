@@ -25,7 +25,7 @@
 // ------------------------------------------------------------------------------- //
 
 #include <gtest/gtest.h>
-#include "Core/Container/Rect.h"
+#include "Michka/Core/Container/Rect.h"
 
 TEST(RectTest, Create)
 {

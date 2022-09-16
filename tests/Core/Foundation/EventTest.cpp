@@ -25,8 +25,8 @@
 // ------------------------------------------------------------------------------- //
 
 #include <gtest/gtest.h>
-#include "Core/Foundation/Event.h"
-#include "Core/Foundation/EventManager.h"
+#include "Michka/Core/Foundation/Event.h"
+#include "Michka/Core/Foundation/EventManager.h"
 #include "../../Classes/MichkaObject.h"
 
 TEST(EventTest, Clear)

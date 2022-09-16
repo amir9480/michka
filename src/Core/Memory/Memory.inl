@@ -24,7 +24,7 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Memory.h"
+#include "Michka/Core/Memory/Memory.h"
 #include <stdlib.h>
 
 namespace Michka

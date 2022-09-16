@@ -24,7 +24,7 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Core/Foundation/Object.h"
+#include "Michka/Core/Foundation/Object.h"
 
 class MichkaObject : public Michka::Object
 {

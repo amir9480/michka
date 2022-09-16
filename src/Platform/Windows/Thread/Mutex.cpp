@@ -24,8 +24,8 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Core/Thread/Mutex.h"
-#include "Core/Exception/Exception.h"
+#include "Michka/Core/Thread/Mutex.h"
+#include "Michka/Core/Exception/Exception.h"
 #define HAVE_STRUCT_TIMESPEC
 #include <Windows.h>
 

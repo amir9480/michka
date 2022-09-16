@@ -24,7 +24,7 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "IndexBuffer.h"
+#include "Michka/Graphics/IndexBuffer.h"
 
 namespace Michka
 {

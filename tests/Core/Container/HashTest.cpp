@@ -25,7 +25,7 @@
 // ------------------------------------------------------------------------------- //
 
 #include <gtest/gtest.h>
-#include "Core/Container/Hash.h"
+#include "Michka/Core/Container/Hash.h"
 #include "../../Classes/Person.h"
 
 TEST(HashTest, Make)

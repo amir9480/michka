@@ -24,8 +24,8 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Log.h"
-#include "Core/Helpers.h"
+#include "Michka/Core/Foundation/Log.h"
+#include "Michka/Core/Helpers.h"
 #include <ctime>
 
 namespace Michka

@@ -25,8 +25,8 @@
 // ------------------------------------------------------------------------------- //
 
 #include <gtest/gtest.h>
-#include "Core/Math/Utility.h"
-#include "Core/Foundation/Types.h"
+#include "Michka/Core/Math/Utility.h"
+#include "Michka/Core/Foundation/Types.h"
 
 TEST(MathUtilityTest, Abs)
 {

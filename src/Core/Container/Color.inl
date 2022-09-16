@@ -24,8 +24,8 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Color.h"
-#include "Core/Math/Utility.h"
+#include "Michka/Core/Container/Color.h"
+#include "Michka/Core/Math/Utility.h"
 
 namespace Michka
 {

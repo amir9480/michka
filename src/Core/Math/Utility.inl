@@ -24,8 +24,8 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Utility.h"
-#include "Core/Reflection/Type.h"
+#include "Michka/Core/Math/Utility.h"
+#include "Michka/Core/Reflection/Type.h"
 #include <math.h>
 
 namespace Michka

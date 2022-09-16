@@ -24,8 +24,8 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Ray.h"
-#include "Core/Math/Utility.h"
+#include "Michka/Core/Math/Ray.h"
+#include "Michka/Core/Math/Utility.h"
 
 namespace Michka
 {

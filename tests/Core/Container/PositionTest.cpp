@@ -25,7 +25,7 @@
 // ------------------------------------------------------------------------------- //
 
 #include <gtest/gtest.h>
-#include "Core/Container/Position.h"
+#include "Michka/Core/Container/Position.h"
 
 TEST(PositionTest, Create)
 {

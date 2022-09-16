@@ -27,7 +27,7 @@
 #ifndef __PERSON_H__
 #define __PERSON_H__
 
-#include "Core/Container/String.h"
+#include "Michka/Core/Container/String.h"
 
 // A class just for testing
 class Person

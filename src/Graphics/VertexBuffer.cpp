@@ -24,7 +24,7 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "VertexBuffer.h"
+#include "Michka/Graphics/VertexBuffer.h"
 
 namespace Michka
 {

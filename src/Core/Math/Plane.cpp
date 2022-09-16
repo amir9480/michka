@@ -24,11 +24,11 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Plane.h"
-#include "Core/Container/String.h"
-#include "Core/Math/Matrix.h"
-#include "Core/Math/BoundingBox.h"
-#include "Core/Math/BoundingSphere.h"
+#include "Michka/Core/Math/Plane.h"
+#include "Michka/Core/Container/String.h"
+#include "Michka/Core/Math/Matrix.h"
+#include "Michka/Core/Math/BoundingBox.h"
+#include "Michka/Core/Math/BoundingSphere.h"
 
 namespace Michka
 {

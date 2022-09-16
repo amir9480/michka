@@ -26,9 +26,9 @@
 
 #include <gtest/gtest.h>
 #include <utility>
-#include "Platform/Window.h"
-#include "Core/Thread/Mutex.h"
-#include "Core/Thread/Thread.h"
+#include "Michka/Platform/Window.h"
+#include "Michka/Core/Thread/Mutex.h"
+#include "Michka/Core/Thread/Thread.h"
 #define HAVE_STRUCT_TIMESPEC
 #include <Windows.h>
 

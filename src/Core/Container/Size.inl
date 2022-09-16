@@ -24,8 +24,8 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Size.h"
-#include "Core/Container/String.h"
+#include "Michka/Core/Container/Size.h"
+#include "Michka/Core/Container/String.h"
 
 namespace Michka
 {

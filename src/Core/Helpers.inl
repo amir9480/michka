@@ -24,9 +24,9 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Helpers.h"
-#include "Defines.h"
-#include "Reflection/Type.h"
+#include "Michka/Core/Helpers.h"
+#include "Michka/Core/Defines.h"
+#include "Michka/Core/Reflection/Type.h"
 
 namespace Michka
 {

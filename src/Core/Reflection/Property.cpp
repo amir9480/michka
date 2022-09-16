@@ -24,7 +24,7 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Property.h"
+#include "Michka/Core/Reflection/Property.h"
 
 namespace Michka
 {

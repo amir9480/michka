@@ -24,8 +24,8 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Map.h"
-#include "Core/Exception/Exception.h"
+#include "Michka/Core/Container/Map.h"
+#include "Michka/Core/Exception/Exception.h"
 
 namespace Michka
 {

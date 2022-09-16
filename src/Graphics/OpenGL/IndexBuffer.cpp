@@ -24,9 +24,9 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Graphics/IndexBuffer.h"
-#include "Graphics/VertexDeclaration.h"
-#include "OpenGLHeaders.h"
+#include "Michka/Graphics/IndexBuffer.h"
+#include "Michka/Graphics/VertexDeclaration.h"
+#include "Michka/Graphics/OpenGL/OpenGLHeaders.h"
 
 namespace Michka
 {

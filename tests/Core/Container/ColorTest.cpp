@@ -25,10 +25,10 @@
 // ------------------------------------------------------------------------------- //
 
 #include <gtest/gtest.h>
-#include "Core/Container/Color.h"
-#include "Core/Math/Vector4.h"
-#include "Core/Math/Vector3.h"
-#include "Core/Foundation/Types.h"
+#include "Michka/Core/Container/Color.h"
+#include "Michka/Core/Math/Vector4.h"
+#include "Michka/Core/Math/Vector3.h"
+#include "Michka/Core/Foundation/Types.h"
 
 TEST(ColorTest, Operators)
 {

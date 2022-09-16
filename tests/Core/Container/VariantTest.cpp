@@ -26,7 +26,7 @@
 
 #include <gtest/gtest.h>
 #include <utility>
-#include "Core/Container/Variant.h"
+#include "Michka/Core/Container/Variant.h"
 #include "../../Classes/Student.h"
 #include "../../Classes/Animal.h"
 

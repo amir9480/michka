@@ -25,12 +25,12 @@
 // ------------------------------------------------------------------------------- //
 
 #include <gtest/gtest.h>
-#include "Core/Math/BoundingBox.h"
-#include "Core/Math/BoundingSphere.h"
-#include "Core/Math/Plane.h"
-#include "Core/Math/Ray.h"
-#include "Core/Math/Utility.h"
-#include "Core/Foundation/Types.h"
+#include "Michka/Core/Math/BoundingBox.h"
+#include "Michka/Core/Math/BoundingSphere.h"
+#include "Michka/Core/Math/Plane.h"
+#include "Michka/Core/Math/Ray.h"
+#include "Michka/Core/Math/Utility.h"
+#include "Michka/Core/Foundation/Types.h"
 
 TEST(RayTest, GetPoint)
 {

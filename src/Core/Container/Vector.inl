@@ -24,9 +24,9 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Vector.h"
-#include "Core/Memory/Memory.h"
-#include "Core/Helpers.h"
+#include "Michka/Core/Container/Vector.h"
+#include "Michka/Core/Memory/Memory.h"
+#include "Michka/Core/Helpers.h"
 
 namespace Michka
 {

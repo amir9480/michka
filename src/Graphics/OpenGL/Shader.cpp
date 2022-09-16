@@ -24,13 +24,13 @@
 // SOFTWARE.                                                                       //
 // ------------------------------------------------------------------------------- //
 
-#include "Core/Math/Vector2.h"
-#include "Core/Math/Vector3.h"
-#include "Core/Math/Vector4.h"
-#include "Core/Math/Matrix3.h"
-#include "Core/Math/Matrix.h"
-#include "Graphics/Shader.h"
-#include "OpenGLHeaders.h"
+#include "Michka/Core/Math/Vector2.h"
+#include "Michka/Core/Math/Vector3.h"
+#include "Michka/Core/Math/Vector4.h"
+#include "Michka/Core/Math/Matrix3.h"
+#include "Michka/Core/Math/Matrix.h"
+#include "Michka/Graphics/Shader.h"
+#include "Michka/Graphics/OpenGL/OpenGLHeaders.h"
 
 namespace Michka
 {

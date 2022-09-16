@@ -26,9 +26,9 @@
 
 #include <gtest/gtest.h>
 #include <type_traits>
-#include "Core/Helpers.h"
-#include "Core/Container/Map.h"
-#include "Core/Reflection/TypeInfo.h"
+#include "Michka/Core/Helpers.h"
+#include "Michka/Core/Container/Map.h"
+#include "Michka/Core/Reflection/TypeInfo.h"
 #include "../../Classes/ReflectionClasses.h"
 
 TEST(ClassReflectionTest, Name)
