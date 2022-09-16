@@ -99,7 +99,7 @@
  * @example
  * First define class with this macro:
  * @code{.cpp}
- * MICHKA_HAS_MEMBER_FUNCTION_ADD(HasGetSum, getSum, int, int, int); // int getSum(int, int)
+ * MICHKA_HAS_MEMBER_FUNCTION_ADD(HasGetSum, int, getSum, int, int); // int getSum(int, int)
  * @endcode
  *
  * To check method exists in specific class:
@@ -112,7 +112,7 @@
  * MichkaHasMemberFunction::HasGetSum<YourClassToCheck, float(float, float, float)>::value
  * @endcode
  */
-#define MICHKA_HAS_MEMBER_FUNCTION_ADD(_NAME, _FUNCTION_NAME, _RETURN_TYPE, ...) \
+#define MICHKA_HAS_MEMBER_FUNCTION_ADD(_NAME, _RETURN_TYPE, _FUNCTION_NAME, ...) \
     namespace MichkaHasMemberFunction \
     { \
         template<typename, typename T> \
@@ -147,7 +147,7 @@
     { \
     }
 
-MICHKA_HAS_MEMBER_FUNCTION_ADD(HasToString, toString, Michka::String);
+MICHKA_HAS_MEMBER_FUNCTION_ADD(HasToString, Michka::String, toString);
 
 /**
  * @brief To easily define binary operators for enums
